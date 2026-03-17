@@ -150,7 +150,9 @@ Segure o Ctrl e clique no link.
 ---
 
 ## ⌨️🖱️ Como citar este trabalho
-DA SILVA, Aline Valentinne; OLIVEIRA, Jhenyffer Vieira de; NASCIMENTO, Maria Isabel de Castro. **Implementação de uma plataforma digital para auxiliar no apoio emocional de jovens LGBTQIAPN+ na região de Jundiaí**. 2025.
+SILVA, Aline Valentinne da; OLIVEIRA, Jhenyffer Vieira de; NASCIMENTO, Maria Isabel de Castro. Implementação de uma plataforma digital para auxiliar no apoio emocional de jovens LGBTQIAPN+ na região de Jundiaí. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2025. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2025.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/41922)
 
 ---
 
