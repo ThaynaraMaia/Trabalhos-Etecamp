@@ -51,7 +51,9 @@ Senha - 1234
 - Rafaela Gatera Tudela
 
 ## Como citar o projeto
-ENEMPLATD. Plataforma digital de auxílio para o ENEM. 2024. Disponível em: <https://github.com/leticiamorais2006/EnemPlatd>. Acesso em: 27 nov. 2024.
+LEITE, Ana Clara Tavares; MORAIS, Leticia Aparecida Lucena; TUDELA, Rafaela Gatera. Desenvolvimento de uma plataforma digital para o preparo de estudantes para o ENEM. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29389)
 
 ## Apendice🔗
 [Apêndice🗂️](APÊNDICE.docx)
