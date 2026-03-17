@@ -58,15 +58,11 @@ a baixo alguns exemplos
 
 
 <h2>Como citar o Projeto </h2>
+NASCIMENTO, Danniel Otavio Coutinho et. al. Guia para auxílio de mães adolescentes de primeira viagem. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
 
-Referência:
-
-YOUR PREGNANCY. Your pregnancy:
-A guide to every gestation. Campo Limpo Paulista: ETEC de Campo Limpo Paulista, Curso Técnico emInformática para Internet: (link github) DOI: 10.1234/etec.campolimpo.yourpregnancy.2024. Acesso em: xx (mês). 20xx.
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29401)
 
 <br>
-
-
 
 
 ![image](https://github.com/user-attachments/assets/37e0fdc6-fefe-4ddc-abbc-297f3247bb17)
