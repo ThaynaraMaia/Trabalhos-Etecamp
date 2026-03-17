@@ -70,4 +70,6 @@ O nosso projeto conta com uma diversidade de interações, trazendo a autoajuda 
 # Como citar o projeto
 Se você utilizar este projeto em sua pesquisa, artigo, ou trabalho, por favor, cite-o da seguinte forma:
 
-BRASOES, Alanis; SILVA, Alana; FERREIRA, Ryciery. Guia para auxiliar no bem-estar psicológico de pessoas com transtorno de bipolaridade. GitHub, 2024. Disponível em: `https://github.com/laniis/Equilibrio---Grupo11`. Acesso em: dia mês ano.
+SILVA, Alana Micaella Nascimento da; BRASÕES, Alanis Castro; FERREIRA, Ryciery Barbosa Lima. Guia para auxiliar no bem-estar psicológico de pessoas com transtornos de bipolaridade. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29362).
