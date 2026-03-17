@@ -22,7 +22,8 @@ Nesse repositório possui uma cópia da parte prática dos Trabalhos de conclus�
 
 - Guia para auxílio de mães adolescentes de primeira viagem (Guia_para_mães_adolecentes)
 
-- Os trabalhos são encontrados em https://ric.cps.sp.gov.br/
+
+Os trabalhos são encontrados no  [Repositório Institucional do Conhecimento - RIC-CPS](https://ric.cps.sp.gov.br) 
 
 
 
