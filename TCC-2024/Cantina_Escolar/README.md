@@ -135,4 +135,6 @@ Este projeto foi desenvolvido por:
 
 Se você utilizar este projeto em sua pesquisa, artigo, ou trabalho, por favor, cite-o da seguinte forma:
 
-PEREIRA, Ana; MELO, Maria; PEREIRA, Rhafaela. **Desenvolvimento de um Sistema Web para auxiliar na organização da Cantina Escolar da Etec de Campo Limpo Paulista.** GitHub, ano. Disponível em: https://github.com/Majuu-melo/Grupo-10-Cantina-Escolar. Acesso em: dia mês ano.
+PEREIRA, Ana Gabrielly de Almeida; MELO, Maria Julia da Silva; PEREIRA, Rhafaela Fernandes. Desenvolvimento de um sistema web para auxiliar na organização da cantina escolar da ETEC de Campo Limpo Paulista. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29324)
