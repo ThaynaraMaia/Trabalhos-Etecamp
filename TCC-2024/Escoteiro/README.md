@@ -99,7 +99,9 @@ Seguem abaixo capturas de tela da aplicação:<br>
 
 ## 3. Considerações Finais
 #### 1.1. Estrutura da Citação 
-ROSA, Kaua Lucio et al. Desenvolvimento de uma Plataforma Digital destinada a promover as ações do Grupo Escoteiro João Paulo II. 2024. 38 p. Artigo científico, Centro Paula Souza – ETEC de Campo Limpo Paulista. 2024
+SOUZA, Adryan Felipe Almeida de; SILVA, João Yuri de Moura; ROSA, Kauã Lucio. Desenvolvimento de uma plataforma digital destinada a promover as ações do grupo escoteiro João Paulo II. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29363)
 
 
 <br>
