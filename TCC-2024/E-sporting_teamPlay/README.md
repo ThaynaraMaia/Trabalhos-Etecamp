@@ -1,5 +1,4 @@
 # TeamPlay - Where Champions Rise
-![TeamPlay](/public/assets/Logo_Full.png)
 
 <img src="public/assets/Logo_Full.png">
 
@@ -52,8 +51,8 @@ Foram determinados os seguintes objetivos para a plataforma TeamPlay:
  
 #### 1.4. Sobre os autores
 ___
-- ``Ryan Lucas`` <a href="https://github.com/zRyan774" title="GitHub"><img align="center" src="/public/assets/icons/social_icon_gh.png" width="22" height="22"></a> • <a href="https://www.instagram.com/Ryanvl18/" title="Instagram"><img align="center" src="/public/assets/icons/social_icon_ig.png" width="22" height="22"></a>
-- ``Leonardo Moraes`` <a href="https://github.com/Leonardo17102006" title="GitHub"><img align="center" src="/public/assets/icons/social_icon_gh.png" width="22" height="22"></a> • <a href="https://www.instagram.com/leonardodagracamoraes/" title="Instagram"><img align="center" src="/public/assets/icons/social_icon_ig.png" width="22" height="22"></a>
+- ``Ryan Lucas`` <a href="https://github.com/zRyan774" title="GitHub"><img align="center" src="/public/assets/icons/social_icon_gh.png" width="22" height="22"></a> • <a href="https://www.instagram.com/Ryanvl18/" title="Instagram"><img align="center" src="public/assets/icons/social_icon_ig.png" width="22" height="22"></a>
+- ``Leonardo Moraes`` <a href="https://github.com/Leonardo17102006" title="GitHub"><img align="center" src="public/assets/icons/social_icon_gh.png" width="22" height="22"></a> • <a href="https://www.instagram.com/leonardodagracamoraes/" title="Instagram"><img align="center" src="public/assets/icons/social_icon_ig.png" width="22" height="22"></a>
 - ``Pablo Henrique`` <a href="https://github.com/Patagonias1/" title="GitHub"><img align="center" src="/public/assets/icons/social_icon_gh.png" width="22" height="22"></a> • <a href="https://www.instagram.com/phd_carvalho/" title="Instagram"><img align="center" src="/public/assets/icons/social_icon_ig.png" width="22" height="22"></a>
 
 <br>
