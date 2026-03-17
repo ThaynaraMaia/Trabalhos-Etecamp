@@ -62,7 +62,9 @@ Orientadores: Thaynara Andrade e Barbara Porfirio
 
 ## Como citar o projeto
 
-SOTO, Edson Adrian Paxi; FAVARO, Giulia da Cruz; DA CUNHA, Clara Mortarelo. Projeto Martopia: desenvolvimento de um sistema web para auxiliar na educação de jovens do interior de São Paulo sobre a vida marinha do litoral paulista. 2025. 
+SOTO, Edson Adrian Paxi; FAVARO, Giulia da Cruz; CUNHA, Clara Mortarelo da. Projeto Martopia: desenvolvimento de um sistema web para auxiliar na educação de jovens do interior de São Paulo sobre a vida marinha do litoral paulista. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2025. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2025.
+
+[Trabalho na íntegra]([https://ric.cps.sp.gov.br/handle/123456789/41936](https://ric.cps.sp.gov.br/handle/123456789/41930))
 
 Em caso de dúvidas entre em contato com giulia.favaro7@gmail.com, claramortareloc@gmail.com ou adrianpaxisto@gmail.com 
 
