@@ -94,7 +94,9 @@ Executando o website:
 
 Como citar este trabalho: 
 
-SILVA, Daniel Gomes da; PEREIRA, Maria Luiza; DANTAS, Paloma do Carmo. **Desenvolvimento de um Website para Auxiliar no Planejamento Pessoal Financeiro dos Estudantes do Ensino Médio da Etec de Campo Limpo Paulista**. 2025. TCC (Ensino Médio Integrado ao Técnico em Informática para Internet) - Etec de Campo Limpo Paulista, Centro Paula Souza, São Paulo.
+SILVA, Daniel Gomes da; PEREIRA, Maria Luiza; DANTAS, Paloma do Carmo. Desenvolvimento de um website para auxiliar no planejamento pessoal financeiro dos estudantes do ensino médio da ETEC de Campo Limpo Paulista. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2025. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2025.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29324)
 
 Em caso de dúvidas entre em contato com daniel.gomsz1408@gmail.com
 
