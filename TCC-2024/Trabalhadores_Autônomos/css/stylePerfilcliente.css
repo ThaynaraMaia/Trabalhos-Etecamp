@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Belleza&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    margin: 0;
+    box-sizing: 0;
+}
+:root{
+    --corPrimaria-1: #EBB548;
+    --corPrimaria-2: #EC5C14;
+    --corPrimaria-3: #235789;
+    --corPrimaria-4: #565254;
+    --corPrimaria-5: #FFFBFE;
+    --fonte-primaria: 'Belleza', 'calibri';
+}
+
+h1 {
+    text-align: center;
+    font-weight: 500; /* Ajusta o peso da fonte */
+    font:  1.8rem "M PLUS 1p", sans-serif;
+    color: #04074B;
+    margin-bottom: 30px;
+}
+.BarraNav{
+    background-color: #FFF;
+    padding:15px 35px 0px 15px;
+    display: flex;
+    justify-content: space-between ;
+}
+.BarraNav > img{
+    width: 186px;
+    height: 51px;
+    margin-top: -10px;
+}
+
+.BarraNav a{
+    text-decoration: none ;
+    color: #EC5C14;
+    font: 400 1.1rem "M PLUS 1p", sans-serif ;
+}
+
+.FotoPerfilNav{
+    width: 50px;
+    height: 50px;
+    border: solid 3px var(--corPrimaria-2);
+    border-radius: 50%;
+    padding: 1px;
+
+}
+
+nav.menuLateral{
+    /* width: 65px;
+    height: 410px; */
+    background-color: #04074B;
+    padding: 30px 0 40px 1%;
+    box-shadow: 3px 0 0 #ED5C15;
+    border-radius: 0 20px 20px 0;
+
+    position: fixed;
+    top: 15%;
+    left: 0;
+    overflow: hidden; 
+    z-index: 10;
+    transition: .3s;
+}
+nav.menuLateral.expandir{
+    width: 300px;
+    z-index: 10;
+}
+.IconExpandir{
+    width: 100%;
+    padding-left: 7px;
+}
+.IconExpandir > i{
+    color: #ED5C15;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+ul{
+    height: 100%;
+    list-style-type: none;
+    padding-left: 3%;
+}
+
+ul li.itemMenu a:hover{
+    background: #ED5C15;
+    color: #FFF;
+    border-radius: 9px 0px 0px 9px;
+
+}
+
+ul li.itemMenu a{
+    color: #ED5C15;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 1%;
+    display: flex;
+    margin-bottom: 10px;
+    line-height: 30px;
+    transition: .4s;
+}
+ul li.ativo a{
+    background-color: #ED5C15;
+    color: #FFF;
+    border-radius: 9px 0px 0px 9px;
+}
+
+ul li.itemMenu a .txtLink{
+    margin-left: 70px;
+    transition: .6s;
+    opacity: 0;
+}
+nav.menuLateral.expandir .txtLink{
+    margin-left: 40px;
+    opacity: 1;
+}
+ul li.itemMenu a .icon > i{
+    font-size: 30px;
+    padding-left: 5px;
+}
+
+.FotoFundo{
+    position: relative;
+    z-index: 1;
+}
+.FotoFundo img{
+    display: block;
+    margin: auto;
+    width: 90%;
+    height: 420px;
+}
+.BlocoPerfilPrincipal{
+    position: absolute;
+    width: 353px;
+    height: 565px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    border-radius: 130px 130px 0px 0px;
+    font-family: "M PLUS 1p", sans-serif;
+    font-size: 1.1rem;
+    box-shadow: 2px 2px 2px 0px #00000073;
+    top: 60%;
+    left: 11%;
+    z-index: 2;
+}
+.LocaleLikes{
+    flex-direction: row;
+    display: flex;
+}
+.FotoPerfil img{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    /* border: 1px solid black; */
+    background-color: #fff;
+}
+.NomeTrabalhador p{
+    font-weight: bolder;
+}
+.tel{
+    font-weight: 400;
+
+}
+.Avaliacao ion-icon{
+   font-size: 1.4rem;
+   color: #ffcb00;
+}
+
+.LocaleLikes p{
+    padding: 5px;
+    color: #242760;
+    font-weight: bold;
+}
+.LocaleLikes ion-icon{
+   font-size: 2.3rem;
+    color: #ED5C15;
+}
+.txt{
+    position: absolute;
+    width: 600px;
+    top: 115%;
+    left: 45%;
+
+    font:  1.5rem "M PLUS 1p", sans-serif;
+}
+
+footer{
+    background-color: #FFF;
+    padding: 10px;
+    font: .7rem "Poppins", sans-serif;
+    color: #666666;
+    margin-top: 400px;
+}
+footer p{
+    padding: 0px 10px 0px 10px;
+}
+
+
+#reviewForm, #reviews{
+    margin-top:500px ;
+    margin-left: 500px;
+}
+.star-rating {
+    display: flex;
+    direction: row-reverse;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+.star-rating input {
+    display: none;
+}
+.star-rating label {
+    color: #ccc;
+    transition: color 0.2s;
+}
+.star-rating input:checked ~ label,
+.star-rating input:checked ~ label ~ label {
+    color: #f39c12;
+}
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #f39c12;
+}
+
+.campo_comentario{
+    display: block;
+    margin: auto;
+}
+
+.trabalhos{
+    margin-top: 30%;
+}
+.carousel {
+    max-width: 1080px; 
+    min-width: 600px; 
+    height: 450px; 
+    margin: 0 auto; 
+}
+
+.carousel img {
+    object-fit: cover; 
+    height: 100%;      
+    width: 100%;      
+}
+.fundocarrossel{
+    background-color: #050739;
+    margin-top: 500px;
+}
+.fundocarrossel h2{
+    color: #F6F6F6;
+    text-align: center;
+    font-family: "Space Grotesk", sans-serif;
+    padding-top: 10px;
+}
+.favorito {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+#favoritarBtn {
+    background-color: #04074B; 
+    color: white; 
+    border: none; 
+    box-shadow: 3px 3px 3px #ED5C15;
+    border-radius: 20px; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+#favoritarBtn:hover {
+    background-color: #02043a; 
+}
+
+#favoritarBtn:active {
+    background-color: #ED5C15; 
+}
+
+.curtir-button {
+    background-color: transparent; /* Remove o fundo cinza */
+    border: none; /* Remove a borda do botão */
+    color: #ED5C15; /* Cor vermelha para o ícone de coração */
+    font-size: 1.5rem; /* Aumenta o tamanho do ícone */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    padding: 0; /* Remove o espaçamento interno */
+}
+
+.curtir-button:hover {
+    color:#ED5C15; /* Cor vermelha mais intensa ao passar o mouse */
+}
+
+.curtir-button i {
+    margin-right: 5px; /* Espaço entre o ícone e o texto */
+}
+
+#likeCount {
+    font-size: 1rem;
+    color: #ED5C15; /* Cor do texto do contador de curtidas */
+    font-weight: bold;
+}
+
+.curtir-button:focus {
+    outline: none; /* Remove o contorno padrão ao focar no botão */
+}
+/* Estilização do contêiner do formulário */
+.EnviarMensagem {
+    width: 100%;
+    max-width: 500px; /* Largura máxima para evitar que o formulário fique muito largo em telas grandes */
+    margin: 20px auto; /* Centraliza o formulário horizontalmente */
+    padding: 20px;
+    background-color: #f7f7f7; /* Cor de fundo clara */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave para destacar o formulário */
+}
+
+/* Título do formulário */
+.EnviarMensagem h2 {
+    text-align: center;
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #04074B /* Cor do texto */
+}
+
+/* Campo de texto */
+.EnviarMensagem textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc; /* Borda leve */
+    border-radius: 4px;
+    font-size: 16px;
+    resize: none; /* Impede o redimensionamento do campo */
+    margin-bottom: 15px;
+    transition: border-color 0.3s;
+}
+
+/* Foco no campo de texto */
+.EnviarMensagem textarea:focus {
+    border-color: #ED5C15;; /* Borda azul quando o campo está em foco */
+    outline: none; /* Remove o contorno padrão do navegador */
+}
+
+/* Botão de enviar */
+.EnviarMensagem button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ED5C15; /* Cor de fundo do botão */
+    border: none;
+    border-radius: 4px;
+    color: #fff; /* Cor do texto do botão */
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Efeito hover no botão */
+.EnviarMensagem button:hover {
+    background-color:  #ED5C15; /* Tom mais escuro de azul ao passar o mouse */
+}
+
+/* Estilo para telas menores */
+@media (max-width: 768px) {
+    .EnviarMensagem {
+        padding: 15px;
+    }
+
+    .EnviarMensagem h2 {
+        font-size: 20px;
+    }
+
+    .EnviarMensagem button {
+        font-size: 16px;
+    }
+}

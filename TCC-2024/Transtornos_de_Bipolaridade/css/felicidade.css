@@ -1,0 +1,49 @@
+#felicidade {
+    display: flex;
+    min-height: calc(100vh - 70px);
+    position: relative;
+}
+
+#ctafelicidade {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 5%;
+}
+
+#ctafelicidade  .title {
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+}
+
+#ctafelicidade  .title span {
+    color: #1a1abe
+}
+
+#ctafelicidade  .description {
+    font-size: 1.2rem;
+}
+#bannerfelicidade  {
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    width: 60%;
+    z-index: 2;
+}
+
+#bannerfelicidade img {
+    height: 100%;
+    width: fit-content;
+}
+
+.shapefelicidade {
+    background-color: rgb(255, 214, 78);
+    width: 40%;
+    height: 90%;
+    position: absolute;
+    border-radius: 40% 20% 10% 500%;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}

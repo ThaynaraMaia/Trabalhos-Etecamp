@@ -1,0 +1,15 @@
+container h1{
+    text-align: center;
+    padding: 18px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+table{
+    width: 80%;
+    margin: auto;
+    /* background-color: #ffffff; */
+    background-color: #ffff;
+    padding: 12px;
+    margin-bottom: 2%;
+}

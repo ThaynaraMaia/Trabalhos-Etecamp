@@ -1,0 +1,221 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato&display=swap");
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.page-title {
+    font-size: 40px;
+    padding: 50px 0;
+    text-align: center;
+}
+
+.saldo-atual {
+    font-size: 40px;
+    padding: 70px 0;
+    text-align: center;
+}
+
+.saldo-titulo {
+    color: rgb(26, 165, 26);
+}
+
+button {
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table thead tr {
+    border-bottom: 3px solid #eee;
+}
+
+table thead tr th {
+    text-align: left;
+    padding-bottom: 20px;
+    text-transform: uppercase;
+    color: #666;
+}
+
+table tbody tr {
+    border-bottom: 3px solid #eee;
+}
+
+tr:last-child {
+    border: 0;
+}
+
+table tbody tr td {
+    padding: 30px 0;
+}
+
+.quantidade {
+    background: #eee;
+    display: inline-flex;
+    padding: 0 0;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    min-width: 60px;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 30px;
+}
+
+.quantidade a {
+    text-decoration: none;
+}
+
+.quantidade span {
+    margin: 0 10px;
+}
+
+.quantidade button {
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    background: transparent;
+    border: 0;
+    padding: 0 10px;
+    font-size: 20px;
+    height: 100%;
+}
+
+.quantidade button:hover {
+    background: #ddd;
+}
+
+.remove {
+    background: #eee;
+    border: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.remove:hover {
+    background: #ddd;
+}
+
+aside {
+    margin-left: 30px;
+}
+
+body>.box {
+    padding: 100%;
+}
+
+.box {
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    background: #eee;
+    color: #222;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box header {
+    padding: 15px 20px;
+    font-size: 18px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.box .info {
+    padding: 20px;
+    font-size: 16px;
+}
+
+.box .info>div {
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.info button {
+    color: #28a745;
+    background: transparent;
+    border: 0;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 16px;
+}
+
+.box footer {
+    padding: 15px 20px;
+    background: #ddd;
+    font-size: 18px;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+aside>button {
+    border: 0;
+    padding: 15px 0;
+    color: white;
+    background: #28a745;
+    display: block;
+    width: 100%;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 16px;
+}
+
+.botao-continuar {
+    background-color: rgb(52, 130, 182);
+    color: rgb(37, 37, 37);
+    font-weight: 600;
+    padding: 8px 205px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+}
+
+.botao-continuar:hover {
+    background-color: rgb(176, 176, 176);
+}
+
+.botao-finalizar {
+    background-color: #2ab62f;
+    color: rgb(37, 37, 37);
+    font-weight: 600;
+    padding: 8px 225px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 7px;
+    border: none;
+    cursor: pointer;
+}
+
+.botao-finalizar:hover {
+    background-color: rgb(176, 176, 176);
+}

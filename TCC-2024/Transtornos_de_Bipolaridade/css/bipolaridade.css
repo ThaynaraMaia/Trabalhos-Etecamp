@@ -1,0 +1,65 @@
+#bipolaridade  {
+    display: flex;
+    min-height: calc(100vh - 70px);
+    position: relative;
+}
+
+#ctaBipolaridade {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 4%;
+}
+
+#ctaBipolaridade .title {
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+}
+
+#ctaBipolaridade .title span {
+    font-size: 2.7rem;
+    color: #e24800
+}
+
+#ctaBipolaridade .description {
+    font-size: 1.3rem;
+    text-align: justify;
+}
+
+#banner {
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    width: 80%;
+    z-index: 2;
+}
+
+#banner img {
+    height: 88%;
+    width: fit-content;
+}
+
+.shapeBipolaridade {
+    margin-top: 10px;
+    background-color: rgb(41, 95, 177);
+    width: 50%;
+    height: 95%;
+    position: absolute;
+    border-radius: 40% 10% 10% 500%;
+    top: 0;
+    right: 0;
+}
+
+#conteudoBipolaridade {
+    background-color: rgb(255, 242, 127);
+    margin-top: 10px;
+    border-radius: 12px;
+    padding: 40px 10px;
+    text-align: justify;
+    font-size: 1.2rem;
+}
+
+#conteudoBipolaridade:nth-of-type(even) {
+    background-color: rgb(245, 227, 67);
+}

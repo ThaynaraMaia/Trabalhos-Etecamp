@@ -1,0 +1,94 @@
+container h1{
+    text-align: center;
+    padding: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+.categorias{
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.categorias button{
+    width: 150px;
+    height: 28px;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.filtros{
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.filtros button{
+    width: 150px;
+    height: 28px;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
+.imagens{
+    display: flex; /*Quando colocamos essa propriedade em um elemento, esse elemento se torna um flex container, a partir daí podemos manipular todos os elementos filhos desse flex container com propriedades novas.*/
+    flex-wrap: wrap; /*Quando um dos flex itens atinge o limite do conteúdo, o último item passa para a coluna debaixo e assim por diante.*/
+    justify-content: center; /* Deixou as imagens no centro */
+    gap: 4vw;
+    /* padding: 0 10vw; */
+    margin: 8px;
+}
+
+.exposicoes{
+    width: 350px;
+    height: 300px;
+    /* border: 10px solid #ffff; */
+    box-shadow: 5px 5px 5px #0008; /* Sombra */ 
+
+    /* flex-grow: 1;  */
+    /* Permite aumentar a largura dos elementos dentro do contêiner para completar o espaço disponível no eixo principal */
+    
+    
+
+     /* Deixar os itens preto e branco: */
+    /* filter: grayscale(100%);*/
+}
+
+.exposicoes img:hover{
+    transform: scale(1.2);
+
+    /* filter: grayscale(100%); Deixar imagem preto em branco ao encostar o mouse */
+    
+    /* Tirar o filtro dos itens: */
+    /* filter: none; */
+}
+
+.exposicoes video:hover{
+    transform: scale(1.2);
+
+    /* filter: grayscale(100%); Deixar imagem preto em branco ao encostar o mouse */
+    
+    /* Tirar o filtro dos itens: */
+    /* filter: none; */
+}
+
+.exposicoes img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s linear;
+    /* border: 10px solid #ffff; */
+}
+
+.exposicoes video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s linear;
+    /* border: 10px solid #ffff; */
+}
+
+.exposicoes form{
+    margin-bottom: 40px;
+}

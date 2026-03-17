@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('header.css');
+@import url('home.css');
+@import url('autoajuda.css');
+@import url('acompanhamento.css');
+@import url('diario.css');
+@import url('footer.css');
+@import url('headerlog.css');
+@import url('cards.css');
+@import url('infobipolaridade.css');
+@import url('bipolaridade.css');
+@import url('descricaodia.css');
+
+* { 
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(254, 254, 254);
+}
+
+section {
+    padding: 28px 8%;
+}
+
+#apoio{
+    background-color: rgb(120, 152, 255);
+    border-radius: 12px;
+    padding: 40px 45px;
+    font-weight: 600;
+    margin-top: 20px;
+    box-shadow: 0px 0px 12px 4px rgb(240, 240, 240);
+}
+
+.btn-default {
+    display: flex;
+    align-items: center;
+}
+
+.btn-default a {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+}
+
+.btn-default a:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+
+.phone-button {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+
+.phone-button:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+

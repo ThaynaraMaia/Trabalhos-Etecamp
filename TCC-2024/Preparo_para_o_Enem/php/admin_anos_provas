@@ -1,0 +1,108 @@
+<?php
+include('conexao.php');
+
+// Função para lidar com o upload de arquivos
+function uploadArquivo($file, $destino) {
+    $nomeArquivo = basename($file["name"]);
+    $caminhoArquivo = $destino . $nomeArquivo;
+    if (move_uploaded_file($file["tmp_name"], $caminhoArquivo)) {
+        return $caminhoArquivo;
+    } else {
+        return false;
+    }
+}
+
+// Adiciona um novo ano de prova
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['adicionar'])) {
+    $ano = intval($_POST['ano']);
+    $id_prova = intval($_POST['id_prova']);
+
+    // Diretório onde os arquivos serão salvos
+    $destinoProva = 'uploads/provas/';
+    $destinoGabarito = 'uploads/gabaritos/';
+
+    // Lidar com o upload dos arquivos
+    $arquivoProva = uploadArquivo($_FILES['arquivo_prova'], $destinoProva);
+    $arquivoGabarito = uploadArquivo($_FILES['arquivo_gabarito'], $destinoGabarito);
+
+    // Verificar se os arquivos foram carregados com sucesso
+    if ($arquivoProva && $arquivoGabarito) {
+        $sql = "INSERT INTO anos_provas (ano, id_prova, arquivo_prova, arquivo_gabarito) VALUES ($ano, $id_prova, '$arquivoProva', '$arquivoGabarito')";
+        if ($conexao->query($sql) === TRUE) {
+            $mensagem = "Ano de prova adicionado com sucesso!";
+        } else {
+            $mensagem = "Erro ao adicionar ano de prova: " . $conexao->error;
+        }
+    } else {
+        $mensagem = "Erro ao fazer upload dos arquivos.";
+    }
+}
+
+// Excluir um ano de prova
+if (isset($_GET['excluir'])) {
+    $id_ano = intval($_GET['excluir']);
+    $sql = "DELETE FROM anos_provas WHERE id_ano = $id_ano";
+    $conexao->query($sql);
+    header("Location: admin_anos.php");
+    exit();
+}
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gerenciar Anos das Provas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Adicionar o estilo semelhante ao da página de tópicos */
+    </style>
+</head>
+<body>
+
+<div class="container">
+<a href="../php/admin_page.php" class="back-btn"><i class="fas fa-arrow-left"></i> Voltar</a>
+    <h1><i class="fas fa-tags icon-header"></i>Gerenciar Anos de Provas</h1>
+
+    <?php if (isset($mensagem)) echo "<p class='mensagem'>$mensagem</p>"; ?>
+
+    <!-- Formulário de Upload -->
+    <form method="post" enctype="multipart/form-data">
+        <input type="number" name="ano" placeholder="Ano da Prova" required>
+        <select name="id_prova" required>
+            <option value="">Selecione a Prova</option>
+            <?php
+            $sql_provas = "SELECT * FROM provas_anteriores";
+            $result_provas = $conexao->query($sql_provas);
+            while ($prova = $result_provas->fetch_assoc()) {
+                echo "<option value='" . $prova['id_prova'] . "'>" . $prova['nome_prova'] . "</option>";
+            }
+            ?>
+        </select>
+        <input type="file" name="arquivo_prova" accept=".pdf" required>
+        <input type="file" name="arquivo_gabarito" accept=".pdf" required>
+        <input type="submit" name="adicionar" value="Adicionar Ano de Prova">
+    </form>
+
+    <h2>Anos de Provas Cadastrados</h2>
+    <?php
+    $sql_anos = "SELECT * FROM anos_provas";
+    $result_anos = $conexao->query($sql_anos);
+
+    if ($result_anos->num_rows > 0) {
+        while ($ano = $result_anos->fetch_assoc()) {
+            echo "
+            <div class='topico'>
+                <span>" . $ano['ano'] . "</span>
+                <a href='admin_anos.php?excluir=" . $ano['id_ano'] . "' class='excluir'><i class='fas fa-trash-alt'></i> Excluir</a>
+            </div>";
+        }
+    } else {
+        echo "<p>Nenhum ano de prova cadastrado.</p>";
+    }
+    ?>
+</div>
+
+</body>
+</html>

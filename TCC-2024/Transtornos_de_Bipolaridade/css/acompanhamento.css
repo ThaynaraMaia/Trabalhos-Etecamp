@@ -1,0 +1,89 @@
+#acompanhamento {
+    background-color: rgb(120, 152, 255);
+    border-radius: 12px;
+    padding: 40px 45px;
+    font-weight: 600;
+    margin-top: 20px;
+    box-shadow: 0px 0px 12px 4px rgb(240, 240, 240);
+}
+
+.humor-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+ 
+.humor-item {
+    border-radius: 20px;
+    padding: 5px;
+    text-align: center;
+    display: inline-block;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.tabela-acompanhamento {
+    border-collapse: collapse;
+    margin-top: 10px;
+    min-width: 400px;
+    margin: none;
+    box-shadow: 0px 0px 12px 4px rgb(240, 240, 240);
+    overflow: hidden;
+    width: 100%;
+    border-radius: 12px;
+}
+
+.tabela-acompanhamento thead tr{
+    background-color: rgb(255, 214, 78);
+    text-align: left;
+    font-weight: bold;
+}
+
+.tabela-acompanhamento th,
+.tabela-acompanhamento td {
+    padding: 30px 120px;
+}
+
+.tabela-acompanhamento tbody tr{
+    border-bottom: 1px solid rgb(189, 189, 189);
+}
+
+.tabela-acompanhamento tbody tr:nth-of-type(even) {
+   background-color: rgb(233, 233, 233);
+}
+
+.tabela-acompanhamento tbody tr:last-of-type {
+    border-bottom: 2px solid rgb(255, 214, 78);
+}
+
+.btn-default-humor a {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 10px 15px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+    gap: 10px;
+}
+
+.btn-default-humor a:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+
+h2 {
+    background-color: rgb(4, 4, 43);
+    border-radius: 12px;
+    padding: 40px 45px;
+    font-weight: 600;
+    margin-top: 20px;
+    color: rgb(255, 242, 198);
+    font-size: 1.5rem;
+}

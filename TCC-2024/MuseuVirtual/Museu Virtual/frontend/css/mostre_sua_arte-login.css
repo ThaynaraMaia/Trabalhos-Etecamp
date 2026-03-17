@@ -1,0 +1,45 @@
+container{
+    display: flex;
+    align-items: center;
+}
+
+container h1{
+    text-align: center;
+    padding: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+}
+
+form{
+    width: 30%;
+    margin-left: 50%;
+    background-color: #501207;
+    padding: 14px;
+    margin-top: 5%;
+    color: #ffffff;
+    border: solid #ffffff 8px;
+    border-radius: 20px;
+}
+ form label{
+    font-size: 22px;
+}
+
+.button{
+    text-align: center;
+    padding: 16px;
+}
+
+form p{
+    font-size: 20px;
+    text-align: center;
+}
+
+form select{
+    padding: 2px;
+    margin: 6px;
+    font-size: 20px;
+}
+
+/* form a{
+    font-size: 20px;
+} */

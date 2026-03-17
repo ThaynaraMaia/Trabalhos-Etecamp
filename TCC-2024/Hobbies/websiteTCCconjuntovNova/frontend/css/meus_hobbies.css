@@ -1,0 +1,427 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f0f0;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+}
+
+.section{
+    margin-top: 0px;
+    margin-right: 100px;
+    margin-left: 200px;
+}
+
+.top-section {
+    background-color: white;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.divider {
+    border-top: 1px solid #ccc;
+    margin: 8px 0;
+    display: block;
+}
+
+.top-content h1 {
+    text-align: left;
+}
+
+.buttons{
+    margin-left: 50%;
+}
+
+.button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    
+}
+
+.button {
+    
+    background-color: white;
+    color: orange;
+    border: 1px solid orange;
+    transition: all 0.3s ease;
+    
+    
+}
+
+.button:hover {
+    background-color: orange;
+    color: white;
+}
+
+/* Estilos do formulário como um modal */
+.formularioContainer {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Alta prioridade para sobrepor outros conteúdos */
+}
+
+.formularioContent {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+}
+
+.formularioContent input, .formularioContent select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.formularioContent button {
+    background-color: orange;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.formularioContent button:hover {
+    background-color: darkorange;
+}
+
+
+
+.calendar-icon img {
+    text-align: right;
+    float: right;
+    margin-left: 20px; 
+}
+
+.icon-tarefa{
+    width: 60px;
+    height: 60px;
+}
+
+.tasks {
+    display: flex;
+    flex-direction: column;
+    gap: 9px; /* Define o espaço entre as tasks */
+}
+
+.spam-task{
+    font-size: 20px;
+}
+
+.task {
+    margin-bottom: 20px; /* Adiciona espaço abaixo de cada task */
+    border-radius: 10px; /* Mantém bordas arredondadas */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
+    padding: 20px; /* Espaçamento interno das tasks */
+    background-color: white; /* Cor de fundo */
+}
+
+.task-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-items: center;
+    width: 100%;
+}
+
+.task-details {
+    margin-top: 10px; /* Adiciona um espaço entre o conteúdo e os detalhes */
+    display: none; /* Esconde o conteúdo inicialmente */
+    
+    padding: 10px; /* Espaçamento interno */
+    border-top: 1px solid #ccc; /* Linha separadora */
+    background-color: #f9f9f9; /* Cor de fundo para destacar */
+}
+
+.task.green {
+    border-left: 5px solid green;
+}
+
+.task.yellow {
+    border-left: 5px solid yellow;
+}
+
+.task.red {
+    border-left: 5px solid red;
+}
+
+
+
+.task-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #fff; /* Fundo branco */
+    border-radius: 8px;     /* Bordas arredondadas */
+    box-shadow: 0 4px 6px rgba(65, 100, 123, 0.4); /* Sombra leve */
+    padding: 16px;          /* Espaçamento interno */
+    margin-bottom: 16px;    /* Espaçamento entre os cards */
+    transition: transform 0.2s, box-shadow 0.2s; /* Animação de efeito ao passar o mouse */
+}
+
+.task-card:hover {
+    transform: scale(1.05); /* Aumenta ligeiramente o card ao passar o mouse */
+    box-shadow: 0 8px 12px rgba(65, 100, 123, 0.5);
+}
+
+.task-info {
+    flex-grow: 1;
+    margin-right: 20px; /* Espaçamento entre o texto e os botões */
+}
+
+.task-info h3 {
+    font-size: 18px;        /* Tamanho da fonte do título */
+    margin-bottom: 8px;     /* Espaçamento abaixo do título */
+    color: #333;            /* Cor do título */
+}
+
+.task-info p {
+    font-size: 14px;        /* Tamanho da fonte da descrição */
+    color: #666;            /* Cor da descrição */
+}
+
+.task-buttons {
+    display: flex;
+    gap: 10px; /* Espaçamento entre os botões */
+}
+
+.task-buttons button {
+    padding: 8px 12px;
+    border: 2px solid transparent; /* Inicialmente sem borda */
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: transparent; /* Fundo transparente */
+    transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+
+
+/* Botão de editar */
+.edit-btn {
+    color: #007bff;
+    border-color: #007bff; /* Borda azul */
+}
+
+.edit-btn:hover {
+    background-color: #007bff;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+/* modal editar */
+
+/* Estilo do fundo do modal */
+.modal {
+    display: none; /* Oculto por padrão */
+    position: fixed; /* Fixo no lugar */
+    z-index: 1000; /* Alto valor para garantir que fique na frente */
+    left: 0;
+    top: 0;
+    width: 100%; /* Cobre a tela toda */
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    justify-content: center;
+    align-items: center;
+    display: flex; /* Centraliza o conteúdo */
+}
+
+/* Estilo do conteúdo do modal */
+.modal-content {
+    background-color: #fefefe;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px; /* Largura máxima do modal */
+}
+
+
+
+
+/* Estilo do título e do formulário */
+.modal h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.modal form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo dos rótulos e campos */
+.modal label {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+.modal select,
+.modal input[type="text"] {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+/* Estilo do botão de envio */
+.modal button[type="submit"] {
+    background-color: orange;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.modal button[type="submit"]:hover {
+    background-color: orange;
+}
+
+ /* modal sentimento  */
+
+ .mood-container {
+    display: flex;
+    gap: 50px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+}
+.mood {
+    text-align: center;
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+.mood:hover {
+    transform: scale(1.1);
+}
+.mood img {
+    width: 50px;
+    height: 50px;
+}
+.feliz {
+    border-color: green;
+}
+.meh {
+    border-color: #FAB005;
+}
+.triste {
+    border-color: red;
+}
+
+.mood.selected {
+    border-color: rgb(216, 215, 215); /* Cor para o ícone selecionado */
+    transform: scale(1.2);
+}
+
+
+/* Botão de excluir */
+.delete-btn {
+    color: #dc3545;
+    border-color: #dc3545; /* Borda vermelha */
+}
+
+.delete-btn:hover {
+    background-color: #dc3545;
+    color: white;
+    transform: scale(1.05);
+}
+
+
+
+.plus-button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.plus-button:hover {
+    transform: scale(1.2); /* Aumenta o tamanho ao passar o mouse */
+    color: #007BFF; /* Muda a cor ao passar o mouse */
+}
+
+/* mensagem */
+
+.card-motivacional {
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.mensagem-conteudo {
+    margin: 20px 0;
+}
+
+#mensagem-motivacional {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* porcentagem */
+.porcento-mood {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.porcento-mood div {
+    text-align: center;
+}
+
+.porcento-mood img {
+    width: 50px;
+    height: 50px;
+}
+
+.porcento-mood p {
+    margin-top: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

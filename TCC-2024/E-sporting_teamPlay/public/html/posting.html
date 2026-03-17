@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feed de Posts</title>
+    <link rel="stylesheet" href="../css/stylePost.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <style>
+        .buttons-container {
+            display: flex;
+            justify-content: flex-end; /* Alinha os botões à direita */
+            margin-top: 10px;
+        }
+        
+        .like-button {
+            margin-left: 10px; /* Espaçamento entre os botões, se houver outros */
+        }
+
+        .comment-form {
+            display: none; /* Manter a seção de comentários oculta */
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <button id="toggleForm">Postar</button>
+        <form id="postForm" class="hidden">
+            <label for="title">Título:</label>
+            <input type="text" id="title" name="title" required><br>
+            
+            <label for="description">Descrição:</label>
+            <textarea id="description" name="description" required></textarea><br>
+            
+            <label for="image">Imagem:</label>
+            <div id="imageDropArea" class="drop-area">
+                <input type="file" id="image" name="image" accept="image/*">
+                <br><br><span>Arraste a imagem aqui ou clique para selecionar</span>
+                <img id="imagePreview" class="hidden" alt="Pré-visualização da Imagem">
+            </div><br><br>
+            <button type="submit">Adicionar Post</button>
+        </form>
+        <div id="feed">
+            <!-- Os posts aparecerão aqui -->
+        </div>
+    </main>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

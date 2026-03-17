@@ -1,0 +1,89 @@
+#conteudoRestaurativaVideo {
+    display: flex;
+    background-color: rgb(245, 237, 201);
+    margin-top: 10px;
+    padding: 10px 25px;
+    box-shadow: 0px 0px 4px 4px rgb(240, 240, 240);
+    position: relative;
+}
+
+#conteudoRestaurativa {
+    margin-top: 10px;
+    padding: 20px 25px;
+    box-shadow: 0px 0px 4px 4px rgb(240, 240, 240);
+    position: relative;
+}
+
+#conteudoRestaurativa:nth-of-type(even) {
+    background-color: rgb(255, 229, 144);
+}
+
+.videoRestaurativa {
+    width: 50%;
+}
+
+.textoRestaurativa {
+    margin-top: 100px;
+    width: 50%;
+    margin-left: 100px;
+}
+
+.textoRestaurativa h1{
+    margin-bottom: 20px;
+}
+
+.textoRestaurativa h1::after {
+    content: '';
+    display: block;
+    width: 9rem;
+    height: 0.3rem;
+    background-color:rgb(32, 138, 29);
+    margin: 0 auto;
+    position: absolute;
+    border-radius: 12px;
+}
+
+.title-restaurativa {
+    font-size: 1.8rem;
+}
+
+#banner-Restaurativa {
+    display: flex;
+    align-items: start;
+    width: 100%;
+    z-index: 2;
+}
+
+#banner-Restaurativa img {
+    width: fit-content;
+}
+
+
+.btn-youtube {
+    display: flex;
+}
+
+.btn-youtube a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+}
+
+.btn-youtube a:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+
+.icones-video {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 50%;
+}

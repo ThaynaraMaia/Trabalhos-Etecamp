@@ -1,0 +1,219 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    font-style: normal;    
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #a3becbdc, #a3becbd8, #fcbc55e1);
+    background-attachment: fixed ;
+    background-repeat: no-repeat;
+    color: #D9D9D9;
+}
+
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #3C5C79;
+    height: 100vh;
+    border-radius: 0px 18px 18px 0px;
+    position: fixed;
+    transition: all .5s;
+    min-width: 82px;
+    z-index: 2;
+    
+    
+}
+
+#sidebar_content {
+    padding: 12px;
+}
+
+#user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+#user_avatar {
+    width: 50px;
+    height: 50px;
+}
+
+#user_infos {
+    display: flex;
+    flex-direction: column;
+}
+
+#user_infos span:last-child {
+    color: #F5F5F5;
+    font-size: 12px;
+}
+
+#side_items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+
+    border: none;
+    padding: 9px; 
+   
+}
+
+.side-item {
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    
+}
+
+.side-item.active {
+    background-color: #D9D9D9;
+}
+
+.side-item:hover:not(.active),
+#logout_btn:hover {
+    background-color: #e3e9f7a1;
+}
+
+.side-item a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f1f1f1;
+}
+
+.side-item.active a {
+    color: #3C5C79;
+}
+
+.side-item a i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+#logout {
+    border-top: 1px solid #F5F5F5;
+    padding: 12px;
+}
+
+#logout_btn {
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border-radius: 8px;
+    text-align: start;
+    cursor: pointer;
+    background-color: transparent;
+    color: #D9D9D9;
+}
+
+#open_btn {
+    position: absolute;
+    top: 30px;
+    right: -10px;
+    background-color: #70aac5;
+    color: #ffffff;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#open_btn_icon {
+    transition: transform .3s ease;
+}
+
+.open-sidebar #open_btn_icon {
+    transform: rotate(180deg);
+}
+
+.item-description {
+    width: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    transition: width .6s;
+    height: 0px;
+}
+
+#sidebar.open-sidebar {
+    min-width: 15%;
+}
+
+#sidebar.open-sidebar .item-description {
+    width: 150px;
+    height: auto;
+}
+
+#sidebar.open-sidebar .side-item a {
+    justify-content: flex-start;
+    gap: 14px;
+}
+
+header{
+    text-align: center;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.logo{
+    width: 200px; /* largura desejada */
+    height: auto;
+    left: 100%;
+    display: block; /* Remove espaço extra abaixo da imagem */
+}
+
+/* css ajustado */
+.table {
+    width: 100%; /* Corrigido para garantir que a tabela se ajuste ao contêiner */
+    border-collapse: collapse; /* Remove os espaços entre as células */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Sombra ao redor da tabela */
+}
+
+.table th, .table td {
+    border: 2px solid #1A4162; /* Borda ao redor das células */
+    padding: 10px; /* Espaçamento interno nas células */
+    text-align: center; /* Alinhamento do texto ao centro */
+}
+
+.table th {
+    background-color: #1A4162; /* Cor de fundo dos cabeçalhos */
+    color: #fff; /* Cor do texto nos cabeçalhos */
+}
+
+.table-container {
+    margin-top: 10px;
+    margin-left: 100px;
+    margin-right: 50px;
+}
+
+.icon-excluir, .icon-alterar {
+    background: transparent; /* Fundo transparente */
+    width: 30px; /* Largura dos ícones */
+    height: 30px; /* Altura dos ícones */
+    cursor: pointer; /* Cursor em forma de mão ao passar sobre o ícone */
+}
+
+.icon-excluir:hover, .icon-alterar:hover {
+    transform: scale(1.2); /* Aumenta o tamanho do ícone ao passar o mouse */
+}

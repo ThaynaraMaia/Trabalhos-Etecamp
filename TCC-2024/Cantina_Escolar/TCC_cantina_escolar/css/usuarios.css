@@ -1,0 +1,167 @@
+.sub-menu>.nav-item .active {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 230px;
+    padding: 15px 0;
+    background-color: #2ab62f;
+    box-shadow: 0 0 5px#2ab62f;
+    display: block;
+}
+
+.tabela>table thead tr {
+    border-bottom: 3px solid #eee;
+}
+
+.adicionar>.row {
+    padding: 25px 15px;
+}
+
+.adicionar>.row h3 {
+    text-align: center;
+}
+
+.card-pesquisar>.search {
+    align-items: center;
+}
+
+.tabela>table {
+    padding: 12px;
+}
+
+.tabela {
+    padding-left: 120px;
+    padding-right: 120px;
+}
+
+.botao-saldo {
+    background-color: #2ab62f;
+    color: rgb(37, 37, 37);
+    font-weight: 600;
+    padding: 7px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.botao-saldo:hover {
+    background-color: rgb(176, 176, 176);
+}
+
+.botao-ver {
+    background-color: #3f7fce;
+    color: rgb(37, 37, 37);
+    font-weight: 600;
+    padding: 7px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.botao-ver:hover {
+    background-color: rgb(176, 176, 176);
+}
+
+.botao-adicionar-produto {
+    background-color: #2ab62f;
+    color: rgb(37, 37, 37);
+    font-weight: 600;
+    padding: 7px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.botao-adicionar-produto:hover {
+    background-color: rgb(176, 176, 176);
+}
+
+.botao-prosseguir {
+    background-color: #529bee;
+    color: rgb(37, 37, 37);
+    font-weight: 600;
+    padding: 7px 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+.botao-prosseguir:hover {
+    background-color: #aaaaaab3;
+}
+
+.card-pesquisar>.profile-container {
+    max-width: 700px;
+    margin: 140px auto;
+    padding: 30px;
+    background: #f6f6f6;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.257);
+    text-align: center;
+}
+
+.nav-item {
+    position: relative;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    z-index: 1000;
+}
+
+.submenu li {
+    width: 200px;
+}
+
+.submenu li a {
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.submenu li a:hover {
+    background-color: #f0f0f0;
+}
+
+.nav-item:hover .submenu {
+    display: block;
+}
+
+.submenu .submenu {
+    left: 100%;
+    top: 0;
+}
+
+.btn-dorado:hover {
+    background-color: #e5c100;
+    transform: scale(1.05);
+}
+
+.btn-dorado i {
+    margin-right: 8px;
+}

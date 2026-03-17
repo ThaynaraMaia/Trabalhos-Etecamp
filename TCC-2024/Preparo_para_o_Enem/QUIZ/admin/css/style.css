@@ -1,0 +1,259 @@
+/* Global Styles */
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f4f8; /* Cor de fundo mais leve e suave */
+    color: #333; /* Cor de texto padrão */
+    line-height: 1.6;
+}
+
+/* Container */
+.container {
+    max-width: 800px; /* Largura máxima */
+    margin: 40px auto; /* Centraliza horizontalmente */
+    padding: 20px;
+    background-color: #ffffff; /* Fundo branco para os containers */
+    border-radius: 12px; /* Bordas arredondadas */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Header */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    color: #007bff; /* Azul para o título */
+    font-size: 2.5em; /* Título maior */
+    font-weight: bold; /* Negrito */
+    margin-bottom: 10px; /* Espaço abaixo do título */
+}
+
+h2 {
+    color: #495057; /* Cor suave para subtítulos */
+    font-size: 1.8em; /* Tamanho maior */
+    margin: 20px 0; /* Espaçamento uniforme */
+}
+
+/* Main Section */
+main {
+    padding: 0 20px;
+}
+
+/* Form Section */
+.form-section {
+    margin-bottom: 40px; /* Espaçamento entre seções */
+}
+
+.question-form {
+    background-color: #ffffff; /* Fundo branco */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Efeito suave */
+}
+
+.question-form:hover {
+    transform: translateY(-4px); /* Levanta o formulário ao passar o mouse */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* Sombra mais forte */
+}
+
+label {
+    font-weight: 600; /* Negrito */
+    font-size: 16px; /* Tamanho maior */
+    color: #495057; /* Cor para rótulos */
+    display: block; /* Exibe como bloco */
+    margin-top: 15px; /* Espaçamento superior */
+}
+
+/* Campos de Entrada */
+input[type="number"], textarea {
+    width: 100%; /* Largura total */
+    padding: 12px; /* Padding interno */
+    margin-top: 5px; /* Margem superior */
+    margin-bottom: 15px; /* Margem inferior */
+    border: 1px solid #ced4da; /* Borda padrão */
+    border-radius: 8px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
+}
+
+textarea {
+    height: 120px; /* Altura do textarea */
+}
+
+textarea:focus, input[type="number"]:focus {
+    border-color: #007bff; /* Borda azul ao focar */
+    outline: none; /* Remove contorno */
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.3); /* Sombra ao focar */
+}
+
+/* Alternativas */
+.alternatives-container {
+    margin-top: 10px; /* Margem superior */
+}
+
+.alternative-item {
+    display: flex; /* Exibe como flexível */
+    align-items: center; /* Alinhamento central */
+    margin-bottom: 15px; /* Margem inferior */
+}
+
+.alternative-item input[type="text"] {
+    flex: 1; /* Expande para ocupar espaço */
+    margin-right: 10px; /* Margem direita */
+    padding: 10px; /* Padding interno */
+    border: 1px solid #ced4da; /* Borda padrão */
+    border-radius: 8px; /* Bordas arredondadas */
+    font-size: 14px; /* Tamanho da fonte */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
+}
+
+.alternative-item input[type="radio"] {
+    margin-right: 10px; /* Margem direita */
+}
+
+/* Estilização dos Botões */
+button {
+    padding: 12px 24px; /* Padding */
+    background-color: #007bff; /* Azul padrão */
+    color: white; /* Texto branco */
+    border: none; /* Sem borda */
+    border-radius: 8px; /* Bordas arredondadas */
+    cursor: pointer; /* Cursor de ponteiro */
+    font-size: 16px; /* Tamanho da fonte */
+    font-weight: 600; /* Negrito */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Transição suave */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    margin: 5px; /* Margem entre botões */
+}
+
+button:hover {
+    background-color: #0056b3; /* Azul escuro ao passar o mouse */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte ao passar */
+    transform: translateY(-2px); /* Levanta o botão */
+}
+
+/* Seção de Questões */
+.questions-section {
+    margin-top: 30px; /* Margem superior */
+}
+
+.questions-list {
+    margin-top: 20px; /* Margem superior */
+}
+
+.question-item {
+    margin-bottom: 20px; /* Margem inferior */
+    padding: 15px; /* Padding interno */
+    border: 1px solid #dee2e6; /* Borda padrão */
+    border-radius: 10px; /* Bordas arredondadas */
+    background-color: #ffffff; /* Fundo branco */
+    display: flex; /* Exibe como flexível */
+    justify-content: space-between; /* Justifica o espaço entre */
+    align-items: center; /* Alinhamento central */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+    transition: box-shadow 0.3s ease, transform 0.3s ease; /* Transição suave */
+}
+
+.question-item:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra ao passar */
+    transform: translateY(-2px); /* Levanta ao passar */
+}
+
+.question-content {
+    flex: 1; /* Expande para ocupar espaço */
+    font-size: 16px; /* Tamanho da fonte */
+    color: #343a40; /* Cor do texto */
+}
+
+/* Ações da Questão */
+.question-actions {
+    display: flex; /* Exibe como flexível */
+    gap: 15px; /* Espaçamento entre botões */
+}
+
+/* Estilo dos Botões de Ação */
+.btn {
+    text-decoration: none; /* Sem sublinhado */
+    padding: 10px 16px; /* Padding */
+    border-radius: 8px; /* Bordas arredondadas */
+    color: white; /* Texto branco */
+    font-size: 14px; /* Tamanho da fonte */
+    font-weight: 500; /* Peso da fonte */
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transição suave */
+}
+
+/* Botões de Editar e Deletar */
+.edit-btn {
+    background-color: #28a745; /* Verde para editar */
+}
+
+.edit-btn:hover {
+    background-color: #218838; /* Verde escuro ao passar */
+}
+
+.delete-btn {
+    background-color: #dc3545; /* Vermelho para deletar */
+}
+
+.delete-btn:hover {
+    background-color: #c82333; /* Vermelho escuro ao passar */
+}
+
+/* Editor */
+#editor {
+    border: 1px solid #ccc; /* Borda padrão */
+    padding: 10px; /* Padding */
+    min-height: 150px; /* Altura mínima */
+    margin: 10px 0; /* Margem */
+    overflow-y: auto; /* Rolagem vertical */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+/* Botões do Editor */
+.btn-container {
+    margin-bottom: 20px; /* Margem inferior */
+}
+
+/* Estilo adicional para formularios */
+.question-form {
+    margin-bottom: 30px; /* Margem inferior */
+}
+
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+}
+
+.btn {
+    padding: 10px 15px;
+    background-color: #007bff; /* Cor de fundo */
+    color: white; /* Cor do texto */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}

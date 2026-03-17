@@ -1,0 +1,62 @@
+#home  {
+    display: flex;
+    min-height: calc(100vh - 70px);
+    position: relative;
+}
+
+#cta {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 4%;
+}
+
+#cta .title {
+    font-size: 2rem;
+    color: rgb(0, 0, 0);
+}
+
+#cta .title span {
+    font-size: 2.7rem;
+    color: #2e20a7
+}
+
+#cta .description {
+    font-size: 1.4rem;
+    text-align: justify;
+}
+
+#cta-buttons {
+    display: flex;
+    gap: 24px;
+}
+
+#cta-buttons a {
+    text-decoration: none;
+    color: rgb(255, 214, 78)
+}
+
+#banner {
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    width: 80%;
+    z-index: 2;
+}
+
+#banner img {
+    height: 90%;
+    width: fit-content;
+}
+
+.shape {
+    margin-top: 10px;
+    background-color: rgb(255, 214, 78);
+    width: 50%;
+    height: 87%;
+    position: absolute;
+    border-radius: 40% 20% 10% 500%;
+    top: 0;
+    right: 0;
+}

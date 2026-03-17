@@ -1,0 +1,88 @@
+/* CSS para a página de informações prévias */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f9;
+}
+
+.info-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    margin: 40px auto;
+    text-align: center;
+}
+
+h1 {
+    color: #003366;
+    font-size: 2.4em; /* Tamanho reduzido da fonte */
+    margin-bottom: 20px;
+}
+
+.intro {
+    color: #555;
+    font-size: 16px; /* Tamanho reduzido da fonte */
+    margin-bottom: 20px;
+}
+
+.info-content {
+    text-align: left;
+    margin: 0 auto;
+    max-width: 800px;
+}
+
+h2 {
+    color: #003366;
+    font-size: 1.8em; /* Tamanho reduzido da fonte */
+    margin-top: 20px;
+    border-bottom: 3px solid #007BFF;
+    padding-bottom: 10px;
+}
+
+.info-box {
+    background-color: #e7f0ff;
+    border-radius: 8px;
+    padding: 15px; /* Tamanho reduzido do padding */
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-box h3 {
+    color: #003366;
+    font-size: 1.3em; /* Tamanho reduzido da fonte */
+    margin-top: 0;
+}
+
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+ul li {
+    margin: 8px 0; /* Tamanho reduzido da margem */
+    font-size: 15px; /* Tamanho reduzido da fonte */
+    color: #333;
+}
+
+.start-btn {
+    display: inline-block;
+    padding: 12px 20px; /* Tamanho reduzido do padding */
+    border: none;
+    border-radius: 8px;
+    background-color: #007BFF;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px; /* Tamanho reduzido da fonte */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+}
+
+.start-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}

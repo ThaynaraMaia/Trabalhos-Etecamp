@@ -1,0 +1,203 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    font-style: normal;    
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Alinha os itens verticalmente */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #a3becbdc, #a3becbd8, #fcbc55e1);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #D9D9D9;
+}
+
+
+
+/* Cabeçalho */
+header {
+   
+    width: 100%;
+    padding: 20px 40px;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.login-btn {
+    background-color: #F6BD55;
+    color: white;
+    margin-right: 50px;
+    border: none;
+    padding: 10px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.logo{
+    max-width: 200px; /* Defina uma largura máxima */
+    max-height: 200px; /* Defina uma altura máxima */
+    width: auto;      /* A largura será ajustada automaticamente */
+    height: auto;  
+    margin-left: 20px;
+}
+
+main {
+    width: 100%;
+    max-width: 1200px;
+    
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+
+.hero-text {
+    max-width: 50%;
+}
+
+.hero h1 {
+    color: #1A4162;
+    font-size: 3.5rem;
+    line-height: 1.2;
+}
+
+.hero p {
+    color: #1A4162;
+    font-size: 1.2rem;
+    margin: 20px 0;
+}
+
+.hero-image{
+    width: 500px;
+    height: 500px;
+}
+
+.cta-btn {
+    background-color: #F6BD55;
+    color: white;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    margin-top: 20px;
+}
+
+/* Features */
+.features {
+    color: #1A4162;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 0;
+    width: 100%;  /* Garante que o contêiner ocupe 100% da largura */
+    margin: 0;    /* Remove qualquer margem entre faixas */
+}
+
+.features::before {
+    content: "";
+    position: absolute;
+    top: 50%;  /* A faixa começa na metade da altura da seção Features */
+    left: calc(-50vw + 50%); /* Centraliza a faixa de 100vw */
+    width: 100vw;  /* A faixa ocupa toda a largura da viewport */
+    height: 50%;  /* Faz a faixa cobrir a parte inferior dos cards */
+    background-color: #D9D9D9;
+    z-index: -1;  /* Coloca a faixa atrás do conteúdo */
+}
+
+/* Cada bloco de Feature */
+.feature {
+    background-color: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 30%;
+}
+
+.feature h2 {
+    margin-bottom: 15px;
+}
+
+/* Solutions */
+.solutions {
+    color: #1A4162;
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    padding: 60px 0;
+    width: 100%;  /* Garante que o contêiner ocupe 100% da largura */
+    margin: 0;    /* Remove qualquer margem entre faixas */
+    margin-bottom: 100px;
+}
+
+.solutions::before {
+    content: "";
+    position: absolute;
+    top: 0;  /* A faixa começa na metade da altura da seção Features */
+    left: calc(-50vw + 50%); /* Centraliza a faixa de 100vw */
+    width: 100vw;  /* A faixa ocupa toda a largura da viewport */
+    height: 100%;  /* Faz a faixa cobrir a parte inferior dos cards */
+    background-color: #D9D9D9;
+    z-index: -1;  /* Coloca a faixa atrás do conteúdo */
+}
+
+.solution-text {
+    max-width: 50%;
+}
+
+.solution-images img {
+    width: 200px;
+    height: 300px;
+    margin-left: 20px;
+    border-radius: 15px;
+}
+
+
+.why-hobbies {
+    color: #1A4162;
+    text-align: center;
+}
+
+.why-item {
+    margin-top: 20px;
+}
+
+footer {
+    background-color: #D9D9D9;
+    color: #1A4162;
+    text-align: center;
+    padding: 20px 0;
+    width: 100%;
+}
+
+.footer-links {
+    margin: 20px 0;
+}
+
+.footer-links a {
+    color: #1A4162;
+    margin: 0 15px;
+    text-decoration: none;
+}
+
+.footer-social img {
+    width: 30px;
+    margin: 0 10px;
+}
+

@@ -1,0 +1,89 @@
+/* @font-face {
+    font-family: "Swiss721 BlkEx Bt";
+    src: url(../assets/swiss721.TTF);
+}                 */
+
+input {
+
+    transition: .5s;
+    background-color: var(--void);
+    border-radius: 2vw;
+    border: none;
+    font-size: medium;
+    padding: .5rem;
+    height: 100%;
+    font-family: monospace;
+    color: var(--will);
+    font-size: large;
+    transition: .5s;
+
+} input:hover {
+    filter: brightness(140%);
+}
+
+form {
+    display: flex;
+    gap: 2vh;
+}
+
+a {
+    color: var(--will);
+    text-decoration: none;
+    
+}
+
+.tabs {
+    background-color: var(--black);
+    display: flex;
+    justify-content: center;
+    gap: 2vw;
+    font-size: large;
+    padding: 1.2vh;
+    border-radius: 2vw;
+} .tabs a {
+    color: var(--light);
+    text-decoration: underline;
+}
+
+/* .postagem {
+    display: flex;
+    width: 100%;
+
+} */
+
+.sidepost {
+    width: 60%;
+}
+
+.page {
+    left: 4vw;
+    width: 90%;
+    display: flex;
+    justify-content: center;
+}
+
+.con1 {
+    gap: 0;
+    border-radius: 2vw 0 0 2vw;
+}
+.con1.fil {
+    width: 30%;
+    border-radius: 0 2vw 2vw 0;
+}
+.post {
+    padding: 1vw;
+    padding-left: 2vw;
+    display: flex;
+    justify-content: space-between;
+}.post img {
+    border-radius: 1vw;
+}
+
+.toolbutton.config {
+    background-color: var(--black);
+    color: var(--light);
+}
+
+.con1.fil input {
+    height: 2vh;
+}

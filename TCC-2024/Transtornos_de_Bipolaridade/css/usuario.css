@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* { 
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(26, 26, 110);
+}
+
+.container {
+    width: 90%;
+    height: 90vh;
+    display: flex;
+}
+
+.perfil-img {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(209, 220, 255);
+    padding: 1rem;
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+}
+
+.perfil{
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    padding: 3rem;
+}
+
+.perfil-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.perfil-header h1::after {
+    content: '';
+    display: block;
+    width: 10rem;
+    height: 0.3rem;
+    background-color:rgb(4, 4, 43);
+    margin: 0 auto;
+    position: absolute;
+    border-radius: 12px;
+}
+
+.btn-editar {
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.btn-editar input {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(209, 220, 255);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+}
+
+.btn-editar input:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(209, 220, 255);
+}
+
+.btn-voltar {
+    display: flex;
+    align-items: center;
+}
+
+.btn-voltar a {
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(209, 220, 255);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+}
+
+.btn-voltar a:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(209, 220, 255);
+}
+
+.input-group {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 1rem;
+}
+
+.input-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1.1rem;
+}
+
+.input-box input {
+    margin: 0.6rem 0;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0px 0px 4px 4px rgb(240, 240, 240);
+}
+
+.input-box input:hover {
+    background-color: #eeeeee75;
+}
+
+@media screen and (max-width: 1330px) {
+    .perfil-img {
+        display: none;
+    }
+
+    .container {
+        width: 50%;
+    }
+
+    .form {
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1330px) {
+    .container{
+        width: 90%;
+        height: auto;
+    }
+
+    .input-group {
+        flex-direction: column;
+        overflow-y: scroll;
+        flex-wrap: nowrap;
+        max-height: 10rem;
+        padding-right: 5rem;
+    }
+}
+
+#navbarUsuario {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 35px;
+}

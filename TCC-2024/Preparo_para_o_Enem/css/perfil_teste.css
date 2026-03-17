@@ -1,0 +1,151 @@
+/* perfil_teste.css */
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo da página */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+    background-color: #6D8777; /* Cor mais suave e profissional */
+    line-height: 1.6;
+    transition: background-color 0.3s ease;
+}
+
+/* Container principal */
+.container {
+    max-width: 1000px;
+    margin: 40px auto; /* Mais espaço ao redor para dar um ar mais clean */
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra sutil para destacar o conteúdo */
+}
+
+/* Estilo do cabeçalho */
+h4.font-weight-bold {
+    color: #374d41; 
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    border-bottom: 4px solid #45624E;
+    padding-bottom: 15px;
+    font-weight: 600;
+}
+
+/* Estilo do menu lateral */
+.menu-lateral {
+    border-right: 1px solid #dcdcdc;
+    /* background-color:; Cor de fundo mais clara */
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Sombra mais suave */
+    padding: 15px;
+}
+
+.list-group-item {
+    border: none;
+    padding: 12px 20px;
+    font-size: 15px;
+    color: #374d41; /* Tom escuro para contraste */
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.list-group-item.active {
+    background-color: #45624E;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.list-group-item:hover {
+    background-color: #dcdcdc;
+    color: #6D8777;
+    cursor: pointer;
+}
+
+/* Estilo das abas */
+.tab-content {
+    padding: 25px;
+    background: #e2e2e2;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+}
+
+/* Estilo das imagens */
+.media img {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #45624E;
+    transition: transform 0.3s ease;
+}
+
+.media img:hover {
+    transform: scale(1.05); /* Pequeno efeito de zoom ao passar o mouse */
+}
+
+/* Estilo dos formulários */
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 8px;
+    color: #2C3E50;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    padding: 12px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #45624E;
+    box-shadow: 0 0 8px rgba(69, 98, 78, 0.1); /* Sombra leve ao focar */
+}
+
+/* Estilo da linha horizontal */
+hr.border-light {
+    border-color: #dcdcdc;
+    margin: 25px 0;
+}
+
+/* Estilo do texto leve */
+.text-light {
+    color: #95A5A6;
+}
+
+/* Adicional */
+.card-body {
+    padding: 25px;
+    background-color: #F7F9F9;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Botão */
+button {
+    background-color: #45624E;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #374d41;
+    cursor: pointer;
+}
+

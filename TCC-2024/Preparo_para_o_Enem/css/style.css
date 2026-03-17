@@ -1,0 +1,175 @@
+*{
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    outline: none; border: none;
+    text-decoration: none;
+    
+}
+
+.body{
+    background: #C0CFB2;
+}
+
+.container{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    padding-bottom: 60px;
+}
+
+
+
+.container .content{
+    text-align: center;
+    
+
+}
+
+.container .content h3 {
+    font-size: 30px;
+    color: black;
+}
+
+.container .content h3 span{
+    background: #6D8777;
+    color: black;
+    border-radius: 5px;
+    padding: 0 15px ;
+}
+
+.container .content h1{
+    font-size: 50px;
+    color:#333;
+} 
+
+.container .content h1 span{
+    color: black;
+}
+
+.container .content p{
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.container .content .btn{
+    display: inline-block;
+    padding: 10px 30px;
+    font-size: 20px;
+    background: #333;
+    color: #fff;
+    margin: 0 5px;
+    text-transform: capitalize;
+}
+.container .content .btn:hover{
+    background: #C0CFB2;
+
+}
+
+
+
+       /*||
+REGISTRO \/ */
+
+
+
+/* .form-container{
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    padding-bottom: 60px;
+    background: #C0CFB2;
+} */
+
+.form-container {
+    margin-top: 20px;
+    margin-left: 150px;
+    padding: 15px;
+    min-height: 130vh;
+    width: 80%;
+    height: 80vh;
+    display: flex;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.212);
+}
+
+.form-img {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #C0CFB2;
+    padding: 1rem;
+}
+
+.form-img img {
+    width: 31rem;
+}
+
+
+
+.form-container form{
+    padding: 50px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0,0,0,.1);
+    background: #fff;
+    text-align: center;
+    width: 600px;
+
+  
+}
+
+.form-container form h3{
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.form-container form input,
+.form-container form select{
+    width: 100%;
+    height: 40px;
+    padding: 10px 15px;
+    font-size: 17px;
+    margin: 8px 0;
+    background: #eee;
+}
+
+.form-container form select option{
+    background: #45624E;
+}
+
+.form-container form .form-btn{
+    background: #e6e6e6;
+    color: #45624E;
+    text-transform: capitalize;
+    font-size: 17px;
+    cursor: pointer;
+}   
+
+.form-container form .form-btn:hover{
+    background: #45624E;
+    color: white;   
+}
+
+.form-container form p{
+    margin-top: 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.form-container form p a{
+    color: #45624E;
+}
+
+.form-container form .error-msg{
+    margin: 10px 0;
+    display: block;
+    background: #45624E;
+    color: #fff;
+    border-radius: 5px;
+    font-size: 20px;
+
+}

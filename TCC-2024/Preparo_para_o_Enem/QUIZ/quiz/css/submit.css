@@ -1,0 +1,313 @@
+/* CSS para a página de resultados do quiz */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5; /* fundo */
+    color: #333;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.result-container {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 800px;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.result-box {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-message {
+    font-size: 20px;
+    color: #333;
+    margin: 10px 0;
+    animation: slideIn 0.5s ease-in-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.toggle-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #00796b;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.toggle-btn:hover {
+    background-color: #004d40;
+    transform: scale(1.05);
+}
+.feedback-box li {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    color: #333;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+    text-align: left; /* Alinha o texto ao canto */
+}
+.feedback-box ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feedback-box li {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    background-color: #f9fbe7;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    animation: fadeInUp 0.5s ease-in-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.feedback-box li.acertou {
+    border-left: 4px solid #4CAF50;
+}
+
+.feedback-box li.errou {
+    border-left: 4px solid #F44336;
+}
+
+.feedback-box h3 {
+    margin-top: 0;
+    color: #333;
+}
+
+.status-message {
+    font-weight: bold;
+    color: #555;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 12px 25px;
+    font-size: 18px;
+    color: #fff;
+    background-color: #0288d1;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.back-btn:hover {
+    background-color: #01579b;
+    transform: scale(1.05);
+}
+
+/* CSS para o feedback das questões */
+.feedback-box ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.feedback-box li {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    color: #333;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    transition: background-color 0.3s ease;
+}
+
+.feedback-box .acertou {
+    background-color: #e0f7f4; /* Verde gelo claro */
+    border-color: #b2dfdb; /* Verde gelo escuro */
+}
+
+.feedback-box .errou {
+    background-color: #ffebee; /* Vermelho gelo claro */
+    border-color: #ffcdd2; /* Vermelho gelo escuro */
+}
+
+.feedback-box h3 {
+    margin-top: 0;
+}
+
+.feedback-box p {
+    margin: 5px 0;
+}
+
+.feedback-box .status-message {
+    font-weight: bold;
+}
+
+.feedback-box .acertou .status-message {
+    color: #2e7d32; /* Verde escuro */
+}
+
+.feedback-box .errou .status-message {
+    color: #c62828; /* Vermelho escuro */
+}
+
+/* Estilo para a caixa de feedback */
+.feedback-box {
+    display: none;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+/* Estilo para o container de resultados */
+.result-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 80%;
+    max-width: 800px;
+    margin: auto;
+    position: relative;
+}
+
+/* Estilo para a caixa de resultados */
+.result-box {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Estilo para as mensagens de resultado */
+.result-message {
+    font-size: 18px;
+    color: #333;
+}
+
+/* Estilo para a caixa de feedback */
+.feedback-box {
+    display: none;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    text-align: left;
+    overflow: auto;
+}
+
+/* Estilo para cada item de feedback */
+.feedback-box ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.feedback-box li {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+
+.feedback-box .correct {
+    background-color: #e0f7fa; /* Verde gelo claro */
+}
+
+.feedback-box .incorrect {
+    background-color: #ffebee; /* Vermelho gelo claro */
+}
+
+/* Estilo para a mensagem de status */
+.status-message {
+    font-weight: bold;
+}
+
+/* Estilo para os botões */
+.toggle-btn, .back-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color:  #C0CFB2;
+    color: #45624E;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.toggle-btn:hover, .back-btn:hover {
+    background-color: #C0CFB2;
+}
+
+.feedback-box li.nao-respondida {
+    background-color: #ffe0b2; /* Amarelo claro */
+    border-left: 4px solid #ff9800; /* Laranja */
+}
+/* Estilo para o título da seção de resumo */
+.summary-title {
+    font-size: 24px; /* Define o tamanho da fonte do título */
+    margin-bottom: 15px; /* Espaçamento inferior para separar do conteúdo abaixo */
+    color: var(--primary-color); /* Cor do texto usando uma variável CSS para cores primárias */
+}
+
+/* Estilo para cada item no resumo */
+.summary-item {
+    display: flex; /* Usa flexbox para alinhar os itens */
+    justify-content: space-between; /* Espaça os itens igualmente entre o início e o fim */
+    padding: 10px 0; /* Espaçamento vertical entre os itens */
+    border-bottom: 1px solid #ddd; /* Linha de separação entre os itens */
+}
+
+/* Estilo para o rótulo (label) de cada item no resumo */
+.summary-label {
+    font-weight: bold; /* Deixa o texto em negrito */
+    color: var(--text-color); /* Cor do texto usando uma variável CSS para texto */
+}
+
+/* Estilo para o valor de cada item no resumo */
+.summary-value {
+    color: var(--text-color); /* Cor do texto usando uma variável CSS para texto */
+    font-weight: normal; /* Peso normal da fonte (não negrito) */
+}
+
+h1{
+color: #45624E;
+}

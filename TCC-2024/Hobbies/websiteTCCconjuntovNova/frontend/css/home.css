@@ -1,0 +1,364 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poetsen One", sans-serif;
+    font-weight: 400;
+    font-style: normal;    
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #a3becbdc, #a3becbd8, #fcbc55e1);
+    background-attachment: fixed ;
+    background-repeat: no-repeat;
+    color: #D9D9D9;
+}
+
+.section{
+    margin-top: 0px;
+    margin-right: 100px;
+    margin-left: 200px;
+}
+
+#sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #3C5C79;
+    height: 100vh;
+    border-radius: 0px 18px 18px 0px;
+    position: fixed;
+    transition: all .5s;
+    min-width: 82px;
+    z-index: 2;
+    
+    
+}
+
+#sidebar_content {
+    padding: 12px;
+}
+
+#user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+#user_avatar {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 20px;
+}
+
+#user_infos {
+    display: flex;
+    flex-direction: column;
+}
+
+#user_infos span:last-child {
+    color: #F5F5F5;
+    font-size: 12px;
+}
+
+#side_items {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+
+    border: none;
+    padding: 9px; 
+   
+}
+
+.side-item {
+    border-radius: 8px;
+    padding: 14px;
+    cursor: pointer;
+    
+}
+
+.side-item.active {
+    background-color: #D9D9D9;
+}
+
+.side-item:hover:not(.active),
+#logout_btn:hover {
+    background-color: #e3e9f7a1;
+}
+
+.side-item a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #f1f1f1;
+}
+
+.side-item.active a {
+    color: #3C5C79;
+}
+
+.side-item a i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+}
+
+#logout {
+    border-top: 1px solid #F5F5F5;
+    padding: 12px;
+}
+
+#logout_btn {
+    color: #fff; /* Cor do texto branca para contraste */
+    text-decoration: none; /* Remove o sublinhado do link */
+    
+    border: none;
+    padding: 12px;
+    font-size: 14px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    border-radius: 8px;
+    text-align: start;
+    cursor: pointer;
+    background-color: transparent;
+}
+
+#open_btn {
+    position: absolute;
+    top: 30px;
+    right: -10px;
+    background-color: #70aac5;
+    color: #ffffff;
+    border-radius: 100%;
+    width: 20px;
+    height: 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#open_btn_icon {
+    transition: transform .3s ease;
+}
+
+.open-sidebar #open_btn_icon {
+    transform: rotate(180deg);
+}
+
+.item-description {
+    width: 0px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 14px;
+    transition: width .6s;
+    height: 0px;
+}
+
+#sidebar.open-sidebar {
+    min-width: 15%;
+}
+
+#sidebar.open-sidebar .item-description {
+    width: 150px;
+    height: auto;
+}
+
+#sidebar.open-sidebar .side-item a {
+    justify-content: flex-start;
+    gap: 14px;
+}
+
+header{
+    text-align: center;
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+}
+
+.logo{
+    width: 200px; /* largura desejada */
+    height: auto;
+    left: 100%;
+    display: block; /* Remove espaço extra abaixo da imagem */
+}
+
+.section{
+    text-align: center;
+    color: #1A4162;
+    
+}
+.borda{
+    border: 2px solid #545454;
+    border-radius: 120px;
+    padding: 10px; 
+    margin: 30px;
+    margin-left: 105px;
+
+}
+.sobre{
+    color: #FCBD55;
+    text-align: center;
+    border-radius: 160px;
+    background-color: #1A4162;
+    padding: 20px 50px;
+    margin-left: 200px;
+    margin-right: 130px;
+
+}
+
+.image-meio {
+    width: 300px;
+    height: 300px;
+    margin-left: 480px;
+    margin-top: 60px;
+    background-color: #ccc;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 0;
+    position: relative;
+}
+
+.text-meio {
+    width: 300px;
+    height: 200px;
+    margin-left: 660px;
+    margin-top: -130px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 20px;
+    color: #1A4162;
+    z-index: 1;
+    position:relative;
+}
+
+.text-content h1 {
+    font-size: 2em;
+    margin: 0;
+}
+
+.text-content p {
+    font-size: 1.2em;
+    margin: 10px 0 0 0;
+}
+
+
+.card-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 60px;
+    margin-left: 90px;
+
+}
+
+
+.card {
+    background-color: #fff;
+    border: 1px solid #fff;
+    border-radius: 8px;
+    margin-bottom: 200px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: block;
+    width: 200px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+
+
+.card img {
+    width: 198px;    
+    height: 302.11px; 
+    object-fit: cover; 
+    
+}
+
+.footer{
+    text-align: center;
+    color: #1A4162;
+    
+} 
+.card-text {
+    padding: 10px;
+    font-size: 13px;
+    color: #1A4162;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.btn-transparente {
+    border: none;
+    background-color: transparent;
+    color: #1A4162;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s;
+}
+.btn-transparente:hover {
+    background-color: #0a4c8162;
+    color: #fff;
+}
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 60px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 650px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+
+.salvar_sugestao {
+    background-color: transparent;
+    border: none;
+    font-size: 15px;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    
+}
+
+
+.salvar_sugestao:hover {
+    transform: scale(1.2); /* Aumenta o tamanho ao passar o mouse */
+    color: #007BFF; /* Muda a cor ao passar o mouse */
+}
+
+
+
+
