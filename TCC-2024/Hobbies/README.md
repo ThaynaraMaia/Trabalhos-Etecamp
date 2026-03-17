@@ -34,7 +34,10 @@ Este projeto foi desenvolvido por:
   - Desenvolvimento back-end (PHP, integração com banco de dados MySQL).
 
 ## 📝 Como Citar
-ADRIELLY de Paula Pereira, CLARA Lima Viana, GABRIELLE Confessone Drumond. Mercury: Gerenciador de Hobbies. 2024. Disponível em: https://github.com/ClaraVianaa/ProjetoMercury/blob/main/README.md . Acesso em: 26 nov. 2024.
+PEREIRA, Adrielly de Paula; VIANA, Clara Lima; CONFESSONE, Gabrielle. Sugestões de hobbies para o controle de ansiedade e estresse na rotina diária dos jovens. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29354)
+
 
 ## 📚 Artigo
 Para o embase do projeto, confira  [Artigo do projeto](TCCparteescrita.docx ).
