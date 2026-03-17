@@ -35,7 +35,9 @@ npm install bcryptjs
 ## Como citar o projeto 
 
 Exemplo:
-DA SILVA, Lukas; MACIEL, Augusto Henrique; ALVES, Eduardo. DESENVOLVIMENTO DE UM WEBSITE PARA AUXILIAR NA ADAPTAÇÃO PESSOAL DE PESSOAS ADULTAS DIAGNOSTICADAS TARDIAMENTE COM TEA. 2025. 35 p.
+MIRANDA, Augusto Henrique Maciel Barbosa; ALVES, Eduardo; SILVA, Lukas Herminio da. Desenvolvimento de um website para auxiliar na adaptação pessoal de pessoas adultas diagnosticadas tardiamente com TEA. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2025. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2025.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/41920)
 
 Em caso de dúvidas entre em contato com eduedu.avs@gmail.com ou com lukasherminio0605@gmail.com
 
