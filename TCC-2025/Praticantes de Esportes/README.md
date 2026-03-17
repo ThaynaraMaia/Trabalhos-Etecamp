@@ -47,8 +47,9 @@ Instalar as dependencias e aplicativos
 
 ## Como citar o projeto 
 
-TOROKI, Nicolas Meneses; Boas, Muryllo Pereira Vilas; MOREIRA, Lucas Augusto Alves. DESENVOLVIMENTO DE UM WEBSITE PARA PRATICANTES DE ESPORTES EM CAMPO LIMPO PAULISTA. 2025. 34 p.
+TOROKI, Nicolas Meneses; MOREIRA, Lucas Augusto Alves; VILAS BOAS, Muryllo Pereira. Desenvolvimento de um website para praticantes de esportes em Campo Limpo Paulista. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2025. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2025.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/41929)
 
 Em caso de dúvidas entre em contato com nictorokinho@hotmail.com ou com grupo4.tcc.etecamp@gmail.com
 
-Para acessar o trabalho escrito do projeto: https://ric.cps.sp.gov.br/
