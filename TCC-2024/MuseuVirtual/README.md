@@ -81,4 +81,6 @@ Pronto o projeto pode ser usado! Lembre-se de logar antes de tentar realizar alg
 </ol>
 
 <h2>Como referenciar:</h2>
-LIMA, Clara Thyfanne de Souza; MARTINS, Gabriel Ferreira; ALVES, Thamires Marques. DESENVOLVIMENTO DE UM MUSEU VIRTUAL PARA A ETEC DE CAMPO LIMPO PAULISTA. p. 1-30, Campo Limpo Paulista, 2024.
+LIMA, Clara Thyfanne de Souza; MARTINS, Gabriel Ferreira; ALVES, Thamires Marques. Desenvolvimento de um museu virtual para a ETEC de Campo Limpo Paulista. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29316)
