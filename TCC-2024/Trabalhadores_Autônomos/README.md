@@ -136,7 +136,9 @@ Estes são os autores, que fizeram a parte escrita e prática do projeto
 
 Se você utilizar este projeto em sua pesquisa, artigo, ou trabalho, por favor, cite-o da seguinte forma:
 
-CAMPOS, Guilherme; COSTA, Mateus; GOUVEIA, Giovana. <strong>Implementação de uma plataforma digital na divulgação de trabalhadores autonômos na região de Jundiaí</strong>. GitHub, ano. Disponível em: <https://github.com/Gineris/siteatualizado>. Acesso em: dia mês ano.
+GOUVEIA, Giovana Neris Moraes; CAMPOS, Guilherme Augusto Pinheiro de; COSTA, Mateus Andrade da. Implementação de uma plataforma digital na divulgação de trabalhadores autônomos da região de Jundiaí. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29352).
 
 
 
