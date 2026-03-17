@@ -19,7 +19,7 @@ Este projeto foi desenvolvido como parte do Trabalho de Conclusão de Curso (TCC
 - Pablo Henrique Pinheiro de Carvalho
 - Ryan Vicentin Lucas
 
-##### E com os orientadores:
+##### E com as orientadoras:
 - Thaynara Cristina Maia dos Santos
 - Barbara Kathellen Andrade Porfirio
 
