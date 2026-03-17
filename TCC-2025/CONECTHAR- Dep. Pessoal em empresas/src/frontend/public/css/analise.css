@@ -1,0 +1,777 @@
+/* frontend/public/css/analise.css
+   Tema "Liquid Glass" — estilos específicos para a página de Análise (baseado em folhapaga.css)
+   Substitua/adicione este arquivo como /css/analise.css e inclua-o em analise.hbs
+*/
+
+/* ===== Variáveis de tema (mantidas consistentes com folhapaga.css) ===== */
+:root {
+    --bg-image: url('/img/liquid_Glass.jpeg');
+    --bg-1: rgba(10, 12, 25, 0.65);
+    --bg-2: rgba(25, 18, 45, 0.5);
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --muted: rgba(255, 255, 255, 0.75);
+    --muted-2: rgba(255, 255, 255, 0.6);
+    --accent-1: #667eea;
+    --accent-2: #764ba2;
+    --accent-3: #4facfe;
+    --success: #28a745;
+    --danger: #dc3545;
+    --glass-blur: 10px;
+    --radius: 12px;
+    --transition-fast: 150ms;
+    --transition: 280ms;
+    --shadow: 0 8px 30px rgba(6, 8, 20, 0.6);
+    --text: #ffffff;
+    --glass-strong: rgba(255, 255, 255, 0.09);
+}
+
+/* ===== Base / reset ===== */
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: var(--text);
+}
+
+body {
+    background: linear-gradient(135deg, rgba(16, 12, 34, 1) 0%, rgba(38, 22, 66, 1) 60%);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+}
+
+/* Reaproveita o wrapper da folha */
+.page-wrapper {
+    min-height: 100vh;
+  display: block;
+  padding-top: 20px;
+}
+
+.cola-layout {
+ display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  padding: calc(var(--navbar-height) + 18px) 24px 24px 24px;
+  align-items: start;
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+/* ===== Sidebar (herdado) ===== */
+.sidebar {
+    width: 260px;
+    padding: 20px;
+    margin-left: 50px;
+    margin-top: 30px;
+    border-radius: var(--radius);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+     -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+      text-decoration: none;
+}
+
+.sidebar h3 {
+    margin: 0 0 12px 0;
+    font-size: 1.05rem;
+    color: var(--muted);
+}
+
+.sidebar .sidebar-link {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    color: var(--muted-2);
+    text-decoration: none;
+    padding: 8px 10px;
+    border-radius: 8px;
+    transition: background var(--transition), color var(--transition), transform var(--transition-fast);
+    font-size: 0.95rem;
+    border: 1px solid transparent;
+}
+
+.sidebar .sidebar-link i {
+    font-size: 1.05rem;
+    color: var(--muted-2);
+      text-decoration: none;
+}
+
+.sidebar .sidebar-link:hover {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    transform: translateY(-2px);
+    color: #fff;
+}
+
+.sidebar .sidebar-link-active {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+
+/* ===== Main content ===== */
+main.p-4 {
+    flex: 1;
+    padding: 8px 0;
+}
+
+/* Header area tweaks */
+.header-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+}
+
+.header-sub {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Buttons (reaproveitados) */
+.glass-button,
+.glass-button-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform var(--transition-fast), box-shadow var(--transition);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    backdrop-filter: blur(6px);
+     -webkit-backdrop-filter: blur(6px);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    color: var(--text);
+    box-shadow: 0 6px 20px rgba(6, 8, 20, 0.45);
+}
+
+.glass-button-primary {
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    border: none;
+    color: #fff;
+}
+
+.glass-button:hover,
+.glass-button-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 36px rgba(6, 8, 20, 0.55);
+}
+
+/* ===== Stat cards (small differences for análise) ===== */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin: 0 -6px;
+}
+
+.col-md-4 {
+    flex: 1 1 calc(33.333% - 18px);
+    min-width: 240px;
+}
+
+.col-md-3 {
+    flex: 1 1 calc(25% - 18px);
+    min-width: 200px;
+}
+
+.stat-card {
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: 0 10px 30px rgba(4, 6, 20, 0.55);
+    backdrop-filter: blur(var(--glass-blur));
+     -webkit-backdrop-filter: blur(var(--glass-blur));
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1.1rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+.gradient-blue-cyan {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.gradient-green-emerald {
+    background: linear-gradient(135deg, #2ecc71 0%, #11998e 100%);
+}
+
+.gradient-purple-pink {
+    background: linear-gradient(135deg, #8e2de2 0%, #c33764 100%);
+}
+
+.gradient-orange-red {
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+}
+
+/* ===== Report cards specific ===== */
+.report-card {
+    padding: 18px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.012));
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    box-shadow: 0 12px 30px rgba(4, 6, 20, 0.45);
+    transition: transform var(--transition-fast), box-shadow var(--transition);
+    cursor: pointer;
+}
+
+.report-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 28px 60px rgba(2, 4, 12, 0.6);
+}
+
+.report-card h3 {
+    margin: 0 0 6px 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.report-card p {
+    margin: 0 0 12px 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* badge for availability */
+.badge-available {
+    padding: 6px 12px;
+    background: rgba(46, 204, 113, 0.12);
+    color: #2ecc71;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.78rem;
+}
+
+.badge-warning {
+    padding: 6px 12px;
+    background: rgba(255, 193, 7, 0.12);
+    color: #ffc107;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.78rem;
+}
+
+/* action button inside card */
+.btn-gerar-relatorio {
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-gerar-relatorio:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.12);
+}
+
+/* gear small button */
+.report-card .glass-button {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+}
+
+/* layout helpers for cards grid */
+.relatorio-section {
+    margin-bottom: 18px;
+}
+
+.relatorio-section>.row {
+    margin-top: 6px;
+}
+
+/* ===== Modals / overlays (used IDs but also generic classes) ===== */
+.overlay-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    inset: 0;
+    z-index: 9998;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 20px;
+}
+
+.overlay-modal[style*="display:none"] {
+    display: none;
+}
+
+.modal-popup {
+    width: 100%;
+    max-width: 720px;
+    border-radius: 16px;
+    padding: 28px;
+    background: linear-gradient(135deg, rgba(30, 30, 45, 0.95), rgba(20, 20, 35, 0.95));
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(12px) saturate(120%);
+     -webkit-backdrop-filter: blur(12px) saturate(120%)
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg);
+    color: #fff;
+}
+
+.modal-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+/* form inside modal reuse glass-input styles */
+.modal-popup .glass-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+}
+
+/* small modal buttons layout */
+.modal-popup .d-flex {
+    display: flex;
+}
+
+.modal-popup .justify-content-end {
+    justify-content: flex-end;
+}
+
+/* ===== Export / filtro modals specific tweaks ===== */
+#popup-filtro-avancado,
+#popup-exportar {
+    max-width: 600px;
+}
+
+/* ===== Search & inputs (reuse) ===== */
+.position-relative {
+    position: relative;
+    display: inline-block;
+}
+
+.position-relative .bi-search {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.glass-input {
+    padding: 10px 12px 10px 36px;
+    border-radius: 10px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #fff;
+    transition: box-shadow var(--transition), border-color var(--transition);
+    min-width: 220px;
+}
+
+.glass-input:focus {
+    outline: none;
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.14);
+    border-color: rgba(102, 126, 234, 0.45);
+}
+
+/* ===== Table styling for potential embedded tables in análises ===== */
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 10px;
+}
+
+.glass-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    min-width: 720px;
+}
+
+.glass-table thead th {
+    text-align: left;
+    padding: 14px 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.glass-table tbody td {
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.92);
+    vertical-align: middle;
+}
+
+.glass-table tbody tr:hover {
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01));
+    transform: translateY(-1px);
+}
+
+/* ===== Accessibility, small helpers and responsiveness ===== */
+.mb-3 {
+    margin-bottom: 12px !important;
+}
+
+.gap-3>*+* {
+    margin-left: 12px;
+}
+
+.text-muted {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.small {
+    font-size: 0.85rem;
+}
+
+@media (max-width: 1100px) {
+    .col-md-4 {
+        flex: 1 1 calc(50% - 18px);
+    }
+
+    .cola-layout {
+        padding: 20px;
+        gap: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .cola-layout {
+        flex-direction: column;
+        padding: 14px;
+    }
+
+    .sidebar {
+        width: 100%;
+        order: 2;
+    }
+
+    .col-md-4 {
+        flex-basis: 100%;
+    }
+
+    .glass-table {
+        min-width: 560px;
+    }
+
+    .position-relative .bi-search {
+        left: 0.6rem;
+    }
+
+    .glass-input {
+        min-width: unset;
+        width: 100%;
+        padding-left: 40px;
+    }
+}
+
+/* small visual polish */
+.page-wrapper,
+.modal-popup,
+.report-card,
+.stat-card {
+    animation: fadeInLite 360ms ease both;
+}
+
+@keyframes fadeInLite {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+/* CSS dos role sobre relatorio financeiro */
+/* ===== Relatório: estilos de modal e preview ===== */
+.report-modal { max-width: 980px; width: 100%; padding: 22px; }
+.report-modal .report-modal-body { display: grid; grid-template-columns: 360px 1fr; gap: 18px; align-items: start; }
+.report-controls { background: transparent; padding: 0; }
+.report-form .modal-label { color: rgba(255,255,255,0.85); font-size:0.86rem; margin-bottom:6px; display:block; }
+.report-form input[type="date"], .report-form select, .report-form input[type="number"] { width:100%; }
+
+/* Preview area */
+.report-preview { background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01)); padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.04); min-height: 260px; display:flex; flex-direction:column; }
+.chart-placeholder { border-radius: 10px; border: 1px dashed rgba(255,255,255,0.04); background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.005)); margin-bottom: 12px; }
+
+/* Tabela de preview */
+.report-preview .glass-table { background: transparent; }
+
+/* Export actions row */
+.export-actions { align-items:center; }
+
+/* Mobile: empilha controls + preview */
+@media (max-width: 880px) {
+  .report-modal .report-modal-body { grid-template-columns: 1fr; }
+  .report-controls { order: 1; }
+  .report-preview { order: 2; margin-top: 10px; }
+}
+
+/* Pequeno tweak para botões no modal */
+.report-modal .glass-button, .report-modal .glass-button-primary { min-width: 110px; }
+
+/* Destaque no header do modal */
+.report-modal h3 { font-size: 1.05rem; margin-bottom: 4px; }
+
+/* placeholders e textos */
+.report-preview .preview-summary { font-size: 0.9rem; color: rgba(255,255,255,0.75); }
+
+/* foco acessível em elementos clicáveis dentro dos cards */
+.report-card:focus, .btn-gerar-relatorio:focus, .modal-close:focus { outline: 3px solid rgba(118,75,162,0.18); outline-offset: 3px; }
+/* ==============================
+   Igualar tamanho dos report-cards
+   e alinhar abaixo dos stat-cards
+   ============================== */
+
+/* altura base compartilhada (ajuste se quiser mais/menos) */
+:root {
+  --card-equal-height: 170px; /* ajuste para 150-200 se necessário */
+}
+
+/* Forçar colunas a usar flex para permitir stretch dos cards */
+.col-md-4 {
+  display: flex;
+  flex-direction: column;
+  /* garante que colunas ocupem altura uniforme no row */
+}
+
+/* Faz com que o próprio card preencha a coluna verticalmente */
+.col-md-4 > .stat-card,
+.col-md-4 > .report-card {
+  flex: 1 1 auto;           /* estica para ocupar todo o espaço da coluna */
+  min-height: var(--card-equal-height);
+  display: flex;
+  flex-direction: column;   /* mantém layout interno (header / corpo / ações) */
+  justify-content: space-between; /* mantém elementos bem distribuídos verticalmente */
+}
+
+/* Garante que todas as linhas de cards estiquem itens verticalmente */
+.row.g-3,
+.row.g-3.mb-4 {
+  align-items: stretch;
+}
+
+/* Pequeno ajuste de espaçamento entre a linha de índices e a linha de relatórios */
+#finance-report-cards {
+  margin-top: 12px; /* ajuste fino: aumenta/reduz distância entre as linhas */
+}
+
+/* Se quiser que a altura seja exatamente a da stat-card (caso ela tenha altura fixa),
+   sobrescreva a variável para corresponder ao valor real da stat-card. */
+
+/* ===== Compatibilidade responsiva ===== */
+/* Em telas pequenas a altura fixa pode ficar grande demais — reduzimos lá */
+@media (max-width: 768px) {
+  :root { --card-equal-height: 140px; }
+  .col-md-4 { display: block; } /* mantém comportamento empilhado natural em mobile */
+  .col-md-4 > .stat-card,
+  .col-md-4 > .report-card { min-height: var(--card-equal-height); }
+}
+/* Complemento para a sidebar fazer o filtro */
+/* sidebar link explicit default/active helpers */
+.sidebar-link-default { color: var(--muted-2); opacity: 0.95; }
+.sidebar-link-active { background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.06); color: #fff; }
+.sidebar-link { cursor: pointer; }
+.sidebar-link[aria-pressed="true"] { font-weight: 700; }
+/* Coisas do pop-up */
+/* ============================
+   Modal / Report: Liquid Glass polish
+   ============================ */
+
+/* Garante que o popup principal tenha "vidro" mais rico e não permita overflow externo */
+.modal-popup {
+  width: 100%;
+  max-width: 980px;                        /* containers maiores para relatórios */
+  max-height: calc(100vh - 64px);          /* evita que ultrapasse a viewport */
+  overflow: hidden;                        /* evita "vazamento" do conteúdo */
+  border-radius: 16px;
+  padding: 18px;
+  background: linear-gradient(135deg, rgba(30,30,45,0.96), rgba(16,16,28,0.94));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 30px 80px rgba(2,4,12,0.75);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  transition: transform 220ms cubic-bezier(.2,.9,.3,1), opacity 180ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Corpo do modal (controls + preview) com scroll interno (evita overflow do documento) */
+.report-modal .report-modal-body {
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 18px;
+  align-items: start;
+  padding-top: 4px;
+  height: auto;
+  max-height: calc(100vh - 180px); /* reserva espaço para título/ações */
+  overflow: auto;                 /* scroll interno para conteúdo extenso */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Cada coluna do body pode rolar independentemente se precisar */
+.report-controls,
+.report-preview {
+  min-width: 0; /* evita overflow de grid item */
+}
+
+/* report-controls (form) - mantém fixo e com scroll vertical se necessário */
+.report-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: calc(100vh - 240px);
+  overflow: auto;
+  padding-right: 6px; /* espaço para scrollbar */
+}
+
+/* report-preview - área de visualização com próprio scroll */
+.report-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  min-height: 200px;
+  max-height: calc(100vh - 240px);
+  overflow: auto;
+}
+
+/* Garante scrollbar esteticamente coerente dentro do modal */
+.report-modal .report-modal-body::-webkit-scrollbar,
+.report-controls::-webkit-scrollbar,
+.report-preview::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.report-modal .report-modal-body::-webkit-scrollbar-thumb,
+.report-controls::-webkit-scrollbar-thumb,
+.report-preview::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.06));
+  border-radius: 10px;
+  border: 2px solid rgba(0,0,0,0.12);
+}
+
+/* Evita que inputs extravase (respeita padding interno) */
+.modal-popup input,
+.modal-popup textarea,
+.modal-popup select {
+  box-sizing: border-box;
+}
+
+/* Botões do header right alinhados e visíveis */
+.modal-popup .d-flex.justify-content-between {
+  align-items: flex-start;
+}
+
+/* Fecha (x) com feedback visual */
+.modal-close {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.85);
+  font-size: 20px;
+  padding: 6px;
+  border-radius: 8px;
+}
+.modal-close:hover { background: rgba(255,255,255,0.03); transform: rotate(90deg); }
+
+/* ============================
+   Dropdowns (select) - conteúdo preto
+   ============================ */
+
+/* Estilo do select dentro dos modais: fundo branco + texto preto */
+.report-modal select.glass-input,
+.modal-popup select.glass-input {
+  background: #ffffff;         /* caixa branca para melhor leitura do menu */
+  color: #111111;             /* texto preto conforme solicitado */
+  -webkit-appearance: none;   /* remove aparência nativa em alguns browsers */
+  appearance: none;
+  border: 1px solid rgba(16,16,20,0.08);
+  padding-right: 38px;        /* espaço para setinha customizada */
+  position: relative;
+}
+
+/* Fornece um ícone de setinha customizado (opcional) usando pseudo-elemento
+   ajusta-se a container pai que tenha position: relative */
+.modal-popup .select-wrap { position: relative; display: inline-block; width: 100%; }
+.modal-popup .select-wrap::after {
+  content: "\25BC";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 10px;
+  color: rgba(0,0,0,0.6);
+}
+
+/* Força as options a terem fundo claro e texto escuro (a maioria dos browsers respeita) */
+.report-modal select.glass-input option {
+  background: #fff;
+  color: #111;
+}
+
+/* Em navegadores que ignoram option styling, recomendamos usar select customizado mais tarde. */
+
+/* ============================
+   Pequenas proteções contra "vazamento" de informações
+   ============================ */
+
+/* Evita que o conteúdo do modal saia pelas bordas arredondadas */
+.modal-popup { overflow: hidden; }
+
+/* Garante que tabelas longas no preview tenham rolagem interior e não estendam o modal */
+.report-preview .table-responsive { max-height: calc(100vh - 340px); overflow: auto; }
+
+/* Garante que imagens/gráficos não excedam o container */
+.report-preview img, .report-preview canvas, .report-preview svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================
+   Responsividade fina
+   ============================ */
+@media (max-width: 980px) {
+  .modal-popup { max-width: calc(100% - 32px); padding: 14px; }
+  .report-modal .report-modal-body { grid-template-columns: 1fr; max-height: calc(100vh - 160px); }
+  .report-controls { max-height: none; }
+  .report-preview { max-height: none; }
+}
+
+/* final touch: acessibilidade (foco) */
+.modal-popup :focus { outline: 3px solid rgba(102,126,234,0.14); outline-offset: 2px; border-radius: 6px; }

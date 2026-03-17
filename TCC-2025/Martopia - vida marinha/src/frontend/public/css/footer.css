@@ -1,0 +1,66 @@
+@font-face {
+    font-family: 'Titulo';
+    src: url('../../fontes/Título.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Texto';
+    src: url('../../fontes/Texto.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.contatos h3 {
+    font-family: 'Titulo';
+    font-size: 2em;
+    letter-spacing: 2px;
+    text-shadow: 2px 4px 2px rgba(0, 0, 0, .3);
+}
+
+.contatos p {
+    font-family: 'Texto';
+    font-size: 1.1em;
+    letter-spacing: 2px;
+    text-shadow: 2px 4px 2px rgba(0, 0, 0, .3);
+    margin-top: 1em;
+}
+
+.redes i {
+    font-size: 1.3em;
+}
+
+.redes h3 {
+    font-family: 'Titulo';
+    font-size: 2em;
+    letter-spacing: 2px;
+    text-shadow: 2px 4px 2px rgba(0, 0, 0, .3);
+}
+
+.redes i:hover {
+    color: #81C0E9;
+}
+
+.redes,
+.contatos,
+.mapa {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.mapa h3 {
+    font-family: 'Titulo';
+    font-size: 2em;
+    letter-spacing: 2px;
+    text-shadow: 2px 4px 2px rgba(0, 0, 0, .3);
+}
+
+.copyright p{
+    font-family: 'Texto';
+    font-size: 1em;
+    color: #c6e1fe;
+}
+

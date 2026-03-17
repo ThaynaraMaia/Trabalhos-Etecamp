@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Gerenciar Bolsas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="../css/stylegerenciarbolsas.css">
+
+</head>
+<body class="min-h-screen flex flex-col items-center p-6">
+
+  <a href="../admin/admin.html" class="back-button">← Voltar</a>
+
+  <!-- Título -->
+  <header>
+    <h1><strong>Gerenciar Bolsas</strong></h1>
+  </header>
+
+  <!-- Formulário -->
+  <div class="card w-full mb-8">
+    <h2>📝 Cadastrar / Editar Bolsa</h2>
+    <form id="formBolsa" class="grid grid-cols-2 gap-4">
+      <input type="text" id="titulo" placeholder="Título" class="input" required>
+      <input type="text" id="descricao" placeholder="Descrição" class="input" required>
+      <input type="text" id="pais" placeholder="País" class="input" required>
+      <input type="text" id="universidade" placeholder="Universidade" class="input" required>
+      <input type="text" id="curso" placeholder="Curso" class="input" required>
+      <input type="text" id="tipo_bolsa" placeholder="Tipo de Bolsa" class="input" required>
+      <input type="text" id="requisitos" placeholder="Requisitos" class="input" required>
+      <input type="date" id="prazo_inscricao" class="input" required>
+      <input type="url" id="link_inscricao" placeholder="Link de Inscrição" class="input col-span-2" required>
+      <button type="submit" id="btnSubmit" class="btn col-span-2">
+        <i class="fa-solid fa-plus"></i> <span>Cadastrar</span>
+      </button>
+    </form>
+  </div>
+
+  <!-- Lista de Bolsas -->
+  <div class="card w-full">
+    <h2>📋 Bolsas Cadastradas</h2>
+
+    <!-- Barra de Pesquisa -->
+    <div class="mb-4">
+      <input type="text" id="pesquisaAdmin"
+        placeholder="🔍 Pesquisar por título, país, universidade, curso, descrição ou tipo de bolsa..."
+        class="input w-full">
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>País</th>
+            <th>Universidade</th>
+            <th>Curso</th>
+            <th>Tipo</th>
+            <th>Requisitos</th>
+            <th>Prazo</th>
+            <th>Link</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody id="tabelaBolsas"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+  <div class="footer-content">
+    <p>&copy; 2025 CiaoMundo. Todos os direitos reservados.</p>
+    <p>Desenvolvido com ❤️ para conectar estudantes ao mundo</p>
+</footer>
+
+
+  <script>
+    const API_URL = "/admin/bolsas/bolsas";
+    const TOKEN = localStorage.getItem("token");
+
+    if (!TOKEN) {
+      alert("Token não encontrado! Faça login antes.");
+      window.location.href = "/login.html";
+    }
+
+    // 🔹 Carregar bolsas
+    async function carregarBolsas() {
+      try {
+        const res = await fetch(API_URL, { headers: { "Authorization": `Bearer ${TOKEN}` } });
+        if (!res.ok) throw new Error("Erro ao carregar bolsas");
+        const bolsas = await res.json();
+        const tbody = document.getElementById("tabelaBolsas");
+        tbody.innerHTML = "";
+
+        bolsas.forEach(bolsa => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td>${bolsa.id_bolsa}</td>
+            <td>${bolsa.titulo}</td>
+            <td>${bolsa.descricao}</td>
+            <td>${bolsa.pais}</td>
+            <td>${bolsa.universidade}</td>
+            <td>${bolsa.curso}</td>
+            <td>${bolsa.tipo_bolsa}</td>
+            <td>${bolsa.requisitos}</td>
+            <td>${bolsa.prazo_inscricao}</td>
+            <td><a href="${bolsa.link_inscricao}" target="_blank">Inscrição</a></td>
+            <td>
+              <div class="actions-cell">
+                <button onclick="editarBolsa(${bolsa.id_bolsa})" class="edit"><i class="fa-solid fa-pen"></i> Editar</button>
+                <button onclick="excluirBolsa(${bolsa.id_bolsa})" class="delete"><i class="fa-solid fa-trash"></i> Excluir</button>
+              </div>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } catch (err) {
+        alert(err.message);
+      }
+    }
+
+    // 🔹 Enviar bolsa
+    async function enviarBolsa(method = "POST", id = null) {
+      const bolsa = {
+        titulo: document.getElementById("titulo").value,
+        descricao: document.getElementById("descricao").value,
+        pais: document.getElementById("pais").value,
+        universidade: document.getElementById("universidade").value,
+        curso: document.getElementById("curso").value,
+        tipo_bolsa: document.getElementById("tipo_bolsa").value,
+        requisitos: document.getElementById("requisitos").value,
+        prazo_inscricao: document.getElementById("prazo_inscricao").value,
+        link_inscricao: document.getElementById("link_inscricao").value
+      };
+
+      const url = id ? `${API_URL}/${id}` : API_URL;
+
+      const res = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${TOKEN}`
+        },
+        body: JSON.stringify(bolsa)
+      });
+
+      if (!res.ok) throw new Error("Erro ao enviar dados da bolsa");
+      document.getElementById("formBolsa").reset();
+      carregarBolsas();
+    }
+
+    // 🔹 Formulário
+    document.getElementById("formBolsa").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const idEdit = e.target.getAttribute("data-edit-id");
+      try {
+        await enviarBolsa(idEdit ? "PUT" : "POST", idEdit);
+        e.target.removeAttribute("data-edit-id");
+        document.getElementById("btnSubmit").innerHTML = `<i class="fa-solid fa-plus"></i> <span>Cadastrar</span>`;
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+
+    // 🔹 Excluir
+    async function excluirBolsa(id) {
+      if (!confirm("Tem certeza que deseja excluir esta bolsa?")) return;
+      await fetch(`${API_URL}/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": `Bearer ${TOKEN}` }
+      });
+      carregarBolsas();
+    }
+
+    // 🔹 Editar
+    async function editarBolsa(id) {
+      const res = await fetch(API_URL, { headers: { "Authorization": `Bearer ${TOKEN}` } });
+      const bolsas = await res.json();
+      const bolsa = bolsas.find(b => b.id_bolsa === id);
+
+      if (!bolsa) return alert("Bolsa não encontrada");
+
+      document.getElementById("titulo").value = bolsa.titulo;
+      document.getElementById("descricao").value = bolsa.descricao;
+      document.getElementById("pais").value = bolsa.pais;
+      document.getElementById("universidade").value = bolsa.universidade;
+      document.getElementById("curso").value = bolsa.curso;
+      document.getElementById("tipo_bolsa").value = bolsa.tipo_bolsa;
+      document.getElementById("requisitos").value = bolsa.requisitos;
+      document.getElementById("prazo_inscricao").value = bolsa.prazo_inscricao;
+      document.getElementById("link_inscricao").value = bolsa.link_inscricao;
+
+      const form = document.getElementById("formBolsa");
+      form.setAttribute("data-edit-id", id);
+      document.getElementById("btnSubmit").innerHTML = `<i class="fa-solid fa-save"></i> <span>Atualizar</span>`;
+    }
+
+    // 🔹 Pesquisa
+    const inputPesquisaAdmin = document.getElementById("pesquisaAdmin");
+    inputPesquisaAdmin.addEventListener("input", () => {
+      const termo = inputPesquisaAdmin.value.toLowerCase();
+      const linhas = document.querySelectorAll("#tabelaBolsas tr");
+      linhas.forEach(linha => {
+        const conteudo = Array.from(linha.children).slice(1, 10).map(td => td.textContent.toLowerCase()).join(" ");
+        linha.style.display = conteudo.includes(termo) ? "" : "none";
+      });
+    });
+
+    // Inicializa
+    carregarBolsas();
+  </script>
+</body>
+</html>

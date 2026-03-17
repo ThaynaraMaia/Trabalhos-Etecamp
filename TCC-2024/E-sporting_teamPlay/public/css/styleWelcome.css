@@ -1,0 +1,292 @@
+body { 
+    background-color: var(--black);
+    font-family: monospace;
+    color: var(--will);
+    overflow-x: hidden;
+    height: 100vh; /* Ajustado para evitar barras de rolagem desnecessárias */
+    align-items: center;
+    font-size: x-large;
+    background-image: url("../assets/kang-the-conqueror-");
+    /* background-image: url("https://media1.tenor.com/m/tY1zPXKQOkIAAAAd/kang-the-conqueror-kang-variants.gif"); */
+    transform: rotateX(-1);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100%;
+} 
+
+.main {
+    left: 0;
+    width: 100%;
+    height: fit-content;
+    display: inline-flex;
+    gap: 2vw;
+    background-color: #1c1636ee;
+    top: 0%;
+    position: absolute;    
+}
+
+.content {
+    width: 100%;
+}
+
+.page {
+    color: var(--will);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: fit-content; /* Alterado para fit-content para evitar a barra de rolagem */
+    color: var(--light);
+    font-family: monospace;
+    margin-top: 13vh;
+    overflow-y: auto; /* Permite rolagem vertical apenas quando necessário */
+    gap: 8vh;
+}
+
+.logo {
+    background: none;
+    border: none;
+}
+
+.logo img {
+    transition: .5s;
+}
+
+.logo img:hover {
+    filter: brightness(1.2);
+    scale: 1.1;
+}
+
+.hs {
+    display: flex;
+    justify-content: space-between;
+    font-size: large;
+    width: 30vw;
+}
+
+.hs a {
+    padding: 1vw;
+    background-color: var(--light);
+    color: white;
+    border-radius: 1vw;
+    text-decoration: none;
+}
+
+.toolbutton {
+    transition: .5s;
+    height: 6vh;
+    width: 10vw;
+    border: none;
+    border-radius: 2vh;
+    font-size: .6rem;
+    color: var(--black);
+    display: inline-flex;
+    background-color: var(--light);
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbutton.active {
+    font-size: .6rem;
+    background-color: var(--mag);
+    color: var(--will);
+}
+
+.toolbutton:hover {
+    filter: brightness(1.5);
+}
+
+.toolbar {
+    padding-inline: 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96.5%;
+    height: 14vh;
+    top: -0.1%;
+    left: -1%;
+    position: absolute;
+    background-color: var(--black);
+    z-index: 2;
+}
+
+.pages {
+    display: flex;
+    gap: 2vw;
+    height: 100vh;
+}
+
+.pfpimg {
+    width: 5vw;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--shade2);
+    border-radius: 1.2rem;
+    margin-right: 1vw;
+}
+
+.pfpimg img {
+    width: 80%;
+    border-radius: 1rem;
+}
+
+.statusind {
+    transition: 15s;
+    position: absolute;
+    bottom: 20%;
+    right: 17%;
+    width: 1rem;
+    border: 0.2rem solid var(--black);
+    height: 1rem;
+    border-radius: 1rem;
+}
+
+.statusind.online {
+    background: radial-gradient(rgb(108, 255, 226), rgb(0, 255, 153) 75%);
+}
+
+.statusind.offline {
+    background: radial-gradient(var(--black), var(--light) 50%);
+}
+
+.statusind.playing {
+    background: radial-gradient(rgb(135, 191, 255), rgb(64, 115, 255) 75%);
+}
+
+.sidebar {
+    display: flex;
+    width: 6%;
+    position: fixed;
+    overflow: hidden;
+    height: 100%;
+    left: 1px;
+    background-color: var(--shade1);
+    z-index: 1;
+}
+
+.userarea {
+    max-width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.at {
+    color: rgba(255, 255, 255, 0.436);
+}
+
+.con1 {
+    width: 90%;
+    background-color: var(--shade2);
+    color: var(--will);
+    padding: 2%;
+    border-radius: 2vw;
+    height: max-content;
+}
+
+.con2 {
+    top: 20%;
+    width: 40%;
+    background-color: var(--shade2);
+    color: var(--will);
+    padding: 2%;
+    border-radius: 2vw;
+}
+
+.post {
+    background-color: var(--light);
+    margin-top: 2%;
+    padding: 2%;
+    border-radius: 1vw;
+}
+
+.side {
+    margin: 2%;
+}
+
+.ad {
+    background-color: var(--light);
+    margin-top: 2%;
+    padding: 2%;
+    border-radius: 1vw;
+}
+
+.c {
+    border: none;
+    background-color: var(--light);
+}
+
+/* CSS extra (se desejar incluir) */
+.intro-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 12vh;
+}
+
+.intro-section p {
+    text-align: center;
+    width: 40vw;
+    color: white;
+}
+
+h1 {
+    color: var(--will);
+}
+
+.intro-text {
+    font-size: 1.2rem;
+    color: white;
+    margin-top: 1vh;
+    margin-bottom: 3vh;
+}
+
+.cta-button {
+    display: inline-block;
+    text-decoration: none;
+    margin-top: 2vh;
+}
+
+.features-section {
+    display: flex;
+    padding: 5%;
+    gap: 2vw;
+}
+
+.features-list li img {
+    width: 40px; /* Ajuste o tamanho da imagem */
+    height: auto; /* Mantém a proporção da imagem */
+    margin-right: 10px; /* Espaçamento entre a imagem e o texto */
+    vertical-align: middle; /* Alinha a imagem ao centro verticalmente com o texto */
+}
+
+.features-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.features-list li {
+    margin-bottom: 1rem;
+    font-size: 2.2vh;
+    color: var(--will);
+}
+
+.banner {
+    margin-top: 5vh;
+    text-align: center;
+}
+
+.tourns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; /* Pequena margem entre as imagens */
+}
+
+.tourns img {
+    width: 70vh; /* Largura fixa para ambas as imagens */
+    height: 50vh; /* Altura fixa para ambas as imagens */
+    border-radius: 2vh; /* Levemente arredondada */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
+}

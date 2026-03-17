@@ -1,0 +1,133 @@
+<link rel="stylesheet" href="/css/doc.css">
+
+<aside class="sidebar">
+  <h3 class="fw-bold mb-3">Categorias Documentação</h3>
+  <ul class="nav flex-column">
+    <li class="side-item">
+      <a class="nav-link filtro-categoria" data-categoria="contrato" href="#">
+        <i class="bi bi-briefcase-fill me-2"></i>Contratos
+      </a>
+    </li>
+    <li class="side-item">
+      <a class="nav-link filtro-categoria" data-categoria="recibo" href="#">
+        <i class="bi bi-card-text me-2"></i>Recibos
+      </a>
+    </li>
+    <li class="side-item">
+      <a class="nav-link filtro-categoria" data-categoria="declaracao" href="#">
+        <i class="bi bi-calendar me-2"></i>Comprov. de férias
+      </a>
+    </li>
+    <li class="side-item">
+      <a class="nav-link filtro-categoria" data-categoria="atestado" href="#">
+        <i class="bi bi-hospital me-2"></i>Atestados médicos
+      </a>
+    </li>
+    <li class="side-item">
+      <a class="nav-link filtro-categoria" data-categoria="holerite" href="#">
+        <i class="bi bi-cash-coin me-2"></i>Holerites
+      </a>
+    </li>
+    <li class="side-item">
+      <a class="nav-link filtro-categoria" data-categoria="outros" href="#">
+        <i class="bi bi-folder-fill me-2"></i>Outros documentos
+      </a>
+    </li>
+    <li class="side-item">
+      <a class="nav-link filtro-categoria active" data-categoria="todos" href="#">
+        <i class="bi bi-files me-2"></i>Todos os documentos
+      </a>
+    </li>
+  </ul>
+
+  <hr>
+
+  <h6 class="fw-bold mt-3">Ações rápidas</h6>
+  <ul class="nav flex-column">
+    <li class="nav-item">
+      <a class="nav-link" href="#" id="btnProcurarDocs">
+        <i class="bi bi-search me-2"></i>Procurar Documentos
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link procurar-setores" href="#">
+        <i class="bi bi-building me-2"></i>Filtrar por Setor
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#" id="btnRecentesDownload">
+        <i class="bi bi-download me-2"></i>Recentes Download
+      </a>
+    </li>
+    <li class="nav-item" id="liRemoverFiltroSetor" style="display:none;">
+  <a class="nav-link" href="#" id="btnRemoverFiltroSetor" title="Remover filtro de setor">
+    <i class="bi bi-x-circle me-2"></i><span id="txtRemoverFiltro">Remover filtro de setor</span>
+  </a>
+</li>
+  </ul>
+</aside>
+
+<!-- Painel lateral dos setores -->
+<div id="setoresPanel" class="setores-panel">
+  <div class="setores-header">
+    <h5>Setores</h5>
+    <button id="closeSetores" class="close-btn">&times;</button>
+  </div>
+  <div class="setores-loading" style="display: none; text-align: center; padding: 20px;">
+    <i class="bi bi-hourglass-split"></i> Carregando setores...
+  </div>
+  <div class="setores-container" id="setoresLista">
+    <!-- Setores serão carregados como botões -->
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const btnProcurarSetores = document.querySelector('.procurar-setores');
+  const setoresPanel = document.getElementById('setoresPanel');
+  const closeSetores = document.getElementById('closeSetores');
+  const setoresLista = document.getElementById('setoresLista');
+
+  // 🔹 Abre o painel de setores
+  if (btnProcurarSetores) {
+    btnProcurarSetores.addEventListener('click', async (e) => {
+      e.preventDefault();
+      setoresPanel?.classList.add('active');
+
+      if (typeof carregarSetores === 'function') {
+        await carregarSetores();
+
+        // 🔹 Transformar setores em botões clicáveis
+        if (setoresLista) {
+          const botoes = setoresLista.querySelectorAll('.setor-btn');
+          botoes.forEach(btn => {
+            btn.addEventListener('click', async () => {
+              const setorId = btn.dataset.setorId;
+              console.info(`[Sidebar] Setor selecionado: ${setorId}`);
+
+              // Destaque visual
+              botoes.forEach(b => b.classList.remove('active'));
+              btn.classList.add('active');
+
+              // Fecha o painel lateral
+              setoresPanel?.classList.remove('active');
+
+              // 🔹 Filtrar uploads conforme o setor
+              if (typeof filtrarUploadsPorSetor === 'function') {
+                await filtrarUploadsPorSetor(setorId);
+              } else {
+                console.warn('⚠️ Função filtrarUploadsPorSetor não encontrada.');
+              }
+            });
+          });
+        }
+      } else {
+        console.error('⚠️ Função carregarSetores não encontrada!');
+      }
+    });
+  }
+
+  // 🔹 Fecha o painel manualmente
+  closeSetores?.addEventListener('click', () => setoresPanel?.classList.remove('active'));
+});
+</script>

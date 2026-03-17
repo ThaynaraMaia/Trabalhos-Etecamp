@@ -1,0 +1,1355 @@
+{{!-- Página: análise.hbs (organizada - estrutura semelhante à folha de pagamento) --}}
+<link rel="stylesheet" href="/css/analise.css">
+<link rel="stylesheet" href="/css/analiseFinanceira.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+{{> navbar }}
+
+<div class="page-wrapper">
+    <div class="cola-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div>
+                <h3>Tipos de Relatório</h3>
+                <ul id="tipos-list">
+                    <li>
+                        <a href="#" data-tipo="todos" class="sidebar-link sidebar-link-active">
+                            <i class="bi bi-grid-3x3-gap"></i> Todos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-tipo="financeiro" class="sidebar-link sidebar-link-default">
+                            <i class="bi bi-currency-dollar"></i> Financeiro
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" data-tipo="jornada" class="sidebar-link sidebar-link-default">
+                            <i class="bi bi-clock-history"></i> Jornada e Ponto
+                        </a>
+                    </li>
+                    {{!-- <li>
+                        <a href="#" data-tipo="gestao" class="sidebar-link sidebar-link-default">
+                            <i class="bi bi-people"></i> Gestão de Pessoas
+                        </a>
+                    </li> --}}
+                </ul>
+
+                <h3 style="margin-top: 2rem;">Buscar Relatório</h3>
+                <div class="position-relative" style="width: 100%; margin-bottom: 1rem;">
+                    <i class="bi bi-search position-absolute"
+                        style="left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5);">
+                    </i>
+                    <input type="text" class="glass-input" id="input-busca-relatorio" placeholder="Buscar..."
+                        style="padding-left: 2.5rem; width: 100%;">
+                </div>
+
+                {{!-- <h3 style="margin-top: 1.5rem;">Filtro Avançado</h3>
+                <ul>
+                    <li>
+                        <button id="btn-filtro-avancado" class="sidebar-link sidebar-link-default"
+                            style="width: 100%; text-align: left;">
+                            <i class="bi bi-funnel"></i> Abrir Filtros
+                        </button>
+                    </li>
+                </ul> --}}
+            </div>
+        </aside>
+
+        <!-- Conteúdo Principal -->
+        <main class="p-4">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div>
+                    <h1 class="text-white mb-2" style="font-size: 1.875rem; font-weight: 700;">Análise de Dados e
+                        Relatórios</h1>
+                    <p style="color: rgba(255,255,255,0.7);">Central completa de relatórios do Departamento Pessoal e RH
+                    </p>
+                </div>
+                {{!-- <div class="d-flex gap-3">
+                    <button class="glass-button" id="btn-exportar">
+                        <i class="bi bi-download"></i> Exportar
+                    </button>
+                    <button class="glass-button-primary" id="btn-gerar-todos">
+                        <i class="bi bi-play-circle"></i> Gerar Todos
+                    </button>
+                </div> --}}
+            </div>
+
+            <!-- Status Cards (Índices) -->
+            {{!-- <div class="row g-3 mb-4">
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="stat-icon gradient-orange-red">
+                                <i class="bi bi-calendar-x text-white"></i>
+                            </div>
+                            <span class="text-warning" style="font-size: 0.875rem; font-weight: 500;">{{#if
+                                stats.absenteismo_variacao}}{{stats.absenteismo_variacao}}{{else}}+0.0%{{/if}}</span>
+                        </div>
+                        <p class="stat-small-muted mb-1">Índice de Absenteísmo</p>
+                        <h3 id="stat-absenteismo" class="text-white fw-bold" style="font-size: 1.5rem;">{{#if
+                            stats.absenteismo}}{{stats.absenteismo}}{{else}}--{{/if}}</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="stat-icon gradient-purple-pink">
+                                <i class="bi bi-arrow-left-right text-white"></i>
+                            </div>
+                            <span class="text-success" style="font-size: 0.875rem; font-weight: 500;">{{#if
+                                stats.turnover_variacao}}{{stats.turnover_variacao}}{{else}}+0.0%{{/if}}</span>
+                        </div>
+                        <p class="stat-small-muted mb-1">Índice de Turnover</p>
+                        <h3 id="stat-turnover" class="text-white fw-bold" style="font-size: 1.5rem;">{{#if
+                            stats.turnover}}{{stats.turnover}}{{else}}--{{/if}}</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="stat-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <div class="stat-icon gradient-blue-cyan">
+                                <i class="bi bi-file-earmark-text text-white"></i>
+                            </div>
+                            <span class="text-success" style="font-size: 0.875rem; font-weight: 500;">{{#if
+                                stats.solicitacoes_aprovadas_pct}}{{stats.solicitacoes_aprovadas_pct}}%{{else}}--{{/if}}</span>
+                        </div>
+                        <p class="stat-small-muted mb-1">Índice de Solicitações</p>
+                        <h3 id="stat-solicitacoes" class="text-white fw-bold" style="font-size: 1.5rem;">{{#if
+                            stats.solicitacoes_total}}{{stats.solicitacoes_total}}{{else}}0{{/if}}</h3>
+                    </div>
+                </div>
+            </div> --}}
+            {{!-- Seção dos cards do tipo financeiro --}}
+            <section class="financeiro">
+                <!-- === Cards Financeiros (Folha / Custo por Pessoal / Gastos com Benefícios) === -->
+                <div class="row g-3" id="finance-report-cards">
+                    <!-- Card: Folha de Pagamento (Financeiro) -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-folha" data-relatorio="folha">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-green-emerald" style="width:48px;height:48px;">
+                                    <i class="bi bi-file-text text-white"></i>
+                                </div>
+                                {{!-- <button class="glass-button" aria-label="Configurações folha" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button> --}}
+                            </div>
+
+                            <h3 class="text-white">Folha de Pagamento</h3>
+                            <p class="small text-muted">Resumo de salários, encargos e impostos por período.</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-available">Disponível</span>
+                                <div class="d-flex gap-2">
+                                    <button class="btn-gerar-relatorio" data-open-modal="modal-folha" type="button">
+                                        <i class="bi bi-play-fill"></i> Abrir
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Custo por Pessoal -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-custo" data-relatorio="custo_pessoal">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-purple-pink" style="width:48px;height:48px;">
+                                    <i class="bi bi-graph-up text-white"></i>
+                                </div>
+                                {{!-- <button class="glass-button" aria-label="Configurações custo por pessoal" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button> --}}
+                            </div>
+
+                            <h3 class="text-white">Custo por Pessoal</h3>
+                            <p class="small text-muted">Distribuição de custos por colaborador / centro de custo.</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-available">Disponível</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-custo" type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Gastos com Benefícios -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-beneficios" data-relatorio="gastos_beneficios">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-blue-cyan" style="width:48px;height:48px;">
+                                    <i class="bi bi-gift text-white"></i>
+                                </div>
+                                {{!-- <button class="glass-button" aria-label="Configurações benefícios" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button> --}}
+                            </div>
+
+                            <h3 class="text-white">Gastos com Benefícios</h3>
+                            <p class="small text-muted">Vale, plano de saúde, refeição: visão consolidada ou por região.
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-available">Disponível</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-beneficios" type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {{!-- Seção de cards do tipo jornada e ponto --}}
+            <section class="jornada">
+                <!-- === Cards Jornada e Ponto === -->
+                <div class="row g-3" id="jornada-report-cards">
+                    <!-- Card: Registro de Ponto -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-registro-ponto" data-relatorio="registro_ponto">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-blue-cyan" style="width:48px;height:48px;">
+                                    <i class="bi bi-clock text-white"></i>
+                                </div>
+                                {{!-- <button class="glass-button" aria-label="Configurações registro de ponto" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button> --}}
+                            </div>
+
+                            <h3 class="text-white">Registro de Ponto</h3>
+                            <p class="small text-muted">Relatório de marcações: entradas, saídas e anomalias.</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-available">Disponível</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-registro-ponto"
+                                    type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Horas Extras -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-horas-extras" data-relatorio="horas_extras">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-orange-red" style="width:48px;height:48px;">
+                                    <i class="bi bi-clock-fill text-white"></i>
+                                </div>
+                                {{!-- <button class="glass-button" aria-label="Configurações horas extras" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button> --}}
+                            </div>
+
+                            <h3 class="text-white">Horas Extras</h3>
+                            <p class="small text-muted">Relatório de horas extras por colaborador, projeto e período.
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-available">Disponível</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-horas-extras" type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Índice de Absenteísmo -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-absenteismo" data-relatorio="absenteismo">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-purple-pink" style="width:48px;height:48px;">
+                                    <i class="bi bi-calendar-x text-white"></i>
+                                </div>
+                                {{!-- <button class="glass-button" aria-label="Configurações absenteísmo" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button> --}}
+                            </div>
+
+                            <h3 class="text-white">Índice de Absenteísmo</h3>
+                            <p class="small text-muted">Análise de faltas, ausências justificadas e não justificadas.
+                            </p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-available">Disponível</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-absenteismo" type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            {{!-- Seçãos dos cards do tipo gestão de pessoas --}}
+            {{!-- <section class="pessoas">
+                <!-- === Cards Gestão de Pessoas === -->
+                <div class="row g-3" id="gestao-report-cards">
+                    <!-- Card: Turnover -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-turnover" data-relatorio="turnover">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-orange-red" style="width:48px;height:48px;">
+                                    <i class="bi bi-arrow-left-right text-white"></i>
+                                </div>
+                                <button class="glass-button" aria-label="Configurações turnover" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                            </div>
+
+                            <h3 class="text-white">Turnover</h3>
+                            <p class="small text-muted">Admissões, demissões e rotatividade — análise por período.</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-warning">Atenção</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-turnover" type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Férias -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-ferias" data-relatorio="ferias">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-blue-cyan" style="width:48px;height:48px;">
+                                    <i class="bi bi-calendar-check text-white"></i>
+                                </div>
+                                <button class="glass-button" aria-label="Configurações férias" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                            </div>
+
+                            <h3 class="text-white">Férias</h3>
+                            <p class="small text-muted">Programação, vencimentos e saldo de períodos aquisitivos.</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-available">Disponível</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-ferias" type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card: Contratos -->
+                    <div class="col-md-4">
+                        <div class="glass-card report-card" role="button" tabindex="0" aria-pressed="false"
+                            id="card-contratos" data-relatorio="contratos">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div class="stat-icon gradient-green-emerald" style="width:48px;height:48px;">
+                                    <i class="bi bi-file-earmark-text text-white"></i>
+                                </div>
+                                <button class="glass-button" aria-label="Configurações contratos" type="button">
+                                    <i class="bi bi-gear"></i>
+                                </button>
+                            </div>
+
+                            <h3 class="text-white">Contratos</h3>
+                            <p class="small text-muted">Vencimentos, tipos contratuais e alertas de renovação.</p>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge-warning">Atenção</span>
+                                <button class="btn-gerar-relatorio" data-open-modal="modal-contratos" type="button">
+                                    <i class="bi bi-play-fill"></i> Abrir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section> --}}
+        </main>
+    </div>
+</div>
+
+
+<!-- Modal de Filtros Avançados (mesma estrutura do arquivo anterior, mantendo IDs) -->
+{{!-- <div id="overlay-filtro-avancado" class="overlay-modal" style="display:none;">
+    <div class="modal-popup" id="popup-filtro-avancado">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 style="margin:0;color:#fff;font-weight:600;">Filtros Avançados</h3>
+            <button id="fechar-filtro-avancado" class="modal-close"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-filtro-avancado">
+            <div class="mb-3">
+                <label class="modal-label">Período</label>
+                <div class="row g-2">
+                    <div class="col-6"><input type="date" name="data_inicio" class="glass-input"></div>
+                    <div class="col-6"><input type="date" name="data_fim" class="glass-input"></div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="modal-label">Departamento</label>
+                <select name="departamento" class="glass-input">
+                    <option value="">Todos os departamentos</option>
+                    <option value="ti">Tecnologia da Informação</option>
+                    <option value="rh">Recursos Humanos</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2" style="margin-top:24px;">
+                <button type="button" class="glass-button" id="limpar-filtros">Limpar</button>
+                <button type="submit" class="glass-button-primary">Aplicar Filtros</button>
+            </div>
+        </form>
+    </div>
+</div> --}}
+
+<!-- Modal de Exportação -->
+<div id="overlay-exportar" class="overlay-modal" style="display:none;">
+    <div class="modal-popup" id="popup-exportar">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 style="margin:0;color:#ffffff00;font-weight:600;">Exportar Relatórios</h3>
+            <button id="fechar-exportar" class="modal-close"><i class="bi bi-x-lg"></i></button>
+        </div>
+
+        <form id="form-exportar">
+            <div class="mb-3">
+                <label class="modal-label">Formato</label>
+                <select name="formato_export" class="glass-input">
+                    <option value="pdf">PDF</option>
+                    <option value="excel">Excel (.xlsx)</option>
+                    <option value="csv">CSV</option>
+                </select>
+            </div>
+
+            <div class="d-flex justify-content-end gap-2" style="margin-top:24px;">
+                <button type="button" class="glass-button" id="cancelar-exportar">Cancelar</button>
+                <button type="submit" class="glass-button-primary">Exportar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{!-- Pop-up dos card do tipo financeiro --}}
+<!-- ===== Modal: Folha de Pagamento ===== -->
+<div id="modal-folha" class="overlay-modal" style="display:none;">
+    <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-folha-title">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h3 id="modal-folha-title" style="margin:0;color:#fff;">
+                    Relatório: Folha de Pagamento 
+                    <span class="badge bg-success ms-2"></span>
+                </h3>
+                <p class="small text-muted" style="margin:4px 0 0 0;">
+                    Configurar período, filtros e opções analíticas.
+                </p>
+            </div>
+            <button class="modal-close" data-close-modal="modal-folha" aria-label="Fechar modal">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="report-modal-body">
+            <div class="report-controls">
+                <form id="form-folha" class="report-form">
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="modal-label">Data início</label>
+                            <input type="date" id="data-inicio-folha" name="inicio" class="glass-input" 
+                                   value="{{defaultStartDate}}">
+                        </div>
+                        <div class="col-6">
+                            <label class="modal-label">Data fim</label>
+                            <input type="date" id="data-fim-folha" name="fim" class="glass-input" 
+                                   value="{{defaultEndDate}}">
+                        </div>
+                    </div>
+
+                    <div class="row g-2 mb-3">
+                        <div class="col-6">
+                            <label class="modal-label">Departamento</label>
+                            <select id="departamento-folha" name="departamento" class="glass-input">
+                                <option value="">Todos</option>
+                                <!-- Preenchido dinamicamente -->
+                            </select>
+                        </div>
+                        {{!-- <div class="col-6">
+                            <label class="modal-label">Filial</label>
+                            <select id="filial-folha" name="filial" class="glass-input">
+                                <option value="">Todas</option>
+                            </select>
+                        </div> --}}
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Agrupar por</label>
+                        <select id="agrupar-folha" name="agrupar_por" class="glass-input">
+                            <option value="funcionario">Funcionário</option>
+                            <option value="setor">Setor</option>
+                            <option value="cargo">Cargo</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="glass-button" data-action="reset-folha">Limpar</button>
+                        <button type="button" class="glass-button-primary" id="btn-gerar-folha">
+                            <i class="bi bi-file-earmark-bar-graph me-1"></i> Gerar Relatório
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-preview" id="preview-folha" style="display:none;">
+                <div class="preview-summary small mb-3" style="color: rgba(255,255,255,0.9); padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <!-- Preenchido por JS -->
+                </div>
+
+                <!-- Gráfico -->
+                <div class="chart-container mb-4" data-chart="folha" style="min-height:250px;">
+                    <!-- Renderizado por analiseFinanceira.js -->
+                </div>
+
+                <!-- Tabela -->
+                <div class="table-responsive">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Nome/Grupo</th>
+                                <th class="text-end">Salário Bruto</th>
+                                <th class="text-end">Descontos</th>
+                                <th class="text-end">Benefícios</th>
+                                <th class="text-end">Líquido</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-folha-tbody">
+                            <!-- Preenchido por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+                    <select class="glass-input" id="export-format-folha" style="width:140px;">
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                    <button type="button" class="glass-button" data-action="download-preview-folha" 
+                            data-tipo="folha">
+                        <i class="bi bi-download me-1"></i> Exportar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Modal: Custo por Pessoal ===== -->
+<div id="modal-custo" class="overlay-modal" style="display:none;">
+    <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-custo-title">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h3 id="modal-custo-title" style="margin:0;color:#fff;">
+                    Relatório: Custo por Pessoal
+                    <span class="badge bg-success ms-2"></span>
+                </h3>
+                <p class="small text-muted" style="margin:4px 0 0 0;">
+                    Analisa distribuição de custos por colaborador/centro e tendências.
+                </p>
+            </div>
+            <button class="modal-close" data-close-modal="modal-custo" aria-label="Fechar modal">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="report-modal-body">
+            <div class="report-controls">
+                <form id="form-custo" class="report-form">
+                    <div class="mb-3">
+                        <label class="modal-label">Período</label>
+                        <select id="periodo-custo" name="periodo" class="glass-input">
+                            <option value="mensal">Mensal</option>
+                            <option value="trimestral">Trimestral</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Agrupar por</label>
+                        <select id="agrupar-custo" name="agrupar_por" class="glass-input">
+                            <option value="setor">Setor</option>
+                            <option value="cargo">Cargo</option>
+                            <option value="funcionario">Funcionário</option>
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="glass-button" data-action="reset-custo">Limpar</button>
+                        <button type="button" class="glass-button-primary" id="btn-gerar-custo">
+                            <i class="bi bi-cash-stack me-1"></i> Gerar Relatório
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-preview" id="preview-custo" style="display:none;">
+                <div class="preview-summary small mb-3" style="color: rgba(255,255,255,0.9); padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <!-- Preenchido por JS -->
+                </div>
+
+                <!-- Gráfico -->
+                <div class="chart-container mb-4" data-chart="custo" style="min-height:250px;">
+                    <!-- Renderizado por analiseFinanceira.js -->
+                </div>
+
+                <!-- Tabela -->
+                <div class="table-responsive">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Agrupamento</th>
+                                <th class="text-end">Salário</th>
+                                <th class="text-end">Encargos</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-custo-tbody">
+                            <!-- Preenchido por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+                    <select class="glass-input" id="export-format-custo" style="width:140px;">
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                    <button type="button" class="glass-button" data-action="download-preview-custo"
+                            data-tipo="custo">
+                        <i class="bi bi-download me-1"></i> Exportar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Modal: Gastos com Benefícios ===== -->
+<div id="modal-beneficios" class="overlay-modal" style="display:none;">
+    <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-beneficios-title">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h3 id="modal-beneficios-title" style="margin:0;color:#fff;">
+                    Relatório: Gastos com Benefícios
+                    <span class="badge bg-success ms-2"></span>
+                </h3>
+                <p class="small text-muted" style="margin:4px 0 0 0;">
+                    Análise detalhada por tipo de benefício e tendências.
+                </p>
+            </div>
+            <button class="modal-close" data-close-modal="modal-beneficios" aria-label="Fechar modal">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div class="report-modal-body">
+            <div class="report-controls">
+                <form id="form-beneficios" class="report-form">
+                    <div class="mb-3">
+                        <label class="modal-label">Período</label>
+                        <select id="periodo-beneficios" name="periodo" class="glass-input">
+                            <option value="mensal">Mensal</option>
+                            <option value="trimestral">Trimestral</option>
+                            <option value="anual">Anual</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Tipo de benefício</label>
+                        <select id="tipo-beneficio" name="tipo" class="glass-input">
+                            <option value="">Todos</option>
+                            <!-- Preenchido dinamicamente -->
+                        </select>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="glass-button" data-action="reset-beneficios">Limpar</button>
+                        <button type="button" class="glass-button-primary" id="btn-gerar-beneficios">
+                            <i class="bi bi-gift me-1"></i> Gerar Relatório
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-preview" id="preview-beneficios" style="display:none;">
+                <div class="preview-summary small mb-3" style="color: rgba(255,255,255,0.9); padding: 12px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <!-- Preenchido por JS -->
+                </div>
+
+                <!-- Gráfico -->
+                <div class="chart-container mb-4" data-chart="beneficios" style="min-height:250px;">
+                    <!-- Renderizado por analiseFinanceira.js -->
+                </div>
+
+                <!-- Tabela -->
+                <div class="table-responsive">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Benefício</th>
+                                <th class="text-center">Colaboradores</th>
+                                <th class="text-end">Custo Médio</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-beneficios-tbody">
+                            <!-- Preenchido por JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+                    <select class="glass-input" id="export-format-beneficios" style="width:140px;">
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                    <button type="button" class="glass-button" data-action="download-preview-beneficios"
+                            data-tipo="beneficios">
+                        <i class="bi bi-download me-1"></i> Exportar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- Pop-up dos cards do tipo jornada e ponto --}}
+<!-- ===== Modal: Registro de Ponto ===== -->
+<div id="modal-registro-ponto" class="overlay-modal" style="display:none;">
+    <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-registro-ponto-title">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h3 id="modal-registro-ponto-title" style="margin:0;color:#fff;">Relatório: Registro de Ponto</h3>
+                <p class="small text-muted" style="margin:4px 0 0 0;">Detalhes das marcações e incidentes (batidas
+                    faltantes, duplicadas).</p>
+            </div>
+            <button class="modal-close" data-close-modal="modal-registro-ponto" aria-label="Fechar modal"><i
+                    class="bi bi-x-lg"></i></button>
+        </div>
+
+        <div class="report-modal-body">
+            <div class="report-controls">
+                <form id="form-registro-ponto" class="report-form">
+                    <div class="row g-2 mb-3">
+                        <div class="col-6"><label class="modal-label">Início</label><input type="date" name="inicio"
+                                class="glass-input"></div>
+                        <div class="col-6"><label class="modal-label">Fim</label><input type="date" name="fim"
+                                class="glass-input"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Filtro</label>
+                        <select name="filtro_tipo" class="glass-input">
+                            <option value="">Todos</option>
+                            <option value="faltantes">Batidas faltantes</option>
+                            <option value="duplicadas">Batidas duplicadas</option>
+                            <option value="fora_horario">Fora do horário</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Detalhamento</label>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <label><input type="checkbox" name="detalhar_colaborador"> Por colaborador</label>
+                            <label><input type="checkbox" name="detalhar_setor"> Por setor</label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="glass-button" data-action="reset-registro-ponto">Limpar</button>
+                        <button type="button" class="glass-button-primary" data-action="preview-registro-ponto">Gerar
+                            Preview</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-preview" id="preview-registro-ponto">
+                <div class="chart-placeholder" data-chart="registro-ponto"
+                    style="min-height:170px;display:flex;align-items:center;justify-content:center;">
+                    <span class="small text-muted">[Gráfico de presença — placeholder]</span>
+                </div>
+
+                <div class="table-responsive mt-3">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Colaborador</th>
+                                <th>Entrada</th>
+                                <th>Saída</th>
+                                <th>Obs</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-registro-ponto-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+                    <select class="glass-input" id="export-format-registro-ponto" style="width:140px;">
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                    <button type="button" class="glass-button"
+                        data-action="download-preview-registro-ponto">Exportar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Modal: Horas Extras ===== -->
+<div id="modal-horas-extras" class="overlay-modal" style="display:none;">
+    <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-horas-extras-title">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h3 id="modal-horas-extras-title" style="margin:0;color:#fff;">Relatório: Horas Extras</h3>
+                <p class="small text-muted" style="margin:4px 0 0 0;">Análise de horas extras por colaborador, centro de
+                    custo e sazonalidade.</p>
+            </div>
+            <button class="modal-close" data-close-modal="modal-horas-extras" aria-label="Fechar modal"><i
+                    class="bi bi-x-lg"></i></button>
+        </div>
+
+        <div class="report-modal-body">
+            <div class="report-controls">
+                <form id="form-horas-extras" class="report-form">
+                    <div class="row g-2 mb-3">
+                        <div class="col-6"><label class="modal-label">Período início</label><input type="date"
+                                name="inicio" class="glass-input"></div>
+                        <div class="col-6"><label class="modal-label">Período fim</label><input type="date" name="fim"
+                                class="glass-input"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Agrupar por</label>
+                        <select name="agrupar_por" class="glass-input">
+                            <option value="funcionario">Funcionário</option>
+                            <option value="centro_custo">Centro de custo</option>
+                            <option value="projeto">Projeto</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Filtros adicionais</label>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <label><input type="checkbox" name="apenas_aprovadas"> Apenas aprovadas</label>
+                            <label><input type="checkbox" name="incluir_compensadas"> Incluir compensadas</label>
+                            <label><input type="checkbox" name="serie_temporal"> Série temporal mensal</label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="glass-button" data-action="reset-horas-extras">Limpar</button>
+                        <button type="button" class="glass-button-primary" data-action="preview-horas-extras">Gerar
+                            Preview</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-preview" id="preview-horas-extras">
+                <div class="chart-placeholder" data-chart="horas-extras"
+                    style="min-height:170px;display:flex;align-items:center;justify-content:center;">
+                    <span class="small text-muted">[Gráfico de horas extras — placeholder]</span>
+                </div>
+
+                <div class="table-responsive mt-3">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Colaborador</th>
+                                <th>Horas</th>
+                                <th>Projeto</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-horas-extras-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+                    <select class="glass-input" id="export-format-horas-extras" style="width:140px;">
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                    <button type="button" class="glass-button"
+                        data-action="download-preview-horas-extras">Exportar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== Modal: Índice de Absenteísmo ===== -->
+<div id="modal-absenteismo" class="overlay-modal" style="display:none;">
+    <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-absenteismo-title">
+        <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+                <h3 id="modal-absenteismo-title" style="margin:0;color:#fff;">Relatório: Índice de Absenteísmo</h3>
+                <p class="small text-muted" style="margin:4px 0 0 0;">Indicadores de faltas, ausências e análise de
+                    causas.</p>
+            </div>
+            <button class="modal-close" data-close-modal="modal-absenteismo" aria-label="Fechar modal"><i
+                    class="bi bi-x-lg"></i></button>
+        </div>
+
+        <div class="report-modal-body">
+            <div class="report-controls">
+                <form id="form-absenteismo" class="report-form">
+                    <div class="row g-2 mb-3">
+                        <div class="col-6"><label class="modal-label">Período inicio</label><input type="date"
+                                name="inicio" class="glass-input"></div>
+                        <div class="col-6"><label class="modal-label">Período fim</label><input type="date" name="fim"
+                                class="glass-input"></div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Segmentar por</label>
+                        <select name="segmentar_por" class="glass-input">
+                            <option value="setor">Setor</option>
+                            <option value="cargo">Cargo</option>
+                            <option value="filial">Filial</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="modal-label">Análises adicionais</label>
+                        <div style="display:flex;flex-direction:column;gap:8px;">
+                            <label><input type="checkbox" name="causas_classificadas"> Classificar causas</label>
+                            <label><input type="checkbox" name="comparar_periodo"> Comparar com período anterior</label>
+                            <label><input type="checkbox" name="tendencia_mensal"> Tendência mensal</label>
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2 justify-content-end">
+                        <button type="button" class="glass-button" data-action="reset-absenteismo">Limpar</button>
+                        <button type="button" class="glass-button-primary" data-action="preview-absenteismo">Gerar
+                            Preview</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="report-preview" id="preview-absenteismo">
+                <div class="chart-placeholder" data-chart="absenteismo"
+                    style="min-height:170px;display:flex;align-items:center;justify-content:center;">
+                    <span class="small text-muted">[Gráfico de absenteísmo — placeholder]</span>
+                </div>
+
+                <div class="table-responsive mt-3">
+                    <table class="glass-table">
+                        <thead>
+                            <tr>
+                                <th>Segmento</th>
+                                <th>Faltas</th>
+                                <th>Taxa (%)</th>
+                                <th>Período</th>
+                            </tr>
+                        </thead>
+                        <tbody id="preview-absenteismo-tbody"></tbody>
+                    </table>
+                </div>
+
+                <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+                    <select class="glass-input" id="export-format-absenteismo" style="width:140px;">
+                        <option value="pdf">PDF</option>
+                        <option value="excel">Excel</option>
+                        <option value="csv">CSV</option>
+                    </select>
+                    <button type="button" class="glass-button"
+                        data-action="download-preview-absenteismo">Exportar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- Pop-ups dos cards do tipo gestão de pessoas --}}
+<!-- ===== Modal: Turnover ===== -->
+{{!-- <div id="modal-turnover" class="overlay-modal" style="display:none;">
+  <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-turnover-title">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h3 id="modal-turnover-title" style="margin:0;color:#fff;">Relatório: Turnover</h3>
+        <p class="small text-muted" style="margin:4px 0 0 0;">Entradas, saídas e indicadores de rotatividade.</p>
+      </div>
+      <button class="modal-close" data-close-modal="modal-turnover" aria-label="Fechar modal"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <div class="report-modal-body">
+      <div class="report-controls">
+        <form id="form-turnover" class="report-form">
+          <div class="row g-2 mb-3">
+            <div class="col-6"><label class="modal-label">Início</label><input type="date" name="inicio" class="glass-input"></div>
+            <div class="col-6"><label class="modal-label">Fim</label><input type="date" name="fim" class="glass-input"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="modal-label">Segmentar por</label>
+            <select name="segmento" class="glass-input">
+              <option value="setor">Setor</option><option value="cargo">Cargo</option><option value="filial">Filial</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="modal-label">Tipos de saída</label>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <label><input type="checkbox" name="saida_demissao" checked> Demissões</label>
+              <label><input type="checkbox" name="saida_rescisao"> Rescisões</label>
+              <label><input type="checkbox" name="saida_desligamento"> Desligamento por justa causa</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="modal-label">Análises adicionais</label>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <label><input type="checkbox" name="taxa_movel"> Taxa móvel (rolling)</label>
+              <label><input type="checkbox" name="cohort_analysis"> Análise por coortes</label>
+              <label><input type="checkbox" name="benchmarks"> Benchmarks externos</label>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 justify-content-end">
+            <button type="button" class="glass-button" data-action="reset-turnover">Limpar</button>
+            <button type="button" class="glass-button-primary" data-action="preview-turnover">Gerar Preview</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="report-preview" id="preview-turnover">
+        <div class="chart-placeholder" data-chart="turnover" style="min-height:170px;display:flex;align-items:center;justify-content:center;">
+          <span class="small text-muted">[Gráfico de turnover — placeholder]</span>
+        </div>
+
+        <div class="table-responsive mt-3">
+          <table class="glass-table">
+            <thead><tr><th>Segmento</th><th>Admissões</th><th>Desligamentos</th><th>Taxa (%)</th></tr></thead>
+            <tbody id="preview-turnover-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+          <select class="glass-input" id="export-format-turnover" style="width:140px;">
+            <option value="pdf">PDF</option><option value="excel">Excel</option><option value="csv">CSV</option>
+          </select>
+          <button type="button" class="glass-button" data-action="download-preview-turnover">Exportar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ===== Modal: Férias ===== -->
+<div id="modal-ferias" class="overlay-modal" style="display:none;">
+  <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-ferias-title">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h3 id="modal-ferias-title" style="margin:0;color:#fff;">Relatório: Férias</h3>
+        <p class="small text-muted" style="margin:4px 0 0 0;">Controle de concessões, vencimentos e planejamento.</p>
+      </div>
+      <button class="modal-close" data-close-modal="modal-ferias" aria-label="Fechar modal"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <div class="report-modal-body">
+      <div class="report-controls">
+        <form id="form-ferias" class="report-form">
+          <div class="row g-2 mb-3">
+            <div class="col-6"><label class="modal-label">Período inicio</label><input type="date" name="inicio" class="glass-input"></div>
+            <div class="col-6"><label class="modal-label">Período fim</label><input type="date" name="fim" class="glass-input"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="modal-label">Status</label>
+            <select name="status" class="glass-input">
+              <option value="">Todos</option><option value="programadas">Programadas</option><option value="pendentes">Pendentes</option><option value="concedidas">Concedidas</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="modal-label">Detalhamento</label>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <label><input type="checkbox" name="por_colaborador"> Por colaborador</label>
+              <label><input type="checkbox" name="por_filial"> Por filial</label>
+              <label><input type="checkbox" name="simular_custos"> Simular custos (1/3 férias, 13º etc.)</label>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 justify-content-end">
+            <button type="button" class="glass-button" data-action="reset-ferias">Limpar</button>
+            <button type="button" class="glass-button-primary" data-action="preview-ferias">Gerar Preview</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="report-preview" id="preview-ferias">
+        <div class="chart-placeholder" data-chart="ferias" style="min-height:170px;display:flex;align-items:center;justify-content:center;">
+          <span class="small text-muted">[Calendário de férias — placeholder]</span>
+        </div>
+
+        <div class="table-responsive mt-3">
+          <table class="glass-table">
+            <thead><tr><th>Colaborador</th><th>Período aquisitivo</th><th>Status</th><th>Data prevista</th></tr></thead>
+            <tbody id="preview-ferias-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+          <select class="glass-input" id="export-format-ferias" style="width:140px;">
+            <option value="pdf">PDF</option><option value="excel">Excel</option><option value="csv">CSV</option>
+          </select>
+          <button type="button" class="glass-button" data-action="download-preview-ferias">Exportar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ===== Modal: Contratos ===== -->
+<div id="modal-contratos" class="overlay-modal" style="display:none;">
+  <div class="modal-popup report-modal" role="dialog" aria-modal="true" aria-labelledby="modal-contratos-title">
+    <div class="d-flex justify-content-between align-items-start mb-3">
+      <div>
+        <h3 id="modal-contratos-title" style="margin:0;color:#fff;">Relatório: Contratos</h3>
+        <p class="small text-muted" style="margin:4px 0 0 0;">Vencimentos, renovações e alertas contratuais.</p>
+      </div>
+      <button class="modal-close" data-close-modal="modal-contratos" aria-label="Fechar modal"><i class="bi bi-x-lg"></i></button>
+    </div>
+
+    <div class="report-modal-body">
+      <div class="report-controls">
+        <form id="form-contratos" class="report-form">
+          <div class="row g-2 mb-3">
+            <div class="col-6"><label class="modal-label">Data referência</label><input type="date" name="referencia" class="glass-input"></div>
+            <div class="col-6"><label class="modal-label">Próximos (dias)</label><input type="number" name="proximos_dias" class="glass-input" placeholder="ex: 30"></div>
+          </div>
+
+          <div class="mb-3">
+            <label class="modal-label">Tipo de contrato</label>
+            <select name="tipo" class="glass-input">
+              <option value="">Todos</option><option value="clt">CLT</option><option value="pj">PJ</option><option value="estagio">Estágio</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label class="modal-label">Alertas</label>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <label><input type="checkbox" name="alerta_renovacao" checked> Renovação próxima</label>
+              <label><input type="checkbox" name="alerta_vencimento"> Vencimento</label>
+              <label><input type="checkbox" name="alerta_documentos"> Documentos pendentes</label>
+            </div>
+          </div>
+
+          <div class="d-flex gap-2 justify-content-end">
+            <button type="button" class="glass-button" data-action="reset-contratos">Limpar</button>
+            <button type="button" class="glass-button-primary" data-action="preview-contratos">Gerar Preview</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="report-preview" id="preview-contratos">
+        <div class="chart-placeholder" data-chart="contratos" style="min-height:170px;display:flex;align-items:center;justify-content:center;">
+          <span class="small text-muted">[Visão de vencimentos — placeholder]</span>
+        </div>
+
+        <div class="table-responsive mt-3">
+          <table class="glass-table">
+            <thead><tr><th>Colaborador</th><th>Tipo</th><th>Vencimento</th><th>Ação</th></tr></thead>
+            <tbody id="preview-contratos-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="export-actions d-flex gap-2 justify-content-end mt-3">
+          <select class="glass-input" id="export-format-contratos" style="width:140px;">
+            <option value="pdf">PDF</option><option value="excel">Excel</option><option value="csv">CSV</option>
+          </select>
+          <button type="button" class="glass-button" data-action="download-preview-contratos">Exportar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> --}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="/js/analiseFinanceira.js"></script>
+<script src="/js/analiseJornada.js"></script>
+<script src="/js/analiseGestor.js"></script>
+<script>
+    // sidebar-filtering.js  (cole dentro de /js/analiseGestor.js ou substitua o bloco pertinente)
+// Torna a sidebar funcional para filtrar seções e cards
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Seletores
+  const tipoLinks = document.querySelectorAll('[data-tipo]');
+  const searchInput = document.getElementById('input-busca-relatorio');
+
+  // Encontra todas as seções relevantes: prefere data-categoria, senão classes existentes
+  function getAllReportSections() {
+    // pega elementos com data-categoria (quando presentes)
+    const byData = Array.from(document.querySelectorAll('[data-categoria]'));
+
+    // pega seções com classes usadas no template (fallback)
+    const byClass = [
+      ...Array.from(document.querySelectorAll('section.financeiro')),
+      ...Array.from(document.querySelectorAll('section.jornada')),
+      ...Array.from(document.querySelectorAll('section.pessoas')),
+      ...Array.from(document.querySelectorAll('section')) // pega quaisquer sections extras
+    ];
+
+    // junta e remove duplicatas
+    const all = new Set([...byData, ...byClass]);
+    return Array.from(all).filter(Boolean);
+  }
+
+  // Resolve categoria de uma seção (data-categoria ou class fallback)
+  function resolveCategoria(section) {
+    if (!section) return null;
+    const dc = section.getAttribute && section.getAttribute('data-categoria');
+    if (dc) return dc;
+    if (section.classList.contains('financeiro')) return 'financeiro';
+    if (section.classList.contains('jornada')) return 'jornada';
+    if (section.classList.contains('pessoas') || section.classList.contains('gestao')) return 'gestao';
+    // fallback: se tiver id ou class que pareça categoria
+    if (section.id) return section.id;
+    return null;
+  }
+
+  // Mostrar / esconder seções por tipo
+  function filtrarPorTipo(tipo) {
+    const sections = getAllReportSections();
+    if (tipo === 'todos') {
+      sections.forEach(s => {
+        s.style.display = '';
+        s.removeAttribute('aria-hidden');
+      });
+    } else {
+      sections.forEach(s => {
+        const cat = resolveCategoria(s);
+        if (cat === tipo) {
+          s.style.display = '';
+          s.removeAttribute('aria-hidden');
+        } else {
+          s.style.display = 'none';
+          s.setAttribute('aria-hidden', 'true');
+        }
+      });
+    }
+
+    // Depois de alterar visibilidade por tipo, reaplica o filtro de busca para sincronizar
+    applySearchFilter();
+  }
+
+  // Aplica busca textual aos cards visíveis (títulos/descrições)
+  function applySearchFilter() {
+    const query = (searchInput?.value || '').toLowerCase().trim();
+    const cards = Array.from(document.querySelectorAll('.report-card'));
+    cards.forEach(card => {
+      // verifica se a seção pai está visível
+      const section = card.closest('section') || card.closest('.financeiro, .jornada, .pessoas') || card.closest('[data-categoria]') || document.body;
+      const sectionVisible = isElementVisible(section);
+
+      // procura título / descrição
+      const titulo = (card.querySelector('h3')?.textContent || '').toLowerCase();
+      const descricao = (card.querySelector('p')?.textContent || '').toLowerCase();
+      const match = query === '' || titulo.includes(query) || descricao.includes(query);
+
+      const col = card.closest('.col-md-4') || card.parentElement;
+      if (sectionVisible && match) {
+        if (col) col.style.display = '';
+        else card.style.display = '';
+      } else {
+        if (col) col.style.display = 'none';
+        else card.style.display = 'none';
+      }
+    });
+  }
+
+  // helper para checar visibilidade (considera display:none e ancestors)
+  function isElementVisible(el) {
+    if (!el) return false;
+    // se seção explicitamente escondida
+    const style = window.getComputedStyle(el);
+    if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return false;
+    // offsetParent null é bom indício de invisibilidade para elementos sem position fixed
+    return el.offsetParent !== null || style.position === 'fixed';
+  }
+
+  // inicializa listeners nos links da sidebar
+  tipoLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const tipo = link.getAttribute('data-tipo');
+      // atualiza classes visuais (ativa / desativa)
+      tipoLinks.forEach(l => {
+        l.classList.remove('sidebar-link-active');
+        l.classList.add('sidebar-link-default');
+        l.setAttribute('aria-pressed', 'false');
+      });
+      link.classList.add('sidebar-link-active');
+      link.classList.remove('sidebar-link-default');
+      link.setAttribute('aria-pressed', 'true');
+
+      // aplica filtro
+      filtrarPorTipo(tipo);
+    });
+
+    // suporte teclado: Enter ativa também
+    link.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        link.click();
+      }
+    });
+  });
+
+  // Busca: aplica filtro enquanto o usuário digita
+  if (searchInput) {
+    let searchTimer = null;
+    searchInput.addEventListener('input', () => {
+      // debounce leve
+      if (searchTimer) clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        applySearchFilter();
+      }, 120);
+    });
+
+    // permitir ESC para limpar
+    searchInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchInput.value = '';
+        applySearchFilter();
+      }
+    });
+  }
+
+  // Inicialização: define estado padrão (todos)
+  (function init() {
+    const defaultLink = document.querySelector('[data-tipo].sidebar-link-active') || document.querySelector('[data-tipo="todos"]');
+    if (defaultLink) {
+      defaultLink.click(); // executa filtrarPorTipo e aplica classes
+    } else {
+      filtrarPorTipo('todos');
+    }
+  })();
+
+  // OPTIONAL: expose helper via window para debug/uso manual
+  window._analiseSidebar = {
+    filtrarPorTipo,
+    applySearchFilter,
+    getAllReportSections,
+    resolveCategoria
+  };
+});
+
+</script>

@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Gerenciar Materiais</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #7B68EE;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Roboto Mono', monospace;
+            padding-top: 80px;
+            padding-bottom: 40px;
+        }
+
+        .container-admin {
+            padding: 20px 0;
+            padding-top: 45px;
+        }
+
+        .header-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: #030303;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        .tabs-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 0;
+        }
+
+        .tab-btn {
+            background: rgba(37, 99, 235, 0.1);
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            padding: 12px 30px;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #1e293b;
+        }
+
+        .tab-btn.active {
+            background:  #dc2626;
+            color: white;
+            border-color: transparent;
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+            display: none;
+        }
+
+        .form-section.active {
+            display: block;
+        }
+
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            border-radius: 10px;
+            padding: 12px 15px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            outline: none;
+        }
+
+        .btn-adicionar {
+            background:  #dc2626;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-adicionar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .videos-list-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .videos-list-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .emocao-group {
+            margin-bottom: 30px;
+        }
+
+        .emocao-group-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 20px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(220, 38, 38, 0.05));
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+
+        .emocao-group-icone {
+            font-size: 2rem;
+        }
+
+        .emocao-group-titulo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .emocao-group-contador {
+            margin-left: auto;
+            background: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .material-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .material-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: #2563eb;
+        }
+
+        .material-item-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .material-item-icone {
+            font-size: 2.5rem;
+            flex-shrink: 0;
+        }
+
+        .material-item-info {
+            flex: 1;
+        }
+
+        .material-item-titulo {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .material-item-tipo {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .tipo-video {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: white;
+        }
+
+        .tipo-texto {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .material-item-descricao {
+            color: #64748b;
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .material-item-url {
+            font-size: 0.85rem;
+            color: #2563eb;
+            word-break: break-all;
+            background: rgba(37, 99, 235, 0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .material-item-fontes {
+            font-size: 0.85rem;
+            color: #64748b;
+            font-style: italic;
+            background: rgba(100, 116, 139, 0.05);
+            padding: 8px 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .material-item-texto {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            color: #1e293b;
+            line-height: 1.6;
+            max-height: 150px;
+            overflow-y: auto;
+        }
+
+        .material-item-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .btn-excluir {
+            padding: 8px 20px;
+            border: none;
+            border-radius: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .btn-excluir:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .sem-materiais {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        .sem-materiais-icone {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            opacity: 0.5;
+        }
+
+        .alert-custom {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 15px;
+            font-weight: 600;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            animation: slideInRight 0.3s ease;
+            display: none;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: white;
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .tab-buttons {
+                flex-direction: column;
+            }
+
+            .form-section, .videos-list-section {
+                padding: 20px;
+            }
+
+            .material-item-header {
+                flex-direction: column;
+            }
+
+            .material-item-actions {
+                flex-direction: column;
+            }
+
+            .btn-excluir {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    {{>navbar}}
+
+    <div id="alertCustom" class="alert-custom"></div>
+
+    <div class="container-fluid container-admin">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="header-section">
+                        <h1 class="page-title">Gerenciar Materiais</h1>
+                        <p class="page-subtitle">Adicione vídeos e textos para cada emoção</p>
+                    </div>
+
+                    <div class="tabs-container">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" onclick="mudarTab('video')">🎬 Vídeos</button>
+                            <button class="tab-btn" onclick="mudarTab('texto')">📝 Textos</button>
+                        </div>
+                    </div>
+
+                    <!-- FORMULÁRIO DE VÍDEO -->
+                    <div class="form-section active" id="formVideoSection">
+                        <h2 class="section-title">➕ Adicionar Novo Vídeo</h2>
+                        <form id="formVideo">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Emoção *</label>
+                                    <select class="form-select" id="emocaoVideoSelect" required>
+                                        <option value="">Selecione uma emoção</option>
+                                        <option value="ansioso">😰 Ansioso</option>
+                                        <option value="feliz">😊 Feliz</option>
+                                        <option value="triste">😢 Triste</option>
+                                        <option value="motivado">💪 Motivado</option>
+                                        <option value="calmo">😌 Calmo</option>
+                                        <option value="estressado">😤 Estressado</option>
+                                        <option value="alegre">🎉 Alegre</option>
+                                        <option value="preocupado">😟 Preocupado</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Ícone do Vídeo</label>
+                                    <input type="text" class="form-control" id="iconeVideoInput" placeholder="Ex: 🎬, 🧘, 💆, 🎵" value="🎬">
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Título do Vídeo *</label>
+                                    <input type="text" class="form-control" id="tituloVideoInput" placeholder="Ex: Técnicas de Respiração para Ansiedade" required>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Descrição *</label>
+                                    <textarea class="form-control" id="descricaoVideoInput" rows="3" placeholder="Breve descrição sobre o vídeo" required></textarea>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">URL do Vídeo *</label>
+                                    <input type="url" class="form-control" id="urlVideoInput" placeholder="https://youtube.com/watch?v=..." required>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn-adicionar">
+                                        ➕ Adicionar Vídeo
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- FORMULÁRIO DE TEXTO -->
+                    <div class="form-section" id="formTextoSection">
+                        <h2 class="section-title">➕ Adicionar Novo Texto</h2>
+                        <form id="formTexto">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Emoção *</label>
+                                    <select class="form-select" id="emocaoTextoSelect" required>
+                                        <option value="">Selecione uma emoção</option>
+                                        <option value="ansioso">😰 Ansioso</option>
+                                        <option value="feliz">😊 Feliz</option>
+                                        <option value="triste">😢 Triste</option>
+                                        <option value="motivado">💪 Motivado</option>
+                                        <option value="calmo">😌 Calmo</option>
+                                        <option value="estressado">😤 Estressado</option>
+                                        <option value="alegre">🎉 Alegre</option>
+                                        <option value="preocupado">😟 Preocupado</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Ícone do Texto</label>
+                                    <input type="text" class="form-control" id="iconeTextoInput" placeholder="Ex: 📖, 📝, 💡, ✨" value="📖">
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Título do Texto *</label>
+                                    <input type="text" class="form-control" id="tituloTextoInput" placeholder="Ex: Como Lidar com a Ansiedade" required>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Texto Completo *</label>
+                                    <textarea class="form-control" id="textoInput" rows="8" placeholder="Escreva o conteúdo completo do texto informativo..." required></textarea>
+                                </div>
+
+                                <div class="col-12 mb-3">
+                                    <label class="form-label">Fontes / Referências</label>
+                                    <textarea class="form-control" id="fontesInput" rows="2" placeholder="Ex: Fonte: Ministério da Saúde, 2024"></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <button type="submit" class="btn-adicionar">
+                                        ➕ Adicionar Texto
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="videos-list-section">
+                        <h2 class="section-title">📚 Materiais Cadastrados</h2>
+                        <div id="materiaisContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    const emocoesConfig = {
+        'ansioso': { cor: '#dc2626', label: '😰 Ansioso', icone: '😰' },
+        'feliz': { cor: '#22c55e', label: '😊 Feliz', icone: '😊' },
+        'triste': { cor: '#3b82f6', label: '😢 Triste', icone: '😢' },
+        'motivado': { cor: '#f59e0b', label: '💪 Motivado', icone: '💪' },
+        'calmo': { cor: '#10b981', label: '😌 Calmo', icone: '😌' },
+        'estressado': { cor: '#ef4444', label: '😤 Estressado', icone: '😤' },
+        'alegre': { cor: '#f97316', label: '🎉 Alegre', icone: '🎉' },
+        'preocupado': { cor: '#8b5cf6', label: '😟 Preocupado', icone: '😟' }
+    };
+
+    function mudarTab(tipo) {
+        document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+        document.querySelectorAll('.form-section').forEach(section => section.classList.remove('active'));
+        
+        event.target.classList.add('active');
+        
+        if (tipo === 'video') {
+            document.getElementById('formVideoSection').classList.add('active');
+        } else {
+            document.getElementById('formTextoSection').classList.add('active');
+        }
+    }
+
+    function mostrarAlerta(mensagem, tipo = 'success') {
+        const alerta = document.getElementById('alertCustom');
+        alerta.textContent = mensagem;
+        alerta.className = `alert-custom alert-${tipo}`;
+        alerta.style.display = 'block';
+
+        setTimeout(() => {
+            alerta.style.display = 'none';
+        }, 3000);
+    }
+
+    async function adicionarMaterial(dados) {
+        try {
+            const response = await fetch('/admin/admmaterial', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                mostrarAlerta('Material adicionado com sucesso!', 'success');
+                setTimeout(() => location.reload(), 1500);
+                return true;
+            } else {
+                mostrarAlerta(result.message || 'Erro ao adicionar material!', 'error');
+                return false;
+            }
+        } catch (err) {
+            console.error('Erro:', err);
+            mostrarAlerta('Erro ao adicionar material!', 'error');
+            return false;
+        }
+    }
+
+    async function excluirMaterial(materialId) {
+        try {
+            const response = await fetch(`/admin/admmaterial/${materialId}`, {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' }
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                mostrarAlerta('Material excluído com sucesso!', 'success');
+                setTimeout(() => location.reload(), 1500);
+                return true;
+            } else {
+                mostrarAlerta(result.message || 'Erro ao excluir material!', 'error');
+                return false;
+            }
+        } catch (err) {
+            console.error('Erro:', err);
+            mostrarAlerta('Erro ao excluir material!', 'error');
+            return false;
+        }
+    }
+
+    function renderizarMateriais() {
+        const materiaisPorEmocao = {{{json materiaisPorEmocao}}} || {};
+        const container = document.getElementById('materiaisContainer');
+
+        if (!materiaisPorEmocao || Object.keys(materiaisPorEmocao).length === 0) {
+            container.innerHTML = `
+                <div class="sem-materiais">
+                    <div class="sem-materiais-icone">📚</div>
+                    <p>Nenhum material cadastrado ainda. Adicione o primeiro material acima!</p>
+                </div>
+            `;
+            return;
+        }
+
+        let html = '';
+
+        Object.keys(emocoesConfig).forEach(emocao => {
+            const materiaisEmocao = materiaisPorEmocao[emocao] || [];
+            
+            if (materiaisEmocao.length > 0) {
+                const config = emocoesConfig[emocao];
+                
+                html += `
+                    <div class="emocao-group">
+                        <div class="emocao-group-header">
+                            <div class="emocao-group-icone">${config.icone}</div>
+                            <h3 class="emocao-group-titulo">${config.label}</h3>
+                            <span class="emocao-group-contador">${materiaisEmocao.length} ${materiaisEmocao.length === 1 ? 'material' : 'materiais'}</span>
+                        </div>
+                        
+                        ${materiaisEmocao.map(material => `
+                            <div class="material-item">
+                                <div class="material-item-header">
+                                    <div class="material-item-icone">${material.icone || (material.tipo === 'texto' ? '📖' : '🎬')}</div>
+                                    <div class="material-item-info">
+                                        <span class="material-item-tipo ${material.tipo === 'texto' ? 'tipo-texto' : 'tipo-video'}">
+                                            ${material.tipo === 'texto' ? '📝 TEXTO' : '🎬 VÍDEO'}
+                                        </span>
+                                        <h4 class="material-item-titulo">${material.titulo}</h4>
+                                        
+                                        ${material.tipo === 'video' ? `
+                                            <p class="material-item-descricao">${material.descricao || ''}</p>
+                                            <div class="material-item-url">🔗 ${material.url}</div>
+                                        ` : `
+                                            <div class="material-item-texto">${material.texto || ''}</div>
+                                            ${material.fontes ? `<div class="material-item-fontes">📚 Fontes: ${material.fontes}</div>` : ''}
+                                        `}
+                                    </div>
+                                </div>
+                                <div class="material-item-actions">
+                                    <button class="btn-excluir" onclick="confirmarExclusao(${material.id})">
+                                        🗑️ Excluir
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }
+        });
+
+        container.innerHTML = html || `
+            <div class="sem-materiais">
+                <div class="sem-materiais-icone">📚</div>
+                <p>Nenhum material cadastrado ainda. Adicione o primeiro material acima!</p>
+            </div>
+        `;
+    }
+
+    function confirmarExclusao(materialId) {
+        if (confirm('Tem certeza que deseja excluir este material?')) {
+            excluirMaterial(materialId);
+        }
+    }
+
+    // FORM VÍDEO
+    document.getElementById('formVideo').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const dados = {
+            tipo: 'video',
+            emocao: document.getElementById('emocaoVideoSelect').value,
+            icone: document.getElementById('iconeVideoInput').value || '🎬',
+            titulo: document.getElementById('tituloVideoInput').value,
+            descricao: document.getElementById('descricaoVideoInput').value,
+            url: document.getElementById('urlVideoInput').value
+        };
+
+        if (!dados.emocao || !dados.titulo || !dados.url) {
+            mostrarAlerta('Por favor, preencha todos os campos obrigatórios!', 'error');
+            return;
+        }
+
+        const sucesso = await adicionarMaterial(dados);
+        
+        if (sucesso) {
+            document.getElementById('formVideo').reset();
+        }
+    });
+
+    // FORM TEXTO
+    document.getElementById('formTexto').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const dados = {
+            tipo: 'texto',
+            emocao: document.getElementById('emocaoTextoSelect').value,
+            icone: document.getElementById('iconeTextoInput').value || '📖',
+            titulo: document.getElementById('tituloTextoInput').value,
+            texto: document.getElementById('textoInput').value,
+            fontes: document.getElementById('fontesInput').value
+        };
+
+        if (!dados.emocao || !dados.titulo || !dados.texto) {
+            mostrarAlerta('Por favor, preencha todos os campos obrigatórios!', 'error');
+            return;
+        }
+
+        const sucesso = await adicionarMaterial(dados);
+        
+        if (sucesso) {
+            document.getElementById('formTexto').reset();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderizarMateriais();
+    });
+</script>
+{{>footer}}
+</body>
+</html>

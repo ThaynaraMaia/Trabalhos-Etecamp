@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relatório: Folha de Pagamento</title>
+  
+  <style>
+    @page { size: A4; margin: 15mm 15mm 20mm 15mm; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; padding: 0; background: #fff; color: #1f2937; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 11px; line-height: 1.5; }
+    
+    header.report-header { position: fixed; top: 0; left: 0; right: 0; height: 80px; padding: 12px 15mm;
+      display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #e5e7eb;
+      background: linear-gradient(to bottom, #ffffff 0%, #f9fafb 100%); z-index: 1000; }
+    
+    .brand { display: flex; gap: 12px; align-items: center; }
+    .brand img { height: 45px; width: auto; object-fit: contain; }
+    .brand-info h1 { margin: 0; font-size: 16px; font-weight: 700; color: #111827; }
+    .tax-id { font-size: 10px; color: #6b7280; margin-top: 2px; }
+    
+    .meta { text-align: right; font-size: 10px; color: #6b7280; }
+    .report-title { font-size: 13px; font-weight: 600; color: #111827; margin-bottom: 4px; }
+    .badge { display: inline-block; padding: 3px 8px; background: #10b981; color: white; 
+      border-radius: 4px; font-size: 9px; font-weight: 600; margin-left: 6px; }
+    
+    footer.report-footer { position: fixed; bottom: 0; left: 0; right: 0; height: 40px; padding: 10px 15mm;
+      text-align: center; font-size: 9px; color: #9ca3af; border-top: 1px solid #e5e7eb; background: #fafafa;
+      display: flex; justify-content: space-between; align-items: center; }
+    
+    .page-content { padding: 95px 15mm 50px 15mm; }
+    
+    h1 { font-size: 20px; margin-bottom: 8px; font-weight: 600; color: #111827; }
+    h2 { font-size: 16px; margin: 20px 0 12px; font-weight: 600; color: #111827; }
+    h3 { font-size: 14px; margin: 16px 0 10px; font-weight: 600; color: #111827; }
+    h4 { font-size: 12px; margin: 12px 0 8px; font-weight: 600; color: #111827; }
+    
+    .subtitle { font-size: 12px; color: #6b7280; margin-bottom: 16px; line-height: 1.6; }
+    
+    .filters-section { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 10px 12px; margin-bottom: 16px; font-size: 10px; }
+    .filter-item { display: inline-block; margin-right: 16px; color: #475569; }
+    .filter-item strong { color: #1e293b; font-weight: 600; }
+    
+    .summary-section { margin-bottom: 20px; }
+    .summary-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px; }
+    .summary-card { background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border: 1px solid #e2e8f0;
+      border-radius: 8px; padding: 12px; position: relative; overflow: hidden; }
+    .summary-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: #3b82f6; }
+    .summary-card.success::before { background: #10b981; }
+    .summary-card.warning::before { background: #f59e0b; }
+    .summary-card.danger::before { background: #ef4444; }
+    .summary-card.info::before { background: #3b82f6; }
+    .summary-card .label { font-size: 10px; color: #64748b; text-transform: uppercase; 
+      letter-spacing: 0.5px; margin-bottom: 6px; font-weight: 500; }
+    .summary-card .value { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 4px; }
+    .summary-card .change { font-size: 9px; font-weight: 600; }
+    .summary-card .change.positive { color: #10b981; }
+    .summary-card .change.negative { color: #ef4444; }
+    
+    .insights-section { background: #fefce8; border-left: 4px solid #eab308; padding: 12px; 
+      margin-bottom: 16px; border-radius: 4px; }
+    .insights-section h4 { margin-top: 0; color: #854d0e; font-size: 12px; margin-bottom: 8px; }
+    .insights-section ul { margin: 0; padding-left: 18px; list-style: none; }
+    .insights-section li { font-size: 10px; color: #713f12; margin-bottom: 4px; position: relative; }
+    .insights-section li::before { content: '→'; position: absolute; left: -15px; font-weight: bold; }
+    
+    .alert-box { background: #fee2e2; border-left: 4px solid #ef4444; padding: 10px; 
+      margin-bottom: 12px; border-radius: 4px; font-size: 10px; color: #7f1d1d; }
+    .alert-box strong { color: #991b1b; }
+    
+    .chart-container { margin: 20px 0; page-break-inside: avoid; }
+    .chart-title { font-size: 12px; font-weight: 600; color: #374151; margin-bottom: 10px; 
+      padding-bottom: 6px; border-bottom: 2px solid #e5e7eb; }
+    .chart-wrapper { background: #fafafa; border: 1px solid #e5e7eb; border-radius: 8px; 
+      padding: 16px; margin-top: 8px; }
+    
+    table.report-table { width: 100%; border-collapse: collapse; background: white; 
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); border-radius: 8px; overflow: hidden; margin: 16px 0; }
+    table.report-table thead { background: linear-gradient(to bottom, #f1f5f9 0%, #e2e8f0 100%); }
+    table.report-table thead th { text-align: left; padding: 10px 12px; font-size: 10px; 
+      font-weight: 600; color: #1e293b; text-transform: uppercase; letter-spacing: 0.5px; 
+      border-bottom: 2px solid #cbd5e1; }
+    table.report-table tbody td { padding: 10px 12px; font-size: 10px; color: #334155; 
+      border-bottom: 1px solid #f1f5f9; }
+    table.report-table tbody tr:hover { background: #f8fafc; }
+    table.report-table tbody tr:last-child td { border-bottom: none; }
+    table.report-table tfoot td { padding: 12px; font-weight: 700; font-size: 11px; 
+      background: #f8fafc; border-top: 2px solid #cbd5e1; color: #0f172a; }
+    
+    .group-section { margin-bottom: 24px; page-break-inside: avoid; }
+    .group-header { background: linear-gradient(to right, #3b82f6 0%, #2563eb 100%); color: white;
+      padding: 10px 14px; border-radius: 6px; margin-bottom: 12px; display: flex; 
+      justify-content: space-between; align-items: center; }
+    .group-name { font-size: 13px; font-weight: 600; }
+    .group-badge { background: rgba(255, 255, 255, 0.2); padding: 4px 10px; border-radius: 12px; 
+      font-size: 10px; font-weight: 600; }
+    .group-summary { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 12px; }
+    .group-summary-item { background: #f8fafc; border: 1px solid #e2e8f0; padding: 8px; 
+      border-radius: 4px; text-align: center; }
+    .group-summary-item .label { font-size: 9px; color: #64748b; margin-bottom: 4px; }
+    .group-summary-item .value { font-size: 13px; font-weight: 700; color: #0f172a; }
+    
+    .notes-section { margin-top: 20px; padding: 12px; background: #f9fafb; border: 1px solid #e5e7eb;
+      border-radius: 6px; font-size: 10px; color: #4b5563; line-height: 1.6; }
+    .notes-section strong { color: #1f2937; }
+    
+    .text-right { text-align: right; }
+    .text-center { text-align: center; }
+    .text-bold { font-weight: 700; }
+    .text-muted { color: #6b7280; }
+    .text-sm { font-size: 9px; }
+    .nowrap { white-space: nowrap; }
+    .page-break { page-break-after: always; }
+    .avoid-break { page-break-inside: avoid; }
+    
+    .mt-4 { margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <header class="report-header">
+    <div class="brand">
+      <div class="brand-info">
+        <h1>Minha Empresa</h1>
+      </div>
+    </div>
+
+    <div class="meta">
+      <div class="report-title">
+        Relatório: Folha de Pagamento
+        <span class="badge"></span>
+      </div>
+      <div>Período:  até </div>
+      <div>Gerado por: Sistema</div>
+      <div>30/10/2025, 02:27:14</div>
+    </div>
+  </header>
+
+  <footer class="report-footer">
+    <div>Documento gerado automaticamente — confidencial</div>
+    <div>Página <span class="page-number"></span></div>
+  </footer>
+
+  <div class="page-content">
+    <h1>Relatório: Folha de Pagamento</h1>
+      <div class="subtitle">Resumo: 4 colaboradores | 
+          Total Bruto: R$ 10.400,00 | 
+          Total Líquido: R$ 12.190,20 | 
+          FGTS Empresa: R$ 832,00</div>
+
+      <div class="filters-section">
+        <strong>Filtros aplicados:</strong>
+          <span class="filter-item">
+            <strong>agrupar_folha:</strong> Funcionário
+          </span>
+      </div>
+
+      <div class="summary-section">
+        <h2>Resumo Executivo</h2>
+        
+        <div class="summary-cards">
+          <div class="summary-card success">
+            <div class="label">Total Bruto</div>
+            <div class="value">R$ 10.400,00</div>
+          </div>
+
+          <div class="summary-card warning">
+            <div class="label">Total Descontos</div>
+            <div class="value">R$ 909,80</div>
+            <div class="change text-muted">
+              8.75% do bruto
+            </div>
+          </div>
+
+          <div class="summary-card info">
+            <div class="label">Benefícios</div>
+            <div class="value">R$ 2.700,00</div>
+            <div class="change text-muted">
+              25.96% do bruto
+            </div>
+          </div>
+
+          <div class="summary-card success">
+            <div class="label">Total Líquido</div>
+            <div class="value">R$ 12.190,20</div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <h2 class="mt-4">Detalhamento Individual</h2>
+      
+      <table class="report-table">
+        <thead>
+          <tr>
+            <th style="width: 28%">Colaborador</th>
+            <th class="text-right" style="width: 14%">Salário Bruto</th>
+            <th class="text-right" style="width: 11%">INSS</th>
+            <th class="text-right" style="width: 11%">IRRF</th>
+            <th class="text-right" style="width: 12%">Benefícios</th>
+            <th class="text-right" style="width: 10%">FGTS</th>
+            <th class="text-right" style="width: 14%">Líquido</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>
+                <div class="text-bold"></div>
+                <div class="text-sm text-muted"></div>
+              </td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right text-bold">R$ 0,00</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold"></div>
+                <div class="text-sm text-muted"></div>
+              </td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right text-bold">R$ 0,00</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold"></div>
+                <div class="text-sm text-muted"></div>
+              </td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right text-bold">R$ 0,00</td>
+            </tr>
+            <tr>
+              <td>
+                <div class="text-bold"></div>
+                <div class="text-sm text-muted"></div>
+              </td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right nowrap">R$ 0,00</td>
+              <td class="text-right text-bold">R$ 0,00</td>
+            </tr>
+        </tbody>
+          <tfoot>
+            <tr>
+              <td class="text-right">Total Geral:</td>
+              <td class="text-right">R$ 10.400,00</td>
+              <td class="text-right">R$ 861,28</td>
+              <td class="text-right">R$ 48,52</td>
+              <td class="text-right">R$ 2.700,00</td>
+              <td class="text-right">R$ 0,00</td>
+              <td class="text-right text-bold">R$ 12.190,20</td>
+            </tr>
+          </tfoot>
+      </table>
+
+
+    <div class="notes-section mt-4 avoid-break">
+      <strong>ℹ Informações Importantes:</strong><br>
+      • Este relatório foi gerado automaticamente com base nos dados do sistema.<br>
+      • Os valores refletem a situação no momento da geração.<br>
+      • Documento confidencial - uso restrito.
+    </div>
+  </div>
+</body>
+</html>

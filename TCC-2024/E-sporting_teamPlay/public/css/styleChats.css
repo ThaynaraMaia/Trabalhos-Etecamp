@@ -1,0 +1,43 @@
+
+.con1 {
+    border-radius: 2vw;
+}
+
+.post h1 {
+    margin: 0;
+    background-color: var(--shade1);
+    padding: 1vh;
+    border-radius: 1vw;
+}
+
+.con1 img {
+    filter: brightness(100);
+} 
+.con1 a {
+    color: var(--will);
+    text-decoration: none;
+} 
+
+.post {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1vw;
+}
+
+.notif {
+    position: relative;
+    top: -.2vh;
+    width: 1vw;
+    height: 1vw;
+}
+
+input {
+    color: var(--will);
+    background-color: var(--void);
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 2vw;
+}

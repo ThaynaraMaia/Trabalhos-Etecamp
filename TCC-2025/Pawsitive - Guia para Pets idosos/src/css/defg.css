@@ -1,0 +1,159 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "AlteHassGrotesk";
+    font-weight: 300;
+}
+
+body{
+    background-color: white
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskRegular.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskBold.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+
+footer {
+    margin-top: auto;
+    background-color: #efebce;
+    width: 100%;
+    height: 220px;
+}
+
+#rownav {
+    text-align: center;
+    background-color: #efebce;
+}
+
+#imgnav {
+    width: 290px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav2 {
+    margin-top: 15px;
+}
+
+#linksnav {
+    color: #4E6422;
+}
+
+#linksnav:hover {
+    color: #A8B16B;
+}
+
+.btnTipo{
+    text-align: center;
+    align-items: center;
+    gap: 70px;
+    justify-content: center;
+    display: flex;
+    margin: 100px;
+}
+
+.btndog{
+    border: solid 1px #C06500;
+    border-radius: 15px;
+}
+
+.btndog:hover{
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.btncat{
+    filter: drop-shadow(2px 4px 8px #C0650060);
+    height: 260px;
+    width: 260px;
+    border: solid 1px #C06500;
+    border-radius: 15px;
+}
+
+.btncat:hover{
+    transform: scale(1.1);
+    transition: 0.5s;
+}
+
+.card{
+    width: 250px;
+    height: 250px;
+}
+
+h2{
+    color: #4E6422;
+}
+
+p{
+    font-size: 18px;
+}
+
+/* FLIP-CARD */
+
+.flip-card{
+    width: 300px;
+    height: 400px;
+    perspective: 1000px;
+}
+
+.flip-card:hover .flip-card-inner{
+    transform: rotateY(-180deg);
+}
+
+.flip-card .flip-card-back{
+    transform: rotateY(-180deg);
+}
+
+.flip-card-inner{
+    position: relative;
+    transition: 1s;
+    transform-style: preserve-3d;
+}
+
+.flip-card-front, .flip-card-back{
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.flip-card-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 30px;
+    border: solid 2px #C06500;
+}
+
+#flip-cards{
+    text-align: center;
+    align-items: center;
+    gap: 20px;
+    justify-content: center;
+    display: flex;
+    margin: 100px;
+}
+
+/* .tipo {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+} */
+
+/* sugestoes */
+
+/* .bSugestoes{
+    background-color: #4E6422;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+} */

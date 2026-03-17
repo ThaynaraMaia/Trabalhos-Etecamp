@@ -1,0 +1,483 @@
+/* INICIANDO ESTILIZAÇÃO DO FUNDO  */
+
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+}
+
+body{
+    background: #81C0E9;
+    background: radial-gradient(circle, rgba(129, 192, 233, 1) 0%, rgb(236, 251, 255) 100%);
+    height: 100vh;
+}
+
+@font-face {
+    font-family: 'Logo';
+    src: url('../../../frontend/fontes/Logo.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Titulo';
+    src: url('../../../frontend/fontes/Título.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Texto';
+    src: url('../../../frontend/fontes/Texto.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/* ========================
+   HEADER
+======================== */
+.header {
+    height: 120px;
+    grid-area: header;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.6rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    z-index: 120;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .3);
+    backdrop-filter: blur(50px);
+    z-index: -1;
+}
+  .perfil{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1.5px solid #12ba2b;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.navbar{
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar a {
+    justify-items: center;
+    font-size: 2rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-family: 'Texto';
+}
+
+
+#check { display: none; }
+
+.icone {
+    position: absolute;
+    right: 0;
+    font-size: 2.8rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+.logo-marca p {
+    font-family: 'Logo';
+    color: #ffffff;
+    font-size: 2.3em;
+    font-weight: 700;
+    padding: -100px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+}
+
+.logo-marca {
+  display: flex;
+  align-items: center;
+  margin-left: 0; 
+  padding-left: 0; 
+}
+
+
+
+/* introdução */
+
+
+h2#inicio {
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 4rem;
+    z-index: 1;
+    text-transform: uppercase;
+    font-family: 'Titulo';
+    color: #fff;
+    letter-spacing: 5px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
+}
+
+#texto_in{
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 1.8rem;
+    letter-spacing: 3px;
+    color: #fff;
+    font-family: 'Texto' ;
+    padding-top: 5%;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
+}
+
+
+#conteudo {
+    margin-top: 13%;
+    color: #000;
+    padding: 60px 20px;
+    text-align: center;
+    min-height: 100vh;
+}
+
+
+
+
+/* ICONE  */
+
+
+
+
+/* COMEÇO ONDAS  */
+
+#onda{
+    display: block;
+    width: 100%;
+}
+
+
+
+
+
+/* INICIO DO CONTEUDO  */
+
+
+
+
+
+/* Fundo animado de bolhas */
+
+.ocean-bottom {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, #c6e1fe, #81c0e9, #38a0dd);
+    overflow: hidden;
+    z-index: -1; 
+}
+
+
+
+.bubble {
+position: absolute;
+bottom: -100px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.5);
+animation: bolhas linear infinite;
+}
+
+
+@keyframes bolhas {
+from { transform: translateY(0); opacity: 0; }
+10% { opacity: 1; }
+to { transform: translateY(-110vh); opacity: 0; }
+}
+
+
+
+/* ========================
+   FOOTER
+======================== */
+
+
+footer {
+position: relative;
+  background-color: #052b5f;
+  color: #fff;
+  padding: 3rem 10%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  font-size: 0.9rem;
+}
+
+footer h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+footer .contatos, footer .redes, footer .mapa {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+footer .redes a {
+  color: #fff;
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  transition: color 0.3s;
+}
+
+footer .redes a:hover {
+  color: #1da1f2; /* cor azul Twitter como exemplo */
+  cursor: pointer;
+}
+
+footer .mapa iframe {
+  border: none;
+  width: 100%;
+  height: 150px;
+  border-radius: 10px;
+}
+
+/* Copyright */
+footer .copyright {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: #ccc;
+  border-top: 1px solid #0b3971;
+  padding-top: 1rem;
+}
+
+/* ========================
+   RESPONSIVIDADE FOOTER
+======================== */
+@media (max-width: 900px) {
+  footer {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  footer .redes a {
+    margin: 0 0.5rem;
+  }
+  footer .mapa iframe {
+    height: 200px;
+    margin: 0 auto;
+  }
+}
+
+
+/* RESPONSIVO */
+
+@media (max-width:1300px){
+  
+
+
+}
+
+@media (min-width:600px) and (max-width:768px) {
+    
+        /* introdução */
+
+.fundo{
+    background-image: url(../img/Fundo_OceaninhoM.png);
+    background-position: center right;
+}
+
+.titulo{
+    padding-left: 85px;
+    padding-top: 95px;
+    font-size: 1.7rem;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: hsl(209, 72%, 23%);
+}
+
+#inicio{
+    font-size: 1.3rem;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-top: 20px;
+}
+
+/* inicio cards */
+
+.conteudo{
+    margin-bottom: 200px;
+    margin: 0px 30px 0px 30px;
+}
+
+.texto_img{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+/* footer */
+.container{
+padding: 20px 30px 20px 30px;
+}
+
+.img_footer img{
+    width: 80px;
+    height: 60px;
+border-radius: 50%;
+margin: 20px;
+}
+
+.dados p {
+    padding-top: 1.5rem;
+    font-size: 12.5px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.dados i{
+    padding: 1.1rem;
+}
+.local{
+text-align: center;
+}
+
+
+}
+
+@media (min-width:769px)and (max-width:992px) {
+
+/*introdução */
+
+.fundo{
+    background-image: url(../img/Fundo_OceaninhoG.png);
+    background-position: center right;
+}
+
+.titulo{
+    padding-left: 90px;
+    padding-top: 90px;
+    font-size: 1.7rem;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: hsl(209, 72%, 23%);
+}
+
+#inicio{
+    font-size: 1.3rem;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-top: 20px;
+}
+/* inicio cards */
+
+.conteudo{
+    margin-bottom: 200px;
+    padding: 0px 30px 0px 30px;
+}
+
+.texto_img{
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+}
+
+@media (min-width:992px)and (max-width:1200px) {
+/* introdução */
+.titulo{
+     padding-left: 200px;
+    padding-top: 150px;
+    font-size: 2.2rem;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    color: #103b63;
+}
+
+#inicio{
+
+    font-size: 1.3rem;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-top: 20px;
+    color: #103b63;
+}
+
+}
+
+/* RESPONSIVIDADE  */
+
+
+@media (max-width: 992px) {
+  .header {
+    padding: 1.3rem 5%;
+  }
+}
+
+@media (max-width: 768px) {
+  .icone {
+    display: inline-flex;
+  }
+
+  #check:checked ~ .icone #menu-icone {
+    display: none;
+  }
+
+  .icone #sair-icone {
+    display: none;
+  }
+
+  #check:checked ~ .icone #sair-icone {
+    display: block;
+  }
+
+  .navbar {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(50px); /* correção aqui também */
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+    overflow: hidden;
+    transition: .3s ease;
+  }
+
+  #check:checked ~ .icone ~ .navbar {
+    height: 17.7rem;
+  }
+
+  .navbar a {
+    display: block;
+    font-size: 1.1rem;
+    margin: 1.5rem 0;
+    text-align: center;
+    transform: translateY(-50%);
+    transition: .3s ease;
+    opacity: 0;
+  }
+
+  #check:checked ~ .icone ~ .navbar a {
+    transform: translateY(0);
+    transition-delay: calc(.15s * var(--i));
+    opacity: 1;
+  }
+}
+
+
+
+
+

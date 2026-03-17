@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Gerenciar Usuários</title>
+   <link rel="stylesheet" href="../css/stylegerenciarusuarios.css">
+</head>
+<body>
+  <a href="../admin/admin.html" class="back-button">← Voltar</a>
+
+  <header>
+    <h1>Gerenciar Usuários</h1>
+  </header>
+
+  <div class="table-container" role="region" aria-label="Tabela de usuários">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nome</th>
+          <th scope="col">Email</th>
+          <th scope="col">Tipo</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="tabelaUsuarios" aria-live="polite" aria-relevant="all">
+        <!-- Usuários carregados aqui -->
+      </tbody>
+    </table>
+  </div>
+
+  <footer> 
+    <div class="footer-bottom">
+      <p>&copy; 2025 CiaoMundo. Todos os direitos reservados.</p>
+      <p>Desenvolvido com ❤️ para conectar estudantes ao mundo</p>
+    </div>
+  </footer>
+
+  <script>
+    async function carregarUsuarios() {
+      const token = localStorage.getItem("token");
+
+      try {
+        const res = await fetch("/admin/usuarios/usuarios", {
+          headers: { Authorization: "Bearer " + token }
+        });
+
+        if (!res.ok) throw new Error("Erro na requisição");
+
+        const usuarios = await res.json();
+        const tabela = document.getElementById("tabelaUsuarios");
+        tabela.innerHTML = "";
+
+        usuarios.forEach((u, i) => {
+          const isRayssa = u.nome.toLowerCase() === "rayssa";
+          const tipoUsuario = u.tipo_usuario === "Administrador" ? "Administrador" : "Usuário";
+
+          const tr = document.createElement("tr");
+
+          tr.innerHTML = `
+            <td>${u.id_usuario}</td>
+            <td>${u.nome}</td>
+            <td>${u.email}</td>
+            <td>${tipoUsuario}</td>
+            <td>
+              <button class="btn-alterar" ${isRayssa ? "disabled" : ""} aria-label="Alterar tipo do usuário ${u.nome}" onclick="alterarTipo(${u.id_usuario})">Alterar Tipo</button>
+              <button class="btn-excluir" ${isRayssa || u.tipo_usuario === "Administrador" ? "disabled" : ""} aria-label="Excluir usuário ${u.nome}" onclick="excluir(${u.id_usuario})">Excluir</button>
+            </td>
+          `;
+          tabela.appendChild(tr);
+        });
+      } catch (err) {
+        alert("Erro ao carregar usuários: " + err.message);
+      }
+    }
+
+    async function alterarTipo(id) {
+      const token = localStorage.getItem("token");
+      const novoTipo = prompt("Digite o novo tipo de usuário (usuario ou Administrador):");
+      if (!novoTipo) return;
+
+      try {
+        const res = await fetch(`/admin/usuarios/usuarios/${id}/tipo`, {
+          method: "PUT",
+          headers: { "Authorization": "Bearer " + token, "Content-Type": "application/json" },
+          body: JSON.stringify({ tipo_usuario: novoTipo })
+        });
+        const data = await res.json();
+        alert(data.message || data.erro);
+        carregarUsuarios();
+      } catch (err) {
+        alert("Erro ao alterar tipo: " + err.message);
+      }
+    }
+
+    async function excluir(id) {
+      const token = localStorage.getItem("token");
+      try {
+        const res = await fetch(`/admin/usuarios/usuarios/${id}`, {
+          method: "DELETE",
+          headers: { Authorization: "Bearer " + token }
+        });
+        const data = await res.json();
+        alert(data.message || data.erro);
+        carregarUsuarios();
+      } catch (err) {
+        alert("Erro ao excluir usuário: " + err.message);
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const perfilBtnImg = document.getElementById('perfilBtnImg');
+      const token = localStorage.getItem('token');
+
+      
+      carregarUsuarios();
+    });
+  </script>
+
+</body>
+</html>

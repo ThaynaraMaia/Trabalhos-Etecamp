@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lembretes - CiaoMundo</title>
+  <link rel="stylesheet" href="../css/stylelembrete.css">
+</head>
+<body>
+  <nav>
+    <div class="nav-container">
+      
+<div class="nav-logo">
+  <div class="planet-icon">
+  <img src="../images/Ciaomundo.png" id="planetIcon" alt="CiaoMundo" style="cursor: pointer;">
+  </div>
+</div>
+      <div class="nav-links">
+        <a href="./user.html">HOME</a>
+        <a href="./bolsas.html">BOLSAS</a>
+        <a href="./documentos.html">DOCUMENTOS</a>
+        <a href="./simulador.html">SIMULADOR DE CUSTOS</a>
+        <a href="./testepersonalidade.html">TESTE DE PERSONALIDADE</a>
+        <a href="./lembrete.html" class="active">NOTIFICAÇÕES</a>
+      </div>
+      <div class="nav-profile">
+        <a href="../user/perfil.html" title="Perfil do usuário">
+          <img id="perfilBtnImg" src="../images/perfil.png" alt="Foto do usuário" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Banner Hero -->
+  <header>
+    <h1>Lembretes de Bolsas</h1>
+    <p>Organize seus prazos e não perca nenhuma oportunidade de intercâmbio</p>
+  </header>
+
+  <div class="container">
+    <!-- Seção do calendário anual -->
+    <div class="calendar-section">
+      <div class="calendar-header">
+        <h2>Calendário Anual</h2>
+        <p style="color: #a5b4fc; margin-bottom: 1rem;">Clique em qualquer data para adicionar um lembrete</p>
+        
+        <div class="year-selector">
+          <button class="year-btn" id="prev-year">❮ Anterior</button>
+          <span class="current-year" id="current-year">2024</span>
+          <button class="year-btn" id="next-year">Próximo ❯</button>
+        </div>
+      </div>
+
+      <div class="months-grid" id="months-container">
+        <!-- Os meses serão gerados dinamicamente -->
+      </div>
+    </div>
+
+    <!-- Seção de notificações -->
+    <div class="notifications-section">
+      <div class="notifications-header">
+        <h2>Notificações Ativas</h2>
+        <div class="notification-counter" id="notification-counter">
+          0 lembretes
+        </div>
+      </div>
+
+      <div id="notifications-list">
+        <!-- Notificações serão carregadas aqui -->
+      </div>
+
+      <div id="empty-state" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">📅</div>
+        <h3 style="color: #64748b; margin-bottom: 0.5rem;">Nenhum lembrete ativo</h3>
+        <p>Clique em uma data no calendário acima para adicionar seu primeiro lembrete</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para adicionar/editar lembrete -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h3>Novo Lembrete</h3>
+        <button class="close-btn" id="close-modal">×</button>
+      </div>
+
+      <form id="reminder-form">
+        <div class="form-group">
+          <label for="reminder-date">Data</label>
+          <input type="date" id="reminder-date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="reminder-title">Título</label>
+          <input type="text" id="reminder-title" placeholder="Ex: Entrega de documentos" required>
+        </div>
+
+        <div class="form-group">
+          <label for="reminder-description">Descrição (opcional)</label>
+          <textarea id="reminder-description" placeholder="Detalhes sobre o lembrete..."></textarea>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn btn-cancel" id="cancel-btn">Cancelar</button>
+          <button type="submit" class="btn btn-save">Salvar Lembrete</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 CiaoMundo. Todos os direitos reservados.</p>
+      <p>Desenvolvido com ❤️ para conectar estudantes ao mundo</p>
+    </div>
+  </footer>
+
+  <script>
+    // Estado da aplicação
+    let currentYear = new Date().getFullYear();
+    let systemReminders = [];
+    let personalReminders = [];
+    let currentUser = null;
+    
+    const monthNames = [
+      'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+      'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
+    ];
+
+    const weekdays = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+
+    // Inicialização CORRIGIDA
+    document.addEventListener('DOMContentLoaded', async () => {
+      await checkAuthentication();
+      await loadSystemReminders();  // Carregar PRIMEIRO
+      await loadPersonalReminders(); // Carregar PRIMEIRO
+      initializeApp(); // DEPOIS inicializar
+      setupEventListeners();
+    });
+
+    async function checkAuthentication() {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Você precisa estar logado para acessar os lembretes.');
+        window.location.href = '../index.html';
+        return;
+      }
+
+      try {
+        const response = await fetch('/user/perfil', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        
+        if (response.ok) {
+          currentUser = await response.json();
+          console.log('Usuário autenticado:', currentUser.nome);
+        } else {
+          throw new Error('Token inválido');
+        }
+      } catch (error) {
+        console.error('Erro na autenticação:', error);
+        localStorage.removeItem('token');
+        alert('Sua sessão expirou. Faça login novamente.');
+        window.location.href = '../index.html';
+      }
+    }
+
+    function initializeApp() {
+      updateProfilePhoto();
+      document.getElementById('current-year').textContent = currentYear;
+      renderCalendar();
+      renderNotifications();
+      updateNotificationCounter();
+    }
+
+    async function updateProfilePhoto() {
+      const perfilBtnImg = document.getElementById('perfilBtnImg');
+      const token = localStorage.getItem('token');
+
+      try {
+        if (token) {
+          const res = await fetch('/user/perfil', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const user = await res.json();
+            if (user.foto) {
+              perfilBtnImg.src = user.foto;
+              return;
+            }
+          }
+        }
+        const foto = localStorage.getItem('userFoto');
+        perfilBtnImg.src = foto || '../images/perfil.png';
+      } catch (err) {
+        console.error('Erro ao atualizar foto:', err);
+        perfilBtnImg.src = '../images/perfil.png';
+      }
+    }
+
+    function setupEventListeners() {
+      // Navegação do ano
+      document.getElementById('prev-year').addEventListener('click', () => {
+        currentYear--;
+        document.getElementById('current-year').textContent = currentYear;
+        renderCalendar();
+      });
+
+      document.getElementById('next-year').addEventListener('click', () => {
+        currentYear++;
+        document.getElementById('current-year').textContent = currentYear;
+        renderCalendar();
+      });
+
+      // Modal
+      document.getElementById('close-modal').addEventListener('click', closeModal);
+      document.getElementById('cancel-btn').addEventListener('click', closeModal);
+      document.getElementById('modal-overlay').addEventListener('click', (e) => {
+        if (e.target === e.currentTarget) closeModal();
+      });
+
+      // Form
+      document.getElementById('reminder-form').addEventListener('submit', handleSaveReminder);
+
+      // Storage listener
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'userFoto') updateProfilePhoto();
+      });
+
+      // Auto refresh profile photo
+      setInterval(updateProfilePhoto, 2000);
+    }
+
+    async function loadPersonalReminders() {
+      const token = localStorage.getItem('token');
+      if (!token) return;
+
+      try {
+        const response = await fetch('/api/lembrete-pessoal', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (response.ok) {
+          personalReminders = await response.json();
+          console.log('Lembretes pessoais carregados:', personalReminders.length);
+        } else {
+          console.error('Erro ao carregar lembretes pessoais');
+          personalReminders = [];
+        }
+      } catch (error) {
+        console.error('Erro ao carregar lembretes pessoais:', error);
+        personalReminders = [];
+      }
+    }
+
+    async function loadSystemReminders() {
+      try {
+        const response = await fetch('/api/lembrete');
+        if (response.ok) {
+          systemReminders = await response.json();
+          console.log('Lembretes do sistema carregados:', systemReminders.length);
+        } else {
+          systemReminders = [];
+        }
+      } catch (error) {
+        console.error('Erro ao carregar lembretes do sistema:', error);
+        systemReminders = [];
+      }
+    }
+
+    function renderCalendar() {
+      const container = document.getElementById('months-container');
+      container.innerHTML = '';
+
+      for (let month = 0; month < 12; month++) {
+        const monthCard = createMonthCard(month, currentYear);
+        container.appendChild(monthCard);
+      }
+    }
+
+    function createMonthCard(month, year) {
+      const card = document.createElement('div');
+      card.className = 'month-card';
+
+      const monthName = document.createElement('div');
+      monthName.className = 'month-name';
+      monthName.textContent = monthNames[month];
+
+      const weekdaysDiv = document.createElement('div');
+      weekdaysDiv.className = 'weekdays';
+      weekdays.forEach(day => {
+        const weekday = document.createElement('div');
+        weekday.className = 'weekday';
+        weekday.textContent = day;
+        weekdaysDiv.appendChild(weekday);
+      });
+
+      const daysGrid = document.createElement('div');
+      daysGrid.className = 'days-grid';
+
+      // Calcular dias do mês
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const firstDayOfWeek = firstDay.getDay();
+      const daysInMonth = lastDay.getDate();
+
+      // Dias do mês anterior
+      const prevMonth = new Date(year, month, 0);
+      const daysInPrevMonth = prevMonth.getDate();
+      
+      for (let i = firstDayOfWeek - 1; i >= 0; i--) {
+        const dayCell = createDayCell(daysInPrevMonth - i, month - 1, year, true);
+        daysGrid.appendChild(dayCell);
+      }
+
+      // Dias do mês atual
+      for (let day = 1; day <= daysInMonth; day++) {
+        const dayCell = createDayCell(day, month, year, false);
+        daysGrid.appendChild(dayCell);
+      }
+
+      // Dias do próximo mês
+      const remainingCells = 42 - (firstDayOfWeek + daysInMonth);
+      for (let day = 1; day <= remainingCells; day++) {
+        const dayCell = createDayCell(day, month + 1, year, true);
+        daysGrid.appendChild(dayCell);
+      }
+
+      card.appendChild(monthName);
+      card.appendChild(weekdaysDiv);
+      card.appendChild(daysGrid);
+      return card;
+    }
+
+    function createDayCell(day, month, year, isOtherMonth) {
+      const cell = document.createElement('div');
+      cell.className = 'day-cell';
+      cell.textContent = day;
+
+      if (isOtherMonth) {
+        cell.classList.add('other-month');
+      }
+
+      // Ajustar mês para valores corretos
+      const actualMonth = month < 0 ? 11 : month > 11 ? 0 : month;
+      const actualYear = month < 0 ? year - 1 : month > 11 ? year + 1 : year;
+      
+      const cellDate = new Date(actualYear, actualMonth, day);
+      const today = new Date();
+      const dateString = cellDate.toISOString().split('T')[0];
+
+      // Verificar se é hoje
+      if (cellDate.toDateString() === today.toDateString()) {
+        cell.classList.add('today');
+      }
+
+      // Verificar se tem lembrete
+      const hasReminder = personalReminders.some(r => r.data_lembrete === dateString) ||
+                         systemReminders.some(r => {
+                           const reminderDate = new Date(r.bolsa.prazo_inscricao);
+                           return reminderDate.toDateString() === cellDate.toDateString();
+                         });
+
+      if (hasReminder) {
+        cell.classList.add('has-reminder');
+      }
+
+      // Adicionar evento de clique
+      if (!isOtherMonth) {
+        cell.addEventListener('click', () => openModal(dateString));
+      }
+
+      return cell;
+    }
+
+    function openModal(date = '') {
+      const modal = document.getElementById('modal-overlay');
+      const dateInput = document.getElementById('reminder-date');
+      
+      if (date) {
+        dateInput.value = date;
+      }
+      
+      modal.classList.add('show');
+      document.getElementById('reminder-title').focus();
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal-overlay');
+      modal.classList.remove('show');
+      document.getElementById('reminder-form').reset();
+    }
+
+    async function handleSaveReminder(e) {
+      e.preventDefault();
+      
+      const date = document.getElementById('reminder-date').value;
+      const title = document.getElementById('reminder-title').value.trim();
+      const description = document.getElementById('reminder-description').value.trim();
+
+      if (!date || !title) {
+        alert('Por favor, preencha ao menos a data e o título.');
+        return;
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Você precisa estar logado para criar lembretes.');
+        return;
+      }
+
+      try {
+        const response = await fetch('/api/lembrete-pessoal', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            data_lembrete: date,
+            titulo: title,
+            descricao: description
+          })
+        });
+
+        if (response.ok) {
+          closeModal();
+          await loadPersonalReminders();
+          renderCalendar();
+          renderNotifications();
+          updateNotificationCounter();
+          showToast('Lembrete adicionado com sucesso!', 'success');
+        } else {
+          const error = await response.json();
+          throw new Error(error.message || 'Erro ao salvar lembrete');
+        }
+      } catch (error) {
+        console.error('Erro ao salvar lembrete:', error);
+        showToast('Erro ao salvar lembrete: ' + error.message, 'error');
+      }
+    }
+
+    async function removeReminder(id) {
+      if (confirm('Tem certeza que deseja remover este lembrete?')) {
+        const token = localStorage.getItem('token');
+        
+        try {
+          const response = await fetch(`/api/lembrete-pessoal/${id}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+
+          if (response.ok) {
+            await loadPersonalReminders();
+            renderCalendar();
+            renderNotifications();
+            updateNotificationCounter();
+            showToast('Lembrete removido!', 'info');
+          } else {
+            const error = await response.json();
+            throw new Error(error.message || 'Erro ao remover lembrete');
+          }
+        } catch (error) {
+          console.error('Erro ao remover lembrete:', error);
+          showToast('Erro ao remover lembrete: ' + error.message, 'error');
+        }
+      }
+    }
+
+    function renderNotifications() {
+      const container = document.getElementById('notifications-list');
+      const emptyState = document.getElementById('empty-state');
+      
+      container.innerHTML = '';
+
+      // Renderizar lembretes do sistema
+      if (systemReminders.length > 0) {
+        systemReminders.forEach(reminder => {
+          const item = createSystemNotificationItem(reminder);
+          if (item) {
+            container.appendChild(item);
+          }
+        });
+      }
+
+      // Renderizar lembretes pessoais
+      if (personalReminders.length > 0) {
+        // Adicionar separador se houver lembretes do sistema
+        if (systemReminders.length > 0) {
+          const separator = document.createElement('div');
+          separator.style.cssText = `
+            margin: 2rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            text-align: center;
+            color: #64748b;
+            font-weight: 600;
+          `;
+          separator.textContent = 'Seus Lembretes Pessoais';
+          container.appendChild(separator);
+        }
+
+        personalReminders
+          .sort((a, b) => new Date(a.data_lembrete) - new Date(b.data_lembrete))
+          .forEach(reminder => {
+            const item = createPersonalNotificationItem(reminder);
+            if (item) {
+              container.appendChild(item);
+            }
+          });
+      }
+
+      // Mostrar estado vazio se não houver lembretes
+      const totalReminders = systemReminders.length + personalReminders.length;
+      emptyState.style.display = totalReminders === 0 ? 'block' : 'none';
+    }
+
+    function createSystemNotificationItem(reminder) {
+      const item = document.createElement('div');
+      item.className = 'notification-item sistema';
+
+      const hoje = new Date().toISOString().slice(0, 10);
+      const prazo = reminder.bolsa.prazo_inscricao;
+      const cincoDiasAntes = new Date(prazo);
+      cincoDiasAntes.setDate(new Date(prazo).getDate() - 5);
+      const cincoDiasAntesStr = cincoDiasAntes.toISOString().slice(0, 10);
+
+      let iconClass, iconSymbol, title, message;
+      
+      if (hoje === cincoDiasAntesStr) {
+        iconClass = 'warning';
+        iconSymbol = '⏰';
+        title = 'Lembrete de Prazo';
+        message = `Faltam 5 dias para as inscrições da bolsa "${reminder.bolsa.titulo}"`;
+      } else if (hoje === prazo) {
+        iconClass = 'success';
+        iconSymbol = '✅';
+        title = 'Prazo Hoje';
+        message = `Hoje é o dia para inscrições da bolsa "${reminder.bolsa.titulo}"`;
+      } else if (new Date(hoje) > new Date(prazo)) {
+        iconClass = 'info';
+        iconSymbol = '🎓';
+        title = 'Prazo Inicial';
+        message = `As inscrições para a bolsa "${reminder.bolsa.titulo}" já começaram (visível por 15 dias)`;
+      }
+
+      item.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-icon ${iconClass}">
+            ${iconSymbol}
+          </div>
+          <div class="notification-text">
+            <h4>${title}</h4>
+            <p>${message}</p>
+            <div class="notification-date">
+              📅 Prazo original: ${new Date(prazo).toLocaleDateString('pt-BR')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      return item;
+    }
+
+    function createPersonalNotificationItem(reminder) {
+      const item = document.createElement('div');
+      item.className = 'notification-item personal';
+
+      const reminderDate = new Date(reminder.data_lembrete);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      reminderDate.setHours(0, 0, 0, 0);
+      
+      const diffTime = reminderDate - today;
+      const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+      let statusText, iconClass, iconSymbol, additionalInfo = '';
+      
+      // Manter visível por 30 dias APÓS a data do lembrete
+      if (diffDays < -30) {
+        // Não exibir lembretes com mais de 30 dias no passado
+        return null;
+      } else if (diffDays < 0) {
+        const diasPassados = Math.abs(diffDays);
+        statusText = `${diasPassados} ${diasPassados === 1 ? 'dia' : 'dias'} antes`;
+        iconClass = 'info';
+        iconSymbol = '📋';
+        additionalInfo = ` (visível por mais ${30 - diasPassados} ${(30 - diasPassados) === 1 ? 'dia' : 'dias'})`;
+      } else if (diffDays === 0) {
+        statusText = 'Hoje';
+        iconClass = 'warning';
+        iconSymbol = '⚠️';
+      } else if (diffDays === 1) {
+        statusText = 'Amanhã';
+        iconClass = 'warning';
+        iconSymbol = '🔔';
+      } else {
+        statusText = `Em ${diffDays} ${diffDays === 1 ? 'dia' : 'dias'}`;
+        iconClass = 'info';
+        iconSymbol = '📅';
+      }
+
+      item.innerHTML = `
+        <div class="notification-content">
+          <div class="notification-icon ${iconClass}">
+            ${iconSymbol}
+          </div>
+          <div class="notification-text">
+            <h4>${reminder.titulo}</h4>
+            ${reminder.descricao ? `<p>${reminder.descricao}</p>` : ''}
+            <div class="notification-date">
+              ${statusText} • ${reminderDate.toLocaleDateString('pt-BR')}${additionalInfo}
+            </div>
+          </div>
+        </div>
+        <button class="remove-btn" onclick="removeReminder(${reminder.id_lembrete_pessoal})" title="Remover lembrete">
+          ×
+        </button>
+      `;
+
+      return item;
+    }
+
+    function updateNotificationCounter() {
+      const counter = document.getElementById('notification-counter');
+      const total = systemReminders.length + personalReminders.length;
+      counter.textContent = `${total} ${total === 1 ? 'lembrete' : 'lembretes'}`;
+    }
+
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      const colors = {
+        success: '#10b981',
+        error: '#ef4444',
+        info: '#3b82f6',
+        warning: '#f59e0b'
+      };
+
+      toast.style.cssText = `
+        position: fixed;
+        top: 100px;
+        right: 20px;
+        background: ${colors[type]};
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        z-index: 3000;
+        font-weight: 600;
+        animation: slideInRight 0.3s ease;
+      `;
+      
+      toast.textContent = message;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.animation = 'slideOutRight 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Adicionar estilos para as animações dos toasts
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideInRight {
+        from {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+      
+      @keyframes slideOutRight {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Recarregar lembretes do sistema periodicamente
+    setInterval(loadSystemReminders, 5 * 60 * 1000); // A cada 5 minutos
+
+    // Admin button handler
+    document.addEventListener('DOMContentLoaded', () => {
+      const token = localStorage.getItem('token');
+     // Funcionalidade do ícone do planeta para administradores
+  if (token) {
+    try {
+      const payloadBase64 = token.split('.')[1];
+      const decodedPayload = JSON.parse(atob(payloadBase64));
+      const tipoUsuario = decodedPayload.tipo_usuario?.toLowerCase();
+      
+      if (tipoUsuario === 'administrador') {
+        planetIcon.style.cursor = 'pointer';
+        planetIcon.title = 'Voltar para Painel Admin';
+        
+        planetIcon.addEventListener('mouseenter', () => {
+          planetIcon.style.transform = 'scale(1.1)';
+          planetIcon.style.filter = 'drop-shadow(0 0 15px rgba(96, 165, 250, 0.8))';
+        });
+        
+        planetIcon.addEventListener('mouseleave', () => {
+          planetIcon.style.transform = 'scale(1)';
+          planetIcon.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.4))';
+        });
+
+        planetIcon.addEventListener('click', (e) => {
+          e.preventDefault();
+          window.location.href = '/admin/admin.html';
+        });
+      }
+    } catch (err) {
+      console.error('Erro ao verificar tipo de usuário:', err);
+    }
+  }
+});
+
+    
+  
+  </script>
+</body>
+</html>

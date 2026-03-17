@@ -1,0 +1,136 @@
+{{!-- Navbar global --}}
+
+<link rel="stylesheet" href="/css/gerenciarPonto.css">
+  {{> navbar }}
+<section class="container-gestao">
+
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <button class="btn-primary" style="padding-left: 50px; border: 1px solid rgba(255, 255, 255, 0.19) " data-bs-toggle="modal" data-bs-target="#modalPonto">Marcar ponto</button>
+
+    {{!-- <div class="box">
+      <h4>Filtros:</h4>
+      <button class="btn-secondary">Visualizar por setor</button>
+      <button class="btn-secondary">Visualizar total</button>
+    </div> --}}
+
+    <div class="box">
+      <h4>Seus últimos pontos:</h4>
+      <table class="tabela-ultimos-pontos">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Horas</th>
+            <th>Data</th>
+          </tr>
+        </thead>
+        <tbody id="listaUltimosPontos">
+          <tr><td colspan="3">Carregando...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </aside>
+
+  <!-- Painel principal -->
+  <section class="main-panel">
+    
+    <!-- Quadro de jornada -->
+    <div class="card-row">
+      <h4>Quadro de jornada:</h4>
+      <div class="jornada-tags">
+        <div class="tag">Setor ADM</div>
+        <div class="tag">Setor RH</div>
+        <div class="tag">Setor Financeiro</div>
+        <div class="tag">Setor Operacional</div>
+      </div>
+    </div>
+
+    <!-- Informações -->
+    <div class="info-row info-boxes">
+      <div class="info-card">
+        <div class="label">QTR horas totais:</div>
+        <div class="value" id="qtrTotal">0</div>
+        {{!-- <button class="btn-secondary" id="verDetalhes1">Ver detalhes</button> --}}
+      </div>
+
+      <div class="info-card">
+        <div class="label">QTR horas faltantes:</div>
+        <div class="value" id="qtrFaltante">220</div>
+        {{!-- <button class="btn-secondary" id="verDetalhes2">Ver detalhes</button> --}}
+      </div>
+    </div>
+
+    <!-- Últimos registros -->
+    <div class="registros-section">
+      <div class="registros-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h4>Últimos registros da empresa</h4>
+        <button id="btnAtualizar" class="btn-small">Atualizar registros</button>
+      </div>
+      <div id="tabelaRegistros" class="tabela">
+        <div class="placeholder">Carregando...</div>
+      </div>
+    </div>
+
+    <div id="alertContainer" class="mt-3"></div>
+  </section>
+</section>
+
+<!-- MODAL Bootstrap -->
+{{!-- O modal permanece o mesmo --}}
+
+<!-- MODAL Bootstrap -->
+<div class="modal fade" id="modalPonto" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content popup">
+      <div class="modal-header">
+        <h5 class="modal-title">Folha de registro de ponto</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <div id="alertPopup" class="alert d-none"></div>
+
+        <form id="formPonto" class="form-ponto">
+          <label for="nome">Nome</label>
+          <input type="text" id="nome" readonly>
+
+          <label for="setor">Setor</label>
+          <input type="text" id="setor" readonly>
+
+          <label for="tipo_usuario">Tipo de usuário</label>
+          <input type="text" id="tipo_usuario" readonly>
+
+          <input type="hidden" id="tipo_registro">
+          <input type="hidden" id="cnpj" value="{{usuario.cnpj}}">
+          <input type="hidden" id="usuario_id" value="{{usuario.id}}">
+
+          <label>Tipo de registro</label>
+          <div class="tipo-group">
+            <button type="button" class="tipo-btn" data-tipo="entrada">Entrada</button>
+            <button type="button" class="tipo-btn" data-tipo="saida">Saída</button>
+            <button type="button" class="tipo-btn" data-tipo="inicio_intervalo">Início intervalo</button>
+            <button type="button" class="tipo-btn" data-tipo="fim_intervalo">Fim intervalo</button>
+          </div>
+
+          <label>Quantidade de horas</label>
+          <div class="tipo-group">
+            <input type="number" id="inputHoras" step="0.01" min="0.01" max="24" placeholder="Ex: 8.50" required>
+            <div class="hora-btn-group">
+              <button type="button" class="hora-btn" data-horas="4">4h</button>
+              <button type="button" class="hora-btn" data-horas="3">3h</button>
+              <button type="button" class="hora-btn" data-horas="2">2h</button>
+            </div>
+          </div>
+
+          <div class="form-actions mt-3 text-center">
+            <button type="submit" class="btn-primary">Marcar ponto</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/pontoScript.js"></script>
+
+<script src="/js/verificarLogin.js"></script>

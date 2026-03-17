@@ -1,0 +1,846 @@
+{{!-- Pagina de folha de pagamento --}}
+<link rel="stylesheet" href="/css/folhapaga.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+{{> navbar }}
+
+<div class="page-wrapper">
+  <div class="cola-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div>
+        <h3>Setores</h3>
+        <ul id="setores-list">
+          <li>
+            <a href="#" data-setor="Todos" class="sidebar-link sidebar-link-active">
+              <i class="bi bi-people"></i> Todos
+            </a>
+          </li>
+          <!-- Setores serão carregados via JS -->
+        </ul>
+
+        <h3 style="margin-top: 2rem;">Gestão</h3>
+        <ul>
+          <li>
+            <a href="#beneficios" class="sidebar-link sidebar-link-default">
+              <i class="bi bi-credit-card"></i> Benefícios
+            </a>
+          </li>
+          <li>
+            <a href="#holerite" class="sidebar-link sidebar-link-default">
+              <i class="bi bi-card-text"></i> Holerites
+            </a>
+          </li>
+           <li>
+            <button id="btn-config" class="sidebar-link sidebar-link-default">
+              <i class="bi bi-gear"></i> Configurações
+            </button>
+          </li> 
+        </ul>
+      </div>
+    </aside>
+
+    <!-- Conteúdo Principal -->
+    <main class="p-4">
+      <!-- Header -->
+      <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+          <h1 class="text-white mb-2" style="font-size: 1.875rem; font-weight: 700;">
+            Folha de Pagamento
+          </h1>
+          <p style="color: rgba(255,255,255,0.7);">
+            Gerencie salários e benefícios da sua equipe
+          </p>
+        </div>
+        <div class="d-flex gap-3">
+          <button class="glass-button" onclick="abrirModalExportar()">
+            <i class="bi bi-download"></i> Exportar
+          </button>
+          <button class="glass-button-primary" onclick="window.location.href='/gestor/gerenciamento'">
+            <i class="bi bi-plus-lg"></i> Novo Funcionário
+          </button>
+        </div>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="row g-3 mb-4">
+        <!-- Total de Funcionários -->
+        <div class="col-md-3">
+          <div class="stat-card" data-field="total">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="stat-icon gradient-blue-cyan">
+                <i class="bi bi-people text-white"></i>
+              </div>
+              <span class="text-success" style="font-size: 0.875rem; font-weight: 500;">
+                {{#if stats.percentual}}{{stats.percentual}}{{else}}--{{/if}}
+              </span>
+            </div>
+
+            <p class="stat-small-muted mb-1">Total de Colaboradores</p>
+
+            <h3 id="stat-total-func" class="text-white fw-bold" style="font-size: 1.5rem;" role="status"
+              aria-live="polite">
+              {{#if stats.total}}{{stats.total}}{{else}}0{{/if}}
+            </h3>
+          </div>
+        </div>
+
+        <!-- Folha Salarial Total -->
+        <div class="col-md-3">
+          <div class="stat-card" data-field="total_salarios">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="stat-icon gradient-green-emerald">
+                <i class="bi bi-currency-dollar text-white"></i>
+              </div>
+              <span class="text-success" style="font-size: 0.875rem; font-weight: 500;">
+                {{#if stats.variacao_folha}}{{stats.variacao_folha}}{{else}}--{{/if}}
+              </span>
+            </div>
+
+            <p class="stat-small-muted mb-1">Folha Salarial Total</p>
+
+            <h3 id="stat-folha-mensal" class="text-white fw-bold" style="font-size: 1.5rem;" role="status"
+              aria-live="polite">
+              {{#if stats.total_salarios_formatted}}
+              {{stats.total_salarios_formatted}}
+              {{else}}
+              R$ 0,00
+              {{/if}}
+            </h3>
+          </div>
+        </div>
+
+        <!-- Média Salarial -->
+        <div class="col-md-3">
+          <div class="stat-card" data-field="media_salarios">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="stat-icon gradient-purple-pink">
+                <i class="bi bi-graph-up text-white"></i>
+              </div>
+              <span class="text-success" style="font-size: 0.875rem; font-weight: 500;">
+                {{#if stats.variacao_media}}{{stats.variacao_media}}{{else}}--{{/if}}
+              </span>
+            </div>
+
+            <p class="stat-small-muted mb-1">Média Salarial</p>
+
+            <h3 id="stat-media-salarial" class="text-white fw-bold" style="font-size: 1.5rem;" role="status"
+              aria-live="polite">
+              {{#if stats.media_salarios_formatted}}
+              {{stats.media_salarios_formatted}}
+              {{else}}
+              R$ 0,00
+              {{/if}}
+            </h3>
+          </div>
+        </div>
+
+        <!-- Próximo Pagamento -->
+        <div class="col-md-3">
+          <div class="stat-card" data-field="proximo_pagamento">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <div class="stat-icon gradient-orange-red">
+                <i class="bi bi-calendar-check text-white"></i>
+              </div>
+              <span class="text-warning" style="font-size: 0.875rem; font-weight: 500;">
+                {{#if stats.proximo_pagamento_label}}{{stats.proximo_pagamento_label}}{{else}}--{{/if}}
+              </span>
+            </div>
+
+            <p class="stat-small-muted mb-1">Próximo Pagamento</p>
+
+            <h3 id="stat-proximo-pagamento" class="text-white fw-bold" style="font-size: 1.5rem;" role="status"
+              aria-live="polite">
+              {{#if stats.proximo_pagamento}}
+              {{stats.proximo_pagamento}}
+              {{else}}
+              Não configurado
+              {{/if}}
+            </h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabela de Funcionários -->
+      <div class="glass-card">
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-3"
+          style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+          <h2 class="text-white" style="font-size: 1.25rem; font-weight: 700;">
+            Funcionários
+          </h2>
+          <div class="d-flex gap-3">
+            <div class="position-relative">
+              <i class="bi bi-search position-absolute"
+                style="left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5);">
+              </i>
+              <input type="text" class="glass-input" id="input-busca" placeholder="Buscar funcionários..."
+                style="padding-left: 2.5rem; width: 250px;">
+            </div>
+            <button class="glass-button" style="padding: 0.5rem;">
+              <i class="bi bi-funnel"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="glass-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>RM</th>
+                <th>Setor</th>
+                <th>Salário</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="employees-tbody">
+              <!-- Colaboradores serão carregados via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<!-- Popup Configurações de Pagamento -->
+<style>
+  /* Animação simples para o aparecimento do campo dia2 */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in {
+    animation: fadeIn 0.25s ease;
+  }
+</style>
+
+<div id="overlay-config"
+  style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); z-index: 9999; align-items: center; justify-content: center;">
+  <div id="popup-config"
+    style="background: linear-gradient(135deg, rgba(30, 30, 45, 0.95), rgba(20, 20, 35, 0.95)); border-radius: 16px; padding: 30px; max-width: 500px; width: 90%; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 255, 255, 0.1);">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h3 style="margin: 0; color: #fff; font-weight: 600;">Configurações de Pagamento</h3>
+      <button id="fechar-config"
+        style="background: none; border: none; color: rgba(255, 255, 255, 0.7); font-size: 24px; cursor: pointer; padding: 0; width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; transition: color 0.3s;">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form id="form-config">
+      <div class="mb-3">
+        <label style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-bottom: 8px; display: block;">
+          Tipo de pagamento
+        </label>
+        <select name="tipo" class="glass-input"
+          style="width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 14px;">
+          <option value="mensal">Mensal (1x no mês)</option>
+          <option value="quinzenal">Quinzenal (2x no mês)</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-bottom: 8px; display: block;">
+          Dia do pagamento 1
+        </label>
+        <input type="number" name="dia1" class="glass-input" min="1" max="31" placeholder="Digite o dia (1-31)"
+          style="width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 14px;">
+      </div>
+
+      <div class="mb-3" id="campo-dia2" style="display: none;">
+        <label style="color: rgba(255, 255, 255, 0.9); font-size: 14px; margin-bottom: 8px; display: block;">
+          Dia do pagamento 2
+        </label>
+        <input type="number" name="dia2" class="glass-input" min="1" max="31" placeholder="Digite o dia (1-31)"
+          style="width: 100%; padding: 12px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 14px;">
+      </div>
+
+      <div class="d-flex justify-content-end gap-2" style="margin-top: 24px;">
+        <button type="button" class="glass-button" id="cancelar-config"
+          style="padding: 10px 20px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: rgba(255, 255, 255, 0.7); cursor: pointer; transition: all 0.3s;">
+          Cancelar
+        </button>
+        <button type="submit" class="glass-button-primary"
+          style="padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 8px; color: #fff; cursor: pointer; font-weight: 600; transition: all 0.3s;">
+          Salvar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{{!-- Pop-up para fazer a exportação --}}
+<div id="modal-exportar" class="modal-overlay" style="display: none;">
+  <div class="modal-content" style="max-width: 500px;">
+    <div class="modal-header">
+      <h3><i class="bi bi-download"></i> Exportar Folha de Pagamento</h3>
+      <button class="btn-fechar-modal" onclick="fecharModalExportar()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p class="mb-4" style="color: rgba(255,255,255,0.8);">Selecione o tipo de exportação:</p>
+
+      <div class="d-flex flex-column gap-3">
+        <button class="btn-exportacao" onclick="abrirPreview('setor')">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <i class="bi bi-diagram-3 me-3" style="font-size: 1.5rem;"></i>
+              <span>Exportar por Setor</span>
+            </div>
+            <i class="bi bi-chevron-right"></i>
+          </div>
+          <small class="d-block mt-2 ms-5 text-muted">
+            Gera folha separada para cada setor da empresa
+          </small>
+        </button>
+
+        <button class="btn-exportacao" onclick="abrirPreview('total')">
+          <div class="d-flex align-items-center justify-content-between">
+            <div>
+              <i class="bi bi-building me-3" style="font-size: 1.5rem,;"></i>
+              <span>Exportar por Colaborador</span>
+            </div>
+            <i class="bi bi-chevron-right"></i>
+          </div>
+          <small class="d-block mt-2 ms-5 text-muted">
+            Gera folha contendo todos os colaboradores de forma unificada
+          </small>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Preview -->
+<div id="modal-preview" class="modal-overlay" style="display: none;">
+  <div class="modal-content" style="max-width: 1200px; max-height: 90vh;">
+    <div class="modal-header">
+      <h3><i class="bi bi-file-earmark-text"></i> Preview - Folha de Pagamento</h3>
+      <div class="d-flex gap-2">
+        <button class="glass-button" onclick="baixarPDF()">
+          <i class="bi bi-download"></i> Baixar PDF
+        </button>
+        <button class="btn-fechar-modal" onclick="fecharModalPreview()">&times;</button>
+      </div>
+    </div>
+    <div class="modal-body" style="overflow-y: auto; max-height: calc(90vh - 100px);">
+      <div id="preview-content" style="background: white; padding: 40px; color: #000;">
+        <!-- Conteúdo será gerado dinamicamente -->
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .btn-exportacao {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+    color: white;
+    text-align: left;
+  }
+
+  .btn-exportacao:hover {
+    background: rgba(102, 126, 234, 0.2);
+    border-color: rgba(102, 126, 234, 0.5);
+    transform: translateY(-2px);
+  }
+
+  #preview-content {
+    font-family: 'Arial', sans-serif;
+  }
+
+  .folha-header {
+    text-align: center;
+    border-bottom: 3px solid #000;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+  }
+
+  .folha-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+
+  .folha-table th {
+    background: #333;
+    color: white;
+    padding: 12px;
+    text-align: left;
+    font-size: 11pt;
+  }
+
+  .folha-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 10pt;
+  }
+
+  .folha-total {
+    background: #f0f0f0;
+    font-weight: bold;
+    font-size: 12pt;
+  }
+
+  .setor-section {
+    margin-bottom: 40px;
+    page-break-after: always;
+  }
+  .d-flex {
+  color: white  !important;
+  }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/folhaGestor.js"></script>
+
+<!-- Scripts inline existentes (config popup, stats, etc) -->
+<script>
+(function(){
+  // Elementos
+  const abrir = document.getElementById('btn-config');
+  const overlay = document.getElementById('overlay-config');
+  const popup = document.getElementById('popup-config');
+  const fecharBtn = document.getElementById('fechar-config');
+  const cancelar = document.getElementById('cancelar-config');
+  const form = document.getElementById('form-config');
+  const tipo = form ? form.querySelector('select[name="tipo"]') : null;
+  const campoDia2 = document.getElementById('campo-dia2');
+
+  function abrirModal(){ 
+    if (!overlay) return;
+    overlay.style.display = 'flex';
+    if (popup) {
+      popup.style.transform = 'scale(0.9)';
+      popup.style.opacity = '0';
+      setTimeout(() => {
+        popup.style.transition = 'all 0.3s ease';
+        popup.style.transform = 'scale(1)';
+        popup.style.opacity = '1';
+      }, 10);
+    }
+  }
+  
+  function fecharModal(){ 
+    if (!overlay) return;
+    if (popup) {
+      popup.style.transform = 'scale(0.9)';
+      popup.style.opacity = '0';
+    }
+    // esconde o overlay depois que a animação termina (mesmo se popup for ausente)
+    setTimeout(() => {
+      if (overlay) overlay.style.display = 'none';
+    }, 300);
+  }
+
+  if (abrir) abrir.addEventListener('click', (e) => { e.preventDefault(); abrirModal(); });
+  if (fecharBtn) fecharBtn.addEventListener('click', fecharModal);
+  if (cancelar) cancelar.addEventListener('click', fecharModal);
+  
+  if (overlay) {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) fecharModal();
+    });
+  }
+  
+  if (fecharBtn) {
+    fecharBtn.addEventListener('mouseenter', () => {
+      fecharBtn.style.color = '#fff';
+      fecharBtn.style.transform = 'rotate(90deg)';
+    });
+    fecharBtn.addEventListener('mouseleave', () => {
+      fecharBtn.style.color = 'rgba(255, 255, 255, 0.7)';
+      fecharBtn.style.transform = 'rotate(0deg)';
+    });
+  }
+
+  if (tipo) {
+    tipo.addEventListener('change', function(){
+      if (!campoDia2) return;
+      if (this.value === 'quinzenal') {
+        campoDia2.style.display = 'block';
+        campoDia2.classList.remove('fade-in');
+        // forçar reflow para reiniciar animação se necessário
+        // eslint-disable-next-line no-unused-expressions
+        void campoDia2.offsetWidth;
+        campoDia2.classList.add('fade-in');
+      } else {
+        campoDia2.style.display = 'none';
+        campoDia2.classList.remove('fade-in');
+      }
+    });
+  }
+
+  const KEY = 'folhaPagamentoConfig';
+  
+  function loadConfig(){
+    try { return JSON.parse(localStorage.getItem(KEY)) || {}; } 
+    catch(e){ return {}; }
+  }
+  
+  function saveConfig(cfg){
+    try { localStorage.setItem(KEY, JSON.stringify(cfg)); } catch(e){ /* fail silently */ }
+  }
+  
+  function calcularProximoPagamentoDias(cfg){
+    if (!cfg || !cfg.tipo || !cfg.dia1) return null;
+    
+    const hoje = new Date();
+    const ano = hoje.getFullYear();
+    const mes = hoje.getMonth();
+    
+    function diffDias(data){
+      // calcula diferença em dias inteiros
+      const ms = data.setHours(0,0,0,0) - (new Date()).setHours(0,0,0,0);
+      return Math.max(0, Math.ceil(ms/86400000));
+    }
+    
+    const dia1Num = Number(cfg.dia1);
+    if (isNaN(dia1Num) || dia1Num < 1) return null;
+
+    if (cfg.tipo === 'mensal'){
+      let data = new Date(ano, mes, dia1Num);
+      if (data < hoje) data = new Date(ano, mes+1, dia1Num);
+      return diffDias(data);
+    } else {
+      const candidatos = [];
+      candidatos.push(new Date(ano, mes, dia1Num));
+      if (cfg.dia2) {
+        const dia2Num = Number(cfg.dia2);
+        if (!isNaN(dia2Num) && dia2Num >= 1) candidatos.push(new Date(ano, mes, dia2Num));
+      }
+      // ajusta para próximo mês se já passou
+      const ajustados = candidatos.map(d => (d.setHours(0,0,0,0), (d < hoje.setHours(0,0,0,0)) ? new Date(d.getFullYear(), d.getMonth()+1, d.getDate()) : new Date(d)));
+      const prox = ajustados.sort((a,b) => a - b)[0];
+      if (!prox) return null;
+      return diffDias(new Date(prox));
+    }
+  }
+  
+  function aplicarConfigNosCards(){
+    const cfg = loadConfig();
+    const el = document.getElementById('stat-proximo-pagamento');
+    const dias = calcularProximoPagamentoDias(cfg);
+    
+    if (el && typeof dias === 'number') {
+      if (dias === 0) el.textContent = 'Hoje';
+      else if (dias === 1) el.textContent = '1 dia';
+      else el.textContent = dias + ' dias';
+    } else if (el) {
+      el.textContent = 'Não configurado';
+    }
+  }
+
+  (function hydrate(){
+    const cfg = loadConfig();
+    if (form) {
+      if (cfg.tipo && tipo) tipo.value = cfg.tipo;
+      if (typeof cfg.dia1 !== 'undefined' && form.elements['dia1']) form.elements['dia1'].value = cfg.dia1;
+      if (typeof cfg.dia2 !== 'undefined' && form.elements['dia2']) form.elements['dia2'].value = cfg.dia2;
+      if (campoDia2 && tipo) {
+        campoDia2.style.display = (tipo.value === 'quinzenal') ? 'block' : 'none';
+        if (tipo.value === 'quinzenal') campoDia2.classList.add('fade-in');
+      }
+    }
+    aplicarConfigNosCards();
+  })();
+
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      
+      const dia1El = form.elements['dia1'];
+      const dia2El = form.elements['dia2'];
+      const dia1 = Number(dia1El?.value || 0);
+      const dia2Raw = Number(dia2El?.value || 0);
+      const dia2 = (isNaN(dia2Raw) || dia2Raw === 0) ? null : dia2Raw;
+      
+      if (dia1 < 1 || dia1 > 31) {
+        alert('O dia do pagamento 1 deve estar entre 1 e 31!');
+        return;
+      }
+      
+      if ((tipo && tipo.value === 'quinzenal') && (!dia2 || dia2 < 1 || dia2 > 31)) {
+        alert('O dia do pagamento 2 deve estar entre 1 e 31 para pagamento quinzenal!');
+        return;
+      }
+      
+      const cfg = {
+        tipo: tipo ? tipo.value : 'mensal',
+        dia1: dia1,
+        dia2: dia2
+      };
+      
+      saveConfig(cfg);
+      aplicarConfigNosCards();
+      
+      const submitBtn = form.querySelector('button[type="submit"]');
+      if (submitBtn) {
+        const originalText = submitBtn.textContent;
+        const originalBg = submitBtn.style.background;
+        submitBtn.textContent = '✓ Salvo!';
+        submitBtn.style.background = 'linear-gradient(135deg, #11998e 0%, #38ef7d 100%)';
+        
+        setTimeout(() => {
+          submitBtn.textContent = originalText;
+          submitBtn.style.background = originalBg || 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+          fecharModal();
+        }, 1000);
+      } else {
+        fecharModal();
+      }
+    });
+  }
+})();
+</script>
+{{!-- Script para a exportação da folha de pagamento, fiz inline pq ia dar trabalho em outro lugar --}}
+<script>
+    // ============ CONFIGURAÇÃO DO BACKEND_URL ============
+  const BACKEND_URL = (typeof window !== 'undefined' && window.BACKEND_URL && window.BACKEND_URL !== '{{BACKEND_URL}}')
+    ? window.BACKEND_URL
+    : (window.location.hostname === 'localhost' && window.location.port === '3000')
+      ? 'http://localhost:3001'
+      : window.location.origin;
+
+  console.log(' BACKEND_URL configurado:', BACKEND_URL);
+  // =====================================================
+
+  function abrirModalExportar() {
+    document.getElementById('modal-exportar').style.display = 'flex';
+  }
+
+  function fecharModalExportar() {
+    document.getElementById('modal-exportar').style.display = 'none';
+  }
+
+  function fecharModalPreview() {
+    document.getElementById('modal-preview').style.display = 'none';
+  }
+
+  async function abrirPreview(tipo) {
+    try {
+      mostrarLoading(true);
+      fecharModalExportar();
+
+      // Buscar dados do backend
+      const response = await fetch(`${BACKEND_URL}/api/folha/exportar?tipo=${tipo}`, {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+        }
+      });
+
+      if (!response.ok) throw new Error('Erro ao buscar dados');
+
+      const dados = await response.json();
+
+      // Gerar HTML do preview
+      const previewHTML = gerarPreviewHTML(dados, tipo);
+      document.getElementById('preview-content').innerHTML = previewHTML;
+
+      // Armazenar dados para download posterior
+      window.dadosExportacao = { dados, tipo };
+
+      document.getElementById('modal-preview').style.display = 'flex';
+
+    } catch (error) {
+      console.error('Erro ao gerar preview:', error);
+      alert('Erro ao carregar preview: ' + error.message);
+    } finally {
+      mostrarLoading(false);
+    }
+  }
+
+  function gerarPreviewHTML(dados, tipo) {
+    const hoje = new Date().toLocaleDateString('pt-BR');
+    const mesAno = new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+    let html = `
+    <div class="folha-header">
+      <h1 style="margin: 0; font-size: 18pt;">${dados.empresa.nome}</h1>
+      <p style="margin: 5px 0;">CNPJ: ${dados.empresa.cnpj}</p>
+      <h2 style="margin: 15px 0 5px 0; font-size: 16pt;">FOLHA DE PAGAMENTO</h2>
+      <p style="margin: 0; font-size: 11pt;">Referência: ${mesAno}</p>
+      <p style="margin: 5px 0; font-size: 10pt;">Gerado em: ${hoje}</p>
+    </div>
+  `;
+
+    if (tipo === 'setor') {
+      // Agrupa por setor
+      dados.setores.forEach(setor => {
+        html += `
+        <div class="setor-section">
+          <h3 style="background: #667eea; color: white; padding: 12px; margin: 0 0 20px 0; font-size: 14pt;">
+            ${setor.nome} - ${setor.funcionarios.length} Funcionário(s)
+          </h3>
+          ${gerarTabelaFuncionarios(setor.funcionarios)}
+          ${gerarResumoSetor(setor)}
+        </div>
+      `;
+      });
+    } else {
+      // Total da empresa
+      html += `
+      <h3 style="background: #667eea; color: white; padding: 12px; margin: 0 0 20px 0; font-size: 14pt;">
+        Folha Consolidada - ${dados.totalFuncionarios} Funcionário(s)
+      </h3>
+      ${gerarTabelaFuncionarios(dados.funcionarios)}
+    `;
+    }
+
+    // Resumo geral
+    html += gerarResumoGeral(dados.resumo);
+
+    return html;
+  }
+
+  function gerarTabelaFuncionarios(funcionarios) {
+    let html = `
+    <table class="folha-table">
+      <thead>
+        <tr>
+          <th>Matrícula</th>
+          <th>Nome</th>
+          <th>Cargo</th>
+          <th style="text-align: right;">Salário Base</th>
+          <th style="text-align: right;">Proventos</th>
+          <th style="text-align: right;">Descontos</th>
+          <th style="text-align: right;">Líquido</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+    funcionarios.forEach(func => {
+      html += `
+      <tr>
+        <td>${func.numero_registro || '-'}</td>
+        <td>${func.nome}</td>
+        <td>${func.cargo}</td>
+        <td style="text-align: right;">${formatarMoeda(func.salarioBase)}</td>
+        <td style="text-align: right;">${formatarMoeda(func.totalProventos)}</td>
+        <td style="text-align: right;">${formatarMoeda(func.totalDescontos)}</td>
+        <td style="text-align: right;"><strong>${formatarMoeda(func.salarioLiquido)}</strong></td>
+      </tr>
+    `;
+    });
+
+    html += `
+      </tbody>
+    </table>
+  `;
+
+    return html;
+  }
+
+  function gerarResumoSetor(setor) {
+    return `
+    <table class="folha-table" style="margin-top: 20px; width: 50%; margin-left: auto;">
+      <tr class="folha-total">
+        <td>Total de Proventos:</td>
+        <td style="text-align: right;">${formatarMoeda(setor.totalProventos)}</td>
+      </tr>
+      <tr class="folha-total">
+        <td>Total de Descontos:</td>
+        <td style="text-align: right;">${formatarMoeda(setor.totalDescontos)}</td>
+      </tr>
+      <tr class="folha-total" style="background: #667eea; color: white;">
+        <td>Total Líquido do Setor:</td>
+        <td style="text-align: right;">${formatarMoeda(setor.totalLiquido)}</td>
+      </tr>
+    </table>
+  `;
+  }
+
+  function gerarResumoGeral(resumo) {
+    return `
+    <div style="margin-top: 40px; border-top: 3px solid #000; padding-top: 20px;">
+      <h3 style="margin-bottom: 20px; font-size: 14pt;">RESUMO GERAL</h3>
+      
+      <table class="folha-table" style="width: 60%; margin-left: auto;">
+        <tr>
+          <td><strong>Total Bruto Geral:</strong></td>
+          <td style="text-align: right;">${formatarMoeda(resumo.totalBruto)}</td>
+        </tr>
+        <tr>
+          <td><strong>Total INSS:</strong></td>
+          <td style="text-align: right;">${formatarMoeda(resumo.totalINSS)}</td>
+        </tr>
+        <tr>
+          <td><strong>Total IRRF:</strong></td>
+          <td style="text-align: right;">${formatarMoeda(resumo.totalIRRF)}</td>
+        </tr>
+        <tr>
+          <td><strong>Total FGTS:</strong></td>
+          <td style="text-align: right;">${formatarMoeda(resumo.totalFGTS)}</td>
+        </tr>
+        <tr class="folha-total" style="background: #000; color: white; font-size: 14pt;">
+          <td><strong>TOTAL LÍQUIDO GERAL:</strong></td>
+          <td style="text-align: right;"><strong>${formatarMoeda(resumo.totalLiquido)}</strong></td>
+        </tr>
+      </table>
+      
+      <p style="margin-top: 30px; text-align: center; color: #666; font-size: 9pt;">
+        Documento gerado eletronicamente - ${new Date().toLocaleString('pt-BR')}
+      </p>
+    </div>
+  `;
+  }
+
+  async function baixarPDF() {
+    try {
+      mostrarLoading(true);
+
+      const { dados, tipo } = window.dadosExportacao;
+
+      // Enviar para o backend gerar o PDF
+      const response = await fetch(`${BACKEND_URL}/api/folha/exportar/pdf`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token') || sessionStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ dados, tipo })
+      });
+
+      if (!response.ok) throw new Error('Erro ao gerar PDF');
+
+      // Download do arquivo
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `Folha_Pagamento_${tipo}_${new Date().getTime()}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+
+      alert('PDF baixado com sucesso!');
+
+    } catch (error) {
+      console.error('Erro ao baixar PDF:', error);
+      alert('Erro ao baixar PDF: ' + error.message);
+    } finally {
+      mostrarLoading(false);
+    }
+  }
+
+  function formatarMoeda(valor) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL'
+    }).format(valor || 0);
+  }
+
+  function mostrarLoading(show) {
+    // Implementação do loading (adapte conforme seu sistema)
+    console.log('Loading:', show);
+  }
+</script>

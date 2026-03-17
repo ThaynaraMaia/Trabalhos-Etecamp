@@ -1,0 +1,40 @@
+#diario {
+    background-color: rgb(24, 46, 121);
+    padding: 20px 45px;
+    font-weight: 600;
+    box-shadow: 0px 0px 4px 4px rgb(240, 240, 240);
+    position: relative;
+    color: white;
+}
+
+.btn-utilidade {
+    display: flex;
+    margin-left: auto;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: rgb(255, 214, 78);
+    transition: background-color .3s ease;
+}
+
+.btn-utilidade button :hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+
+.btn-utilidade a {
+    text-decoration: none;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+}
+
+.icone-registrar {
+    position: absolute;
+    bottom: 20px;
+    right: 200px;
+    width: 80px;
+}

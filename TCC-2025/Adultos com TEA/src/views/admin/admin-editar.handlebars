@@ -1,0 +1,13 @@
+{{>navbar-adm}}
+<main>
+  <h2>Editar Usuário</h2>
+  {{#if error}}<p class="error">{{error}}</p>{{/if}}
+  <form method="POST" action="/admin/usuarios/editar/{{usuario.id_usuario}}">
+    <label>Nome</label>
+    <input type="text" name="nome" value="{{usuario.nome}}" required>
+    <label>Email</label>
+    <input type="email" name="email" value="{{usuario.email}}" required>
+    <button type="submit">Salvar Alterações</button>
+  </form>
+  <p><a href="/admin/usuarios">Voltar</a></p>
+</main>

@@ -1,0 +1,83 @@
+#conteudoYoga {
+    background-color: rgb(32, 138, 29);
+    color: white;
+    margin-top: 10px;
+    padding: 50px 45px;
+    box-shadow: 0px 0px 4px 4px rgb(240, 240, 240);
+    position: relative;
+}
+
+#conteudoYoga:nth-of-type(even) {
+    background-color: rgb(136, 236, 132);
+}
+
+#yoga {
+    display: flex;
+    min-height: calc(100vh - 70px);
+    position: relative;
+}
+
+#cta-yoga {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 4%;
+}
+
+.title-yoga {
+    font-size: 1.9rem;
+    color: rgb(0, 0, 0);
+}
+
+.title-yoga span {
+    display: flex;
+    font-size: 2.7rem;
+    color: rgb(38, 194, 32);
+}
+
+.description-yoga {
+    font-size: 1.2rem;
+    text-align: justify;
+}
+
+#banner-yoga {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 80%;
+    z-index: 2;
+}
+
+#banner-yoga img {
+    width: fit-content;
+}
+
+.btn-yoga {
+    display: flex;
+}
+
+.btn-yoga a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+}
+
+.btn-yoga a:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+
+.icones-ilustrativo {
+    position: absolute;
+    bottom: 50px;
+    right: 200px;
+    width: 60px;
+}

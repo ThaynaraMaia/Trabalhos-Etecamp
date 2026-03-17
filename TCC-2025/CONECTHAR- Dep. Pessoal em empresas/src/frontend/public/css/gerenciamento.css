@@ -1,0 +1,1298 @@
+/* ===========================================================
+   GERENCIAMENTO - LIQUID GLASS (Isolado da Navbar)
+   =========================================================== */
+
+:root {
+  --bg-image: url('/img/glassmorphism5.jpg');
+  --nav-height: 70px;
+  --nav-top-gap: 10px;
+  --content-offset: calc(var(--nav-height) + var(--nav-top-gap) + 12px);
+  --shadow: 0 8px 30px rgba(6,8,20,0.6); 
+
+  /* Cores e efeitos */
+  --glass-bg: rgba(255, 255, 255, 0.08);
+  --glass-bg-strong: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.25);
+  --accent: rgba(177, 156, 217, 0.9);
+  --shadow-strong: 0 12px 40px rgba(0, 0, 0, 0.147);
+  --blur: 16px;
+ --glass-border: rgba(255,255,255,0.12);
+ --glass-blur: 10px;
+  /* Cards */
+  --card-min: 160px;
+  --card-max: 260px;
+  --card-gap: 12px;
+  --list-gap: 12px;
+}
+
+/* ===========================================================
+   ISOLAMENTO TOTAL DO CONTEÚDO
+   =========================================================== */
+
+#page-gerenciamento {
+  font-family: 'Segoe UI', system-ui, Roboto, 'Helvetica Neue', Arial;
+  color: #fff;
+  background-image: linear-gradient(135deg, rgba(30, 30, 60, 0.188), rgba(10,10,20,0.9)), var(--bg-image);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* ===========================================================
+   LAYOUT PRINCIPAL
+   =========================================================== */
+
+#page-gerenciamento .container-gestao {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* ===========================================================
+   SIDEBAR
+   =========================================================== */
+
+#page-gerenciamento .sidebar {
+  position: sticky;
+  top: calc(var(--nav-top-gap) + 12px);
+  width: 260px;
+  padding: 20px;
+  margin-left: 45px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%)
+}
+
+/* Botões */
+#page-gerenciamento .btn {
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  
+  padding: 8px 14px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border: 1.2px solid var(--glass-border);
+  transition: all 0.22s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+#page-gerenciamento .btn:hover {
+  background: rgba(255,255,255,0.10);
+  transform: translateY(-2px);
+}
+#page-gerenciamento .btn.selected {
+  background: var(--accent);
+  color: #111;
+  border-color: rgba(0,0,0,0.15);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+}
+
+/* ===========================================================
+   SETOR CONTAINER
+   =========================================================== */
+
+#page-gerenciamento .setor-container {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  width: 100%;
+  height: auto !important;
+  min-height: fit-content !important;
+  overflow: visible !important;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-strong);
+  padding: 18px;
+  margin-bottom: 26px;
+  margin-left: 10px;
+  box-sizing: border-box;
+}
+
+/* Título do setor */
+#page-gerenciamento .setor-titulo {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+/* ===========================================================
+   GRID DE CARDS
+   =========================================================== */
+
+#page-gerenciamento .cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  gap: var(--card-gap);
+  margin-top: 12px;
+  box-sizing: border-box;
+}
+
+#page-gerenciamento .card-col {
+  flex: 1 1 var(--card-min);
+  max-width: var(--card-max);
+  min-width: var(--card-min);
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* ===========================================================
+   CARD INDIVIDUAL
+   =========================================================== */
+
+#page-gerenciamento .item-colaborador {
+  width: 100%;
+  min-height: 140px;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.25s ease, background 0.25s ease;
+  word-break: break-word;
+}
+#page-gerenciamento .item-colaborador:hover {
+  transform: translateY(-6px);
+  background: rgba(177, 156, 217, 0.08);
+}
+
+/* Imagem */
+#page-gerenciamento .item-colaborador img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.22);
+  margin-bottom: 12px;
+}
+
+/* Textos */
+#page-gerenciamento .item-colaborador .nome {
+  font-weight: 600;
+  font-size: 1rem;
+  margin: 6px 0 4px;
+}
+#page-gerenciamento .item-colaborador .cargo {
+  font-size: 0.88rem;
+  color: rgba(255,255,255,0.85);
+}
+#page-gerenciamento .item-colaborador .salario {
+  font-size: 0.95rem;
+  margin-top: 8px;
+  color: #c5f0d6;
+  font-weight: 700;
+}
+
+/* ===========================================================
+   MODO LISTA
+   =========================================================== */
+
+#page-gerenciamento .tabela-colaboradores thead { display: none; }
+#page-gerenciamento .tabela-colaboradores tbody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--list-gap);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#page-gerenciamento .tabela-colaboradores tbody tr {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+  word-break: break-word;
+}
+#page-gerenciamento .tabela-colaboradores tbody tr:hover {
+  transform: translateY(-4px);
+}
+
+#page-gerenciamento .linha-colaborador td {
+  flex: 1;
+  min-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Imagem na lista */
+#page-gerenciamento .linha-colaborador .coluna-foto img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* ===========================================================
+   SCROLLBAR
+   =========================================================== */
+
+#page-gerenciamento ::-webkit-scrollbar { width: 12px; height: 12px; }
+#page-gerenciamento ::-webkit-scrollbar-track {
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+}
+#page-gerenciamento ::-webkit-scrollbar-thumb {
+  background: rgba(177,156,217,0.4);
+  border-radius: 10px;
+}
+#page-gerenciamento ::-webkit-scrollbar-thumb:hover {
+  background: rgba(177,156,217,0.6);
+}
+
+/* ===========================================================
+   RESPONSIVIDADE
+   =========================================================== */
+
+@media (max-width: 1100px) {
+  #page-gerenciamento .container-gestao {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  #page-gerenciamento .sidebar {
+    position: relative;
+    width: 100%;
+  }
+}
+
+@media (max-width: 900px) {
+  #page-gerenciamento .cards-row {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 600px) {
+  #page-gerenciamento .card-col {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+  #page-gerenciamento .tabela-colaboradores tbody tr {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+/* ===========================================================
+   OVERLAY DO COLABORADOR SELECIONADO (POP-UP CENTRALIZADO)
+   =========================================================== */
+
+#overlayColaborador {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(5px);
+   -webkit-backdrop-filter: blur(5px);
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden; /* Remove qualquer rolagem do overlay */
+}
+
+#colabSelecionadoContainer {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: var(--shadow-strong);
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  /* REMOVIDO: max-height e overflow-y */
+  position: relative;
+  backdrop-filter: blur(var(--blur));
+   -webkit-backdrop-filter: blur(var(--blur));
+  color: #fff;
+  margin: 0 auto;
+  /* Garante que o conteúdo se ajuste automaticamente */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Cabeçalho do pop-up */
+#colabSelecionadoContainer .colab-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  text-align: center;
+  flex-shrink: 0; /* Impede que o header encolha */
+}
+
+#colabSelecionadoContainer .colab-header img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  margin-bottom: 15px;
+}
+
+#colabSelecionadoContainer .colab-header h4 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+/* Detalhes do colaborador */
+#colabSelecionadoContainer .colab-details {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+  flex-shrink: 0; /* Impede que os detalhes encolham */
+}
+
+#colabSelecionadoContainer .colab-details p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+#colabSelecionadoContainer .colab-details strong {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Benefícios - Agora com altura fixa e scroll interno se necessário */
+#colabSelecionadoContainer .colab-beneficios {
+  margin-bottom: 25px;
+  flex: 1; /* Ocupa o espaço disponível */
+  min-height: 100px; /* Altura mínima */
+  max-height: 200px; /* Altura máxima antes do scroll interno */
+  overflow-y: auto; /* Scroll interno apenas para benefícios se necessário */
+}
+
+#colabSelecionadoContainer .colab-beneficios h5 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: var(--accent);
+  position: sticky;
+  top: 0;
+  background: var(--glass-bg-strong);
+  padding: 5px 0;
+  z-index: 1;
+}
+
+#colabSelecionadoContainer .colab-beneficios ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#colabSelecionadoContainer .colab-beneficios li {
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-bottom: 6px;
+  border-left: 3px solid var(--accent);
+}
+
+/* Ações do pop-up */
+#colabSelecionadoContainer .colab-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  flex-shrink: 0; /* Impede que os botões encolham */
+}
+
+#colabSelecionadoContainer .colab-actions button {
+  flex: 1;
+  min-width: 120px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+#btnEditarColab {
+  background: var(--accent);
+  color: #111;
+}
+
+#btnEditarColab:hover {
+  background: rgba(177, 156, 217, 1);
+  transform: translateY(-2px);
+}
+
+#btnExcluirColab {
+  background: rgba(220, 53, 69, 0.8);
+  color: white;
+}
+
+#btnExcluirColab:hover {
+  background: rgba(220, 53, 69, 1);
+  transform: translateY(-2px);
+}
+
+#btnFecharColab {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid var(--glass-border) !important;
+}
+
+#btnFecharColab:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Botão fechar (X) no canto superior direito */
+#colabSelecionadoContainer .close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+#colabSelecionadoContainer .close-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: rotate(90deg);
+}
+
+/* ===========================================================
+   RESPONSIVIDADE DO OVERLAY
+   =========================================================== */
+
+@media (max-width: 600px) {
+  #overlayColaborador {
+    padding: 10px;
+  }
+  
+  #colabSelecionadoContainer {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  #colabSelecionadoContainer .colab-actions {
+    flex-direction: column;
+  }
+  
+  #colabSelecionadoContainer .colab-actions button {
+    min-width: 100%;
+  }
+  
+  #colabSelecionadoContainer .colab-header img {
+    width: 100px;
+    height: 100px;
+  }
+  
+  #colabSelecionadoContainer .colab-beneficios {
+    max-height: 150px; /* Altura menor em mobile */
+  }
+}
+
+/* Estilo personalizado para a scrollbar dos benefícios (opcional) */
+#colabSelecionadoContainer .colab-beneficios::-webkit-scrollbar {
+  width: 6px;
+}
+
+#colabSelecionadoContainer .colab-beneficios::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+#colabSelecionadoContainer .colab-beneficios::-webkit-scrollbar-thumb {
+  background: rgba(177, 156, 217, 0.5);
+  border-radius: 3px;
+}
+
+#colabSelecionadoContainer .colab-beneficios::-webkit-scrollbar-thumb:hover {
+  background: rgba(177, 156, 217, 0.7);
+}
+/* ===========================================================
+   ESTILOS PARA BENEFÍCIOS NO MODAL - CHECKBOX BONITO
+   =========================================================== */
+
+/* Container principal dos benefícios */
+.beneficios-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 8px;
+  width: 100%;
+}
+
+/* Categoria de benefícios */
+.beneficio-categoria {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.beneficio-categoria h6 {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+/* Grid de cards de benefícios */
+.beneficios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* Item individual do benefício com checkbox */
+.beneficio-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+}
+
+.beneficio-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.beneficio-item.selected {
+  background: rgba(177, 156, 217, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(177, 156, 217, 0.2);
+}
+
+/* Checkbox customizado */
+.beneficio-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.beneficio-checkbox-custom {
+  position: relative;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.beneficio-item:hover .beneficio-checkbox-custom {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.beneficio-checkbox:checked + .beneficio-checkbox-custom {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.beneficio-checkbox:checked + .beneficio-checkbox-custom::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid #111;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Conteúdo do benefício */
+.beneficio-content {
+  flex: 1;
+  color: #ffffff;
+}
+
+.beneficio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.beneficio-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.beneficio-badge {
+  background: rgba(177, 156, 217, 0.2);
+  color: var(--accent);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+.beneficio-value {
+  color: #c5f0d6;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 4px 0;
+}
+
+.beneficio-desc {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  margin: 6px 0 0 0;
+  line-height: 1.4;
+}
+
+.beneficio-contexto {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.beneficio-contexto small {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+}
+
+/* Header dos benefícios */
+.beneficios-header {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.beneficios-header strong {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.beneficios-header small {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Estado quando não há benefícios */
+.beneficios-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.beneficios-empty .icon {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+/* Scrollbar */
+.beneficios-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.beneficios-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.beneficios-container::-webkit-scrollbar-thumb {
+  background: rgba(177, 156, 217, 0.5);
+  border-radius: 3px;
+}
+
+.beneficios-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(177, 156, 217, 0.7);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .beneficios-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .beneficio-item {
+    padding: 12px;
+  }
+}
+/* ===========================
+   ESTADO SELECIONADO - ROXO SUAVE
+   =========================== */
+
+/* cor principal (variável) */
+:root {
+  --accent-strong: rgba(177, 156, 217, 1);      /* roxo puro */
+  --accent-soft-bg: rgba(177, 156, 217, 0.15);  /* fundo suave usado antes */
+  --accent-soft-bg-2: rgba(177, 156, 217, 0.22);/* alternativa para badges */
+}
+
+/* já existente, mas reforçamos e ampliamos (transições mais suaves) */
+.beneficio-item {
+  transition: transform 0.22s ease, background 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+/* estado quando receber a classe .selected (suporte universal) */
+.beneficio-item.selected {
+  background: linear-gradient(180deg, rgba(177,156,217,0.12), rgba(177,156,217,0.08));
+  border-color: var(--accent-strong);
+  box-shadow: 0 8px 20px rgba(177,156,217,0.15);
+  transform: translateY(-3px);
+}
+
+/* reforçar texto e badge em estado selecionado */
+.beneficio-item.selected .beneficio-title,
+.beneficio-item.selected .beneficio-value {
+  color: #111; /* contraste forte sobre o roxo suave */
+}
+
+.beneficio-item.selected .beneficio-badge {
+  background: var(--accent-soft-bg-2);
+  color: var(--accent-strong);
+  border: 1px solid rgba(177,156,217,0.25);
+}
+
+/* checkbox customizado fica roxo e com marcação escura (melhor contraste) */
+.beneficio-checkbox:checked + .beneficio-checkbox-custom {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  box-shadow: 0 4px 12px rgba(177,156,217,0.18);
+}
+.beneficio-checkbox:checked + .beneficio-checkbox-custom::after {
+  border-color: #111; /* marca do check */
+}
+
+/* se o HTML coloca o checkbox antes do conteúdo, podemos estilizar o conteúdo por irmãos */
+.beneficio-checkbox:checked ~ .beneficio-content .beneficio-title,
+.beneficio-checkbox:checked ~ .beneficio-content .beneficio-value {
+  color: #111;
+}
+.beneficio-checkbox:checked ~ .beneficio-content .beneficio-badge {
+  background: var(--accent-soft-bg-2);
+  color: var(--accent-strong);
+  border: 1px solid rgba(177,156,217,0.25);
+}
+
+/* Suporte moderno: estilizar o próprio .beneficio-item quando o input interno estiver checado */
+/* OBS: :has() ainda não tem 100% de suporte em todos os navegadores (Chrome/Edge/Safari recentes suportam). */
+.beneficio-item:has(.beneficio-checkbox:checked) {
+  background: linear-gradient(180deg, rgba(177,156,217,0.12), rgba(177,156,217,0.08));
+  border-color: var(--accent-strong);
+  box-shadow: 0 8px 20px rgba(177,156,217,0.15);
+  transform: translateY(-3px);
+}
+
+/* foco acessível (teclado) */
+.beneficio-checkbox-custom:focus,
+.beneficio-checkbox:focus + .beneficio-checkbox-custom {
+  outline: 3px solid rgba(177,156,217,0.18);
+  outline-offset: 2px;
+}
+
+/* pequenos ajustes visuais para garantir contraste de textos quando selecionado */
+.beneficio-item.selected .beneficio-desc,
+.beneficio-item:has(.beneficio-checkbox:checked) .beneficio-desc,
+.beneficio-checkbox:checked ~ .beneficio-content .beneficio-desc {
+  color: rgba(0,0,0,0.6); /* texto secundário mais escuro sobre fundo claro roxo */
+}
+
+/* suaviza a borda esquerda que você usou em lista interna (se quiser também destacar) */
+#colabSelecionadoContainer .colab-beneficios li.selected,
+.beneficio-item.selected {
+  border-left: 4px solid var(--accent-strong);
+}
+
+/* garante transição suave para badge */
+.beneficio-badge {
+  transition: background 0.22s ease, color 0.22s ease, border 0.22s ease;
+}
+/* =========================
+   BENEFÍCIOS: TEXTO EM BRANCO
+   ========================= */
+
+.beneficio-item,
+.beneficio-card,
+.beneficio-item .beneficio-content,
+.beneficio-card-content,
+.beneficio-title,
+.beneficio-card-title,
+.beneficio-value,
+.beneficio-card-value,
+.beneficio-desc,
+.beneficio-card-desc,
+.beneficio-contexto small,
+.beneficio-card-contexto small {
+  color: #ffffff !important;
+}
+
+/* badge com fundo levemente translúcido mas texto branco */
+.beneficio-badge {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+/* quando selecionado, manter contraste (títulos em preto para melhor leitura sobre fundo claro) */
+.beneficio-item.selected .beneficio-title,
+.beneficio-card.selected .beneficio-card-title {
+  color: #111 !important;
+}
+
+/* valor sempre branco ou verde se preferir destaque */
+.beneficio-value,
+.beneficio-card-value {
+  color: #ffffff !important;
+  font-weight: 700;
+}
+
+/* pequenas correções de acessibilidade/foco */
+.beneficio-checkbox-custom:focus,
+.beneficio-checkbox-custom:focus-visible {
+  outline: 3px solid rgba(255,255,255,0.12);
+  outline-offset: 2px;
+}
+/* ===========================================================
+   ESTILOS PARA BENEFÍCIOS NO MODAL - CENTRALIZADO
+   =========================================================== */
+
+/* Container principal dos benefícios - CENTRALIZADO */
+.beneficios-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza horizontalmente */
+  gap: 16px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 8px;
+  width: 100%;
+}
+
+/* Categoria de benefícios - CENTRALIZADA */
+.beneficio-categoria {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 600px; /* Largura máxima para centralização */
+  margin: 0 auto; /* Centraliza o container */
+}
+
+.beneficio-categoria h6 {
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  text-align: center;
+}
+
+/* Grid de cards de benefícios - CENTRALIZADO */
+.beneficios-grid {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza os itens */
+  gap: 12px;
+  margin-top: 8px;
+  width: 100%;
+}
+
+/* Item individual do benefício com checkbox - LARGURA FIXA */
+.beneficio-item {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 16px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  position: relative;
+  width: 100%;
+  max-width: 500px; /* Largura máxima para centralização */
+}
+
+.beneficio-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.beneficio-item.selected {
+  background: rgba(177, 156, 217, 0.15);
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(177, 156, 217, 0.2);
+}
+
+/* Header dos benefícios - CENTRALIZADO */
+.beneficios-header {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  text-align: center;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 100%;
+  max-width: 600px; /* Largura máxima para centralização */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.beneficios-header strong {
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.beneficios-header small {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Estado quando não há benefícios - CENTRALIZADO */
+.beneficios-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: 100%;
+  max-width: 500px; /* Largura máxima para centralização */
+  margin: 0 auto;
+}
+
+/* ===========================================================
+   AJUSTES NO LAYOUT DO MODAL PARA CENTRALIZAÇÃO
+   =========================================================== */
+
+/* Container do modal para centralizar conteúdo */
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Formulário do modal */
+#formColaborador {
+  width: 100%;
+  max-width: 800px; /* Largura máxima do formulário */
+}
+
+/* Ajuste específico para a linha dos benefícios */
+.modal-body .row.mb-3:has(.beneficios-container) {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal-body .row.mb-3:has(.beneficios-container) .col-12 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ===========================================================
+   RESPONSIVIDADE - CENTRALIZAÇÃO MANTIDA
+   =========================================================== */
+
+@media (max-width: 768px) {
+  .beneficio-item {
+    max-width: 100%; /* Em mobile ocupa toda a largura */
+    margin: 0 10px;
+  }
+  
+  .beneficio-categoria {
+    max-width: 100%;
+    margin: 0 10px;
+  }
+  
+  .beneficios-header {
+    max-width: 100%;
+    margin: 0 10px 16px 10px;
+  }
+}
+
+/* ===========================================================
+   MANTER ESTILOS EXISTENTES (CHECKBOX, CORES, ETC.)
+   =========================================================== */
+
+/* Checkbox customizado (mantido do código anterior) */
+.beneficio-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.beneficio-checkbox-custom {
+  position: relative;
+  top: 2px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.beneficio-item:hover .beneficio-checkbox-custom {
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.beneficio-checkbox:checked + .beneficio-checkbox-custom {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.beneficio-checkbox:checked + .beneficio-checkbox-custom::after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid #111;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* Conteúdo do benefício (mantido) */
+.beneficio-content {
+  flex: 1;
+  color: #ffffff;
+}
+
+.beneficio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 6px;
+}
+
+.beneficio-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin: 0;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.beneficio-badge {
+  background: rgba(177, 156, 217, 0.2);
+  color: var(--accent);
+  padding: 3px 8px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+.beneficio-value {
+  color: #c5f0d6;
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 4px 0;
+}
+
+.beneficio-desc {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+  margin: 6px 0 0 0;
+  line-height: 1.4;
+}
+
+.beneficio-contexto {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.beneficio-contexto small {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+}
+/* -----------------------------
+   Ajuste: aproximar título e valor
+   ----------------------------- */
+
+/* Aplica layout flex nas linhas de benefícios do modal */
+#colabSelecionadoContainer .colab-beneficios li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* mantém valor à direita */
+  gap: 12px;                       /* distância controlada entre título e valor */
+  padding: 8px 12px;
+  box-sizing: border-box;
+}
+
+/* Se o conteúdo do benefício for um bloco (ex.: .beneficio-title + .beneficio-value) */
+#colabSelecionadoContainer .colab-beneficios li .beneficio-title,
+#colabSelecionadoContainer .colab-beneficios li .beneficio-value {
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* Faz o título ocupar o espaço disponível, mas permitindo que quebre linha se necessário */
+#colabSelecionadoContainer .colab-beneficios li .beneficio-title {
+  flex: 1 1 auto;
+  margin-right: 8px;   /* pequeno espaçamento até o valor */
+  min-width: 0;        /* permite que o título quebre e não force overflow */
+  color: #ffffff;
+}
+
+/* Valor alinhado à direita, sem quebrar linha e com destaque */
+#colabSelecionadoContainer .colab-beneficios li .beneficio-value {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: 8px;
+  color: #c5f0d6;
+  font-weight: 700;
+}
+
+/* Se os benefícios no modal forem simples <li>Texto<span class="valor">R$...</span></li> */
+#colabSelecionadoContainer .colab-beneficios li span.valor {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: 8px;
+  color: #c5f0d6;
+  font-weight: 700;
+}
+
+/* Também aplica a mesma lógica ao componente .beneficio-header (usado nos cards) */
+.beneficio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.beneficio-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-right: 8px;
+}
+
+.beneficio-value {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin-left: 8px;
+}
+
+/* Mobile: empilha título e valor para evitar quebra estranha */
+@media (max-width: 440px) {
+  #colabSelecionadoContainer .colab-beneficios li,
+  .beneficio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  #colabSelecionadoContainer .colab-beneficios li .beneficio-value,
+  .beneficio-value {
+    margin-left: 0;
+    margin-top: 6px;
+    align-self: flex-end; /* mantém o valor à direita se couber */
+  }
+}
+/* força título e valor bem próximos e evita overflow */
+.beneficio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;            /* reduzido para aproximar */
+}
+
+.beneficio-title {
+  flex: 1 1 auto;
+  min-width: 0;        /* permite quebrar sem causar overflow */
+  margin: 0;
+  margin-right: 6px;   /* espaçamento pequeno entre título e valor */
+  line-height: 1.15;
+}
+
+.beneficio-value {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  margin: 0;
+  font-weight: 700;
+  margin-left: 6px;
+  color: #c5f0d6;
+}
+
+/* para o li de benefícios no modal (se usar list items no overlay) */
+#colabSelecionadoContainer .colab-beneficios li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+/* mobile empilha para evitar overflow */
+@media (max-width: 440px) {
+  .beneficio-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .beneficio-value {
+    margin-left: 0;
+    margin-top: 6px;
+    align-self: flex-end;
+  }
+}

@@ -1,0 +1,794 @@
+/* ================================
+   Benefícios - Liquid Glass Theme
+   ================================ */
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.15);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+  --glass-hover: rgba(255, 255, 255, 0.1);
+  --primary-color: rgba(102, 126, 234, 0.8);
+  --secondary-color: rgba(160, 174, 192, 0.7);
+  --danger-color: rgba(245, 101, 101, 0.8);
+  --blur: blur(15px);
+}
+
+/* ================================
+   Reset e Base (SEM AFETAR NAVBAR)
+   ================================ */
+.page-wrapper * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: url('/img/glassmorphism5.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+
+/* ================================
+   Layout
+   ================================ */
+.page-wrapper {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+}
+
+.cola-layout {
+  display: flex;
+  min-height: calc(100vh - 60px);
+  position: relative;
+  z-index: 1;
+}
+
+/* ================================
+   Conteúdo
+   ================================ */
+.content {
+  flex: 1;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border-radius: 25px;
+  margin: 20px;
+  padding: 30px;
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+
+  0%,
+  100% {
+    transform: translateX(-100%);
+  }
+
+  50% {
+    transform: translateX(100%);
+  }
+}
+
+/* ================================
+   Header
+   ================================ */
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid var(--glass-border);
+  position: relative;
+}
+
+.header-section h4 {
+  font-weight: 700;
+  color: #fff;
+  font-size: 1.8rem;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.header-section p {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ================================
+   Cards (Stat / Benefit)
+   ================================ */
+.stat-card,
+.benefit-card {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  padding: 25px;
+  display: flex;
+  gap: 20px;
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover,
+.benefit-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 15px 40px 0 rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.stat-card::before,
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.stat-card:hover::before,
+.benefit-card:hover::before {
+  left: 100%;
+}
+
+.stat-icon {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  animation: float 3s ease-in-out infinite;
+}
+
+.stat-content h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.benefit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.benefit-header h6 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.benefit-body {
+  flex: 1;
+}
+
+.benefit-description {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.benefit-info {
+  display: flex;
+  gap: 30px;
+  margin-top: 15px;
+}
+
+.benefit-footer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid var(--glass-border);
+}
+
+/* ================================
+   Controls Section
+   ================================ */
+.controls-section {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+  padding: 20px;
+  box-shadow: var(--glass-shadow);
+}
+
+/* ================================
+   Form Controls
+   ================================ */
+.content .form-control,
+.content .form-select,
+.modal-body .form-control,
+.modal-body .form-select,
+.modal-body textarea {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 12px 18px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.content .form-control::placeholder,
+.modal-body .form-control::placeholder,
+.modal-body textarea::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.content .form-control:focus,
+.content .form-select:focus,
+.modal-body .form-control:focus,
+.modal-body .form-select:focus,
+.modal-body textarea:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+  color: #fff;
+  outline: none;
+}
+
+/* Opções do select - TEXTO PRETO para visibilidade */
+.content .form-select option,
+.modal-body .form-select option {
+  background: #ffffff;
+  color: #000000;
+  padding: 10px;
+  font-weight: 500;
+}
+
+/* Dropdown menu - TEXTO PRETO */
+.content .dropdown-menu,
+.modal-body .dropdown-menu {
+  background: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: var(--glass-shadow);
+}
+
+.content .dropdown-item,
+.modal-body .dropdown-item {
+  color: #000000 !important;
+  font-weight: 500;
+  padding: 10px 15px;
+  transition: all 0.2s ease;
+}
+
+.content .dropdown-item:hover,
+.modal-body .dropdown-item:hover {
+  background: rgba(102, 126, 234, 0.2);
+  color: #000000 !important;
+}
+
+/* Labels */
+.content .form-label,
+.modal-body .form-label {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* Input Group */
+.content .input-group,
+.modal-body .input-group {
+  display: flex;
+  gap: 10px;
+}
+
+.content .input-group .btn,
+.modal-body .input-group .btn {
+  white-space: nowrap;
+}
+
+/* ================================
+   Botões
+   ================================ */
+.content .btn,
+.modal-footer .btn,
+.benefit-card .btn,
+.header-section .btn {
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.content .btn::before,
+.modal-footer .btn::before,
+.benefit-card .btn::before,
+.header-section .btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+  z-index: 0;
+}
+
+.content .btn:hover::before,
+.modal-footer .btn:hover::before,
+.benefit-card .btn:hover::before,
+.header-section .btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.content .btn i,
+.modal-footer .btn i,
+.benefit-card .btn i,
+.header-section .btn i {
+  position: relative;
+  z-index: 1;
+}
+
+.content .btn-sm {
+  padding: 8px 16px;
+  font-size: 0.75rem;
+}
+
+/* ================================
+   Alertas
+   ================================ */
+.content .alert,
+.alert.position-fixed {
+  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  box-shadow: var(--glass-shadow);
+  color: #fff;
+  font-weight: 500;
+}
+
+.alert-success {
+  background: rgba(72, 187, 120, 0.9);
+}
+
+.alert-danger {
+  background: rgba(245, 101, 101, 0.9);
+}
+
+.alert-info {
+  background: rgba(66, 153, 225, 0.9);
+}
+
+.alert-warning {
+  background: rgba(237, 137, 54, 0.9);
+}
+
+/* ================================
+   Tabela
+   ================================ */
+.content .table-responsive {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border-radius: 15px;
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+}
+
+.content .table {
+  color: #fff;
+  margin: 0;
+}
+
+.content .table thead th {
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid var(--glass-border);
+  color: #fff;
+  font-weight: 600;
+  padding: 15px;
+}
+
+.content .table tbody td {
+  border-bottom: 1px solid var(--glass-border);
+  padding: 15px;
+  vertical-align: middle;
+}
+
+.content .table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* ================================
+   Badges
+   ================================ */
+.content .badge,
+.benefit-card .badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.badge.bg-success {
+  background: rgba(72, 187, 120, 0.8) !important;
+}
+
+.badge.bg-secondary {
+  background: rgba(160, 174, 192, 0.8) !important;
+}
+
+/* ================================
+   Scrollbar Liquid Glass
+   ================================ */
+.content::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.content::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.content::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.content::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* ================================
+   Animações
+   ================================ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.benefit-card {
+  animation: fadeIn 0.6s ease;
+}
+
+.stat-card {
+  animation: slideIn 0.6s ease;
+}
+
+.stat-card:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.stat-card:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.stat-icon {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* ================================
+   Pop-ups / Modais - Liquid Glass
+   ================================ */
+
+/* Modal Overlay */
+.modal-backdrop.show {
+  background-color: rgba(0, 0, 0, 0.4);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+/* Modal Dialog */
+.modal-dialog {
+  max-width: 700px;
+}
+
+/* Modal Content */
+.modal-content {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 15px 40px rgba(31, 38, 135, 0.37),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Modal Header */
+.modal-header {
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px 20px 0 0;
+  color: #ffffff;
+  padding: 20px 25px;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal-header .modal-title {
+  font-weight: 700;
+  font-size: 1.4rem;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header .btn-close {
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
+  transition: all 0.3s ease;
+}
+
+.modal-header .btn-close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+
+/* Modal Body */
+.modal-body {
+  background: rgba(255, 255, 255, 0.05);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  padding: 25px;
+  color: #ffffff;
+}
+
+/* Modal Footer */
+.modal-footer {
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 0 0 20px 20px;
+  padding: 15px 25px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* ================================
+   Responsividade
+   ================================ */
+@media (max-width: 768px) {
+  .header-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+
+  .stat-card {
+    margin-bottom: 15px;
+  }
+
+  .benefit-info {
+    flex-direction: column;
+  }
+
+  .controls-section .row {
+    gap: 10px;
+  }
+
+  .controls-section .col-md-3 {
+    margin-bottom: 10px;
+  }
+
+  .content {
+    margin: 10px;
+    padding: 20px;
+  }
+
+  .benefit-footer {
+    flex-direction: column;
+  }
+}
+
+/* Stat color variants (coloque no seu CSS externo) */
+.stat-card.stat-blue {
+  border-color: rgba(66, 153, 225, 0.15);
+  box-shadow: 0 6px 22px rgba(66, 153, 225, 0.06);
+  background: linear-gradient(180deg, rgba(66, 153, 225, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+.stat-card.stat-green {
+  border-color: rgba(72, 187, 120, 0.15);
+  box-shadow: 0 6px 22px rgba(72, 187, 120, 0.06);
+  background: linear-gradient(180deg, rgba(72, 187, 120, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+.stat-card.stat-purple {
+  border-color: rgba(124, 58, 237, 0.15);
+  box-shadow: 0 6px 22px rgba(124, 58, 237, 0.06);
+  background: linear-gradient(180deg, rgba(124, 58, 237, 0.03), rgba(255, 255, 255, 0.01));
+}
+
+/* bolinha / ícone central */
+.stat-card .stat-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  position: relative;
+  z-index: 1;
+}
+
+/* Colors for the icon circle */
+.stat-card.stat-blue .stat-icon {
+  background: linear-gradient(135deg, rgba(66, 153, 225, 0.95), rgba(102, 126, 234, 0.9));
+}
+
+.stat-card.stat-green .stat-icon {
+  background: linear-gradient(135deg, rgba(72, 187, 120, 0.95), rgba(120, 220, 150, 0.9));
+}
+
+.stat-card.stat-purple .stat-icon {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.95), rgba(165, 105, 189, 0.9));
+}
+
+/* pequeno ponto decorativo (opcional) - "bolinha do meio" extra */
+.stat-card .stat-icon::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.9;
+  filter: blur(0.4px);
+}
+
+/* cor do ponto decorativo combinando com a variação do card */
+.stat-card.stat-blue .stat-icon::after {
+  background: rgba(66, 153, 225, 0.95);
+}
+
+.stat-card.stat-green .stat-icon::after {
+  background: rgba(72, 187, 120, 0.95);
+}
+
+.stat-card.stat-purple .stat-icon::after {
+  background: rgba(124, 58, 237, 0.95);
+}
+
+/* hover sutil para chamar atenção */
+.stat-card.stat-blue:hover .stat-icon,
+.stat-card.stat-green:hover .stat-icon,
+.stat-card.stat-purple:hover .stat-icon {
+  transform: translateY(-4px) scale(1.03);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.28);
+}
+
+/* melhora legibilidade do conteúdo do card para essas variantes */
+.stat-card.stat-blue .stat-content p,
+.stat-card.stat-green .stat-content p,
+.stat-card.stat-purple .stat-content p {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.stat-card.stat-blue .stat-content h3,
+.stat-card.stat-green .stat-content h3,
+.stat-card.stat-purple .stat-content h3 {
+  /* mantém o gradiente/clip que você já usa para números */
+  background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.95) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+#btnNovoCargo,
+#btnNovoSetor {
+  color: white !important;
+}

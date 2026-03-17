@@ -1,0 +1,493 @@
+/* public/css/analiseFinanceira.css */
+/* Estilos específicos para relatórios financeiros */
+
+/* ============================
+   VARIÁVEIS E CORES
+   ============================ */
+:root {
+  --color-primary: #667eea;
+  --color-secondary: #764ba2;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-info: #3b82f6;
+  
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-success: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --gradient-warning: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  --gradient-danger: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  
+  --glass-bg: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-hover: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================
+   MODAL DE RELATÓRIOS
+   ============================ */
+.report-modal {
+  max-width: 1200px;
+  width: 95%;
+  max-height: 90vh;
+  background: linear-gradient(135deg, rgba(30, 30, 45, 0.98), rgba(20, 20, 35, 0.98));
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  animation: modalSlideIn 0.3s ease;
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.report-modal-body {
+  display: grid;
+  grid-template-columns: 400px 1fr;
+  gap: 24px;
+  padding: 24px;
+  max-height: calc(90vh - 100px);
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .report-modal-body {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}
+
+/* ============================
+   CONTROLES DO RELATÓRIO
+   ============================ */
+.report-controls {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.report-controls h4 {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--color-primary);
+}
+
+.report-form label {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.report-form .glass-input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.875rem;
+  transition: all 0.3s;
+}
+
+.report-form .glass-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--glass-hover);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.report-form select.glass-input option {
+  background: #1a1d35;
+  color: white;
+}
+
+/* Checkboxes personalizados */
+.report-form input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.report-form label:has(input[type="checkbox"]) {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.2s;
+}
+
+.report-form label:has(input[type="checkbox"]):hover {
+  color: white;
+}
+
+/* ============================
+   PREVIEW DO RELATÓRIO
+   ============================ */
+.report-preview {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 20px;
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.preview-summary {
+  background: var(--glass-hover);
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 4px solid var(--color-primary);
+  margin-bottom: 16px;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.preview-summary strong {
+  color: white;
+  font-weight: 600;
+}
+
+/* ============================
+   TABELA DO RELATÓRIO
+   ============================ */
+.glass-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: transparent;
+  font-size: 0.875rem;
+}
+
+.glass-table thead th {
+  background: var(--gradient-primary);
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.glass-table thead th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.glass-table thead th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.glass-table tbody tr {
+  background: var(--glass-bg);
+  transition: all 0.2s;
+}
+
+.glass-table tbody tr:hover {
+  background: var(--glass-hover);
+  transform: translateX(2px);
+}
+
+.glass-table tbody td {
+  padding: 12px 16px;
+  color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.glass-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.glass-table tbody tr:last-child td:first-child {
+  border-bottom-left-radius: 8px;
+}
+
+.glass-table tbody tr:last-child td:last-child {
+  border-bottom-right-radius: 8px;
+}
+
+/* Alinhamentos */
+.glass-table .text-end {
+  text-align: right;
+}
+
+.glass-table .text-center {
+  text-align: center;
+}
+
+/* Destaque para valores */
+.glass-table td strong {
+  color: white;
+  font-weight: 600;
+}
+
+/* ============================
+   GRÁFICOS
+   ============================ */
+.chart-placeholder {
+  min-height: 200px;
+  background: var(--glass-bg);
+  border: 1px dashed var(--glass-border);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  padding: 20px;
+}
+
+.chart-placeholder[data-chart] {
+  border: none;
+  background: transparent;
+}
+
+/* ============================
+   AÇÕES DE EXPORTAÇÃO
+   ============================ */
+.export-actions {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--glass-border);
+}
+
+.export-actions select {
+  padding: 8px 12px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.export-actions select:hover {
+  border-color: var(--color-primary);
+  background: var(--glass-hover);
+}
+
+.export-actions select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* ============================
+   BADGES DE STATUS
+   ============================ */
+.badge-available {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.badge-warning {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ============================
+   BOTÕES DE AÇÃO
+   ============================ */
+.btn-gerar-relatorio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-gerar-relatorio:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-gerar-relatorio:active {
+  transform: translateY(0);
+}
+
+/* ============================
+   SPINNER DE LOADING
+   ============================ */
+.spinner-border {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================
+   RESPONSIVIDADE
+   ============================ */
+@media (max-width: 768px) {
+  .report-modal {
+    width: 100%;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .report-modal-body {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .glass-table {
+    font-size: 0.75rem;
+  }
+
+  .glass-table thead th,
+  .glass-table tbody td {
+    padding: 8px 12px;
+  }
+
+  .export-actions {
+    flex-direction: column;
+  }
+
+  .export-actions select,
+  .export-actions button {
+    width: 100%;
+  }
+}
+
+/* ============================
+   ANIMAÇÕES
+   ============================ */
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ============================
+   UTILITÁRIOS
+   ============================ */
+.text-muted {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.small {
+  font-size: 0.875rem;
+}
+
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 1rem; }
+.mb-4 { margin-bottom: 1.5rem; }
+
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-4 { margin-top: 1.5rem; }
+
+.d-flex { display: flex; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 1rem; }
+.justify-content-between { justify-content: space-between; }
+.justify-content-end { justify-content: flex-end; }
+.align-items-center { align-items: center; }
+
+/* ============================
+   IMPRESSÃO
+   ============================ */
+@media print {
+  .report-controls,
+  .export-actions,
+  .modal-close,
+  .no-print {
+    display: none !important;
+  }
+
+  .report-modal-body {
+    grid-template-columns: 1fr;
+  }
+
+  .glass-table {
+    border: 1px solid #ddd;
+  }
+
+  .glass-table thead th {
+    background: #667eea !important;
+    color: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

@@ -1,0 +1,730 @@
+/* === Global background via CSS variable (site-wide) === */
+:root {
+  /* valor default — altere para o seu padrão */
+  --bg-image: url('/img/glassmorphism5.jpg');
+}
+
+/* Use sempre a variável. Mantém o gradiente escuro por cima. */
+body {
+  /* gradiente sobre a imagem (mesmo efeito do seu design) */
+  background-image: linear-gradient(rgba(8,10,20,0.45), rgba(8,10,20,0.45)), var(--bg-image);
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* opcional, manter o fundo fixo */
+  transition: background-image .28s ease-in-out, background-position .28s ease;
+  /* se outras regras estiverem usando !important, descomente a linha abaixo com cautela:
+  background-image: linear-gradient(rgba(8,10,20,0.45), rgba(8,10,20,0.45)), var(--bg-image) !important;
+  */
+}
+
+/* ===== Variáveis Navbar Liquid Glass ===== */
+:root {
+  --nav-height: 70px;
+  --glass-bg: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --backdrop-blur: 20px;
+  --text: rgba(255, 255, 255, 0.96);
+  --text-muted: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== Navbar Glass Effect ===== */
+.navbar-cola,
+.navbar-gestor {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 50;
+  padding: 1rem;
+   background: linear-gradient(135deg, rgba(235, 232, 252, 0.247), rgba(138, 92, 246, 0.151));
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.navbar-glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(12px) saturate(1.2);
+  -webkit-backdrop-filter: blur(12px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* ===== Brand/Logo ===== */
+.brand-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-logo {
+  width: 80px;
+  height: 200px;
+  background: linear-gradient(135deg, #60a5fa, #a855f7);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.brand-logo span {
+  color: white;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.brand-left h1 {
+  color: white;
+  font-weight: 700;
+  font-size: 2.25rem;
+  margin: 0;
+}
+
+.brand-left img {
+  /* height: 60px;
+  width: auto; */
+
+   padding: 10px 16px;
+  box-shadow: 0 10px 15px rgb(50, 50, 77), inset 2px 0px 5px rgba(50, 50, 77, 0.685);
+  background-color: rgba(255, 255, 255, 0.505);
+  border-radius: 2rem;
+  /* width: 100%; */
+  /* max-width: 420px; */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.204), inset 0 0 30px rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(4px);
+  /* border: 1.5px solid rgba(255, 255, 255, 0.849); */
+  margin-left: 26px;
+
+}
+
+/* ===== Navigation Links ===== */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-item,
+.btnNav {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-item:hover,
+.btnNav:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.nav-item.active,
+.btnNav.active {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Efeito de brilho no hover */
+.nav-item::before,
+.btnNav::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.nav-item:hover::before,
+.btnNav:hover::before {
+  left: 100%;
+}
+
+/* ===== Nav Actions (direita) ===== */
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Botão de perfil */
+.btn-profile {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-profile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.avatar-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.avatar-initials {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.3), rgba(139, 92, 246, 0.3));
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+/* Menu extra button */
+#btnMenu {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+#btnMenu:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* ===== Popover/Dropdown ===== */
+.popover-profile {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  padding: 0.75rem;
+  color: white;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  min-width: 220px;
+}
+
+.popover {
+  border: none;
+  background: transparent;
+}
+
+.popover-body {
+  padding: 0;
+}
+
+/* Botões do popover */
+.btn-popover-action {
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  border: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-popover-action:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+}
+
+.btn-danger.btn-popover-action {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.3), rgba(220, 38, 38, 0.3));
+  color: #fca5a5;
+}
+
+.btn-danger.btn-popover-action:hover {
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.5), rgba(220, 38, 38, 0.5));
+  color: white;
+}
+
+/* ===== Modal ===== */
+#confirmLogoutModal .modal-content {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+  color: white;
+}
+
+#confirmLogoutModal .modal-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#confirmLogoutModal .modal-body {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+#confirmLogoutModal .btn {
+  border-radius: 12px;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+}
+
+#confirmLogoutModal .btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+#confirmLogoutModal .btn-danger {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border: none;
+  color: white;
+}
+
+/* ===== Linha decorativa ===== */
+.linha {
+  height: 8px;
+  width: 100%;
+  margin-top: 0.5rem;
+  border-radius: 0 0 12px 12px;
+  background: linear-gradient(90deg, 
+    rgba(59, 130, 246, 0.1) 0%,
+    rgba(168, 85, 247, 0.1) 50%,
+    rgba(236, 72, 153, 0.1) 100%
+  );
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 1024px) {
+  .nav-links {
+    display: none;
+  }
+
+  .brand-left h1 {
+    display: none;
+  }
+
+  .navbar-glass {
+    padding: 0.75rem 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar-cola,
+  .navbar-gestor {
+    padding: 0.5rem;
+  }
+
+  .brand-logo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .btn-profile {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* ===== Animações ===== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-item, .btnNav, .btn-profile, #btnMenu {
+    transition: none;
+  }
+}
+/* ===== BG PICKER (modal/panel) - Adicione ao final do navbar.css ===== */
+.bgpicker-overlay {
+  position: fixed;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4,6,12,0.55);
+  z-index: 1400;
+  padding: 20px;
+}
+.bgpicker-overlay[aria-hidden="false"] { 
+  display: flex; 
+}
+
+.bgpicker-panel {
+  width: min(980px, 96%);
+  max-height: calc(100vh - 80px);
+  overflow: auto;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  box-shadow: 0 28px 80px rgba(6,10,20,0.6);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+}
+
+.bgpicker-header { 
+  display:flex; 
+  align-items:center; 
+  justify-content:space-between; 
+  gap:12px; 
+  padding: 6px 8px 10px; 
+}
+.bgpicker-header h3 { 
+  margin:0; 
+  font-size:1.05rem; 
+  color: rgba(255,255,255,0.96); 
+}
+.bgpicker-header .btn-close { 
+  background: transparent; 
+  border: none; 
+  width:34px; 
+  height:34px; 
+  border-radius:8px; 
+  cursor:pointer; 
+  color: rgba(255,255,255,0.7);
+}
+
+.bgpicker-body { 
+  padding: 8px 8px 12px; 
+}
+.bgpicker-body .muted.small { 
+  color: rgba(255,255,255,0.78); 
+  margin-bottom:8px; 
+}
+
+.bg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  align-items: start;
+}
+
+/* thumb */
+.bg-thumb {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid transparent;
+  background: rgba(255,255,255,0.02);
+  transition: transform .14s ease, box-shadow .14s ease, border-color .12s ease;
+}
+.bg-thumb img { 
+  width: 100%; 
+  height: 92px; 
+  object-fit: cover; 
+  display:block; 
+}
+.bg-thumb:hover { 
+  transform: translateY(-6px); 
+  box-shadow: 0 14px 40px rgba(6,10,20,0.28); 
+}
+
+/* selected */
+.bg-thumb.selected {
+  border-color: rgba(123,108,255,0.28);
+  box-shadow: 0 12px 36px rgba(81,65,196,0.12);
+}
+.bg-thumb .thumb-check {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  background: linear-gradient(90deg, #7b6cff, #5141c4);
+  color: #fff;
+  padding: 6px 8px;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  box-shadow: 0 6px 18px rgba(81,65,196,0.12);
+}
+
+/* footer */
+.bgpicker-footer { 
+  display:flex; 
+  justify-content:space-between; 
+  gap:12px; 
+  padding: 10px 4px 6px; 
+}
+.bgpicker-footer .btn { 
+  padding: 8px 12px; 
+  border-radius: 10px; 
+}
+
+/* mobile adjustments */
+@media (max-width: 700px) {
+  .bg-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+  }
+  .bg-thumb img { 
+    height: 84px; 
+  }
+}
+
+/* --- Garantir variável de altura disponível --- */
+:root {
+  --nav-height: 70px; /* já definido, mantive como fallback */
+  --nav-outer-gap: 18px; /* espaço extra acima do conteúdo */
+}
+
+/* --- Faz a navbar ficar fixa sem sobrepor o conteúdo --- */
+/* Usamos position:fixed para manter no topo e adicionamos padding-top ao body */
+.navbar-cola,
+.navbar-gestor {
+  position: fixed;        /* fixa no topo da janela */
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  z-index: 1100;          /* menor que modal/popover (ajustável) */
+  transition: transform .18s ease, top .18s ease;
+}
+
+/* Espaço global para que a navbar não cubra conteúdo das páginas */
+body {
+  /* aplica padding apenas se não houver um layout customizado que já trate disso */
+  padding-top: calc(var(--nav-height) + var(--nav-outer-gap));
+  /* em páginas que já tenham header, você pode remover esta regra e usar .page-content */
+}
+
+/* alternativa: se preferir não mexer no body global, use .page-content no container principal:
+.page-content { padding-top: calc(var(--nav-height) + var(--nav-outer-gap)); }
+*/
+
+/* pequenos ajustes responsivos para mobile (onde a navbar pode ser menor) */
+@media (max-width: 640px) {
+  body {
+    padding-top: calc(56px + 12px); /* navbar menor */
+  }
+}
+
+/* --- Popover (perfil) - Liquid Glass & texto branco --- */
+.popover-profile,
+.fallback-popover {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  color: var(--text);
+  -webkit-backdrop-filter: blur(18px) saturate(120%);
+  backdrop-filter: blur(18px) saturate(120%);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  box-shadow: 0 18px 40px rgba(2,6,20,0.6);
+  padding: 10px;
+  min-width: 240px;
+  z-index: 1500; /* acima da navbar */
+}
+
+/* forçar cor nos textos e pequenos elementos dentro */
+.popover-profile,
+.popover-profile * {
+  color: rgba(255,255,255,0.96) !important;
+}
+
+/* botoes do popover */
+.btn-popover-action {
+  color: rgba(255,255,255,0.95) !important;
+  background: transparent;
+  border: none;
+  padding: 10px 8px;
+  border-radius: 10px;
+  text-align: left;
+  font-weight: 600;
+}
+
+/* hover mais intenso */
+.btn-popover-action:hover {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  transform: translateY(-2px);
+}
+
+/* o botão de "Sair" mantém destaque mas com tom claro */
+.btn-danger.btn-popover-action {
+  background: linear-gradient(90deg, rgba(239,68,68,0.16), rgba(220,38,38,0.12));
+  color: #ffd7d7 !important;
+}
+
+/* --- Modal de Perfil - Liquid Glass visual --- */
+#profileModal .modal-content {
+  background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.08);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  backdrop-filter: blur(20px) saturate(120%);
+  border-radius: 14px;
+  box-shadow: 0 30px 70px rgba(2,6,20,0.7);
+  color: rgba(255,255,255,0.96);
+}
+
+/* header/body/footer do modal */
+#profileModal .modal-header,
+#profileModal .modal-footer {
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+/* textos e labels brancos/claros */
+#profileModal .modal-body,
+#profileModal .modal-body label,
+#profileModal .modal-body .form-label,
+#profileModal .modal-body .form-text {
+  color: rgba(255,255,255,0.95);
+}
+
+/* inputs com aspecto translúcido e texto branco */
+#profileModal .modal-body input.form-control,
+#profileModal .modal-body input[type="number"],
+#profileModal .modal-body input[type="text"],
+#profileModal .modal-body textarea,
+#profileModal .modal-body select {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.96);
+  padding: .5rem .6rem;
+  border-radius: 10px;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  transition: box-shadow .14s ease, border-color .14s ease, transform .12s ease;
+}
+
+/* placeholder mais suave */
+#profileModal .modal-body ::placeholder {
+  color: rgba(255,255,255,0.55);
+}
+
+/* foco com brilho sutil púrpura */
+#profileModal .modal-body input:focus,
+#profileModal .modal-body select:focus,
+#profileModal .modal-body textarea:focus {
+  outline: none;
+  box-shadow: 0 6px 30px rgba(123,108,255,0.12);
+  border-color: rgba(123,108,255,0.55);
+  transform: translateY(-2px);
+}
+
+/* invalid feedback ajustado para tema escuro */
+#profileModal .invalid-feedback {
+  color: #ffb4b4;
+}
+
+/* empresa desabilitada (visual) */
+#profileModal .modal-body input[disabled] {
+  opacity: 0.85;
+  cursor: not-allowed;
+  background: rgba(255,255,255,0.02);
+  border-style: dashed;
+}
+
+/* avatar preview */
+#profileAvatarPreview {
+  border-radius: 12px;
+  overflow: hidden;
+  font-weight: 700;
+  font-size: 1.6rem;
+  color: rgba(255,255,255,0.96);
+  background: linear-gradient(135deg, rgba(99,102,241,0.18), rgba(139,92,246,0.12));
+  display: grid;
+  place-items: center;
+}
+
+/* botões do modal em estilo glass */
+#profileModal .btn {
+  border-radius: 10px;
+  padding: 0.6rem 1rem;
+  font-weight: 700;
+}
+
+#profileModal .btn-secondary {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.96);
+}
+
+#profileModal .btn-primary {
+  background: linear-gradient(90deg, #7b6cff, #5b3dd6);
+  border: none;
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(91,61,214,0.16);
+}
+
+/* mensagem de formulário */
+#profileFormMsg {
+  color: rgba(255,255,255,0.96);
+}
+
+/* garantir que modal/popover fiquem acima do BG picker */
+.modal,
+.fallback-popover,
+.popover,
+#profileModal,
+#profile-popover {
+  z-index: 1600;
+}
+
+/* BG picker já estava com 1400, manter ordem correta:
+   navbar (1100) < bgpicker (1400) < popover/modal (1600) */
+
+/* --- Pequenas melhorias de acessibilidade e foco --- */
+.fallback-popover:focus,
+.popover-profile:focus,
+#profileModal:focus {
+  outline: 3px solid rgba(123,108,255,0.12);
+  outline-offset: 6px;
+}
+
+/* --- Se quiser remover o espaço global no body e usar container --- */
+/* Descomente e adicione .page-content à sua wrapper/main se preferir:
+body { padding-top: 0; }
+.page-content { padding-top: calc(var(--nav-height) + var(--nav-outer-gap)); }
+*/
+
+/* ---------------------------
+   Fim dos overrides - Liquid Glass e prevenção de overlay
+   --------------------------- */
+
+   .bi bi-three-dots-vertical{
+  text-decoration: none;
+  }

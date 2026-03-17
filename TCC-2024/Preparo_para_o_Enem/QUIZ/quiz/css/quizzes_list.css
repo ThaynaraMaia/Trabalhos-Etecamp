@@ -1,0 +1,241 @@
+/* Reset de CSS básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Definir uma tipografia simples e acessível */
+body {
+    font-family: 'Nunito Sans', 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f4f7f9; /* Fundo mais claro */
+    line-height: 1.6;
+}
+
+/* Cabeçalho */
+header {
+    background-color: #45624E ; /* Azul escuro */
+    padding: 3rem 0; /* Menos padding para um visual mais leve */
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+header h1 {
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 1.5rem;
+}
+
+.navbar-link {
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.navbar-link:hover {
+    color: #f0ad4e; /* Cor de destaque */
+    transition: color 0.3s ease;
+}
+
+/* Conteúdo Principal */
+main {
+    padding: 4rem 20px; /* Margens laterais para melhor visualização */
+    text-align: center;
+}
+
+h2 {
+    font-size: 2.2rem; /* Título maior */
+    color: #45624E; /* Verde escuro */
+    margin-bottom: 2rem; /* Mais espaçamento inferior */
+    align-items: center;
+}
+
+/* Container dos Simulados */
+.quizzes-container {
+    display: flex;
+    flex-direction: column; /* Coluna para manter alinhamento */
+    align-items: center; /* Centraliza os quizzes */
+    max-width: 1200px; /* Largura máxima */
+    margin: 0 auto; /* Centraliza na tela */
+}
+
+/* Simulados */
+.simulados {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem; /* Espaçamento entre cards */
+    flex-wrap: wrap; /* Permite que os cards se movam para a próxima linha em telas menores */
+}
+
+.simulado {
+    background-color: #ffffff; /* Fundo branco */
+    border-radius: 8px; /* Bordas mais suaves */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Sombra mais intensa */
+    width: 300px; /* Largura fixa */
+    height: 350px; /* Altura fixa */
+    text-align: center;
+    color: #333; /* Texto escuro */
+    font-size: 1.1rem; /* Tamanho da fonte */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+    padding: 20px; /* Adicionado padding para espaçamento interno */
+}
+
+.simulado:hover {
+    transform: translateY(-5px); /* Efeito de elevação */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra ao passar o mouse */
+}
+
+.simulado img {
+    margin-top: 10px;
+    width: 80%; /* Ajuste responsivo */
+    max-width: 200px; /* Limite para a largura da imagem */
+}
+
+.simulado p {
+    margin: 15px 0; /* Espaçamento uniforme entre elementos */
+}
+
+/* Botão */
+.btn {
+    background-color: #f0ad4e; /* Cor do botão */
+    color: white;
+    font-weight: bold; /* Negrito */
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 15px;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transições suaves */
+}
+
+.btn:hover {
+    background-color: #e69500; /* Cor de destaque ao passar o mouse */
+    transform: scale(1.05); /* Leve aumento */
+}
+
+/* Rodapé */
+footer {
+    background-color: #45624E ; /* Azul escuro */
+    color: white;
+    padding: 1rem 0; /* Padding reduzido */
+    text-align: center;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9rem; /* Tamanho menor para não chamar muito a atenção */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .simulado {
+        width: 90%; /* Ajusta para ocupar 90% da largura em dispositivos menores */
+        height: auto; /* Altura automática para responsividade */
+    }
+
+    h2 {
+        font-size: 1.8rem; /* Tamanho menor do título em dispositivos móveis */
+    }
+
+    header h1 {
+        font-size: 1.5rem; /* Reduzido para responsividade */
+    }
+}
+
+/* Seção de Dicas */
+.tips-section {
+    background-color: #ffffff; /* Fundo branco */
+    border-radius: 8px; /* Bordas arredondadas */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    padding: 20px; /* Padding */
+    margin: 20px 0; /* Margem vertical */
+}
+
+.tips-section h2 {
+    color: #45624E; /* Verde escuro */
+    margin-bottom: 10px; /* Espaçamento inferior */
+}
+
+.tips-list {
+    list-style: none; /* Remove os marcadores da lista */
+    padding-left: 0; /* Remove o padding */
+    margin: 15px 0; /* Margem vertical */
+}
+
+.tips-list li {
+    margin: 10px 0; /* Espaçamento entre os itens */
+    font-size: 1.1rem; /* Tamanho da fonte */
+}
+
+/* Estilos para a seção de quizzes */
+.quizzes-section {
+    margin-top: 20px; /* Espaço superior */
+}
+
+.quizzes-container {
+    display: flex; /* Flexbox para alinhar os cards */
+    flex-wrap: wrap; /* Permitir que os cards quebrem para a linha seguinte */
+    gap: 20px; /* Espaçamento entre os cards */
+}
+
+.simulado-card {
+    background-color: #f9f9f9; /* Fundo claro */
+    border: 1px solid #ddd; /* Bordas sutis */
+    border-radius: 8px; /* Bordas arredondadas */
+    padding: 20px; /* Padding interno */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Sombra leve */
+    width: calc(30% - 20px); /* Ajuste a largura para que caibam 3 cards por linha, considerando a margem */
+    box-sizing: border-box; /* Inclui padding e border no tamanho total */
+}
+
+.simulado-card h3 {
+    color: #45624E; /* Cor do título */
+}
+
+.simulado-card p {
+    margin: 10px 0; /* Margem vertical para parágrafo */
+}
+
+.simulado-card .btn {
+    background-color: #45624E; /* Cor de fundo do botão */
+    color: #fff; /* Cor do texto do botão */
+    padding: 10px 15px; /* Padding do botão */
+    border: none; /* Sem borda */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-decoration: none; /* Sem sublinhado */
+}
+
+.simulado-card .btn:hover {
+    background-color: #3b4a3e; /* Cor de fundo do botão ao passar o mouse */
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .simulado-card {
+        width: calc(45% - 20px); /* 2 cards por linha em telas menores */
+    }
+}
+
+@media (max-width: 480px) {
+    .simulado-card {
+        width: calc(100% - 20px); /* 1 card por linha em telas muito pequenas */
+    }
+}

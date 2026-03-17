@@ -1,0 +1,5 @@
+npm install express express-session express-handlebars sqlite3 multer bcrypt bcryptjs
+
+--opcional para o criaadm.js--
+
+npm install bcryptjs

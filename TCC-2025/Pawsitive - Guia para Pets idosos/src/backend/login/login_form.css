@@ -1,0 +1,236 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "AlteHassGrotesk";
+    font-weight: 300;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../../assets/AlteHaasGroteskRegular.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../../assets/AlteHaasGroteskBold.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* body{
+    font-family: "Nexa";
+} */
+
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    button{
+        background: linear-gradient(90deg, #b3dd5f 0%, #f1ba7b 100%);
+        color: #7a4100;
+    }
+}
+
+input{
+    padding: 12px 30px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 400px;
+}
+
+input::placeholder{
+    color: #C06500;
+}
+
+button{
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    margin-top: 10px;
+    width: 400px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .3s;
+}
+
+button:hover{
+    transform: translateY(-3px);
+}
+
+h2{
+    margin-bottom: 32px;
+    font-size: 50px;
+    text-align: center;
+    color: #4E6422;
+    font-weight: 400;
+}
+
+p{
+    margin-bottom: 30px;
+}
+
+/* .msgerro {
+    color: #7a4100; 
+    margin-top: 15px;
+    font-weight: bold;
+    text-align: center;
+} */
+
+.divPai{
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card{
+    width: 80%;
+    height: 90vh;
+    background-color: #efebce;
+    border-radius: 32px;
+    padding: 32px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    /* background-color: rgba(239, 235, 206 / .1); */
+}
+
+.esquerda, .direita{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.formLogin, .facaLogin, .formCadastro, .facaCadastro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.facaLogin, .facaCadastro{
+    position: absolute;
+
+    h2, p{
+        color: #C06500;
+    }
+
+    button{
+        background-color: rgba(255 255 255 / .5);
+        color: #C06500;
+        border: 1px solid rgba(255 255 255 / .5);
+    }
+}
+
+/* backgound movel */
+
+.card::after{
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-image: url(../../img/teste5.jpg);
+    opacity: 35%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+}
+
+/* login active */
+
+.card.loginActive .facaLogin{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card.loginActive .facaCadastro{
+    transform: translateX(0);
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.card.loginActive .formLogin{
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.card.loginActive .formCadastro{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card.loginActive:after{
+    transform: translateX(50%);
+}
+
+/* cadastro active */
+
+.card.cadastroActive .facaCadastro{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card.cadastroActive .facaLogin{
+    transform: translateX(0);
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.card.cadastroActive .formCadastro{
+    transition: all .3s .3s;
+    opacity: 1;
+}
+
+.card.cadastroActive .formLogin{
+    opacity: 0;
+    pointer-events: none;
+}
+
+.card.cadastroActive:after{
+    transform: translateX(-50%);
+}
+
+/* transições */
+
+.card::after{
+    transition: all .5s;
+}
+
+.facaCadastro{
+    transition: all .3s 0;
+    transform: translateX(200%);
+    opacity: 0;
+}
+
+.formLogin{
+    opacity: 0;
+    transition: all .3s 0;
+}
+
+.facaLogin{
+    transition: all .3s 0;
+    transform: translateX(-200%);
+    opacity: 0;
+}
+
+.formCadastro{
+    opacity: 0;
+    transition: all .3s 0;
+}

@@ -1,0 +1,275 @@
+
+
+body { 
+    background-color: var(--black);
+    color: var(--will);
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 100%;
+    align-items: center;
+    left: 1%;
+    
+} 
+
+.main {
+    width: 100%;
+    height: 100%;
+    display: inline-flex;
+    background-color: var(--black);
+    top: 0%;
+    position: absolute;
+}
+
+.content {
+    width: 100%;
+}
+
+.logo img {
+    transition: .5s;
+}
+.logo img:hover {
+    filter: brightness(1.2);
+    scale: 1.1;
+}
+
+.toolbutton {
+    transition: .5s;
+    height: 6vh;
+    width: 10vw;
+    border: none;
+    border-radius: 2vh;
+    font-size: .6rem;
+    color: var(--black);
+    display: inline-flex;
+    background-color: var(--light);
+    align-items: center;
+    justify-content: center;
+}
+.toolbutton.active {
+    font-size: .6rem;
+    background-color: var(--mag);
+    color: var(--will);
+}
+.toolbutton.config {
+    background-color: var(--black);
+    color: var(--light);
+}
+.toolbutton:hover {
+    filter: brightness(1.5);
+}
+
+.toolbar {
+    padding-inline: 2%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 96.5%;
+    height: 13%;
+    top: -0.1%;
+    left: -1%;
+    position: absolute;
+    background-color: var(--black);
+    z-index: 2;
+}
+
+.pfpimg {
+    width: 5vw;
+    height: 5vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--shade2);
+    border-radius: 1.2rem;
+    margin-right: 1vw;
+}
+.pfpimg img {
+    width: 80%;
+    border-radius: 1rem;
+}
+.pfpimg2 {
+    width: 10vw;
+    height: 10vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--shade2);
+    border-radius: 1.2rem;
+    margin-right: 1vw;
+    text-align: center;
+}
+.pfpimg2 img {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--shade2);
+    border-radius: 1.2rem;
+}
+
+.statusind {
+    transition: 15s;
+    position: absolute;
+    bottom: 20%;
+    right: 17%;
+    width: 1rem;
+    border: 0.2rem solid var(--black);
+    height: 1rem;
+    border-radius: 1rem;
+}
+.statusind.online {
+    background: radial-gradient(rgb(108, 255, 226), rgb(0, 255, 153) 75%);
+}
+.statusind.offline {
+    background: radial-gradient(var(--black), var(--light) 50%);
+}
+.statusind.playing {
+    background: radial-gradient(rgb(135, 191, 255), rgb(64, 115, 255) 75%);
+}
+
+.userarea {
+    max-width: 25%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.at {
+    color: rgba(255, 255, 255, 0.436);
+}
+
+.page {
+    color: var(--will);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 96.5%;
+    height: 83%;
+    background-color: var(--black);
+    color: var(--light);
+    top: 12vh;
+    left: 0vw;
+    position: absolute;
+    padding: 1%; 
+}
+
+.con1 {
+    height: 100%;
+    display: flex;
+    background-color: var(--shade2);
+    color: var(--will);
+    padding: 2%;
+    border-radius: 2vw;
+    gap: 1vw;
+    
+}
+.con2 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    background-color: var(--shade1);
+    color: var(--will);
+    padding: 2%;
+    border: solid 1px var(--light);
+    border-radius: 2vw;
+}.con2.first {
+    width: 30%;
+}.con2.sec {
+    height: 100%;
+
+}
+
+.user-info {
+    margin-top: 20px;
+    color: var(--will);
+    font-size: 18px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.inp {
+    background-color: var(--void);
+    border-radius: 2vw;
+    border: 1px solid var(--light);
+    height: 4vh;
+    font-family: monospace;
+    color: var(--will);
+    height: 6vh;
+    font-size: large;
+}
+
+.inp.btn {
+    transition: .5s;
+    background-color: var(--light);
+    width: 100%;
+    height: 7vh;
+    /* font-size: 22px; */
+    color: var(--black);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: monospace;
+    font-size: 2.5vh;
+    padding: 1%;
+    text-align: center;
+}
+.inp.btn:hover {
+    filter: brightness(1.5);
+}
+.inp.btn.config {
+    background-color: var(--black);
+    color: var(--light);
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}.inp h1 {
+    font-size: 2.5vh;
+}
+
+.inp.btn.sec{
+    width: 20vw;
+}
+
+
+.con2top {
+    display: flex;
+    align-items: center;
+}
+.con2top h1{
+    font-size: 4vh;
+}
+
+.info {
+    font-size: 3vh;
+}
+.con2bottom {
+    gap: 2vw;
+    display: flex;
+    justify-content: space-between;
+}
+.con2bottom a {
+    width: 15vw;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+}
+
+.info li {
+    background-color: var(--shade2);
+    padding: .5%;
+    border-radius: 1vh;
+}
+

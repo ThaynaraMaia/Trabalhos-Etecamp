@@ -1,0 +1,36 @@
+INPUT: {"id_usuario":null,"tempo_segundos":50}
+Salvando: ID=12, Tempo=50
+INPUT: {"id_usuario":null,"tempo_segundos":9}
+Salvando: ID=12, Tempo=9
+INPUT: {"id_usuario":null,"tempo_segundos":21}
+Salvando: ID=6, Tempo=21
+ERRO: Duplicate entry '6' for key 'uk_usuario'
+INPUT: {"id_usuario":null,"tempo_segundos":106}
+Salvando: ID=6, Tempo=106
+ERRO: Duplicate entry '6' for key 'uk_usuario'
+INPUT: {"id_usuario":null,"tempo_segundos":34}
+Salvando: ID=6, Tempo=34
+ERRO: Duplicate entry '6' for key 'uk_usuario'
+INPUT: {"id_usuario":null,"tempo_segundos":2}
+Salvando: ID=6, Tempo=2
+ERRO: Duplicate entry '6' for key 'uk_usuario'
+INPUT: {"id_usuario":null,"tempo_segundos":21}
+Salvando: ID=6, Tempo=21
+INPUT: {"id_usuario":null,"tempo_segundos":29}
+Salvando: ID=6, Tempo=29
+ERRO: Duplicate entry '6' for key 'uk_usuario'
+INPUT: {"id_usuario":null,"tempo_segundos":21}
+Salvando: ID=6, Tempo=21
+ERRO: Duplicate entry '6' for key 'uk_usuario'
+INPUT: {"id_usuario":null,"tempo_segundos":24}
+Salvando: ID=19, Tempo=24
+INPUT: {"id_usuario":null,"tempo_segundos":26}
+Salvando: ID=19, Tempo=26
+INPUT: {"id_usuario":null,"tempo_segundos":22}
+Salvando: ID=20, Tempo=22
+INPUT: {"id_usuario":null,"tempo_segundos":30}
+Salvando: ID=22, Tempo=30
+INPUT: {"id_usuario":null,"tempo_segundos":31}
+Salvando: ID=23, Tempo=31
+INPUT: {"id_usuario":null,"tempo_segundos":29}
+Salvando: ID=12, Tempo=29

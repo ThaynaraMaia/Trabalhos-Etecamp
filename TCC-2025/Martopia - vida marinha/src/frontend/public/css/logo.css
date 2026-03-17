@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'Logo';
+    src: url('../../fontes/Logo.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+.logo-marca p {
+    font-family: 'Logo';
+    color: #ffffff;
+    font-size: 2.3em;
+    font-weight: 700;
+    padding-right: -100px;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .2);
+}
+
+.logo-marca {
+  display: flex;
+  align-items: center;
+  margin-left: 0; 
+  padding-left: 0; 
+}

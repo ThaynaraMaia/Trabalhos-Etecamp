@@ -1,0 +1,315 @@
+.containerHome {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.5), rgba(0,0,0,0.1)),
+                url("/img/fundofoda.png") no-repeat center top;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100vh;
+}
+
+/* overlay escuro com blur */
+/* overlay escuro com blur */
+#overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 1050;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem; /* garante que haja espaço em telas pequenas */
+}
+
+/* pop-up estilo vidro responsivo */
+#popup {
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 2rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 450px; /* largura máxima em telas grandes */
+    min-width: 280px; /* largura mínima para telas pequenas */
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
+                inset 0 0 30px rgba(255, 255, 255, 0.05);
+    text-align: center;
+    animation: popupFade 0.35s ease;
+    position: relative;
+    backdrop-filter: blur(20px);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    max-height: 90vh; /* não ultrapassa altura da tela */
+    overflow-y: auto; /* scroll interno se o conteúdo for maior que a tela */
+}
+
+/* animação */
+@keyframes popupFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* titulo */
+#popup h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1.8rem;
+    font-weight: 600;
+    color: #fff;
+}
+
+/* inputs */
+#popup input, #popup select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    transition: border 0.2s, background 0.2s;
+}
+
+#popup input::placeholder, #popup select {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#popup input:focus, #popup select:focus {
+    border-color: #8ab4f8;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* botões */
+#popup button[type="submit"] {
+    width: 40%;
+    background: rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+#popup button[type="submit"]:hover {
+    background: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* fechar (X) */
+.close-btn {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.6rem;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #fff;
+}
+
+/* animação */
+@keyframes popupFade {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+#popup select {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    font-size: 1rem;
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    backdrop-filter: blur(6px);
+    transition: border 0.2s, background 0.2s;
+    appearance: none; /* remove estilo padrão do navegador */
+}
+
+/* placeholder das opções */
+#popup select option {
+    color: #000; /* cor das opções visíveis no menu dropdown */
+    background: #fff; /* fundo branco para legibilidade */
+}
+/* Scrollbar para navegadores Chromium (Chrome, Edge, Opera) */
+#popup::-webkit-scrollbar {
+    width: 8px; /* largura da barra */
+}
+
+#popup::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05); /* fundo do track */
+    border-radius: 4px;
+}
+
+#popup::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2); /* cor do thumb */
+    border-radius: 4px;
+    transition: background 0.2s;
+}
+
+#popup::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.35); /* hover mais claro */
+}
+
+/* Scrollbar para Firefox */
+#popup {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.05);
+}
+/* ---------- CARROSSEL estilo FreeFrontend (centralizado, sem scrollbar) ---------- */
+:root {
+  --mais-height: 800px;
+  --carousel-height: 460px;
+  --slide-width-pct: 46%;   /* % width of each slide (desktop). adjust to show more/less peek */
+  --gap-px: 18;             /* gap between slides */
+}
+
+/* seção & fundo */
+.mais-section { position: relative; min-height: var(--mais-height); padding: 2.5rem 1rem; display:absolute; align-items:center; overflow:visible; color:#fff; }
+.mais-bg { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+.mais-bg img{ width:100%; height:100%; object-fit:cover; filter: blur(12px) saturate(.95) contrast(.95); transform: scale(1.05); }
+.mais-bg-overlay{ position:absolute; inset:0; background: linear-gradient(180deg, rgba(6,8,12,0.28), rgba(8,10,20,0.55)); backdrop-filter: blur(4px) saturate(120%); }
+
+/* foreground */
+.mais-inner { position:relative; z-index:6; width:100%; }
+.mais-row { display:flex; gap:1.25rem; align-items:center; justify-content:center; }
+
+/* carousel area */
+.carousel-area { display:flex; align-items:center; gap:12px; width:100%; max-width:1200px; margin:0 auto; position:relative; }
+
+/* prev/next buttons */
+.cf-btn { background: rgba(0,0,0,0.55); color:#fff; border: none; width:44px; height:44px; border-radius:999px; display:grid; place-items:center; cursor:pointer; z-index:10; box-shadow:0 10px 30px rgba(0,0,0,0.45); }
+.cf-btn:hover { transform: scale(1.04); }
+
+/* viewport hides overflow; track moved by JS */
+.cf-viewport { overflow:hidden; flex:1 1 auto; height: var(--carousel-height); border-radius:14px; }
+.cf-track { display:flex; gap: var(--gap-px); align-items:center; height:100%; transition: transform .45s cubic-bezier(.2,.9,.2,1); will-change: transform; padding: 0 20px; }
+
+/* slides: width responsive, height 100% */
+.cf-slide {
+  flex: 0 0 var(--slide-width-pct);
+  max-width: 520px;
+  height: 100%;
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+  transition: transform .36s ease, box-shadow .36s ease, opacity .28s ease;
+  cursor:pointer;
+  display:block;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.45);
+  transform-origin: center;
+}
+
+/* image fills slide nicely */
+.cf-slide img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* inactive slides smaller and dimmer; active slide is scaled and highlighted */
+.cf-slide.inactive { transform: scale(.9) translateY(6px); opacity:.75; filter:saturate(.92) contrast(.95); }
+.cf-slide.active { transform: scale(1.06) translateY(-10px); box-shadow: 0 32px 70px rgba(0,0,0,0.65); opacity:1; }
+
+/* dots */
+.cf-dots { display:flex; gap:.5rem; justify-content:center; margin-top:12px; width:100%; }
+.cf-dot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,0.12); border:none; cursor:pointer; transition: transform .18s ease; }
+.cf-dot.active { background: linear-gradient(180deg,#9768ff,#6b4bff); transform:scale(1.3); box-shadow: 0 6px 18px rgba(107,75,255,0.18); }
+
+/* placeholder description column (right) */
+.description-column { min-width:260px; display:flex; align-items:center; justify-content:center; }
+
+/* slide popup (reaproveitado; styling similar ao anterior) */
+.slide-popup {
+  position:absolute; z-index:40; width:360px; max-width:45%;
+  background: linear-gradient(180deg, rgba(18,18,28,0.82), rgba(8,8,14,0.7));
+  border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:1rem; color:#fff; box-shadow:0 22px 60px rgba(0,0,0,0.6);
+  backdrop-filter: blur(6px) saturate(120%);
+}
+.slide-popup .close-slide { position:absolute; right:10px; top:8px; cursor:pointer; color:rgba(255,255,255,0.9); }
+
+/* mobile adjustments */
+@media (max-width: 1000px) {
+  :root { --slide-width-pct: 72%; --carousel-height: 360px; --mais-height: 520px; }
+  .description-column { display:none; }  /* keep simple on small screens */
+  .carousel-area { gap:8px; }
+}
+@media (max-width: 640px) {
+  :root { --slide-width-pct: 86%; --carousel-height: 320px; --mais-height: 640px; }
+  .cf-btn { width:40px; height:40px; }
+  .slide-popup { display:none; } /* use fullscreen overlay handled by JS */
+}
+/* Popup: layout específico para Comunidade */
+#popup { max-width: 760px; width: 94%; box-sizing: border-box; }
+#popup .popup-grid {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+#popup .popup-grid .popup-img {
+  flex: 0 0 220px;
+  max-width: 220px;
+}
+#popup .popup-grid .popup-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display:block;
+}
+
+/* texto à direita */
+#popup .popup-grid .popup-body { flex: 1 1 auto; }
+
+/* contate-nos: campos e botão já possuem estilo, reforçamos alinhamento */
+#popup .contact-field { margin-bottom: 0.8rem; display:block; width:100%; }
+#popup .contact-field input,
+#popup .contact-field textarea,
+#popup .contact-field select {
+  width:100%;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.16);
+  background: rgba(255,255,255,0.04);
+  color: #fff;
+  box-sizing: border-box;
+  resize: vertical;
+}
+#popup .contact-actions { display:flex; gap:.6rem; justify-content:flex-end; margin-top: .6rem; }
+#popup .btn-send {
+  background: linear-gradient(180deg,#6b4bff,#3f2bff);
+  color:#fff;
+  border:none;
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor:pointer;
+}
+#popup .btn-cancel {
+  background: transparent;
+  color:#fff;
+  border:1px solid rgba(255,255,255,0.12);
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor:pointer;
+}
+
+/* mensagens de feedback */
+#popup .form-msg { font-size:0.95rem; margin-top: .5rem; color: #e6e6e6; }
+#popup .form-error { color: #ffb3b3; }
+#popup .form-success { color: #bff0c9; }

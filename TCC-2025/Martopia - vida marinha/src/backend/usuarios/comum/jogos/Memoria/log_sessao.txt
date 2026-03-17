@@ -1,0 +1,182 @@
+SESSION: Array
+(
+    [id_usuario] => 12
+    [nome] => Giulia
+    [email] => giu.favaro7@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7fbe0d934689a6d4b8fb7a6ae9a39aaaa13ce7283ad0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [logado] => 1
+    [id] => 15
+)
+
+SESSION: Array
+(
+    [id_usuario] => 12
+    [nome] => Giulia
+    [email] => giu.favaro7@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7fbe0d934689a6d4b8fb7a6ae9a39aaaa13ce7283ad0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [logado] => 1
+    [id] => 15
+)
+
+SESSION: Array
+(
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [id_usuario] => 6
+    [nome] => vitor
+    [email] => vitorcarvalho@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [id_usuario] => 6
+    [nome] => vitor
+    [email] => vitorcarvalho@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [id_usuario] => 6
+    [nome] => vitor
+    [email] => vitorcarvalho@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [id_usuario] => 6
+    [nome] => vitor
+    [email] => vitorcarvalho@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [id_usuario] => 6
+    [nome] => vitor
+    [email] => vitorcarvalho@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [id_usuario] => 6
+    [nome] => vitor
+    [email] => vitorcarvalho@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Usuário Logado com sucesso!!!!
+    [id_usuario] => 6
+    [nome] => vitor
+    [email] => vitorcarvalho@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Conteudo postado com sucesso
+    [id_usuario] => 19
+    [nome] => Eliana
+    [email] => eliana.cruz@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 0
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Conteudo postado com sucesso
+    [id_usuario] => 19
+    [nome] => Eliana
+    [email] => eliana.cruz@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 0
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Conteudo postado com sucesso
+    [id_usuario] => 20
+    [nome] => Mica
+    [email] => micaelly.santos@yahoo.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 0
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Conteudo postado com sucesso
+    [id_usuario] => 22
+    [nome] => Luciano 
+    [email] => lulu.favaro@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 0
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Conteudo postado com sucesso
+    [id_usuario] => 23
+    [nome] => Gigi
+    [email] => giovana.favaro10@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7f40bd001563085fc35165329ea1ff5c5ecbdbbeefd0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 0
+    [logado] => 1
+)
+
+SESSION: Array
+(
+    [mensagem] => Conteudo postado com sucesso
+    [id_usuario] => 12
+    [nome] => Giulia
+    [email] => giu.favaro7@gmail.com
+    [senha] => 4326999ffff76d4bae86b2b214f5f420bad0fe7fbe0d934689a6d4b8fb7a6ae9a39aaaa13ce7283ad0f59b242071be12249e63d2e6a858bcdcad1187
+    [tipo] => 0
+    [status] => 1
+    [logado] => 1
+)
+

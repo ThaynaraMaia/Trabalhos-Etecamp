@@ -1,0 +1,393 @@
+<!-- navbar.hbs -->
+
+<nav class="navbar-modern">
+  <div class="navbar-container">
+    <div class="navbar-left">
+      <a href="/" class="navbar-logo-link">
+        <img src="/img/carlos.png" alt="logo" class="navbar-logo">
+      </a>
+    </div>
+
+    <button class="navbar-toggle" id="navbarToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="navbar-links" id="navbarLinks">
+      <a class="navbar-botao" href="/perfil">Perfil</a>
+      <a class="navbar-botao" href="/forum">Fórum</a>
+      <a class="navbar-botao" href="/conquistas">Locais</a>
+      <a class="navbar-botao" href="/agenda">Agenda</a>
+
+      {{#if (eq user.tipo "Administrador")}}
+      <a class="navbar-botao" href="/admin/admmaterial">Material</a>
+      <a class="navbar-botao" href="/admin/adm-usuarios">Usuários</a>
+      {{else}}
+      <a class="navbar-botao" href="/materiais">Material</a>
+      {{/if}}
+    </div>
+
+    <div class="navbar-right">
+      {{#if user}}
+      <a href="/perfil" aria-label="perfil" class="navbar-avatar-link">
+        <img src="{{#if user.foto}}{{user.foto}}{{else}}/img/avatar.png{{/if}}" alt="avatar" class="navbar-avatar">
+      </a>
+      <a href="/logout" class="navbar-btn-logout">Sair</a>
+      {{else}}
+      <a href="/login" class="navbar-btn">Login</a>
+      <a href="/cadastrar" class="navbar-btn">Cadastro</a>
+      {{/if}}
+    </div>
+  </div>
+</nav>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .navbar-modern {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: #2a5298 ;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    
+  }
+
+  .navbar-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .navbar-logo-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .navbar-logo {
+    width: 65px;
+    height: 65px;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    object-fit: contain;
+  }
+
+  .navbar-logo:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+
+  .navbar-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  .navbar-toggle span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  .navbar-toggle.active span:nth-child(1) {
+    transform: rotate(45deg) translate(8px, 8px);
+  }
+
+  .navbar-toggle.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .navbar-toggle.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+  }
+
+  .navbar-links {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-grow: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .navbar-botao {
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+  }
+
+  .navbar-botao:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .navbar-botao:hover:before {
+    left: 100%;
+  }
+
+  .navbar-botao:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    color: white;
+    text-decoration: none;
+  }
+
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .navbar-avatar-link {
+    text-decoration: none;
+  }
+
+  .navbar-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    object-fit: cover;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .navbar-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+
+  .navbar-btn {
+    background: linear-gradient(45deg, #dc2626, #ef4444);
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    white-space: nowrap;
+  }
+
+  .navbar-btn:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+  }
+
+  .navbar-btn:hover:before {
+    left: 100%;
+  }
+
+  .navbar-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+    color: white;
+    text-decoration: none;
+  }
+
+  .navbar-btn-logout {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    white-space: nowrap;
+  }
+
+  .navbar-btn-logout:hover {
+    background: rgba(220, 38, 38, 0.8);
+    transform: translateY(-1px);
+    color: white;
+    text-decoration: none;
+  }
+
+  /* Tablet */
+  @media (max-width: 1024px) {
+    .navbar-container {
+      padding: 0 1.5rem;
+    }
+
+    .navbar-links {
+      gap: 0.3rem;
+    }
+
+    .navbar-botao {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .navbar-container {
+      padding: 0 1rem;
+      height: 60px;
+    }
+
+    .navbar-logo {
+      width: 40px;
+      height: 40px;
+    }
+
+    .navbar-toggle {
+      display: flex;
+      order: 2;
+    }
+
+    .navbar-links {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, #1e3c72 0%, #2a5298 100%);
+      flex-direction: column;
+      padding: 1rem;
+      gap: 0.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      max-height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+
+    .navbar-links.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .navbar-botao {
+      width: 100%;
+      text-align: center;
+      padding: 0.8rem;
+    }
+
+    .navbar-right {
+      gap: 0.5rem;
+      order: 3;
+    }
+
+    .navbar-avatar {
+      width: 35px;
+      height: 35px;
+    }
+
+    .navbar-btn,
+    .navbar-btn-logout {
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  /* Mobile pequeno */
+  @media (max-width: 480px) {
+    .navbar-container {
+      padding: 0 0.75rem;
+    }
+
+    .navbar-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+
+    .navbar-btn-logout {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.8rem;
+    }
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.getElementById('navbarToggle');
+    const links = document.getElementById('navbarLinks');
+    
+    if (toggle && links) {
+      toggle.addEventListener('click', function() {
+        this.classList.toggle('active');
+        links.classList.toggle('active');
+      });
+
+      // Fecha o menu ao clicar em um link
+      const navLinks = links.querySelectorAll('.navbar-botao');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          toggle.classList.remove('active');
+          links.classList.remove('active');
+        });
+      });
+
+      // Fecha o menu ao clicar fora
+      document.addEventListener('click', function(event) {
+        if (!toggle.contains(event.target) && !links.contains(event.target)) {
+          toggle.classList.remove('active');
+          links.classList.remove('active');
+        }
+      });
+    }
+  });
+</script>

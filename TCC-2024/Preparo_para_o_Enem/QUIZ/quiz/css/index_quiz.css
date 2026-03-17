@@ -1,0 +1,94 @@
+
+/* CSS Geral para manter a aparência do sistema */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f5f5;
+}
+
+h2 {
+    color: #003366;
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+h3 {
+    color: #003366;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+form {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    max-width: 800px;
+    margin: 40px auto;
+    border: 1px solid #ddd;
+}
+
+label.quiz-alternative {
+    display: block;
+    margin-bottom: 12px;
+    font-size: 18px;
+    color: #333;
+}
+
+input[type="radio"] {
+    margin-right: 10px;
+}
+
+button {
+    padding: 14px 24px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    display: block;
+    margin: 20px auto;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.question-container {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    position: relative; /* Para ajustar o posicionamento do erro */
+}
+
+/* Destaque para questões não respondidas */
+.question-container.error {
+    border-color: #ff6f6f; /* Cor da borda para destacar erro */
+    background-color: #ffe6e6; /* Cor de fundo para indicar erro */
+    box-shadow: 0 4px 8px rgba(255, 0, 0, 0.2); /* Sombra para indicar erro */
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+
+
+.question-pic {  
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+}

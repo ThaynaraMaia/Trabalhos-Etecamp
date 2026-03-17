@@ -1,0 +1,529 @@
+/*Cole esse scritp aqui no banco de dados para dar a permissão para o usuario Rayssa quando você trocar de dispositivos*/
+/*
+
+DROP USER IF EXISTS 'Rayssa'@'localhost';
+DROP USER IF EXISTS 'Rayssa'@'%';
+
+CREATE USER 'Rayssa'@'localhost' IDENTIFIED BY '123';
+CREATE USER 'Rayssa'@'%' IDENTIFIED BY '123';
+
+GRANT ALL PRIVILEGES ON sistema_bolsas.* TO 'Rayssa'@'localhost';
+GRANT ALL PRIVILEGES ON sistema_bolsas.* TO 'Rayssa'@'%';
+
+FLUSH PRIVILEGES;
+
+*/ 
+
+
+
+/*/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////*/
+
+
+
+
+
+/* Banco de dados sistema_bolsas:script sql:*/
+
+/*-- =====================
+-- Banco de dados: sistema_bolsas
+-- =====================
+CREATE DATABASE IF NOT EXISTS sistema_bolsas;
+USE sistema_bolsas;
+
+-- =====================
+-- Tabela: usuario
+-- =====================
+CREATE TABLE IF NOT EXISTS usuario (
+  id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+  nome VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL,
+  tipo_usuario VARCHAR(50) NOT NULL,
+  senha VARCHAR(255) NOT NULL,
+  foto VARCHAR(255)
+);
+
+-- =====================
+-- Tabela: bolsa
+-- =====================
+CREATE TABLE IF NOT EXISTS bolsa (
+  id_bolsa INT AUTO_INCREMENT PRIMARY KEY,
+  titulo VARCHAR(255) NOT NULL,
+  descricao TEXT NOT NULL,
+  pais VARCHAR(100) NOT NULL,
+  universidade VARCHAR(255) NOT NULL,
+  curso VARCHAR(255) NOT NULL,
+  tipo_bolsa VARCHAR(100) NOT NULL,
+  requisitos TEXT NOT NULL,
+  prazo_inscricao DATE NOT NULL,
+  link_inscricao VARCHAR(500) NOT NULL
+);
+
+-- =====================
+-- Tabela: avaliacao_bolsa
+-- =====================
+CREATE TABLE IF NOT EXISTS avaliacao_bolsa (
+  id_avaliacao INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  id_bolsa INT NOT NULL,
+  nota INT NOT NULL,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+  FOREIGN KEY (id_bolsa) REFERENCES bolsa(id_bolsa)
+);
+
+-- =====================
+-- Tabela: comentario
+-- =====================
+CREATE TABLE IF NOT EXISTS comentario (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  id_bolsa INT NOT NULL,
+  texto TEXT NOT NULL,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+  FOREIGN KEY (id_bolsa) REFERENCES bolsa(id_bolsa)
+);
+
+-- =====================
+-- Tabela: comentario_like
+-- =====================
+CREATE TABLE IF NOT EXISTS comentario_like (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  id_comentario INT NOT NULL,
+  curtido BOOLEAN DEFAULT FALSE,
+  descurtido BOOLEAN DEFAULT FALSE,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+  FOREIGN KEY (id_comentario) REFERENCES comentario(id)
+);
+
+-- =====================
+-- Tabela: favorito
+-- =====================
+CREATE TABLE IF NOT EXISTS favorito (
+  id_favorito INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  id_bolsa INT NOT NULL,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+  FOREIGN KEY (id_bolsa) REFERENCES bolsa(id_bolsa)
+);
+
+-- =====================
+-- Tabela: lembrete
+-- =====================
+CREATE TABLE IF NOT EXISTS lembrete (
+  id_lembrete INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  id_bolsa INT NOT NULL,
+  data_lembrete DATE NOT NULL,
+  enviado BOOLEAN DEFAULT FALSE,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario),
+  FOREIGN KEY (id_bolsa) REFERENCES bolsa(id_bolsa)
+);
+
+-- =====================
+-- Tabela: lembrete_pessoal
+-- =====================
+CREATE TABLE IF NOT EXISTS lembrete_pessoal (
+  id_lembrete_pessoal INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  titulo VARCHAR(255) NOT NULL,
+  descricao TEXT,
+  data_lembrete DATE NOT NULL,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+
+-- =====================
+-- Tabela: simulador_custos
+-- =====================
+CREATE TABLE IF NOT EXISTS simulador_custos (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  id_usuario INT NOT NULL,
+  alimentacao DECIMAL(10,2) DEFAULT 0,
+  moradia DECIMAL(10,2) DEFAULT 0,
+  transporte DECIMAL(10,2) DEFAULT 0,
+  lazer DECIMAL(10,2) DEFAULT 0,
+  outros DECIMAL(10,2) DEFAULT 0,
+  total_mensal DECIMAL(10,2) NOT NULL,
+  total_semanal DECIMAL(10,2) NOT NULL,
+  total_diario DECIMAL(10,2) NOT NULL,
+  createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (id_usuario) REFERENCES usuario(id_usuario)
+);
+*/
+
+
+/*bolsas.html*/
+
+/*<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Bolsas Disponíveis</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .estrela { font-size: 24px; cursor: pointer; color: #ccc; }
+    .estrela.preenchida { color: gold; }
+    body { background-color: #0f172a; color: white; }
+    input[type="text"] { color: black; }
+    .cardTitulo {
+      background-color: transparent;
+      border: 2px solid #3b82f6;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.6);
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .cardTitulo:hover {
+      border-color: #60a5fa;
+      box-shadow: 0 0 18px rgba(96, 165, 250, 0.8);
+      cursor: default;
+    }
+    #tituloPagina { color: #1e40af; font-size: 2rem; font-weight: bold; }
+    #verFavoritas { color: #ef4444; font-size: 1.25rem; font-weight: 600; }
+    #voltar { color: #1e40af; font-size: 1.25rem; }
+    .btnCurtido { color: black; font-weight: bold; }
+    .btnDescurtido { color: red; font-weight: bold; }
+  </style>
+</head>
+<body class="p-6">
+
+<div class="cardTitulo mb-4">
+  <h2 id="tituloPagina">Bolsas Disponíveis</h2>
+  <button id="verFavoritas">❤️ Minhas Favoritas</button>
+  <button id="voltar" class="hidden">🔙 Voltar</button>
+</div>
+
+<input type="text" id="pesquisaBolsas" placeholder="Pesquisar bolsas..." class="p-2 w-full mb-6 rounded" />
+<div id="listaBolsas" class="space-y-4"></div>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const TOKEN = localStorage.getItem("token");
+  const ID_USUARIO = parseInt(localStorage.getItem("id_usuario"));
+  const TIPO_USUARIO = localStorage.getItem("tipo_usuario") || "usuario"; // "Administrador" ou "Usuario"
+
+  if (!TOKEN || !ID_USUARIO) {
+    alert("Faça login primeiro!");
+    window.location.href = "/login.html";
+    return;
+  }
+
+  const API = {
+    BOLSAS: "http://localhost:3000/user/bolsas-publicas",
+    AVALIACOES: "http://localhost:3000/avaliacao",
+    COMENTARIOS: "http://localhost:3000/comentario",
+    FAVORITAR: "http://localhost:3000/favoritos",
+    FAVORITAS: "http://localhost:3000/favoritos"
+  };
+
+  async function fetchJSON(url, options = {}) {
+    options.headers = { ...(options.headers || {}), "Content-Type": "application/json" };
+    if (TOKEN) options.headers["Authorization"] = `Bearer ${TOKEN}`;
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error(`Erro na API: ${res.status}`);
+    return await res.json();
+  }
+
+  async function calcularMedia(id_bolsa) {
+    try {
+      const notas = await fetchJSON(`${API.AVALIACOES}/${id_bolsa}`);
+      if (!notas || notas.length === 0) return 0;
+      return (notas.reduce((acc, n) => acc + (n.nota || 0), 0) / notas.length).toFixed(1);
+    } catch { return 0; }
+  }
+
+  async function fetchComentarios(id_bolsa) {
+    try {
+      const comentarios = await fetchJSON(`${API.COMENTARIOS}/${id_bolsa}`);
+      return comentarios || [];
+    } catch { return []; }
+  }
+
+  function renderizarComentarios(listaC, comentarios, id_bolsa) {
+  const TIPO_USUARIO = localStorage.getItem("tipo_usuario"); // pegando tipo do usuário
+
+  listaC.innerHTML = comentarios.map(c => {
+    const jaCurtiu = c.likes?.some(l => l.id_usuario === ID_USUARIO && l.curtido);
+    const jaDescurtiu = c.likes?.some(l => l.id_usuario === ID_USUARIO && l.descurtido);
+    const qtdCurtidas = c.likes?.filter(l => l.curtido).length || 0;
+    const qtdDescurtidas = c.likes?.filter(l => l.descurtido).length || 0;
+
+    // Mostrar botão de remover se for o próprio comentário ou administrador
+    const mostrarRemover = (c.id_usuario === ID_USUARIO || TIPO_USUARIO?.toLowerCase() === "administrador");
+
+    return `
+      <div class="comentarioItem flex items-center justify-between p-2 border-b border-gray-300 text-black">
+        <p><strong>${c.Usuario?.nome ?? 'Usuário'}:</strong> ${c.texto}</p>
+        <div class="acoes flex space-x-2">
+          <button class="curtirComentario ${jaCurtiu ? 'btnCurtido' : ''}" data-id="${c.id}" title="Curtir">👍 ${qtdCurtidas}</button>
+          <button class="descurtirComentario ${jaDescurtiu ? 'btnDescurtido' : ''}" data-id="${c.id}" title="Descurtir">👎 ${qtdDescurtidas}</button>
+          ${mostrarRemover ? `<button class="removerComentario text-red-600" data-id="${c.id}" title="Remover">🗑️</button>` : ""}
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  // Curtir
+  listaC.querySelectorAll(".curtirComentario").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      try {
+        await fetchJSON(`${API.COMENTARIOS}/${btn.dataset.id}/curtir`, { method: "POST" });
+        renderizarComentarios(listaC, await fetchComentarios(id_bolsa), id_bolsa);
+      } catch { alert("Erro ao curtir comentário"); }
+    });
+  });
+
+  // Descurtir
+  listaC.querySelectorAll(".descurtirComentario").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      try {
+        await fetchJSON(`${API.COMENTARIOS}/${btn.dataset.id}/descurtir`, { method: "POST" });
+        renderizarComentarios(listaC, await fetchComentarios(id_bolsa), id_bolsa);
+      } catch { alert("Erro ao descurtir comentário"); }
+    });
+  });
+
+  // Remover
+  listaC.querySelectorAll(".removerComentario").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      if (!confirm("Deseja realmente remover este comentário?")) return;
+      try {
+        await fetchJSON(`${API.COMENTARIOS}/${btn.dataset.id}`, { method: "DELETE" });
+        renderizarComentarios(listaC, await fetchComentarios(id_bolsa), id_bolsa);
+      } catch { alert("Erro ao remover comentário"); }
+    });
+  });
+}
+
+
+
+  async function criarDivBolsa(b, media, comentarios) {
+    const div = document.createElement("div");
+    div.className = "bg-white p-4 rounded-xl shadow-md text-black";
+    div.dataset.id = b.id_bolsa;
+
+    div.innerHTML = `
+      <h3 class="font-bold text-lg">${b.titulo || ""}</h3>
+      <p>${b.descricao || ""}</p>
+      <p>
+        <strong>País:</strong> ${b.pais || ""} |
+        <strong>Universidade:</strong> ${b.universidade || ""} |
+        <strong>Curso:</strong> ${b.curso || ""} |
+        <strong>Tipo:</strong> ${b.tipo_bolsa || ""}
+      </p>
+      <p><strong>Requisitos:</strong> ${b.requisitos || "Não informado"}</p>
+      <p><strong>Prazo de inscrição:</strong> ${b.prazo_inscricao || "Não informado"}</p>
+      <p>
+        <strong>Link de inscrição:</strong> 
+        <a href="${b.link_inscricao || "#"}" target="_blank" class="text-blue-600 hover:underline">
+          ${b.link_inscricao || "Não disponível"}
+        </a>
+      </p>
+      <div class="flex items-center space-x-2 mt-2">
+        <div class="estrelas flex space-x-1">
+          <span data-valor="1" class="estrela">☆</span>
+          <span data-valor="2" class="estrela">☆</span>
+          <span data-valor="3" class="estrela">☆</span>
+          <span data-valor="4" class="estrela">☆</span>
+          <span data-valor="5" class="estrela">☆</span>
+        </div>
+        <span class="media ml-2 font-bold">${media}</span>
+        <button class="favorito text-2xl">${b.favoritado ? "❤️" : "🤍"}</button>
+        <button class="comentario ml-2">💬 Novo comentário</button>
+      </div>
+      <div class="comentarios mt-2 hidden">
+        <input type="text" placeholder="Escreva um comentário..." class="p-2 border rounded w-full mb-1" />
+        <button class="adicionarComentario bg-blue-600 text-white px-2 py-1 rounded mb-1">Enviar</button>
+        <p class="verComentarios text-blue-600 cursor-pointer">Ver comentários</p>
+        <div class="listaComentarios mt-2 hidden"></div>
+      </div>
+    `;
+
+    // --- Estrelas e favoritos continuam iguais ---
+    const atualizarEstrelas = (nota) => {
+      div.querySelectorAll(".estrela").forEach(star => {
+        const valor = parseInt(star.dataset.valor);
+        if (valor <= nota) {
+          star.textContent = "★";
+          star.classList.add("preenchida");
+        } else {
+          star.textContent = "☆";
+          star.classList.remove("preenchida");
+        }
+      });
+    };
+
+    let notaUsuario = 0;
+    b.notaUsuario = 0;
+
+    async function carregarNotaUsuario() {
+      try {
+        const notas = await fetchJSON(`${API.AVALIACOES}/${b.id_bolsa}`);
+        const minhaNota = notas.find(n => n.id_usuario === ID_USUARIO);
+        notaUsuario = minhaNota ? minhaNota.nota : 0;
+        b.notaUsuario = notaUsuario;
+        atualizarEstrelas(notaUsuario);
+      } catch {
+        notaUsuario = 0;
+        b.notaUsuario = 0;
+        atualizarEstrelas(0);
+      }
+    }
+
+    await carregarNotaUsuario();
+
+    div.querySelectorAll(".estrela").forEach(star => {
+      star.addEventListener("click", async () => {
+        const valorClicado = parseInt(star.dataset.valor);
+        try {
+          if (valorClicado === notaUsuario) {
+            await fetchJSON(`${API.AVALIACOES}/${b.id_bolsa}`, { method: "DELETE" });
+            notaUsuario = 0;
+          } else {
+            await fetchJSON(`${API.AVALIACOES}/${b.id_bolsa}`, { 
+              method: "POST", 
+              body: JSON.stringify({ nota: valorClicado }) 
+            });
+            notaUsuario = valorClicado;
+          }
+          b.notaUsuario = notaUsuario;
+          atualizarEstrelas(notaUsuario);
+          const novaMedia = await calcularMedia(b.id_bolsa);
+          div.querySelector(".media").textContent = novaMedia;
+        } catch (err) {
+          alert("Erro ao avaliar bolsa");
+          console.error(err);
+          await carregarNotaUsuario();
+        }
+      });
+    });
+
+    // Favorito
+    const btnFav = div.querySelector(".favorito");
+    const atualizarCor = () => { btnFav.textContent = b.favoritado ? "❤️" : "🤍"; };
+    atualizarCor();
+
+    btnFav.addEventListener("click", async () => {
+      try {
+        const res = await fetchJSON(`${API.FAVORITAR}/${b.id_bolsa}`, { method: "POST" });
+        b.favoritado = res.favoritado;
+        atualizarCor();
+        if (b.favoritado) {
+          if (!bolsasFavoritas.some(f => f.id_bolsa === b.id_bolsa)) bolsasFavoritas.push(b);
+        } else {
+          bolsasFavoritas = bolsasFavoritas.filter(f => f.id_bolsa !== b.id_bolsa);
+          if (tituloPagina.textContent === "Minhas Favoritas") div.remove();
+        }
+      } catch { alert("Erro ao favoritar/desfavoritar a bolsa"); }
+    });
+
+    // --- Comentários ---
+    const btnCom = div.querySelector(".comentario");
+    const comentariosDiv = div.querySelector(".comentarios");
+    const listaC = comentariosDiv.querySelector(".listaComentarios");
+    const input = comentariosDiv.querySelector("input[type='text']");
+    const btnEnviar = comentariosDiv.querySelector(".adicionarComentario");
+    const btnVer = comentariosDiv.querySelector(".verComentarios");
+
+    btnCom.addEventListener("click", () => {
+      comentariosDiv.classList.toggle("hidden");
+      btnCom.textContent = comentariosDiv.classList.contains("hidden") ? "💬 Novo comentário" : "💬 Ocultar comentários";
+    });
+
+    btnVer.addEventListener("click", async () => {
+      const comentariosAtual = await fetchComentarios(b.id_bolsa);
+      renderizarComentarios(listaC, comentariosAtual, b.id_bolsa);
+      listaC.classList.toggle("hidden");
+      btnVer.textContent = listaC.classList.contains("hidden") ? "Ver comentários" : "Ocultar comentários";
+    });
+
+    btnEnviar.addEventListener("click", async () => {
+      if (!input.value) return alert("Digite um comentário!");
+      try {
+        await fetchJSON(`${API.COMENTARIOS}/${b.id_bolsa}`, { method: "POST", body: JSON.stringify({ comentario: input.value }) });
+        input.value = "";
+        const comentariosAtual = await fetchComentarios(b.id_bolsa);
+        renderizarComentarios(listaC, comentariosAtual, b.id_bolsa);
+        listaC.classList.remove("hidden");
+        btnVer.textContent = "Ocultar comentários";
+      } catch { alert("Erro ao adicionar comentário"); }
+    });
+
+    return div;
+  }
+
+  let bolsasCarregadas = [];
+  let bolsasFavoritas = [];
+
+  async function carregarBolsas(favoritas = false, filtro = "") {
+    try {
+      const todas = await fetchJSON(API.BOLSAS);
+      bolsasFavoritas = await fetchJSON(API.FAVORITAS);
+      const lista = document.getElementById("listaBolsas");
+      lista.innerHTML = "";
+
+      bolsasCarregadas = todas.map(b => {
+        b.favoritado = bolsasFavoritas.some(f => f.id_bolsa === b.id_bolsa);
+        return b;
+      });
+
+      const bolsasFiltradas = bolsasCarregadas.filter(b => {
+        const termo = filtro.toLowerCase();
+        return (b.titulo || "").toLowerCase().includes(termo) ||
+               (b.universidade || "").toLowerCase().includes(termo) ||
+               (b.pais || "").toLowerCase().includes(termo);
+      });
+
+      for (const b of bolsasFiltradas) {
+        if (favoritas && !b.favoritado) continue;
+        const media = await calcularMedia(b.id_bolsa);
+        const comentarios = await fetchComentarios(b.id_bolsa);
+        const div = await criarDivBolsa(b, media, comentarios);
+        lista.appendChild(div);
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  }
+
+  carregarBolsas();
+
+  document.getElementById("pesquisaBolsas").addEventListener("input", (e) => {
+    carregarBolsas(false, e.target.value);
+  });
+
+  const btnFavoritas = document.getElementById("verFavoritas");
+  const btnVoltar = document.getElementById("voltar");
+  const tituloPagina = document.getElementById("tituloPagina");
+
+  btnFavoritas.addEventListener("click", () => {
+    carregarBolsas(true);
+    btnFavoritas.classList.add("hidden");
+    btnVoltar.classList.remove("hidden");
+    tituloPagina.textContent = "Minhas Favoritas";
+  });
+
+  btnVoltar.addEventListener("click", () => {
+    carregarBolsas(false);
+    btnFavoritas.classList.remove("hidden");
+    btnVoltar.classList.add("hidden");
+    tituloPagina.textContent = "Bolsas Disponíveis";
+  });
+
+});
+</script>
+
+</body>
+</html>
+*/

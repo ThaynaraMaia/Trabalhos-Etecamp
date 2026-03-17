@@ -1,0 +1,452 @@
+<?php
+include_once '../../../classes/class_IRepositorioUsuarios.php';
+
+$mensagem = "";
+session_start();
+if ($_SESSION) {
+  $mensagem = $_SESSION['mensagem'];
+} else {
+  $mensagem = "";
+}
+
+$usuario = $_SESSION['nome'];
+$id = $_SESSION['id_usuario'];
+
+// Busca os dados do usuário
+$dados = $respositorioUsuario->buscarUsuario($id);
+// Foto padrão se não tiver
+$foto = !empty($dados['foto']) ? $dados['foto'] : 'frontend/public/img/fotoperfil.png';
+
+$registroUsuario = $respositorioUsuario->listarTodosUsuarios();
+
+
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Publicar Conteúdos Educativos - Projeto Martopia</title>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="../../../../frontend/public/css/baseGeral.css">
+  <link rel="stylesheet" href="../../../../frontend/public/css/logo.css">
+  <link rel="stylesheet" href="../../../../frontend/public/css/instamar.css">
+  <link rel="stylesheet" href="../../../../frontend/public/css/footer.css">
+  <!-- <link rel="stylesheet" href="../Quiz/quizForm.css">  -->
+
+  <!-- Ícones Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+</head>
+
+<body>
+
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      height: 100vh;
+      background: #045A94;
+      background: radial-gradient(circle, rgba(4, 90, 148, 1) 0%, rgba(129, 192, 233, 1) 50%, #9fcaec);
+    }
+
+
+    .page-content {
+      flex: 1 0 auto;
+      /* max-width: 1200px; */
+      /* width: 100%; */
+      margin: 5% auto 2rem auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .form {
+      background-color: #ffffff;
+      border: 2px solid #38a0dd;
+      height: 100%;
+      max-height: 1600px;
+      border-radius: 20px;
+      padding: 50px 30px;
+      max-width: 1200px;
+      width: 100%;
+      margin: 20px auto;
+      color: #045A94;
+      box-shadow: 0 0 15px 3px #81c0e9;
+    }
+
+    .form:hover {
+      box-shadow: 0 0 25px 5px #38a0dd;
+    }
+
+    .form h2 {
+      font-family: 'Titulo';
+      font-size: 2rem;
+      letter-spacing: 2px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form label {
+      font-family: 'Texto';
+      font-size: 1.3rem;
+      display: block;
+      margin-top: 25px;
+      font-weight: bold;
+      justify-content: baseline;
+      padding-bottom: 1em
+    }
+
+    .form select,
+    .form textarea,
+    .form input[type="text"] {
+      width: 100%;
+      padding: 8px 10px;
+      margin-top: 5px;
+      border: 1.5px solid #007BFF;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #003366;
+      box-sizing: border-box;
+      transition: border-color 0.3s ease;
+      font-family: 'Texto';
+    }
+
+    .form select:focus,
+    .form textarea:focus,
+    .form input[type="text"]:focus {
+      border-color: #38a0dd;
+      outline: none;
+      box-shadow: 0 0 5px #81c0e9;
+      font-family: 'Texto';
+    }
+
+    .form button {
+      margin-top: 25px;
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+      background-color: #81c0e9;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form button:hover {
+      background-color: #045A94;
+    }
+
+    .btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    footer {
+      background-color: #045A94;
+    }
+
+    #image-previews img {
+      display: block;
+      margin-top: 10px;
+    }
+
+    .person {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10rem;
+    }
+
+    header {
+      box-shadow: 0 40px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .perfil {
+      width: 80px;
+      height: 80px;
+      margin-left: -3rem;
+      border: 1.5px solid #e18451;
+      /* color: #81c0e9; */
+    }
+
+    .iconeCentral {
+      display: flex;
+      align-items: center;
+      /* centraliza verticalmente o ícone e o texto */
+      justify-content: center;
+      /* centraliza horizontalmente na tela */
+      background: transparent;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 1000px;
+      font-weight: bold;
+      filter: blur(.2px);
+      box-shadow: 0 0 15px 3px #81c0e9;
+      height: auto;
+      padding: 2rem;
+      margin: 8rem auto;
+      text-align: center;
+      font-family: 'Texto';
+      gap: 3rem;
+      margin-top: 10rem;
+    }
+
+    .centraliza {
+      display: flex;
+      flex-direction: column;
+      /* h2 e botão ficam um embaixo do outro */
+      align-items: center;
+      text-align: center;
+    }
+
+    .btn-voltar {
+      transition: 0.3s;
+      padding: 0.8rem 1.4rem;
+      background: linear-gradient(135deg, #c6e1f6, #9fcaec);
+      color: #045a94;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 1.1rem;
+      font-family: 'Texto', serif;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    }
+
+    .btn-voltar:hover {
+      background: linear-gradient(135deg, #81C0E9, #38a0dd);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35);
+    }
+  </style>
+
+
+
+  <!-- NAVBAR -->
+  <header class="header">
+
+    <input type="checkbox" id="check">
+    <label for="check" class="icone">
+      <i class="bi bi-list" id="menu-icone"></i>
+      <i class="bi bi-x" id="sair-icone"></i>
+    </label>
+
+    <div class="logo-marca" style="margin-left: -3rem;">
+      <a href="./home.php" class="logo"><img src="../../../../frontend/public/img/Logo.png" alt="Logo-Projeto Martopia"></a>
+      <p style="margin-left: -3rem;">Projeto <br> Martopia</p>
+    </div>
+
+    <nav>
+      <a href="../../../trocar/trocarperfil.php"><img src="../../../../<?php echo htmlspecialchars($foto); ?>" alt="Foto de Perfil" class="perfil"></a>
+    </nav>
+  </header>
+
+  <div class="iconeCentral">
+
+    <div> <img src="../img/planeta-terram.png" alt="IconConscientizar" style="color: #000; font-size: 7rem;"></img> </div>
+
+    <div class="centraliza">
+
+      <h2 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, .3); color: #fff;">Adicionar Conteúdos Conscientizadores</h2>
+
+      <br><br>
+
+      <div>
+        <button onclick="history.back()" class="btn-voltar"> Voltar </button>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- <form action="artigo_salvar.php" method="POST" enctype="multipart/form-data"> -->
+
+  <div class="page-content">
+
+
+    <form class="form" action="salvar_conscientizacao.php" method="POST" enctype="multipart/form-data">
+
+      <h2>Cadastrar Conteúdos de Conscientização</h2>
+
+      <label>Autor: <?php echo $_SESSION['nome']; ?> </label>
+
+      <label>Título:</label>
+
+      <input class="input" type="text" name="titulo" required style="font-size: 1.2rem;">
+
+      <label for="tipo">Tipo:</label>
+      <input type="text" name="tipo" value="Conscientização" readonly style="font-size: 1.2rem;">
+
+
+      <label for="categoria">Categoria:</label>
+      <select name="categoria" id="categoria" required onchange="mostrarCategoria(this.value)" style="font-size: 1.2rem;">
+        <option value="" style="font-size: 1.2rem;">Selecione um tipo primeiro</option>
+        <option value="Noticias" style="font-size: 1.2rem;">Noticias</option>
+        <option value="Infograficos" style="font-size: 1.2rem;">Infográficos</option>
+        <option value="Texto" style="font-size: 1.2rem;">Texto</option>
+        <option value="Videos" style="font-size: 1.2rem;">Videos</option>
+      </select>
+
+
+      <!-- NOTÍCIA -->
+      <div class="categoria categoria-Noticias hidden">
+
+        <label>Imagem:</label>
+
+        <div class="file-upload" id="file-upload-area">
+          <i class="bi bi-cloud-upload"></i>
+          <p>Clique ou arraste arquivos para enviar</p>
+          <p class="text-sm text-gray-500 mt-2">Formatos suportados: JPG, PNG</p>
+          <input type="file" name="foto_noticia" id="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
+        </div>
+
+        <div class="preview-container" id="preview-container">
+          <p class="text-sm font-semibold mb-2">Pré-visualização:</p>
+          <div id="image-previews"></div>
+        </div>
+
+
+        <label>Legenda Imagem:</label>
+        <input type="text" name="legenda_noticia" class="border p-2 w-full mb-3" style="font-size: 1.2rem;">
+        <label>Link Notícia:</label>
+        <input type="text" name="link_noticia" class="border p-2 w-full mb-3" style="font-size: 1.2rem;">
+
+      </div>
+
+
+      <!-- TEXTO -->
+      <div class="categoria categoria-Texto hidden">
+        <label>Texto:</label>
+        <textarea name="conteudo" rows="4" class="border p-2 w-full mb-3" style="font-size: 1.2rem;"></textarea>
+
+
+        <label>Imagem:</label>
+
+        <div class="file-upload" id="file-upload-area">
+          <i class="bi bi-cloud-upload"></i>
+          <p>Clique ou arraste arquivos para enviar</p>
+          <p class="text-sm text-gray-500 mt-2">Formatos suportados: JPG, PNG</p>
+          <input type="file" name="foto_text" id="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
+        </div>
+
+        <div class="preview-container" id="preview-container">
+          <p class="text-sm font-semibold mb-2">Pré-visualização:</p>
+          <div id="image-previews"></div>
+        </div>
+
+
+        <label>Fonte:</label>
+        <input type="text" name="fonte_texto" class="border p-2 w-full mb-3" style="font-size: 1.2rem;">
+      </div>
+
+      <!-- VÍDEO -->
+      <div class="categoria categoria-Videos hidden">
+        <label>Link do Vídeo (YouTube):</label>
+        <input type="text" name="link_video" class="border p-2 w-full mb-3" style="font-size: 1.2rem;">
+      </div>
+
+      <!-- Infograficos -->
+      <div class="categoria categoria-Infograficos hidden">
+        <label>Texto:</label>
+        <textarea name="conteudo_info" rows="4" class="border p-2 w-full mb-3" style="font-size: 1.2rem;"></textarea>
+
+        <label>Imagem:</label>
+
+        <div class="file-upload" id="file-upload-area">
+          <i class="bi bi-cloud-upload"></i>
+          <p>Clique ou arraste arquivos para enviar</p>
+          <p class="text-sm text-gray-500 mt-2">Formatos suportados: JPG, PNG</p>
+          <input type="file" name="foto_info" id="file-input" accept="image/*" multiple onchange="handleFileSelect(event)">
+        </div>
+
+        <div class="preview-container" id="preview-container">
+          <p class="text-sm font-semibold mb-2">Pré-visualização:</p>
+          <div id="image-previews"></div>
+        </div>
+
+
+        <label>Fonte:</label>
+        <input type="text" name="fonte_info" class="border p-2 w-full mb-3" style="font-size: 1.2rem;">
+      </div>
+
+
+      <div class="btn"><button type="submit" style="font-size: 1.2rem; font-family:'Texto';">Salvar</button></div>
+
+    </form>
+
+  </div>
+
+  <script>
+    function mostrarCategoria(cat) {
+      document.querySelectorAll(".categoria").forEach(c => c.classList.add("hidden"));
+      if (cat) {
+        document.querySelector(".categoria-" + cat).classList.remove("hidden");
+      }
+    }
+  </script>
+
+  <footer>
+    <div class="contatos">
+      <h3>Contatos</h3>
+      <p>Email: contato@martopia.com.br</p>
+      <p>Telefone: +55 11 99999-9999</p>
+      <p>Endereço: Rua do Oceano, 123, São Paulo, SP</p>
+    </div>
+
+    <div class="redes">
+      <h3>Redes Sociais</h3>
+      <div>
+        <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+        <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="bi bi-twitter"></i></a>
+        <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+      </div>
+    </div>
+
+    <div class="mapa">
+      <h3>Localização</h3>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3656.548882243676!2d-46.65639078446302!3d-23.564280468272937!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59cdbc1e56f5%3A0x5d7dbe91edb2db03!2sAv.%20Paulista%2C%20S%C3%A3o%20Paulo%20-%20SP%2C%20Brasil!5e0!3m2!1spt-BR!2sus!4v1600000000000!5m2!1spt-BR!2sus"
+        allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="Mapa do local">
+      </iframe>
+    </div>
+
+    <div class="copyright">
+      &copy; 2025 Projeto Martopia. Todos os direitos reservados.
+    </div>
+  </footer>
+
+  <script src="../../comum/instamar/instamarJS/modal.js"></script>
+
+  <!-- Biblioteca Scroll -->
+  <script src="https://unpkg.com/scrollreveal"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,61 @@
+
+.con1 {
+    border-radius: 2vw;
+}
+
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    gap: 1vw;
+}
+
+.creator {
+    color: var(--mag);
+}
+
+ul {
+    background-color: var(--black);
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    border-radius: 1vw;
+    font-size: larger;
+}
+
+.toolbutton.active.mini {
+    width: fit-content;
+    height: fit-content;
+    font-size: medium;
+}
+
+.msg {
+    border: none;
+    padding: 10px;
+    border-radius: 1vh;
+    background-color: var(--shade1);
+}
+.chatlogs {
+    display: flex;
+    flex-direction: column;
+    gap: 1vh;
+    background-color: var(--black);
+    padding: 1vw;
+    border-radius: 1vh;
+    overflow: auto;
+    height: 30vh;
+}
+
+a {
+    color: var(--will);
+}
+
+input {
+    color: var(--will);
+    background-color: var(--void);
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 2vw;
+}

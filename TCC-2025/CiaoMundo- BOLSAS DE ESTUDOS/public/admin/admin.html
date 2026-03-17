@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CiaoMundo - Painel Administrativo</title>
+  <link rel="stylesheet" href="../css/styleadmin.css">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">
+        <div class="planet-icon">
+          <img src="../images/Ciaomundo.png" alt="">
+        </div>
+        
+      </div>
+      <div class="nav-profile">
+        <div class="admin-indicator">ADMIN</div>
+        <a href="../user/perfil.html" title="Perfil do usuário">
+          <img id="perfilBtnImg" src="../images/perfil.png" alt="Foto do usuário" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    
+    <header class="page-header">
+      <h1>Painel <strong>Administrativo</strong></h1>
+      <p>Controle total da plataforma CiaoMundo</p>
+    </header>
+
+    <!-- Estatísticas -->
+    <section class="stats-container">
+      <div class="stat-card">
+        <div class="stat-number" id="totalUsuarios">-</div>
+        <div class="stat-label">Usuários Ativos</div>
+        <div class="stat-description">Estudantes registrados</div>
+      </div>
+      
+      <div class="stat-card">
+        <div class="stat-number" id="totalBolsas">-</div>
+        <div class="stat-label">Bolsas Ativas</div>
+        <div class="stat-description">Oportunidades disponíveis</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number">-</div>
+        <div class="stat-label">Países</div>
+        <div class="stat-description">Destinos de intercâmbio</div>
+      </div>
+    </section>
+
+    <!-- Área Administrativa -->
+    <section class="admin-section">
+      <h2 class="section-title">Área Administrativa</h2>
+      <p class="section-description">
+        Gerencie todos os aspectos da plataforma com controle total sobre usuários, 
+        bolsas de estudo e conteúdos do sistema.
+      </p>
+      
+      <div class="admin-cards">
+        <div class="admin-card" onclick="location.href='./gerenciarusuarios.html'" title="Gerenciar Usuários">
+          <div class="card-icon">👥</div>
+          <h3 class="card-title">Gerenciar Usuários</h3>
+          <p class="card-description">
+            Controle completo sobre contas de usuários, permissões e perfis de acesso.
+          </p>
+        </div>
+        
+        <div class="admin-card" onclick="location.href='./gerenciarbolsas.html'" title="Gerenciar Bolsas">
+          <div class="card-icon">🎓</div>
+          <h3 class="card-title">Gerenciar Bolsas</h3>
+          <p class="card-description">
+            Adicione, edite e gerencie todas as oportunidades de bolsas disponíveis.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Funcionalidades do Administrador -->
+    <section class="admin-features">
+      <h2 class="section-title">Funcionalidades do Administrador</h2>
+      <p class="section-description">
+        Como administrador, você tem acesso a ferramentas para manter a plataforma 
+        funcionando de forma eficiente e proporcionar a melhor experiência aos usuários.
+      </p>
+      
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">🛡️</div>
+          <div class="feature-text">Gerenciar Usuários</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📊</div>
+          <div class="feature-text">Gerenciar Bolsas</div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">📝</div>
+          <div class="feature-text">Gerenciar Conteúdo</div>
+        </div>
+      
+      </div>
+    </section>
+
+    <!-- Área do Usuário -->
+    <section class="user-section">
+      <h2 class="section-title">Área do Usuário</h2>
+      <p class="section-description">
+        Acesse rapidamente as principais funcionalidades disponíveis para os estudantes da plataforma e clique no icone do CiaoMundo para voltar a página principal.
+      </p>
+      
+      <div class="user-cards">
+        <div class="user-card" onclick="location.href='../user/bolsas.html'" title="Bolsas de Estudo">
+          <div class="card-icon">🎯</div>
+          <h3 class="card-title">Bolsas de Estudo</h3>
+          <p class="card-description">
+            Explore oportunidades de bolsas para intercâmbio internacional.
+          </p>
+        </div>
+        
+        <div class="user-card" onclick="location.href='../user/simulador.html'" title="Simulador de Custos">
+          <div class="card-icon">💰</div>
+          <h3 class="card-title">Simulador</h3>
+          <p class="card-description">
+            Calcule os custos estimados para seu intercâmbio dos sonhos.
+          </p>
+        </div>
+        
+        <div class="user-card" onclick="location.href='../user/documentos.html'" title="Documentos">
+          <div class="card-icon">📄</div>
+          <h3 class="card-title">Documentos</h3>
+          <p class="card-description">
+            Guia completo da documentação necessária para intercâmbio.
+          </p>
+        </div>
+        
+        <div class="user-card" onclick="location.href='../user/testepersonalidade.html'" title="Teste de Personalidade">
+          <div class="card-icon">🧠</div>
+          <h3 class="card-title">Teste</h3>
+          <p class="card-description">
+            Descubra o destino ideal baseado no seu perfil pessoal.
+          </p>
+        </div>
+        
+        <div class="user-card" onclick="location.href='../user/lembrete.html'" title="Notificações">
+          <div class="card-icon">🔔</div>
+          <h3 class="card-title">Notificações</h3>
+          <p class="card-description">
+            Mantenha-se atualizado com lembretes importantes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Administração CiaoMundo</h3>
+        <p>Painel de controle e gerenciamento da plataforma de intercâmbio estudantil do Brasil.</p>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Gerenciamento</h3>
+        <a href="./gerenciarusuarios.html">Usuários do Sistema</a>
+        <a href="./gerenciarbolsas.html">Bolsas de Estudo</a>
+         <a href="../user/bolsas.html">Comentarios </a>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Área do Usuário</h3>
+        <a href="../user/bolsas.html">Bolsas de Estudo</a>
+        <a href="../user/documentos.html">Documentação</a>
+        <a href="../user/simulador.html">Simulador de custos</a>
+        <a href="../user/testepersonalidade.html">Teste de Personalidade</a>
+        <a href="../user/lembrete.html">Notificações</a>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Suporte Técnico</h3>
+        <a href="./sobrenos.html">Sobre nós</a>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 CiaoMundo. Todos os direitos reservados.</p>
+      <p>Painel Administrativo | Desenvolvido com segurança e eficiência</p>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const perfilBtnImg = document.getElementById('perfilBtnImg');
+      const token = localStorage.getItem('token');
+
+      // Função para atualizar foto do perfil (corrigida igual ao home)
+     async function atualizarFoto() {
+  try {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const res = await fetch('/user/perfil', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const user = await res.json();
+        perfilBtnImg.src = user.foto || '../images/perfil.png';
+        return;
+      }
+    }
+    perfilBtnImg.src = '../images/perfil.png';
+  } catch (err) {
+    console.error('Erro ao atualizar foto:', err);
+    perfilBtnImg.src = '../images/perfil.png';
+  }
+}
+
+atualizarFoto();
+setInterval(atualizarFoto, 5000);
+
+      // Função para buscar estatísticas reais
+      async function carregarEstatisticas() {
+        try {
+          if (token) {
+            // Buscar total de usuários
+            const resUsuarios = await fetch('/admin/usuarios/usuarios', {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (resUsuarios.ok) {
+              const usuarios = await resUsuarios.json();
+              document.getElementById('totalUsuarios').textContent = usuarios.length;
+            }
+
+            // Buscar total de bolsas
+            const resBolsas = await fetch('/admin/bolsas/bolsas', {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (resBolsas.ok) {
+              const bolsas = await resBolsas.json();
+              document.getElementById('totalBolsas').textContent = bolsas.length;
+            }
+          }
+        } catch (err) {
+          console.error('Erro ao carregar estatísticas:', err);
+          document.getElementById('totalUsuarios').textContent = 'Erro';
+          document.getElementById('totalBolsas').textContent = 'Erro';
+        }
+      }
+
+      async function verificarAdmin() {
+        if (!token) return false;
+        try {
+          const res = await fetch('/user/perfil', {
+            headers: { 'Authorization': `Bearer ${token}` }
+          });
+          if (res.ok) {
+            const user = await res.json();
+            return user.tipo_usuario?.toLowerCase() === 'administrador';
+          }
+          return false;
+        } catch (err) {
+          console.error(err);
+          return false;
+        }
+      }
+
+      // Inicializar funções
+      atualizarFoto();
+      carregarEstatisticas();
+      verificarAdmin().then(isAdmin => {
+        console.log('É admin?', isAdmin);
+      });
+
+      // Escutar mudanças no localStorage
+      window.addEventListener('storage', (e) => {
+        if (e.key === 'userFoto') atualizarFoto();
+      });
+
+      // Atualizar foto periodicamente
+      setInterval(atualizarFoto, 2000);
+      
+      // Atualizar estatísticas periodicamente
+      setInterval(carregarEstatisticas, 5000);
+    });
+  </script>

@@ -1,0 +1,58 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "AlteHassGrotesk";
+    font-weight: 300;
+}
+
+body{
+    background-color: white
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../../../assets/AlteHaasGroteskRegular.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../../../assets/AlteHaasGroteskBold.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+
+#rownav {
+    text-align: center;
+    background-color: #A8B16B;
+}
+
+#imgnav {
+    width: 290px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav2 {
+    margin-top: 15px;
+}
+
+#linksnav {
+    color: #4E6422;
+}
+
+#linksnav:hover {
+    color: #A8B16B;
+}
+
+.esquerda, .direita{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}

@@ -1,0 +1,99 @@
+/* Reset de CSS básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Definir uma tipografia formal */
+/* body {
+    font-family: 'Nunito Sans', 'Poppins', sans-serif;
+    color: #333;
+    background-color: #e6e6e6;
+    line-height: 1.6;
+} */
+
+/* Cabeçalho */
+/* .header{
+    background-color: #003366;
+    padding: 4rem 0;
+} */
+
+.navbar-list {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.navbar-link {
+    color: white;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0.5rem;
+}
+
+.navbar-link:hover {
+    color: #f0ad4e;
+    transition: color 0.3s ease;
+}
+
+/* Botão Trocar de Conta */
+.cta-btn {
+    background-color: #f0ad4e;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cta-btn:hover {
+    background-color: #e69500;
+    transition: background-color 0.3s ease;
+}
+
+/* Conteúdo Principal */
+main {
+    padding: 5rem;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2rem;
+    color: #45624E;
+    margin-bottom: 1.5rem;
+}
+
+.simulados {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.simulado {
+    background-color: white;
+    border-radius: 10px;
+    /* padding: 6rem; */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    height: 300px;
+    text-align: center;
+    /* transition: transform 0.3s ease; */
+    color: #45624E;
+    font-family: 'Nunito Sans', 'Poppins', sans-serif;
+    font-size: larger;
+}
+
+.simulado:hover {
+    transform: translateY(-5px);
+}
+
+.simulado img {
+    margin-top: 2px;
+    width: 200px;
+    margin-left: 50px;
+}

@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Holerite - {{usuario.nome}}</title>
+
+  <!-- Bootstrap & Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+
+
+  <style>
+    /* Estilos do template (mantidos similar ao que você tinha) */
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container-holerite {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 30px;
+    }
+
+    .header-holerite {
+      text-align: center;
+      border-bottom: 3px solid #667eea;
+      padding-bottom: 20px;
+      margin-bottom: 30px;
+    }
+
+    .info-colaborador {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+    }
+
+    .tabela-holerite th {
+      background: #667eea;
+      color: #fff;
+      padding: 12px;
+      font-size: 13px;
+      text-align: left;
+    }
+
+    .tabela-holerite td {
+      padding: 8px;
+      border-bottom: 1px solid #dee2e6;
+      vertical-align: middle;
+    }
+
+    .totalizadores {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .total-row {
+      font-size: 16px;
+      font-weight: bold;
+      padding: 15px;
+      background: white;
+      border-radius: 8px;
+      margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .liquido-row {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 20px;
+    }
+
+    .acoes-holerite {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-header {
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-fechar-modal {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      color: #666;
+    }
+
+    @media print {
+      body {
+        background: white !important;
+        padding: 0 !important;
+      }
+
+      .container-holerite {
+        box-shadow: none !important;
+        max-width: 100% !important;
+      }
+
+      .acoes-holerite,
+      .modal-overlay,
+      .btn-remover {
+        display: none !important;
+      }
+    }
+
+    /* exemplo reparado para botões de ação */
+    .btn-acao {
+      background: linear-gradient(135deg, #20c997 0%, #28a745 100%);
+      color: white;
+      transition: transform .12s ease, box-shadow .12s ease;
+    }
+
+    .btn-acao:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-pdf {
+      background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+      color: rgb(136, 58, 58);
+    }
+
+    .btn-pdf:hover {
+      background: linear-gradient(135deg, #fd7e14 0%, #dc3545 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-salvar {
+      background: linear-gradient(135deg, #0a5338 0%, #0edb29 100%);
+      color: white;
+    }
+
+    .btn-salvar:hover {
+      background: linear-gradient(135deg, #1c6c21 0%, #1acb9c 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-email {
+      background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+      color: white;
+    }
+
+    .btn-email:hover {
+      background: linear-gradient(135deg, #6f42c1 0%, #17a2b8 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(23, 162, 184, 0.3);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #6f42c1 0%, #17a2b8 100%);
+      transform: translateY(-2px);
+
+    }
+
+    /* Responsividade para botões em telas menores */
+    @media (max-width: 768px) {
+      .acoes-holerite {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .btn-acao {
+        width: 100%;
+        max-width: none;
+      }
+
+      .btn {
+        padding: 10px 15px;
+        font-size: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-holerite">
+    <!-- Header -->
+    <div class="header-holerite">
+
+      <h2><i class="bi bi-file-earmark-text"></i> RECIBO DE PAGAMENTO DE SALÁRIO</h2>
+
+      <p class="mb-0 mt-2">
+        <strong id="nome-empresa">{{empresa.nome_empresa}}</strong><br>
+        <small>CNPJ: <span id="cnpj-empresa">{{empresa.cnpj}}</span></small>
+      </p>
+    </div>
+
+    <!-- Informações do Colaborador -->
+    <div class="info-colaborador">
+      <div class="row">
+        <div class="col-md-3">
+          <small class="text-muted">Código</small><br>
+          <strong id="codigo-colaborador">{{usuario.numero_registro}}</strong>
+        </div>
+        <div class="col-md-3">
+          <small class="text-muted">Nome Completo</small><br>
+          <strong id="nome-colaborador">{{usuario.nome}}</strong>
+        </div>
+        <div class="col-md-3">
+          <small class="text-muted">CPF</small><br>
+          <strong id="cpf-colaborador">{{usuario.cpf}}</strong>
+        </div>
+        <div class="col-md-3">
+          <small class="text-muted">Cargo</small><br>
+          <strong id="cargo-colaborador">{{usuario.cargo}}</strong>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <label class="form-label"><strong>Mês Referência:</strong></label>
+          <input type="month" id="mes-referencia" class="form-control" value="{{mesReferencia}}">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label"><strong>Número de Dependentes:</strong></label>
+          <input type="number" id="num-dependentes" class="form-control" value="{{usuario.dependentes}}" min="0">
+        </div>
+      </div>
+    </div>
+
+    <!-- Proventos -->
+    <div class="secao-proventos mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="mb-0"><i class="bi bi-plus-circle-fill"></i> Proventos</h4>
+        <button class="btn btn-light btn-sm" id="btn-add-provento"><i class="bi bi-plus-lg"></i> Adicionar</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover tabela-holerite">
+          <thead>
+            <tr>
+              <th width="10%">Código</th>
+              <th width="45%">Descrição</th>
+              <th width="15%">Referência</th>
+              <th width="20%">Valor (R$)</th>
+              <th width="10%">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-proventos"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Descontos -->
+    <div class="secao-descontos mb-4">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h4 class="mb-0"><i class="bi bi-dash-circle-fill"></i> Descontos</h4>
+        <button class="btn btn-light btn-sm" id="btn-add-desconto"><i class="bi bi-plus-lg"></i> Adicionar</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover tabela-holerite">
+          <thead>
+            <tr>
+              <th width="10%">Código</th>
+              <th width="45%">Descrição</th>
+              <th width="15%">Referência</th>
+              <th width="20%">Valor (R$)</th>
+              <th width="10%">Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tbody-descontos"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Totalizadores -->
+    <div class="totalizadores">
+      <div class="total-row">
+        <span><i class="bi bi-cash-stack"></i> Total de Proventos:</span>
+        <span id="total-proventos">R$ 0,00</span>
+      </div>
+      <div class="total-row">
+        <span><i class="bi bi-dash-circle"></i> Total de Descontos:</span>
+        <span id="total-descontos">R$ 0,00</span>
+      </div>
+      <div class="total-row liquido-row">
+        <span><i class="bi bi-wallet2"></i> SALÁRIO LÍQUIDO:</span>
+        <span id="salario-liquido">R$ 0,00</span>
+      </div>
+    </div>
+
+    <!-- Bases de Cálculo -->
+    <div class="d-flex gap-3 flex-wrap mb-3">
+      <div class="p-3 bg-white rounded shadow-sm">
+        <small>Salário Base</small><br>
+        <strong id="salario-base-display">R$ {{usuario.salario}}</strong>
+      </div>
+      <div class="p-3 bg-white rounded shadow-sm">
+        <small>Base INSS</small><br>
+        <strong id="base-inss">R$ 0,00</strong>
+      </div>
+      <div class="p-3 bg-white rounded shadow-sm">
+        <small>Base FGTS</small><br>
+        <strong id="base-fgts">R$ 0,00</strong>
+      </div>
+      <div class="p-3 bg-white rounded shadow-sm">
+        <small>Valor FGTS (8%)</small><br>
+        <strong id="valor-fgts">R$ 0,00</strong>
+      </div>
+      <div class="p-3 bg-white rounded shadow-sm">
+        <small>Base IRRF</small><br>
+        <strong id="base-irrf">R$ 0,00</strong>
+      </div>
+    </div>
+
+    <!-- Ações -->
+    <div class="acoes-holerite">
+      {{!-- <button class="btn-acao btn-calcular" id="btn-calcular-auto"><i class="bi bi-calculator-fill"></i> Calcular
+        Automático</button> --}}
+      <button class="btn-acao btn-salvar" id="btn-salvar-holerite"><i class="bi bi-save-fill"></i> Salvar
+        Holerite</button>
+      <button class="btn-acao btn-pdf" id="btn-gerar-pdf"><i class="bi bi-file-pdf-fill"></i> Gerar PDF</button>
+      <button class="btn-acao btn-email" id="btn-enviar-colaborador"><i class="bi bi-send-fill"></i> Enviar para
+        Colaborador</button>
+      <button id="btn-voltar" class="btn btn-secondary">Voltar</button>
+
+    </div>
+  </div>
+
+  <!-- Modal: Adicionar Provento -->
+  <div class="modal-overlay" id="modal-provento" role="dialog" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <div class="modal-header">
+        <h4><i class="bi bi-plus-circle"></i> Adicionar Provento</h4>
+        <button type="button" class="btn-fechar-modal" aria-label="Fechar">&times;</button>
+      </div>
+      <form id="form-add-provento">
+        <div class="mb-3">
+          <label class="form-label">Código:</label>
+          <select id="provento-codigo" class="form-select">
+            <option value="">Selecione ou digite...</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descrição:</label>
+          <input type="text" id="provento-descricao" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Referência:</label>
+          <input type="text" id="provento-referencia" class="form-control" placeholder="Ex: 30,00 ou 100%">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Valor (R$):</label>
+          <input type="number" step="0.01" id="provento-valor" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100"><i class="bi bi-check-lg"></i> Adicionar Provento</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Adicionar Desconto -->
+  <div class="modal-overlay" id="modal-desconto" role="dialog" aria-hidden="true">
+    <div class="modal-content" role="document">
+      <div class="modal-header">
+        <h4><i class="bi bi-dash-circle"></i> Adicionar Desconto</h4>
+        <button type="button" class="btn-fechar-modal" aria-label="Fechar">&times;</button>
+      </div>
+      <form id="form-add-desconto">
+        <div class="mb-3">
+          <label class="form-label">Código:</label>
+          <select id="desconto-codigo" class="form-select">
+            <option value="">Selecione ou digite...</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Descrição:</label>
+          <input type="text" id="desconto-descricao" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Referência:</label>
+          <input type="text" id="desconto-referencia" class="form-control" placeholder="Ex: 9,00% ou 6%">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Valor (R$):</label>
+          <input type="number" step="0.01" id="desconto-valor" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100"><i class="bi bi-check-lg"></i> Adicionar Desconto</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Dados ocultos que o JS usa -->
+
+  <input type="hidden" id="colaborador-id" value="{{usuario.id}}">
+  <input type="hidden" id="email-colaborador" value="{{usuario.email}}">
+  <input type="hidden" id="salario-base" value="{{usuario.salario}}">
+
+  <script>
+    const BACKEND_URL = 'http://localhost:3001';
+    const PDF_TEMPLATE_NAME = 'holerite_template'; // Nome do template Handlebars que seu pdfController espera
+
+    // --- FUNÇÕES PARA PREENCHER SUGESTÕES ---
+    function preencherSugestoesProvento() {
+      const sugestoes = [
+        { codigo: '001', descricao: 'Salário Base' },
+        { codigo: '002', descricao: 'Hora Extra 50%' },
+        { codigo: '003', descricao: 'Hora Extra 100%' },
+        { codigo: '004', descricao: 'Adicional Noturno' },
+        { codigo: '005', descricao: 'Adicional Periculosidade' },
+        { codigo: '006', descricao: 'Adicional Insalubridade' },
+        { codigo: '007', descricao: 'Comissão' },
+        { codigo: '008', descricao: 'Bonificação' },
+        { codigo: '009', descricao: 'Gratificação' },
+        { codigo: '010', descricao: 'DSR sobre Horas Extras' },
+        { codigo: '011', descricao: '13º Salário' },
+        { codigo: '012', descricao: 'Férias' },
+        { codigo: 'MANUAL', descricao: 'Outro (digitar manualmente)' }
+      ];
+      preencherSelect('provento', sugestoes);
+    }
+
+    function preencherSugestoesDesconto() {
+      const sugestoes = [
+        { codigo: '301', descricao: 'INSS' },
+        { codigo: '302', descricao: 'IRRF' },
+        { codigo: '303', descricao: 'Faltas' },
+        { codigo: '304', descricao: 'Atrasos' },
+        { codigo: '305', descricao: 'Vale Transporte' },
+        { codigo: '306', descricao: 'Vale Alimentação' },
+        { codigo: '307', descricao: 'Plano de Saúde' },
+        { codigo: '308', descricao: 'Empréstimo Consignado' },
+        { codigo: '309', descricao: 'Pensão Alimentícia' },
+        { codigo: '310', descricao: 'Adiantamento Salarial' },
+        { codigo: 'MANUAL', descricao: 'Outro (digitar manualmente)' }
+      ];
+      preencherSelect('desconto', sugestoes);
+    }
+
+    function preencherSelect(tipo, sugestoes) {
+      const select = document.getElementById(`${tipo}-codigo`);
+      if (!select) return;
+
+      // Limpa as opções atuais, exceto a primeira
+      select.innerHTML = '<option value="">Selecione ou digite...</option>';
+
+      sugestoes.forEach(sugestao => {
+        const option = document.createElement('option');
+        option.value = sugestao.codigo;
+        option.textContent = `${sugestao.codigo} - ${sugestao.descricao}`;
+        select.appendChild(option);
+      });
+    }
+
+    // --- FUNÇÕES PARA FECHAR MODAL ---
+    function fecharModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
+    }
+
+    function configurarFechamentoModal() {
+      // Fechar modal ao clicar no X
+      document.querySelectorAll('.btn-fechar-modal').forEach(button => {
+        button.addEventListener('click', function () {
+          const modal = this.closest('.modal-overlay');
+          if (modal) {
+            fecharModal(modal.id);
+          }
+        });
+      });
+
+      // Fechar modal ao clicar no overlay (fora do conteúdo)
+      document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', function (e) {
+          if (e.target === this) {
+            fecharModal(this.id);
+          }
+        });
+      });
+
+      // Fechar modal com tecla ESC
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          document.querySelectorAll('.modal-overlay').forEach(modal => {
+            if (modal.style.display === 'flex') {
+              fecharModal(modal.id);
+            }
+          });
+        }
+      });
+
+      // Botões cancelar
+      document.getElementById('btn-cancelar-provento')?.addEventListener('click', function () {
+        fecharModal('modal-provento');
+      });
+
+      document.getElementById('btn-cancelar-desconto')?.addEventListener('click', function () {
+        fecharModal('modal-desconto');
+      });
+    }
+
+
+    // --- CLASSES ---
+    class CalculadoraFolha {
+      static calcularINSS(salarioBruto) {
+        if (salarioBruto <= 1412.00) return salarioBruto * 0.075;
+        if (salarioBruto <= 2666.68) return (salarioBruto * 0.09) - 21.18;
+        if (salarioBruto <= 4000.03) return (salarioBruto * 0.12) - 101.18;
+        if (salarioBruto <= 7786.02) return (salarioBruto * 0.14) - 181.18;
+        return 908.85; // Teto
+      }
+
+      static calcularIRRF(salarioBase, dependentes = 0) {
+        const deducaoDependente = 189.59 * dependentes;
+        const baseCalculo = Math.max(0, salarioBase - deducaoDependente);
+
+        if (baseCalculo <= 2259.20) return 0;
+        if (baseCalculo <= 2826.65) return (baseCalculo * 0.075) - 169.44;
+        if (baseCalculo <= 3751.05) return (baseCalculo * 0.15) - 381.44;
+        if (baseCalculo <= 4664.68) return (baseCalculo * 0.225) - 662.77;
+        return (baseCalculo * 0.275) - 896.00;
+      }
+
+      static calcularFGTS(salarioBruto) {
+        return salarioBruto * 0.08;
+      }
+    }
+
+    class GerenciadorHolerite {
+      constructor(salarioBase, dependentes) {
+        this.salarioBase = parseFloat(salarioBase) || 0;
+        this.dependentes = parseInt(dependentes) || 0;
+        this.proventos = [];
+        this.descontos = [];
+        this.baseINSS = 0;
+        this.baseIRRF = 0;
+        this.baseFGTS = 0;
+        this.totalProventos = 0;
+        this.totalDescontos = 0;
+      }
+
+      adicionarProvento(codigo, descricao, referencia, valor) {
+        const valorFloat = parseFloat(valor);
+        this.proventos.push({ codigo, descricao, referencia, valor: valorFloat });
+        this.totalProventos += valorFloat;
+      }
+
+      adicionarDesconto(codigo, descricao, referencia, valor) {
+        const valorFloat = parseFloat(valor);
+        this.descontos.push({ codigo, descricao, referencia, valor: valorFloat });
+        this.totalDescontos += valorFloat;
+      }
+
+      removerItem(tipo, indice) {
+        if (tipo === 'provento') {
+          this.proventos.splice(indice, 1);
+        } else if (tipo === 'desconto') {
+          this.descontos.splice(indice, 1);
+        }
+        this.recalcular();
+      }
+
+      getTotalProventos() { return this.totalProventos; }
+      getTotalDescontos() { return this.totalDescontos; }
+      getSalarioLiquido() { return this.totalProventos - this.totalDescontos; }
+
+      recalcular() {
+        // Zera tudo, exceto itens manuais
+        const proventosManuais = this.proventos.filter(p => p.codigo !== '001'); // 001 é o Salário Base
+        const descontosManuais = this.descontos.filter(d => d.codigo !== '301' && d.codigo !== '302'); // 301=INSS, 302=IRRF
+
+        this.proventos = [];
+        this.descontos = [];
+        this.totalProventos = 0;
+        this.totalDescontos = 0;
+
+        // 1. Adicionar Salário Base
+        if (this.salarioBase > 0) {
+          this.adicionarProvento('001', 'Salário Base', '30 dias', this.salarioBase);
+        }
+
+        // 2. Adicionar proventos manuais (mantidos)
+        proventosManuais.forEach(p => this.adicionarProvento(p.codigo, p.descricao, p.referencia, p.valor));
+
+        // 3. Recalcular bases
+        this.baseFGTS = this.totalProventos;
+        this.baseINSS = this.totalProventos;
+
+        // 4. Adicionar INSS
+        const inss = CalculadoraFolha.calcularINSS(this.baseINSS);
+        if (inss > 0) {
+          this.adicionarDesconto('301', 'INSS', 'Tabela', inss.toFixed(2));
+        }
+
+        // 5. Recalcular base IRRF (Total Proventos - Desconto INSS)
+        const inssDesconto = this.descontos.find(d => d.codigo === '301')?.valor || 0;
+        this.baseIRRF = this.totalProventos - inssDesconto;
+
+        // 6. Adicionar IRRF
+        const irrf = CalculadoraFolha.calcularIRRF(this.baseIRRF, this.dependentes);
+        if (irrf > 0) {
+          this.adicionarDesconto('302', 'IRRF', 'Tabela', irrf.toFixed(2));
+        }
+
+        // 7. Adicionar descontos manuais (mantidos)
+        descontosManuais.forEach(d => this.adicionarDesconto(d.codigo, d.descricao, d.referencia, d.valor));
+      }
+    }
+
+    // --- VARIÁVEIS GLOBAIS ---
+    let gerenciador = null;
+    let colaboradorId = null;
+
+    // --- FUNÇÕES AUXILIARES ---
+
+    function formatarMoeda(valor) {
+      return (valor || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    // Função Placeholder para notificação (ajuste conforme seu HTML)
+    function mostrarNotificacao(mensagem, tipo = 'info') {
+      console.log(`[NOTIFICAÇÃO ${tipo.toUpperCase()}]: ${mensagem}`);
+      // Implementação básica de alerta para garantir que a função não quebre o script
+      alert(`${tipo.toUpperCase()}: ${mensagem}`);
+    }
+
+    function mostrarLoading(mostrar) {
+      console.log(`[LOADING]: ${mostrar ? 'Iniciado' : 'Finalizado'}`);
+      // Implemente a lógica de mostrar/esconder o loading se tiver um elemento no HTML
+    }
+
+    function renderizarTabelas() {
+      // Função para preencher os dados nas tabelas e totalizadores
+      document.getElementById('total-proventos').textContent = formatarMoeda(gerenciador.getTotalProventos());
+      document.getElementById('total-descontos').textContent = formatarMoeda(gerenciador.getTotalDescontos());
+      document.getElementById('salario-liquido').textContent = formatarMoeda(gerenciador.getSalarioLiquido());
+
+      document.getElementById('base-inss').textContent = formatarMoeda(gerenciador.baseINSS);
+      document.getElementById('base-fgts').textContent = formatarMoeda(gerenciador.baseFGTS);
+      document.getElementById('base-irrf').textContent = formatarMoeda(gerenciador.baseIRRF);
+      document.getElementById('valor-fgts').textContent = formatarMoeda(CalculadoraFolha.calcularFGTS(gerenciador.baseFGTS));
+
+      const tbodyProventos = document.getElementById('tbody-proventos');
+      const tbodyDescontos = document.getElementById('tbody-descontos');
+      tbodyProventos.innerHTML = '';
+      tbodyDescontos.innerHTML = '';
+
+      gerenciador.proventos.forEach((item, index) => {
+        const row = tbodyProventos.insertRow();
+        row.innerHTML = `
+          <td>${item.codigo}</td>
+          <td>${item.descricao}</td>
+          <td>${item.referencia}</td>
+          <td>${formatarMoeda(item.valor)}</td>
+          <td>${item.codigo !== '001' ? `<button class="btn btn-danger btn-sm btn-remover" data-tipo="provento" data-index="${index}"><i class="bi bi-trash"></i></button>` : ''}</td>
+        `;
+      });
+
+      gerenciador.descontos.forEach((item, index) => {
+        const row = tbodyDescontos.insertRow();
+        row.innerHTML = `
+          <td>${item.codigo}</td>
+          <td>${item.descricao}</td>
+          <td>${item.referencia}</td>
+          <td>${formatarMoeda(item.valor)}</td>
+          <td>${item.codigo !== '301' && item.codigo !== '302' ? `<button class="btn btn-danger btn-sm btn-remover" data-tipo="desconto" data-index="${index}"><i class="bi bi-trash"></i></button>` : ''}</td>
+        `;
+      });
+
+      adicionarListenersRemover();
+    }
+
+    function recalcularEAtualizar() {
+      if (!gerenciador) return;
+      // Atualiza dependentes antes de recalcular
+      gerenciador.dependentes = parseInt(document.getElementById('num-dependentes')?.value) || 0;
+      gerenciador.recalcular();
+      renderizarTabelas();
+    }
+
+    async function carregarDadosColaborador(id) {
+      try {
+        mostrarLoading(true);
+
+        // Simulação de Dados (REMOVA ISSO ao usar seu fetch real com o token)
+        const salarioBase = document.getElementById('salario-base')?.value || 0;
+        const dados = { salario: salarioBase, dependentes: 0 };
+
+        gerenciador = new GerenciadorHolerite(dados.salario, dados.dependentes);
+        recalcularEAtualizar();
+
+      } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        mostrarNotificacao('Erro ao carregar holerite: ' + error.message, 'danger');
+      } finally {
+        mostrarLoading(false);
+      }
+    }
+
+    // **** NOVA FUNÇÃO DE PDF USANDO O BACKEND ****
+    async function gerarPDF() {
+      if (!gerenciador) {
+        mostrarNotificacao('Carregue os dados do holerite primeiro.', 'warning');
+        return;
+      }
+
+      try {
+        mostrarLoading(true);
+        console.log(' Gerando PDF...');
+
+        const nomeColaborador = document.getElementById('nome-colaborador')?.textContent || 'Colaborador';
+        const cpf = document.getElementById('cpf-colaborador')?.textContent || '';
+        const cargo = document.getElementById('cargo-colaborador')?.textContent || '';
+        const codigo = document.getElementById('codigo-colaborador')?.textContent || '';
+        const nomeEmpresa = document.getElementById('nome-empresa')?.textContent || 'EMPRESA LTDA';
+        const cnpjEmpresa = document.getElementById('cnpj-empresa')?.textContent || '';
+        const mesRef = document.getElementById('mes-referencia')?.value || new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' });
+
+        // Criar container temporário invisível
+        const container = document.createElement('div');
+        container.style.cssText = 'position:absolute;left:-9999px;top:0;width:210mm;background:white;padding:15mm;';
+
+        let htmlProventos = '';
+        gerenciador.proventos.forEach(p => {
+          htmlProventos += `
+                <tr>
+                    <td style="border:1px solid #000;padding:6px;">${p.codigo}</td>
+                    <td style="border:1px solid #000;padding:6px;">${p.descricao}</td>
+                    <td style="border:1px solid #000;padding:6px;text-align:center;">${p.referencia}</td>
+                    <td style="border:1px solid #000;padding:6px;text-align:right;"><strong>${formatarMoeda(p.valor)}</strong></td>
+                    <td style="border:1px solid #000;padding:6px;"></td>
+                </tr>
+            `;
+        });
+
+        let htmlDescontos = '';
+        if (gerenciador.descontos.length > 0) {
+          gerenciador.descontos.forEach(d => {
+            htmlDescontos += `
+                    <tr>
+                        <td style="border:1px solid #000;padding:6px;">${d.codigo}</td>
+                        <td style="border:1px solid #000;padding:6px;">${d.descricao}</td>
+                        <td style="border:1px solid #000;padding:6px;text-align:center;">${d.referencia}</td>
+                        <td style="border:1px solid #000;padding:6px;"></td>
+                        <td style="border:1px solid #000;padding:6px;text-align:right;"><strong>${formatarMoeda(d.valor)}</strong></td>
+                    </tr>
+                `;
+          });
+        }
+
+        container.innerHTML = `
+            <div style="font-family:Arial,sans-serif;font-size:11pt;color:#000;background:white;width:180mm;margin:0 auto;">
+                <div style="text-align:center;margin-bottom:15px;border-bottom:3px solid #000;padding-bottom:10px;">
+                    <h2 style="margin:0 0 8px 0;font-size:16pt;font-weight:bold;">RECIBO DE PAGAMENTO DE SALÁRIO</h2>
+                    <div style="font-size:13pt;font-weight:bold;margin:5px 0;">${nomeEmpresa}</div>
+                    <div style="font-size:10pt;color:#333;">CNPJ: ${cnpjEmpresa}</div>
+                    <div style="margin-top:8px;font-size:10pt;"><strong>Mês Referência:</strong> ${mesRef}</div>
+                </div>
+
+                <table style="width:100%;border:2px solid #000;border-collapse:collapse;margin-bottom:15px;background:#f9f9f9;">
+                    <tr>
+                        <td style="padding:8px;border:1px solid #000;width:20%;">
+                            <div style="font-size:9pt;color:#666;">Código</div>
+                            <div style="font-weight:bold;font-size:10pt;">${codigo}</div>
+                        </td>
+                        <td style="padding:8px;border:1px solid #000;width:35%;">
+                            <div style="font-size:9pt;color:#666;">Nome Completo</div>
+                            <div style="font-weight:bold;font-size:10pt;">${nomeColaborador}</div>
+                        </td>
+                        <td style="padding:8px;border:1px solid #000;width:25%;">
+                            <div style="font-size:9pt;color:#666;">CPF</div>
+                            <div style="font-weight:bold;font-size:10pt;">${cpf}</div>
+                        </td>
+                        <td style="padding:8px;border:1px solid #000;width:20%;">
+                            <div style="font-size:9pt;color:#666;">Cargo</div>
+                            <div style="font-weight:bold;font-size:10pt;">${cargo}</div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div style="background:#f0f0f0;padding:6px 8px;margin:15px 0 8px 0;border-left:4px solid #000;font-weight:bold;font-size:11pt;">
+                    PROVENTOS
+                </div>
+                <table style="width:100%;border-collapse:collapse;margin-bottom:15px;">
+                    <thead>
+                        <tr style="background:#000;color:white;">
+                            <th style="border:1px solid #000;padding:8px;text-align:left;width:12%;font-size:10pt;">Código</th>
+                            <th style="border:1px solid #000;padding:8px;text-align:left;width:40%;font-size:10pt;">Descrição</th>
+                            <th style="border:1px solid #000;padding:8px;text-align:center;width:18%;font-size:10pt;">Referência</th>
+                            <th style="border:1px solid #000;padding:8px;text-align:right;width:15%;font-size:10pt;">Proventos</th>
+                            <th style="border:1px solid #000;padding:8px;text-align:right;width:15%;font-size:10pt;">Descontos</th>
+                        </tr>
+                    </thead>
+                    <tbody style="font-size:10pt;">
+                        ${htmlProventos}
+                        ${htmlDescontos}
+                        <tr style="background:#f0f0f0;">
+                            <td colspan="3" style="border:2px solid #000;padding:8px;"><strong>TOTAIS</strong></td>
+                            <td style="border:2px solid #000;padding:8px;text-align:right;"><strong>${formatarMoeda(gerenciador.getTotalProventos())}</strong></td>
+                            <td style="border:2px solid #000;padding:8px;text-align:right;"><strong>${formatarMoeda(gerenciador.getTotalDescontos())}</strong></td>
+                        </tr>
+                        <tr style="background:#000;color:white;">
+                            <td colspan="4" style="border:2px solid #000;padding:10px;text-align:right;font-size:12pt;"><strong>SALÁRIO LÍQUIDO</strong></td>
+                            <td style="border:2px solid #000;padding:10px;text-align:right;font-size:12pt;"><strong>${formatarMoeda(gerenciador.getSalarioLiquido())}</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="background:#f0f0f0;padding:6px 8px;margin:15px 0 8px 0;border-left:4px solid #000;font-weight:bold;font-size:11pt;">
+                    BASES DE CÁLCULO
+                </div>
+                <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+                    <tr style="font-size:10pt;">
+                        <td style="border:1px solid #000;padding:8px;text-align:center;background:#f9f9f9;">
+                            <div style="font-size:9pt;color:#666;margin-bottom:3px;">Base INSS</div>
+                            <div style="font-weight:bold;">${formatarMoeda(gerenciador.baseINSS)}</div>
+                        </td>
+                        <td style="border:1px solid #000;padding:8px;text-align:center;background:#f9f9f9;">
+                            <div style="font-size:9pt;color:#666;margin-bottom:3px;">Base FGTS</div>
+                            <div style="font-weight:bold;">${formatarMoeda(gerenciador.baseFGTS)}</div>
+                        </td>
+                        <td style="border:1px solid #000;padding:8px;text-align:center;background:#f9f9f9;">
+                            <div style="font-size:9pt;color:#666;margin-bottom:3px;">Valor FGTS (8%)</div>
+                            <div style="font-weight:bold;">${formatarMoeda(CalculadoraFolha.calcularFGTS(gerenciador.baseFGTS))}</div>
+                        </td>
+                        <td style="border:1px solid #000;padding:8px;text-align:center;background:#f9f9f9;">
+                            <div style="font-size:9pt;color:#666;margin-bottom:3px;">Base IRRF</div>
+                            <div style="font-weight:bold;">${formatarMoeda(gerenciador.baseIRRF)}</div>
+                        </td>
+                    </tr>
+                </table>
+
+                <div style="display:flex;justify-content:space-between;margin-top:30px;">
+                    <div style="width:45%;text-align:center;">
+                        <div style="border-top:1px solid #000;padding-top:8px;margin-top:25px;font-size:10pt;">
+                            Assinatura do Colaborador
+                        </div>
+                    </div>
+                    <div style="width:45%;text-align:center;">
+                        <div style="border-top:1px solid #000;padding-top:8px;margin-top:25px;font-size:10pt;">
+                            Data: ${new Date().toLocaleDateString('pt-BR')}
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align:center;margin-top:20px;font-size:9pt;color:#999;">
+                    Documento gerado em ${new Date().toLocaleString('pt-BR')}
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(container);
+
+        // Aguardar renderização
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        console.log(' Capturando imagem do holerite...');
+
+        // Capturar como imagem usando html2canvas
+        const canvas = await html2canvas(container, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: '#ffffff'
+        });
+
+        console.log(' Criando PDF...');
+
+        // Criar PDF usando jsPDF
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
+
+        const imgData = canvas.toDataURL('image/png');
+        const pdfWidth = 210; // A4 width in mm
+        const pdfHeight = 297; // A4 height in mm
+        const imgWidth = pdfWidth - 20; // margins
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        let heightLeft = imgHeight;
+        let position = 10;
+
+        // Adicionar imagem ao PDF
+        pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+        heightLeft -= pdfHeight;
+
+        // Se precisar de mais páginas
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+          heightLeft -= pdfHeight;
+        }
+
+        // Remover container temporário
+        document.body.removeChild(container);
+
+        // Salvar PDF
+        const filename = `Holerite_${nomeColaborador.replace(/\s/g, '_')}_${mesRef.replace(/\//g, '-')}.pdf`;
+        pdf.save(filename);
+
+        console.log(' PDF gerado com sucesso!');
+        mostrarNotificacao('PDF baixado com sucesso!', 'success');
+
+      } catch (error) {
+        console.error(' Erro ao gerar PDF:', error);
+        mostrarNotificacao('Erro ao gerar PDF: ' + error.message, 'danger');
+      } finally {
+        mostrarLoading(false);
+      }
+    }
+    // **** FIM DA NOVA FUNÇÃO DE PDF ****
+
+    // Placeholder para as funções de ação (Salvar, Email)
+    async function salvarHolerite() {
+      if (!gerenciador) {
+        mostrarNotificacao('Carregue os dados do holerite primeiro.', 'warning');
+        return;
+      }
+
+      try {
+        mostrarLoading(true);
+        console.log(' Salvando holerite no banco...');
+
+        const colaboradorId = document.getElementById('colaborador-id')?.value;
+        const mesReferencia = document.getElementById('mes-referencia')?.value;
+        const salarioBase = document.getElementById('salario-base')?.value;
+
+        if (!colaboradorId || !mesReferencia) {
+          mostrarNotificacao('Dados incompletos para salvar holerite', 'warning');
+          return;
+        }
+
+        const dadosHolerite = {
+          usuario_id: parseInt(colaboradorId),
+          mes_referencia: mesReferencia, // Formato: "2025-10"
+          salario_base: parseFloat(salarioBase) || 0,
+          proventos: gerenciador.proventos,
+          descontos: gerenciador.descontos,
+          salario_liquido: gerenciador.getSalarioLiquido(),
+          arquivo_pdf_caminho: null
+        };
+
+        console.log(' Enviando dados:', dadosHolerite);
+        console.log(' URL:', `${BACKEND_URL}/api/holerites/salvar`); // CORRIGIDO: holerites (plural)
+
+        const response = await fetch(`${BACKEND_URL}/api/holerites/salvar`, { // CORRIGIDO AQUI
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dadosHolerite)
+        });
+
+        console.log(' Status da resposta:', response.status);
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error(' Erro na resposta:', errorText);
+          throw new Error(`Erro ${response.status}: ${errorText}`);
+        }
+
+        const resultado = await response.json();
+
+        if (resultado.success) {
+          console.log(' Holerite salvo:', resultado);
+          mostrarNotificacao(resultado.mensagem || 'Holerite salvo com sucesso!', 'success');
+        } else {
+          throw new Error(resultado.erro || 'Erro desconhecido');
+        }
+
+      } catch (error) {
+        console.error(' Erro ao salvar holerite:', error);
+        mostrarNotificacao('Erro ao salvar holerite: ' + error.message, 'danger');
+      } finally {
+        mostrarLoading(false);
+      }
+    }
+    async function enviarParaColaborador() {
+      if (!gerenciador) {
+        mostrarNotificacao('Carregue os dados do holerite primeiro.', 'warning');
+        return;
+      }
+
+      try {
+        mostrarLoading(true);
+        console.log(' Enviando holerite para o colaborador...');
+
+        const colaboradorId = document.getElementById('colaborador-id')?.value;
+        const mesReferencia = document.getElementById('mes-referencia')?.value;
+        const salarioBase = document.getElementById('salario-base')?.value;
+
+        if (!colaboradorId || !mesReferencia) {
+          mostrarNotificacao('Dados incompletos para enviar holerite', 'warning');
+          return;
+        }
+
+        const dadosHolerite = {
+          usuario_id: parseInt(colaboradorId),
+          mes_referencia: mesReferencia,
+          salario_base: parseFloat(salarioBase) || 0,
+          proventos: gerenciador.proventos,
+          descontos: gerenciador.descontos,
+          salario_liquido: gerenciador.getSalarioLiquido(),
+          arquivo_pdf_caminho: null
+        };
+
+        console.log(' Salvando e enviando holerite...');
+
+        const response = await fetch(`${BACKEND_URL}/api/holerites/salvar`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(dadosHolerite)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Erro ${response.status}: ${errorText}`);
+        }
+
+        const resultado = await response.json();
+
+        if (resultado.success) {
+          console.log(' Holerite enviado para o colaborador!');
+          mostrarNotificacao('Holerite enviado com sucesso! O colaborador já pode visualizar.', 'success');
+        } else {
+          throw new Error(resultado.erro || 'Erro desconhecido');
+        }
+
+      } catch (error) {
+        console.error(' Erro ao enviar holerite:', error);
+        mostrarNotificacao('Erro ao enviar holerite: ' + error.message, 'danger');
+      } finally {
+        mostrarLoading(false);
+      }
+    }
+
+    // --- LISTENERS CRUCIAIS PARA OS BOTÕES DE ADICIONAR (SOLUÇÃO FINAL) ---
+    function adicionarListenersPrincipais() {
+      // 1. LISTENERS PARA ABRIR O MODAL
+
+      // O ID dos botões no seu HTML é 'btn-add-provento' e 'btn-add-desconto'
+      document.getElementById('btn-add-provento')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('modal-provento').style.display = 'flex';
+      });
+
+      document.getElementById('btn-add-desconto')?.addEventListener('click', (e) => {
+        e.preventDefault();
+        document.getElementById('modal-desconto').style.display = 'flex';
+      });
+
+      // 2. LISTENERS PARA SUBMETER OS FORMULÁRIOS
+      document.getElementById('form-add-provento')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const form = e.target;
+        gerenciador.adicionarProvento(
+          form['provento-codigo'].value || 'MANUAL',
+          form['provento-descricao'].value,
+          form['provento-referencia'].value,
+          form['provento-valor'].value
+        );
+        recalcularEAtualizar();
+        form.reset();
+        document.getElementById('modal-provento').style.display = 'none';
+        fecharModal('modal-provento');
+      });
+
+      document.getElementById('form-add-desconto')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const form = e.target;
+        gerenciador.adicionarDesconto(
+          form['desconto-codigo'].value || 'MANUAL',
+          form['desconto-descricao'].value,
+          form['desconto-referencia'].value,
+          form['desconto-valor'].value
+        );
+        recalcularEAtualizar();
+        form.reset();
+        document.getElementById('modal-desconto').style.display = 'none';
+        fecharModal('modal-desconto');
+      });
+
+      // 3. LISTENERS DE INPUTS PRINCIPAIS
+      document.getElementById('mes-referencia')?.addEventListener('change', recalcularEAtualizar);
+      document.getElementById('num-dependentes')?.addEventListener('change', recalcularEAtualizar);
+
+      // 4. LISTENERS DE BOTÕES DE AÇÃO
+      document.getElementById('btn-salvar-holerite')?.addEventListener('click', salvarHolerite);
+      document.getElementById('btn-gerar-pdf')?.addEventListener('click', gerarPDF);
+      document.getElementById('btn-enviar-colaborador')?.addEventListener('click', enviarParaColaborador);
+    }
+
+    function adicionarListenersRemover() {
+      document.querySelectorAll('.btn-remover').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const tipo = e.currentTarget.dataset.tipo;
+          const index = parseInt(e.currentTarget.dataset.index);
+          gerenciador.removerItem(tipo, index);
+          renderizarTabelas(); // Chama renderizar para recriar as linhas e listeners
+        });
+      });
+    }
+
+    document.getElementById('btn-voltar').addEventListener('click', () => {
+      history.back();
+    });
+
+    // --- INICIALIZAÇÃO ---
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. PREENCHER AS SUGESTÕES NOS SELECTS
+      preencherSugestoesProvento();
+      preencherSugestoesDesconto();
+      configurarFechamentoModal();
+      // 2. LIGA TODOS OS EVENTOS DE BOTÃO (INCLUINDO ADD PROVENTO/DESCONTO)
+      adicionarListenersPrincipais();
+
+      // 3. Tenta carregar os dados
+      const savedColaboradorId = document.getElementById('colaborador-id')?.value;
+      if (savedColaboradorId) {
+        colaboradorId = savedColaboradorId;
+        carregarDadosColaborador(colaboradorId);
+      } else {
+        mostrarNotificacao("ID do Colaborador não encontrado na página. Holerite não carregado.", "warning");
+      }
+
+      // 4. Configura o mês de referência padrão
+      const mesRefInput = document.getElementById('mes-referencia');
+      if (mesRefInput && !mesRefInput.value) {
+        const hoje = new Date();
+        const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+        const ano = hoje.getFullYear();
+        mesRefInput.value = `${ano}-${mes}`;
+      }
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+</body>
+
+</html>

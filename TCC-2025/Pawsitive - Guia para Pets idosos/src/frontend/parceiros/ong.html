@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../bootstrap-5.3.6-dist/bootstrap-5.3.6-dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <link rel="stylesheet" href="../../css/ong1.css">
+
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+
+    <script src="https://unpkg.com/scrollreveal"></script>
+
+    <script src="../pgONG.js" defer></script>
+
+    <title>Página Inicial</title>
+
+    <style>
+        .ong1 {
+            margin-top: 90px;
+        }
+
+        .titulo03 {
+            font-size: 40px;
+            margin-left: 180px;
+        }
+
+        .conteudo {
+            width: 550px;
+            margin-top: 80px;
+            margin-left: 85px;
+        }
+
+        .fundo {
+            background-color: #fffef5;
+            width: 1330px;
+            height: 520px;
+        }
+
+        .imgp {
+            margin-top: 20px;
+        }
+
+        .cont {
+            width: 500px;
+            background-color: #4E6422;
+            display: grid;
+            place-items: center;
+            width: 100%;
+            height: 600px;
+            margin-top: 160px;
+        }
+
+        .botaocnt {
+            display: flex;
+            justify-items: center;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            margin-bottom: 40px;
+        }
+
+        .botao {
+            border-radius: 20px;
+            padding: 10px;
+            width: 850px;
+            font-size: 18px;
+            background-color: #4E6422;
+            color: white;
+            border: solid #4E6422;
+            margin-left: 48px;
+            margin-top: 10PX;
+
+        }
+
+        .botao:hover {
+            background-color: #60703e;
+            border: solid #60703e;
+            transition: 0.5s;
+        }
+
+        .map {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .Meu {
+            border: 1px solid #4E6422;
+            background-color: #fff;
+            color: #4E6422;
+            transition: 0.7s;
+        }
+
+        .Meu:hover {
+            background-color: #4E6422;
+            color: #fff;
+            border: 1px solid #fff;
+            transition: 0.7s;
+        }
+
+        .efeitoT{
+            visibility: hidden;
+        }
+
+        .efeitoH{
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <header>
+            <div class="row" id="rownav" style="background-color: #A8B16B;">
+                <nav class="navbar position-relative" style="height: 135px; position: relative;">
+                    <div class="container position-relative" style="position: relative;">
+
+                        <!-- Botão à direita -->
+                        <div class="ms-auto">
+
+                            <!-- Logo centralizada -->
+                            <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+                                <img src="../../img/logo.png" alt="" id="imgnav"
+                                    style="width: 290px; max-height: 110px; object-fit: contain; display: block; margin: 0 auto;">
+                            </div>
+
+                        </div>
+                </nav>
+            </div>
+        </header>
+        <nav>
+            <div class="row">
+                <div class="nav2">
+                    <ul class="nav justify-content-center">
+                        <li class="nav-item">
+                            <div class="col-sm">
+                                <a href="../../frontend/pgInicial.php" class="nav-link" id="linksnav">Pagina Inicial
+                                </a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="col-sm">
+                                <a href="../../frontend/parceiros/ongs.html" class="nav-link"
+                                    id="linksnav">Parceiros</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="col-sm">
+                                <a href="../../frontend/parceiros/ongs.html" class="nav-link" id="linksnav">Guias</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <div class="col-sm">
+                                <a href="../../frontend/adoçao/adocao.html" class="nav-link" id="linksnav">Adoção</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <main>
+        <h1 style="text-align: center; font-size: 55px; margin-top: 40px; color: #4E6422;" class="efeitoT">Mirassol</h1>
+        <h2 class="efeitoT" style="text-align: center; font-size: 35px; margin-top: -10px;">Fundada em 2008</h2>
+
+        <div class="ong1">
+            <h3 class="titulo03 efeitoH">Historia da ONG</h3>
+            <div class="mirasol">
+                <div class="row">
+                    <div class="col-5">
+                        <img src="../../img/gatinho.jpg" alt="" class="imgPTS efeitoT">
+                    </div>
+                    <div class="col-7">
+                        <div class="conteudo">
+                            <p style="font-size: 20px;" class="prgf efeitoH">Lorem ipsum dolor sit, amet consectetur
+                                adipisicing elit.
+                                Provident doloremque eveniet, modi iste ducimus sapiente velit? Nobis eos expedita
+                                dolor
+                                iusto omnis, atque accusamus ducimus, ullam impedit quaerat reiciendis quibusdam!
+                                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error tempora maiores
+                                laudantium, repudiandae, corporis quaerat atque ut similique sed quo nulla ipsam in
+                                laborum. Blanditiis alias magni ratione possimus saepe. Lorem ipsum dolor sit amet,
+                                consectetur adipisicing elit. Nisi corporis harum vitae consequuntur praesentium, ab
+                                nostrum, porro delectus, quam aspernatur laborum ut nesciunt temporibus laudantium
+                                rem illo. Eligendi, ad non. Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                                Nihil, dolorem repellat? Minima debitis ab iure, eveniet laborum amet ullam
+                                laudantium placeat
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="cont">
+                <div class="fundo">
+                    <div class="row"
+                        style="display: flex; justify-items: center; align-items: center; margin-top: 50px;">
+                        <div class="col map efeitoH">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d58655.54463107574!2d-46.82777658439623!3d-23.24412271199357!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf2099452a8e2f%3A0x6a58afde9684c8b5!2sClube%20de%20Campo%20Aqua%20Park!5e0!3m2!1spt-BR!2sbr!4v1757594450123!5m2!1spt-BR!2sbr"
+                                width="450" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                        <div class="col" style="margin-right: 110px;">
+                            <h2 class="efeitoT" style="font-size: 40px; margin-bottom: 30px; color: #4E6422;">Localização</h2>
+                            <p class="efeitoH" style="font-size: 20px;">Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                Aspernatur quo asperiores nam dolore, autem adipisci quisquam! Natus esse expedita
+                                fugiat. Nisi, impedit omnis? Eveniet, reiciendis fugit voluptates velit doloribus iusto?
+                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Numquam delectus dolore alias
+                                laudantium maiores dolorum architecto. Recusandae nulla itaque ipsum sit praesentium
+                                dicta explicabo, quas suscipit eveniet nihil, sapiente inventore?</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div class="botaocnt efeitoH">
+                <button class="botao" data-bs-toggle="modal" data-bs-target="#exampleModal">Entrar
+                    em
+                    contato</button>
+
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header" style="background-color: #4E6422; color: #fff;">
+                                <h5 class="modal-title titulomodal" id="exampleModalLabel">Ola
+                                    Adotante!
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="prgf">Lorem ipsum dolor sit amet consectetur adipisicing
+                                    elit.
+                                    Minus ducimus eaque
+                                    corrupti commodi. Eum similique iste autem quidem, quis iusto
+                                    eos
+                                    dolor, blanditiis vitae
+                                    obcaecati, quibusdam odit minima. Quos, ipsum.</p>
+                                <br>
+                                <p>Contato para a adoção: <a href="https://wa.me/5511930475829" class="whats"
+                                        style="color: #4E6422;"><strong></strong>(11)93047-5829</a></p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-bs-dismiss="modal"
+                                    style="background-color: #4E6422; color: #fff;">Fechar</button>
+                                <button type="button" class="btn Meu">Save
+                                    changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer style="background-color: #efebce;">
+        <div class="row">
+            <div class="col logo">
+                <img src="../../img/logofooter.png" alt="" style="width: 200px; height: 200px; margin-top: 20px;">
+                <!-- <p style="font-size: 15px; color: #4E6422;">Todos os direitos <br> reservados</p> -->
+            </div>
+            <div class="col colabore">
+                <h4 style="margin-top: 35px; color: #4E6422;">Colabore</h4>
+                <p style="font-size: 17px; color: #4E6422; margin-top: 15px;">Doe qualquer valor!</p>
+                <p style="font-size: 17px; color: #4E6422;">Cobertores, ração e itens são sempre bem-vindos para
+                    as
+                    ONG's!
+                </p>
+            </div>
+            <div class="col redes">
+                <h4 style="margin-top: 35px; color: #4E6422;">Siga-nos</h4>
+                <a href="/"><img src="../../img/instagram.png" alt=""
+                        style="width: 30px; height: 30px; margin-right: 15px;"></a>
+                <a href="/"><img src="../../img/facebook.png" alt=""
+                        style="width: 30px; height: 30px; margin-right: 15px;"></a>
+                <a href="/"><img src="../../img/tktk.png" alt="" style="width: 30px; height: 30px;"></a>
+            </div>
+            <div class="col parceiros">
+                <h4 style="margin-top: 35px; color: #4E6422;">Pawceiros</h4>
+                <p style="font-size: 17px; color: #4E6422; margin-top: 15px;">ONG's</p>
+                <p style="font-size: 17px; color: #4E6422;">Veterinários</p>
+            </div>
+        </div>
+    </footer>
+
+
+
+
+    <script src="../../bootstrap-5.3.6-dist/bootstrap-5.3.6-dist/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/d486d2cd81.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+</body>
+
+</html>

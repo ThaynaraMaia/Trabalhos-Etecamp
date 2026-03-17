@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bolsas - CiaoMundo</title>
+  <link rel="stylesheet" href="../css/stylebolsas.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="nav-logo">
+      <div class="planet-icon">
+          <img src="../images/Ciaomundo.png" id="planetIcon" alt="CiaoMundo" style="cursor: pointer;">
+     </div>
+    </div>
+    <div class="nav-links">
+      <a href="./user.html">HOME</a>
+      <a href="./bolsas.html">BOLSAS</a>
+      <a href="./documentos.html">DOCUMENTOS</a>
+      <a href="./simulador.html">SIMULADOR DE CUSTOS</a>
+      <a href="./testepersonalidade.html">TESTE DE PERSONALIDADE</a>
+      <a href="./lembrete.html">Notificações</a>
+    </div>
+    <div class="nav-profile">
+      <a href="../user/perfil.html" title="Perfil do usuário">
+        <img id="perfilBtnImg" src="../images/perfil.png" alt="Foto do usuário" />
+      </a>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <h1 id="tituloPagina">Bolsas Disponíveis</h1>
+  <p>Encontre a oportunidade perfeita para seu intercâmbio</p>
+</header>
+
+<div class="container">
+  <div class="page-header">
+    <input type="text" id="pesquisaBolsas" placeholder="Pesquisar por título, universidade ou país..." />
+    <button id="verFavoritas" class="btn-favoritas-pesquisa">❤️ Minhas Favoritas</button>
+    <button id="voltar" class="btn-favoritas-pesquisa hidden">🔙 Voltar</button>
+  </div>
+  <div id="listaBolsas"></div>
+</div>
+
+<footer>
+  <div class="footer-content">
+    <p>&copy; 2025 CiaoMundo. Todos os direitos reservados.</p>
+    <p>Desenvolvido com ❤️ para conectar estudantes ao mundo</p>
+  </div>
+</footer>
+
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+  const TOKEN = localStorage.getItem("token");
+  const ID_USUARIO = parseInt(localStorage.getItem("id_usuario"));
+  const TIPO_USUARIO = localStorage.getItem("tipo_usuario") || "usuario";
+
+  const perfilBtnImg = document.getElementById('perfilBtnImg');
+  const token = localStorage.getItem('token');
+
+  async function atualizarFoto() {
+    try {
+      if (token) {
+        const res = await fetch('/user/perfil', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        if (res.ok) {
+          const user = await res.json();
+          perfilBtnImg.src = user.foto || '../images/perfil.png';
+          return;
+        }
+      }
+      // Se não tiver token ou a requisição falhar, usa a foto padrão
+      perfilBtnImg.src = '../images/perfil.png';
+    } catch (err) {
+      console.error('Erro ao atualizar foto:', err);
+      perfilBtnImg.src = '../images/perfil.png';
+    }
+  }
+
+  atualizarFoto();
+  
+  // ❌ REMOVIDO: window.addEventListener('storage', ...)
+  // Não é mais necessário pois não usamos localStorage
+  
+  setInterval(atualizarFoto, 5000); // Atualiza a cada 5 segundos
+
+
+  const planetIcon = document.getElementById('planetIcon');
+if (TOKEN) {
+  try {
+    const payloadBase64 = TOKEN.split('.')[1];
+    const decodedPayload = JSON.parse(atob(payloadBase64));
+    const tipoUsuario = decodedPayload.tipo_usuario?.toLowerCase();
+    
+    if (tipoUsuario === 'administrador') {
+      planetIcon.style.cursor = 'pointer';
+      planetIcon.title = 'Voltar para Painel Admin';
+      
+      planetIcon.addEventListener('mouseenter', () => {
+        planetIcon.style.transform = 'scale(1.1)';
+        planetIcon.style.filter = 'drop-shadow(0 0 15px rgba(96, 165, 250, 0.8))';
+      });
+      
+      planetIcon.addEventListener('mouseleave', () => {
+        planetIcon.style.transform = 'scale(1)';
+        planetIcon.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.4))';
+      });
+
+      planetIcon.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.location.href = '/admin/admin.html';
+      });
+    }
+  } catch (err) {
+    console.error('Erro ao verificar tipo de usuário:', err);
+  }
+}
+
+  if (!TOKEN || !ID_USUARIO) {
+    alert("Faça login primeiro!");
+    window.location.href = "/login.html";
+    return;
+  }
+
+  const API = {
+    BOLSAS: "http://localhost:3000/user/bolsas-publicas",
+    AVALIACOES: "http://localhost:3000/avaliacao",
+    COMENTARIOS: "http://localhost:3000/comentario",
+    FAVORITAR: "http://localhost:3000/favoritos",
+    FAVORITAS: "http://localhost:3000/favoritos"
+  };
+
+  async function fetchJSON(url, options = {}) {
+    options.headers = { ...(options.headers || {}), "Content-Type": "application/json" };
+    if (TOKEN) options.headers["Authorization"] = `Bearer ${TOKEN}`;
+    const res = await fetch(url, options);
+    if (!res.ok) throw new Error(`Erro na API: ${res.status}`);
+    return await res.json();
+  }
+
+  async function calcularMedia(id_bolsa) {
+    try {
+      const notas = await fetchJSON(`${API.AVALIACOES}/${id_bolsa}`);
+      if (!notas || notas.length === 0) return 0;
+      return (notas.reduce((acc, n) => acc + (n.nota || 0), 0) / notas.length).toFixed(1);
+    } catch { return 0; }
+  }
+
+  async function fetchComentarios(id_bolsa) {
+    try {
+      const comentarios = await fetchJSON(`${API.COMENTARIOS}/${id_bolsa}`);
+      return comentarios || [];
+    } catch { return []; }
+  }
+
+  function renderizarComentarios(listaC, comentarios, id_bolsa) {
+    const TIPO_USUARIO = localStorage.getItem("tipo_usuario");
+
+    listaC.innerHTML = comentarios.map(c => {
+      const jaCurtiu = c.likes?.some(l => l.id_usuario === ID_USUARIO && l.curtido);
+      const jaDescurtiu = c.likes?.some(l => l.id_usuario === ID_USUARIO && l.descurtido);
+      const qtdCurtidas = c.likes?.filter(l => l.curtido).length || 0;
+      const qtdDescurtidas = c.likes?.filter(l => l.descurtido).length || 0;
+      const mostrarRemover = (c.id_usuario === ID_USUARIO || TIPO_USUARIO?.toLowerCase() === "administrador");
+
+      return `
+        <div class="comentarioItem">
+          <p><strong>${c.Usuario?.nome ?? 'Usuário'}:</strong> ${c.texto}</p>
+          <div class="acoes">
+            <button class="curtirComentario ${jaCurtiu ? 'btnCurtido' : ''}" data-id="${c.id}" title="Curtir">👍 ${qtdCurtidas}</button>
+            <button class="descurtirComentario ${jaDescurtiu ? 'btnDescurtido' : ''}" data-id="${c.id}" title="Descurtir">👎 ${qtdDescurtidas}</button>
+            ${mostrarRemover ? `<button class="removerComentario" data-id="${c.id}" title="Remover">🗑️</button>` : ""}
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    listaC.querySelectorAll(".curtirComentario").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        try {
+          await fetchJSON(`${API.COMENTARIOS}/${btn.dataset.id}/curtir`, { method: "POST" });
+          renderizarComentarios(listaC, await fetchComentarios(id_bolsa), id_bolsa);
+        } catch { alert("Erro ao curtir comentário"); }
+      });
+    });
+
+    listaC.querySelectorAll(".descurtirComentario").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        try {
+          await fetchJSON(`${API.COMENTARIOS}/${btn.dataset.id}/descurtir`, { method: "POST" });
+          renderizarComentarios(listaC, await fetchComentarios(id_bolsa), id_bolsa);
+        } catch { alert("Erro ao descurtir comentário"); }
+      });
+    });
+
+    listaC.querySelectorAll(".removerComentario").forEach(btn => {
+      btn.addEventListener("click", async () => {
+        if (!confirm("Deseja realmente remover este comentário?")) return;
+        try {
+          await fetchJSON(`${API.COMENTARIOS}/${btn.dataset.id}`, { method: "DELETE" });
+          renderizarComentarios(listaC, await fetchComentarios(id_bolsa), id_bolsa);
+        } catch { alert("Erro ao remover comentário"); }
+      });
+    });
+  }
+
+  async function criarDivBolsa(b, media, comentarios) {
+    const div = document.createElement("div");
+    div.className = "bolsa-card";
+    div.dataset.id = b.id_bolsa;
+
+    div.innerHTML = `
+      <div class="bolsa-conteudo">
+        <div class="bolsa-header">
+          <h3>${b.titulo || "Sem título"}</h3>
+        </div>
+
+        <div class="bolsa-info-visivel">
+          <div class="info-row">
+            <strong>Descrição:</strong>
+            <p>${b.descricao || "Sem descrição"}</p>
+          </div>
+
+          <div class="info-row">
+            <strong>País:</strong>
+            <p>${b.pais || "Não informado"}</p>
+          </div>
+          
+          <button class="toggle-detalhes">Ver Mais</button>
+
+          <div class="bolsa-detalhes">
+            <div class="info-row">
+              <strong>Universidade:</strong>
+              <p>${b.universidade || "Não informado"}</p>
+            </div>
+
+            <div class="info-row">
+              <strong>Curso:</strong>
+              <p>${b.curso || "Não informado"}</p>
+            </div>
+
+            <div class="info-row">
+              <strong>Tipo de Bolsa:</strong>
+              <p>${b.tipo_bolsa || "Não informado"}</p>
+            </div>
+
+            <div class="info-row">
+              <strong>Requisitos:</strong>
+              <p>${b.requisitos || "Não informado"}</p>
+            </div>
+
+            <div class="info-row">
+              <strong>Prazo de Inscrição:</strong>
+              <p>${b.prazo_inscricao || "Não informado"}</p>
+            </div>
+
+            <div class="info-row">
+              <strong>Link de Inscrição:</strong>
+              <p><a href="${b.link_inscricao || "#"}" target="_blank">${b.link_inscricao || "Não disponível"}</a></p>
+            </div>
+
+            <button class="toggle-detalhes-final">
+              <span class="icone-toggle-final">▲</span> Ocultar Detalhes
+            </button>
+            <div style="clear: both;"></div>
+          </div>
+        </div>
+
+        <div class="bolsa-acoes">
+          <div class="estrelas">
+            <span data-valor="1" class="estrela">☆</span>
+            <span data-valor="2" class="estrela">☆</span>
+            <span data-valor="3" class="estrela">☆</span>
+            <span data-valor="4" class="estrela">☆</span>
+            <span data-valor="5" class="estrela">☆</span>
+          </div>
+          <span class="media">${media}</span>
+          <button class="favorito">${b.favoritado ? "❤️" : "🤍"}</button>
+          <button class="comentario">💬 Comentários</button>
+        </div>
+
+        <div class="comentarios hidden">
+          <input type="text" placeholder="Escreva um comentário..." />
+          <button class="adicionarComentario">Enviar Comentário</button>
+          <p class="verComentarios">Ver todos os comentários</p>
+          <div class="listaComentarios hidden"></div>
+        </div>
+      </div>
+    `;
+
+    // Toggle detalhes - botão inicial e final
+    const btnToggle = div.querySelector(".toggle-detalhes");
+    const btnToggleFinal = div.querySelector(".toggle-detalhes-final");
+    const detalhes = div.querySelector(".bolsa-detalhes");
+
+    btnToggle.addEventListener("click", () => {
+      detalhes.classList.add("expandido");
+      btnToggle.classList.add("hidden");
+    });
+
+    btnToggleFinal.addEventListener("click", () => {
+      detalhes.classList.remove("expandido");
+      btnToggle.classList.remove("hidden");
+    });
+
+    const atualizarEstrelas = (nota) => {
+      div.querySelectorAll(".estrela").forEach(star => {
+        const valor = parseInt(star.dataset.valor);
+        if (valor <= nota) {
+          star.textContent = "★";
+          star.classList.add("preenchida");
+        } else {
+          star.textContent = "☆";
+          star.classList.remove("preenchida");
+        }
+      });
+    };
+
+    let notaUsuario = 0;
+    b.notaUsuario = 0;
+
+    async function carregarNotaUsuario() {
+      try {
+        const notas = await fetchJSON(`${API.AVALIACOES}/${b.id_bolsa}`);
+        const minhaNota = notas.find(n => n.id_usuario === ID_USUARIO);
+        notaUsuario = minhaNota ? minhaNota.nota : 0;
+        b.notaUsuario = notaUsuario;
+        atualizarEstrelas(notaUsuario);
+      } catch {
+        notaUsuario = 0;
+        b.notaUsuario = 0;
+        atualizarEstrelas(0);
+      }
+    }
+
+    await carregarNotaUsuario();
+
+    div.querySelectorAll(".estrela").forEach(star => {
+      star.addEventListener("click", async () => {
+        const valorClicado = parseInt(star.dataset.valor);
+        try {
+          if (valorClicado === notaUsuario) {
+            await fetchJSON(`${API.AVALIACOES}/${b.id_bolsa}`, { method: "DELETE" });
+            notaUsuario = 0;
+          } else {
+            await fetchJSON(`${API.AVALIACOES}/${b.id_bolsa}`, { 
+              method: "POST", 
+              body: JSON.stringify({ nota: valorClicado }) 
+            });
+            notaUsuario = valorClicado;
+          }
+          b.notaUsuario = notaUsuario;
+          atualizarEstrelas(notaUsuario);
+          const novaMedia = await calcularMedia(b.id_bolsa);
+          div.querySelector(".media").textContent = novaMedia;
+        } catch (err) {
+          alert("Erro ao avaliar bolsa");
+          console.error(err);
+          await carregarNotaUsuario();
+        }
+      });
+    });
+
+    const btnFav = div.querySelector(".favorito");
+    const atualizarCor = () => { btnFav.textContent = b.favoritado ? "❤️" : "🤍"; };
+    atualizarCor();
+
+    btnFav.addEventListener("click", async () => {
+      try {
+        const res = await fetchJSON(`${API.FAVORITAR}/${b.id_bolsa}`, { method: "POST" });
+        b.favoritado = res.favoritado;
+        atualizarCor();
+        if (b.favoritado) {
+          if (!bolsasFavoritas.some(f => f.id_bolsa === b.id_bolsa)) bolsasFavoritas.push(b);
+        } else {
+          bolsasFavoritas = bolsasFavoritas.filter(f => f.id_bolsa !== b.id_bolsa);
+          if (tituloPagina.textContent === "Minhas Favoritas") div.remove();
+        }
+      } catch { alert("Erro ao favoritar/desfavoritar a bolsa"); }
+    });
+
+    const btnCom = div.querySelector(".comentario");
+    const comentariosDiv = div.querySelector(".comentarios");
+    const listaC = comentariosDiv.querySelector(".listaComentarios");
+    const input = comentariosDiv.querySelector("input[type='text']");
+    const btnEnviar = comentariosDiv.querySelector(".adicionarComentario");
+    const btnVer = comentariosDiv.querySelector(".verComentarios");
+
+    btnCom.addEventListener("click", () => {
+      comentariosDiv.classList.toggle("hidden");
+      btnCom.textContent = comentariosDiv.classList.contains("hidden") ? "💬 Comentários" : "💬 Ocultar";
+    });
+
+    btnVer.addEventListener("click", async () => {
+      const comentariosAtual = await fetchComentarios(b.id_bolsa);
+      renderizarComentarios(listaC, comentariosAtual, b.id_bolsa);
+      listaC.classList.toggle("hidden");
+      btnVer.textContent = listaC.classList.contains("hidden") ? "Ver todos os comentários" : "Ocultar comentários";
+    });
+
+    btnEnviar.addEventListener("click", async () => {
+      if (!input.value) return alert("Digite um comentário!");
+      try {
+        await fetchJSON(`${API.COMENTARIOS}/${b.id_bolsa}`, { method: "POST", body: JSON.stringify({ comentario: input.value }) });
+        input.value = "";
+        const comentariosAtual = await fetchComentarios(b.id_bolsa);
+        renderizarComentarios(listaC, comentariosAtual, b.id_bolsa);
+        listaC.classList.remove("hidden");
+        btnVer.textContent = "Ocultar comentários";
+      } catch { alert("Erro ao adicionar comentário"); }
+    });
+
+    return div;
+  }
+
+  let bolsasCarregadas = [];
+  let bolsasFavoritas = [];
+
+  async function carregarBolsas(favoritas = false, filtro = "") {
+    try {
+      const todas = await fetchJSON(API.BOLSAS);
+      bolsasFavoritas = await fetchJSON(API.FAVORITAS);
+      const lista = document.getElementById("listaBolsas");
+      lista.innerHTML = "";
+
+      bolsasCarregadas = todas.map(b => {
+        b.favoritado = bolsasFavoritas.some(f => f.id_bolsa === b.id_bolsa);
+        return b;
+      });
+
+      const bolsasFiltradas = bolsasCarregadas.filter(b => {
+        const termo = filtro.toLowerCase();
+        return (b.titulo || "").toLowerCase().includes(termo) ||
+               (b.universidade || "").toLowerCase().includes(termo) ||
+               (b.pais || "").toLowerCase().includes(termo);
+      });
+
+      for (const b of bolsasFiltradas) {
+        if (favoritas && !b.favoritado) continue;
+        const media = await calcularMedia(b.id_bolsa);
+        const comentarios = await fetchComentarios(b.id_bolsa);
+        const div = await criarDivBolsa(b, media, comentarios);
+        lista.appendChild(div);
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  }
+
+  carregarBolsas();
+
+  document.getElementById("pesquisaBolsas").addEventListener("input", (e) => {
+    carregarBolsas(false, e.target.value);
+  });
+
+  const btnFavoritas = document.getElementById("verFavoritas");
+  const btnVoltar = document.getElementById("voltar");
+  const tituloPagina = document.getElementById("tituloPagina");
+
+  btnFavoritas.addEventListener("click", () => {
+    carregarBolsas(true);
+    btnFavoritas.classList.add("hidden");
+    btnVoltar.classList.remove("hidden");
+    tituloPagina.textContent = "Minhas Favoritas";
+  });
+
+  btnVoltar.addEventListener("click", () => {
+    carregarBolsas(false);
+    btnFavoritas.classList.remove("hidden");
+    btnVoltar.classList.add("hidden");
+    tituloPagina.textContent = "Bolsas Disponíveis";
+  });
+
+});
+</script>
+
+</body>
+</html>

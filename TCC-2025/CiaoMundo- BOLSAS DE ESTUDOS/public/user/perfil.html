@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Perfil</title>
+  <link rel="stylesheet" href="../css/styleperfil.css">
+</head>
+
+<body>
+<a href="#" id="backButton" class="back-button">← Voltar</a>
+
+  <div class="login-container" role="main" aria-label="Perfil do usuário">
+    <h2>Perfil</h2>
+
+    <!-- Foto do usuário -->
+    <img src="../images/perfil.png" alt="Foto do Usuário" id="perfil-img" class="perfil-img" />
+
+    <!-- Alterar foto -->
+    <p id="alterarFoto" class="alterar-foto" tabindex="0" role="button" aria-label="Alterar foto do perfil">Alterar foto</p>
+    <input type="file" id="novaFoto" accept="image/*" style="display:none;" />
+
+    <!-- Formulário de edição -->
+    <form id="perfilForm" novalidate>
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" placeholder="Nome" required autocomplete="name" />
+
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" placeholder="E-mail" required autocomplete="email" />
+
+      <label for="senha">Senha:</label>
+      <input type="password" id="senha" name="senha" placeholder="Senha" autocomplete="current-password" />
+
+      <button type="submit" aria-label="Salvar alterações no perfil">Salvar Alterações</button>
+    </form>
+
+    <button id="logoutBtn" aria-label="Sair da conta">Sair</button>
+  </div>
+
+  <script>
+    const API_URL = "http://localhost:3000"; // URL do backend
+
+    // Logout
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await fetch(`${API_URL}/auth/logout`, { method: 'POST' });
+      localStorage.removeItem('token');
+      window.location.href = '/home.html';
+    });
+
+    // Alterar foto
+    const alterarFoto = document.getElementById('alterarFoto');
+    const fileInput = document.getElementById('novaFoto');
+
+    alterarFoto.addEventListener('click', () => fileInput.click());
+    alterarFoto.addEventListener('keypress', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        fileInput.click();
+      }
+    });
+
+    fileInput.addEventListener('change', async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      const formData = new FormData();
+      formData.append('foto', file);
+
+      const res = await fetch(`${API_URL}/user/alterar-foto`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+        body: formData
+      });
+      const data = await res.json();
+      if (data.success) {
+        document.getElementById('perfil-img').src = data.foto;
+  
+      } else {
+        alert(data.message || "Erro ao atualizar foto");
+      }
+    });
+
+    // Atualizar perfil
+    document.getElementById('perfilForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const senha = document.getElementById('senha').value;
+
+      const res = await fetch(`${API_URL}/user/atualizar`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        },
+        body: JSON.stringify({ nome, email, senha })
+      });
+
+      const data = await res.json();
+      if (data.success) alert("Perfil atualizado com sucesso!");
+      else alert(data.message || "Erro ao atualizar perfil");
+    });
+
+    // Carregar dados do usuário
+    document.addEventListener('DOMContentLoaded', async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        window.location.href = '/login.html';
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_URL}/user/perfil`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const user = await res.json();
+
+        document.getElementById('nome').value = user.nome || '';
+        document.getElementById('email').value = user.email || '';
+        document.getElementById('perfil-img').src = user.foto || "../images/perfil.png";
+
+      } catch (err) {
+        console.error(err);
+      }
+    });
+    const backButton = document.getElementById('backButton');
+
+  backButton.addEventListener('click', async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      window.location.href = '/login.html';
+      return;
+    }
+
+    try {
+      // Decodificar token para saber o tipo do usuário
+      const payloadBase64 = token.split('.')[1];
+      const decodedPayload = JSON.parse(atob(payloadBase64));
+      const tipoUsuario = decodedPayload.tipo_usuario?.toLowerCase();
+
+      if (tipoUsuario === 'administrador') {
+        window.location.href = '/admin/admin.html';
+      } else {
+        window.location.href = '/user/user.html';
+      }
+    } catch (err) {
+      console.error(err);
+      window.location.href = '/login.html';
+    }
+  });
+  </script>
+</body>
+</html>

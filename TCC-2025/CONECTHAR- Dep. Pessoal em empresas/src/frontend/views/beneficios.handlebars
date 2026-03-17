@@ -1,0 +1,948 @@
+<link rel="stylesheet" href="/css/beneficios.css">
+
+<div class="page-wrapper">
+  {{> navbar }}
+  <div class="cola-layout">
+  
+    <main class="content p-4">
+      <div class="header-section mb-4">
+        <div>
+          <h4>Gerenciar Benefícios</h4>
+          <p class="text-muted" style="font-size: 20px;">Gerencie vale-transporte, vale-alimentação, plano de saúde e outros benefícios</p>
+        </div>
+        <button class="btn btn-primary" id="btnCriarBeneficio">
+          <i class="bi bi-plus-circle me-2"></i> Criar novo benefício
+        </button>
+      </div>
+
+      <!-- Cards de Estatísticas -->
+   <div class="row g-3 mb-4">
+  <div class="col-md-4">
+    <div class="stat-card stat-blue">          
+      <div class="stat-icon"><i class="bi bi-gift"></i></div>
+      <div class="stat-content">
+        <h3 id="totalBeneficios">0</h3>
+        <p>Benefícios ativos</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="stat-card stat-green">         
+      <div class="stat-icon"><i class="bi bi-currency-dollar"></i></div>
+      <div class="stat-content">
+        <h3 id="valorTotal">R$ 0,00</h3>
+        <p>Custo mensal</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="stat-card stat-purple">        
+      <div class="stat-icon"><i class="bi bi-people"></i></div>
+      <div class="stat-content">
+        <h3 id="funcionariosAtendidos">0</h3>
+        <p>Funcinarios com benefícios</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+      <!-- Filtros e Controles -->
+      <div class="controls-section mb-4">
+        <div class="row g-3">
+          <div class="col-md-3">
+            <select class="form-select" id="filtroSetor">
+              <option value="">Todos os setores</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="filtroCargo">
+              <option value="">Todos os cargos</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="buscarBeneficio" placeholder="Buscar benefícios...">
+          </div>
+          <div class="col-md-3">
+            <select class="form-select" id="modoExibicao">
+              <option value="cards"> Exibir em Cards</option>
+              <option value="tabela">Exibir em Tabela</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lista de Benefícios -->
+      <div id="beneficiosContainer">
+        <div class="text-center py-5">
+          <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Carregando...</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- Modal: Criar/Editar Benefício -->
+<div class="modal fade" id="modalBeneficio" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Criar Novo Benefício</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formBeneficio">
+          <div class="mb-3">
+            <label class="form-label">Setor *</label>
+            <div class="input-group">
+              <select class="form-select" id="beneficioSetor" required>
+                <option value="">Selecione o setor</option>
+              </select>
+              <button type="button" class="btn btn-outline-secondary" id="btnNovoSetor">
+                <i class="bi bi-plus"> Novo</i>
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Cargo *</label>
+            <div class="input-group">
+              <select class="form-select" id="beneficioCargo" required disabled>
+                <option value="">Primeiro selecione um setor</option>
+              </select>
+              <button type="button" class="btn btn-outline-secondary" id="btnNovoCargo" disabled>
+                <i class="bi bi-plus">Novo</i> 
+              </button>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Nome do Benefício *</label>
+            <input type="text" class="form-control" id="beneficioNome" required placeholder="Ex: Vale Transporte">
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-control" id="beneficioDescricao" rows="2" placeholder="Descrição opcional do benefício"></textarea>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Valor (R$) *</label>
+              <input type="number" class="form-control" id="beneficioValor" required step="0.01" min="0" placeholder="0,00">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Data Início</label>
+              <input type="date" class="form-control" id="beneficioDataInicio">
+            </div>
+            <div class="col-md-4 mb-3">
+              <label class="form-label">Data Fim</label>
+              <input type="date" class="form-control" id="beneficioDataFim">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" form="formBeneficio" class="btn btn-primary">Criar Benefício</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Criar Setor -->
+<div class="modal fade" id="modalSetor" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Criar Novo Setor</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formSetor">
+          <div class="mb-3">
+            <label class="form-label">Nome do Setor *</label>
+            <input type="text" class="form-control" id="setorNome" required placeholder="Ex: Recursos Humanos">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-control" id="setorDescricao" rows="2" placeholder="Descrição opcional"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" form="formSetor" class="btn btn-primary">Criar Setor</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Criar Cargo -->
+<div class="modal fade" id="modalCargo" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Criar Novo Cargo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="formCargo">
+          <div class="mb-3">
+            <label class="form-label">Setor *</label>
+            <select class="form-select" id="cargoSetor" required>
+              <option value="">Selecione o setor</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Nome do Cargo *</label>
+            <input type="text" class="form-control" id="cargoNome" required placeholder="Ex: Analista">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Descrição</label>
+            <textarea class="form-control" id="cargoDescricao" rows="2" placeholder="Descrição opcional"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="submit" form="formCargo" class="btn btn-primary">Criar Cargo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const BACKEND_URL = '{{BACKEND_URL}}';
+  const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+
+  // Variáveis globais
+  let todosBeneficios = [];
+  let todosSetores = [];
+  let todosCargos = [];
+  let modoAtual = 'cards';
+
+  // Inicialização
+  document.addEventListener('DOMContentLoaded', async () => {
+    await carregarDados();
+    configurarEventListeners();
+  });
+
+  // Carregar todos os dados
+  async function carregarDados() {
+    await Promise.all([
+      carregarSetores(),
+      carregarCargos(),
+      carregarBeneficios()
+    ]);
+  }
+
+  // Carregar setores
+ async function carregarSetores() {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/setores/listar`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    const data = await response.json();
+    
+    if (data.success) {
+      todosSetores = data.data;
+      preencherSelectSetores();
+    } else {
+      console.error('Erro ao carregar setores:', data.message);
+    }
+  } catch (err) {
+    console.error('Erro ao carregar setores:', err);
+  }
+}
+
+  // Carregar cargos
+ async function carregarCargos() {
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/cargos/listar`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+    
+    const data = await response.json();
+    
+    console.log('Resposta cargos:', data); // Debug
+    
+    if (data.success) {
+      todosCargos = data.data;
+      console.log('Cargos carregados:', todosCargos); // Debug
+      preencherSelectCargos();
+    } else {
+      console.error('Erro ao carregar cargos:', data.message);
+    }
+  } catch (err) {
+    console.error('Erro ao carregar cargos:', err);
+  }
+}
+  // Carregar benefícios
+  async function carregarBeneficios() {
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/beneficios/listar`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        todosBeneficios = data.data;
+        atualizarEstatisticas(data.stats);
+        renderizarBeneficios(todosBeneficios);
+      }
+    } catch (err) {
+      console.error('Erro ao carregar benefícios:', err);
+      document.getElementById('beneficiosContainer').innerHTML = `
+        <div class="alert alert-danger">Erro ao carregar benefícios</div>
+      `;
+    }
+  }
+
+  // Preencher selects de setores
+  function preencherSelectSetores() {
+    const selects = ['filtroSetor', 'beneficioSetor', 'cargoSetor'];
+    selects.forEach(id => {
+      const select = document.getElementById(id);
+      const isFilter = id === 'filtroSetor';
+      
+      select.innerHTML = isFilter 
+        ? '<option value="">Todos os setores</option>' 
+        : '<option value="">Selecione o setor</option>';
+      
+      todosSetores.forEach(setor => {
+        select.innerHTML += `<option value="${setor.id}">${setor.nome_setor}</option>`;
+      });
+    });
+  }
+
+  // Preencher selects de cargos
+ function preencherSelectCargos(setorId = null) {
+  console.log('Preenchendo selects de cargos. Setor filtro:', setorId); // Debug
+  console.log('Total de cargos disponíveis:', todosCargos.length); // Debug
+  
+  const selects = ['filtroCargo', 'beneficioCargo'];
+  
+  selects.forEach(id => {
+    const select = document.getElementById(id);
+    if (!select) {
+      console.warn(`Select ${id} não encontrado`);
+      return;
+    }
+    
+    const isFilter = id === 'filtroCargo';
+    
+    // Limpar select
+    select.innerHTML = isFilter 
+      ? '<option value="">Todos os cargos</option>' 
+      : '<option value="">Selecione o cargo</option>';
+    
+    // Filtrar cargos por setor se necessário
+    const cargosFiltrados = setorId 
+      ? todosCargos.filter(c => c.setor_id == setorId)
+      : todosCargos;
+    
+    console.log(`Cargos filtrados para ${id}:`, cargosFiltrados); // Debug
+    
+    // Adicionar opções
+    cargosFiltrados.forEach(cargo => {
+      const option = document.createElement('option');
+      option.value = cargo.id;
+      option.textContent = `${cargo.nome_cargo}${cargo.nome_setor ? ' - ' + cargo.nome_setor : ''}`;
+      select.appendChild(option);
+    });
+    
+    console.log(`Select ${id} preenchido com ${cargosFiltrados.length} cargos`); // Debug
+  });
+}
+  // Atualizar estatísticas
+  function atualizarEstatisticas(stats) {
+    document.getElementById('totalBeneficios').textContent = stats.total_beneficios || 0;
+    document.getElementById('valorTotal').textContent = `R$ ${Number(stats.valor_total_mensal || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+    document.getElementById('funcionariosAtendidos').textContent = stats.funcionarios_com_beneficios || 0;
+  }
+
+  // Renderizar benefícios
+  function renderizarBeneficios(beneficios) {
+    const container = document.getElementById('beneficiosContainer');
+    
+    if (beneficios.length === 0) {
+      container.innerHTML = `
+        <div class="text-center py-5">
+          <i class="bi bi-inbox" style="font-size: 3rem; color: #ccc;"></i>
+          <p class="text-muted mt-3">Nenhum benefício cadastrado</p>
+        </div>
+      `;
+      return;
+    }
+
+    if (modoAtual === 'cards') {
+      renderizarCards(beneficios);
+    } else {
+      renderizarTabela(beneficios);
+    }
+  }
+
+  // Renderizar em cards
+  function renderizarCards(beneficios) {
+  // injeta estilos uma única vez
+  if (!document.getElementById('benefit-card-styles')) {
+    const style = document.createElement('style');
+    style.id = 'benefit-card-styles';
+    style.innerHTML = `
+      .benefit-card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        min-height: 220px;
+        box-sizing: border-box;
+        padding: 12px;
+        border-radius: 8px;
+        background: #fff;
+        border: 1px solid #e6e6e6;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      }
+
+      .benefit-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .benefit-body {
+        flex: 1 1 auto; /* ocupa o espaço disponível, empurra o footer pra baixo */
+        overflow: auto;  /* caso o texto seja muito grande, cria scroll interno */
+        padding-bottom: 8px; /* garante espaço para o footer */
+      }
+
+      .benefit-description {
+        margin: 0 0 8px 0;
+        max-height: 6.5em; /* evita que a descrição estoure o card */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 1.2em;
+        display: -webkit-box;
+        -webkit-line-clamp: 4; /* corta em 4 linhas (visual) */
+        -webkit-box-orient: vertical;
+        word-break: break-word;
+      }
+
+      .benefit-info {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        margin-top: 6px;
+      }
+
+      .benefit-info > div h5 {
+        margin: 0;
+      }
+
+      .benefit-footer {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+        align-items: center;
+        margin-top: 10px;
+        flex-shrink: 0; /* garante que o footer não encolha além do necessário */
+      }
+
+      /* garante que o botão fique acima de qualquer conteúdo que pudesse sobrepor */
+      .benefit-footer .btn {
+        position: relative;
+        z-index: 2;
+      }
+
+      /* responsividade simples: garante altura mínima em telas pequenas */
+      @media (max-width: 576px) {
+        .benefit-card { min-height: 200px; padding: 10px; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  const container = document.getElementById('beneficiosContainer');
+
+  container.innerHTML = `
+    <div class="row g-3">
+      ${beneficios.map(b => `
+        <div class="col-md-6 col-lg-4">
+          <div class="benefit-card ${!b.ativo ? 'inactive' : ''}">
+            <div class="benefit-header">
+              <div>
+                <h6 style="margin:0; font-weight:600;">${b.nome_do_beneficio}</h6>
+                <small class="text-muted">${b.nome_cargo || 'Sem cargo'} - ${b.nome_setor || 'Sem setor'}</small>
+              </div>
+              <span class="badge ${b.ativo ? 'bg-success' : 'bg-secondary'}" style="height:fit-content;">
+                ${b.ativo ? 'Ativo' : 'Inativo'}
+              </span>
+            </div>
+
+            <div class="benefit-body">
+              <p class="benefit-description">${b.descricao_beneficio || 'Sem descrição'}</p>
+
+              <div class="benefit-info">
+                <div>
+                  <small class="text-muted">Valor</small>
+                  <h5 style="margin:0;">R$ ${Number(b.valor_aplicado || 0).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</h5>
+                </div>
+                <div>
+                  <small class="text-muted">Funcionários</small>
+                  <h5 style="margin:0;">${b.total_funcionarios || 0}</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="benefit-footer">
+              <button
+                class="btn btn-sm btn-outline-primary"
+                style="color:black;"
+                onmouseenter="this.style.color=''; (this.querySelector('i') || this).style.color='';"
+                onmouseleave="this.style.color='black'; (this.querySelector('i') || this).style.color='black';"
+                onclick="editarBeneficio(${b.id})"
+              >
+                <i class="bi bi-pencil" style="color:black; margin-right:6px;"></i> Editar
+              </button>
+
+              <button
+                class="btn btn-sm btn-outline-danger"
+                style="color:black;"
+                onmouseenter="this.style.color=''; (this.querySelector('i') || this).style.color='';"
+                onmouseleave="this.style.color='black'; (this.querySelector('i') || this).style.color='black';"
+                onclick="deletarBeneficio(${b.id}, '${(b.nome_do_beneficio || '').replace(/'/g, "\\'")}')"
+              >
+                <i class="bi bi-trash" style="color:black; margin-right:6px;"></i> Deletar
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+  // Renderizar em tabela
+  function renderizarTabela(beneficios) {
+    const container = document.getElementById('beneficiosContainer');
+    
+    container.innerHTML = `
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Benefício</th>
+              <th>Cargo</th>
+              <th>Setor</th>
+              <th>Valor</th>
+              <th>Funcionários</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${beneficios.map(b => `
+              <tr>
+                <td>
+                  <strong>${b.nome_do_beneficio}</strong><br>
+                  <small class="text-muted">${b.descricao_beneficio || ''}</small>
+                </td>
+                <td>${b.nome_cargo || '-'}</td>
+                <td>${b.nome_setor || '-'}</td>
+                <td>R$ ${Number(b.valor_aplicado).toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</td>
+                <td>${b.total_funcionarios || 0}</td>
+                <td>
+                  <span class="badge ${b.ativo ? 'bg-success' : 'bg-secondary'}">
+                    ${b.ativo ? 'Ativo' : 'Inativo'}
+                  </span>
+                </td>
+               <td>
+  <button
+    class="btn btn-sm btn-outline-primary"
+    style="color:black;"
+    onmouseenter="this.style.color=''; (this.querySelector('i') || this).style.color='';"
+    onmouseleave="this.style.color='black'; (this.querySelector('i') || this).style.color='black';"
+    onclick="editarBeneficio(${b.id})"
+  >
+    <i class="bi bi-pencil" style="color:black;">Editar</i>
+  </button>
+
+  <button
+    class="btn btn-sm btn-outline-danger"
+    style="color:black;"
+    onmouseenter="this.style.color=''; (this.querySelector('i') || this).style.color='';"
+    onmouseleave="this.style.color='black'; (this.querySelector('i') || this).style.color='black';"
+    onclick="deletarBeneficio(${b.id}, '${b.nome_do_beneficio}')"
+  >
+    <i class="bi bi-trash" style="color:black;">Deletar</i>
+  </button>
+</td>
+
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>
+    `;
+  }
+ // Configurar event listeners
+  function configurarEventListeners() {
+    // Modo de exibição
+    document.getElementById('modoExibicao').addEventListener('change', (e) => {
+      modoAtual = e.target.value;
+      renderizarBeneficios(aplicarFiltros());
+    });
+
+    // Filtros
+    document.getElementById('filtroSetor').addEventListener('change', () => {
+      renderizarBeneficios(aplicarFiltros());
+    });
+
+    document.getElementById('filtroCargo').addEventListener('change', () => {
+      renderizarBeneficios(aplicarFiltros());
+    });
+
+    document.getElementById('buscarBeneficio').addEventListener('input', (e) => {
+      renderizarBeneficios(aplicarFiltros());
+    });
+
+    // Botão criar benefício
+    document.getElementById('btnCriarBeneficio').addEventListener('click', () => {
+      abrirModalBeneficio();
+    });
+
+    // Botão novo setor
+    document.getElementById('btnNovoSetor').addEventListener('click', () => {
+      abrirModalSetor();
+    });
+
+    // Botão novo cargo
+    document.getElementById('btnNovoCargo').addEventListener('click', () => {
+      abrirModalCargo();
+    });
+
+    // Mudança de setor no modal de benefício
+   document.getElementById('beneficioSetor').addEventListener('change', (e) => {
+  const setorId = e.target.value;
+  const btnNovoCargo = document.getElementById('btnNovoCargo');
+  const selectCargo = document.getElementById('beneficioCargo');
+  
+  console.log('Setor selecionado:', setorId); // Debug
+  
+  if (setorId) {
+    selectCargo.disabled = false;
+    btnNovoCargo.disabled = false;
+    preencherSelectCargos(setorId);
+  } else {
+    selectCargo.disabled = true;
+    btnNovoCargo.disabled = true;
+    selectCargo.innerHTML = '<option value="">Primeiro selecione um setor</option>';
+  }
+});
+    // Formulários
+    document.getElementById('formBeneficio').addEventListener('submit', criarBeneficio);
+    document.getElementById('formSetor').addEventListener('submit', criarSetor);
+    document.getElementById('formCargo').addEventListener('submit', criarCargo);
+  }
+
+  // Aplicar filtros
+  function aplicarFiltros() {
+    const setorId = document.getElementById('filtroSetor').value;
+    const cargoId = document.getElementById('filtroCargo').value;
+    const busca = document.getElementById('buscarBeneficio').value.toLowerCase();
+
+    return todosBeneficios.filter(b => {
+      const matchSetor = !setorId || b.setor_id == setorId;
+      const matchCargo = !cargoId || b.cargo_id == cargoId;
+      const matchBusca = !busca || 
+        b.nome_do_beneficio.toLowerCase().includes(busca) ||
+        (b.descricao_beneficio && b.descricao_beneficio.toLowerCase().includes(busca));
+
+      return matchSetor && matchCargo && matchBusca;
+    });
+  }
+
+  // Abrir modal de benefício
+  function abrirModalBeneficio() {
+    document.getElementById('formBeneficio').reset();
+    document.getElementById('beneficioCargo').disabled = true;
+    document.getElementById('btnNovoCargo').disabled = true;
+    
+    const modal = new bootstrap.Modal(document.getElementById('modalBeneficio'));
+    modal.show();
+  }
+
+  // Abrir modal de setor
+  function abrirModalSetor() {
+    document.getElementById('formSetor').reset();
+    const modal = new bootstrap.Modal(document.getElementById('modalSetor'));
+    modal.show();
+  }
+
+  // Abrir modal de cargo
+  function abrirModalCargo() {
+    document.getElementById('formCargo').reset();
+    const setorSelecionado = document.getElementById('beneficioSetor').value;
+    
+    if (setorSelecionado) {
+      document.getElementById('cargoSetor').value = setorSelecionado;
+    }
+    
+    const modal = new bootstrap.Modal(document.getElementById('modalCargo'));
+    modal.show();
+  }
+
+  // Criar setor
+async function criarSetor(e) {
+  e.preventDefault();
+  
+  const dados = {
+    nome: document.getElementById('setorNome').value.trim(),
+    descricao: document.getElementById('setorDescricao').value.trim()
+  };
+
+  if (!dados.nome) {
+    mostrarAlerta('Por favor, informe o nome do setor', 'warning');
+    return;
+  }
+
+  try {
+    const response = await fetch(`${BACKEND_URL}/api/setores/register`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(dados)
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      bootstrap.Modal.getInstance(document.getElementById('modalSetor')).hide();
+      mostrarAlerta('Setor criado com sucesso!', 'success');
+      await carregarSetores();
+      
+      // Se estiver criando de dentro do modal de benefício, selecionar o novo setor
+      if (data.data && data.data.id) {
+        document.getElementById('beneficioSetor').value = data.data.id;
+        document.getElementById('beneficioSetor').dispatchEvent(new Event('change'));
+      }
+    } else {
+      mostrarAlerta(data.message || 'Erro ao criar setor', 'danger');
+    }
+  } catch (err) {
+    console.error('Erro ao criar setor:', err);
+    mostrarAlerta('Erro ao criar setor', 'danger');
+  }
+}
+  // Criar cargo
+  async function criarCargo(e) {
+    e.preventDefault();
+    
+    const dados = {
+      setor_id: document.getElementById('cargoSetor').value,
+      nome_cargo: document.getElementById('cargoNome').value,
+      descricao: document.getElementById('cargoDescricao').value
+    };
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/cargos/criar`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        bootstrap.Modal.getInstance(document.getElementById('modalCargo')).hide();
+        mostrarAlerta('Cargo criado com sucesso!', 'success');
+        await carregarCargos();
+        
+        // Atualizar select de cargo no modal de benefício
+        const setorId = document.getElementById('beneficioSetor').value;
+        if (setorId) {
+          preencherSelectCargos(setorId);
+        }
+      } else {
+        mostrarAlerta(data.message || 'Erro ao criar cargo', 'danger');
+      }
+    } catch (err) {
+      console.error('Erro ao criar cargo:', err);
+      mostrarAlerta('Erro ao criar cargo', 'danger');
+    }
+  }
+
+  // Criar benefício
+  async function criarBeneficio(e) {
+    e.preventDefault();
+    
+    const dados = {
+      cargo_id: document.getElementById('beneficioCargo').value,
+      setor_id: document.getElementById('beneficioSetor').value,
+      nome_beneficio: document.getElementById('beneficioNome').value,
+      descricao: document.getElementById('beneficioDescricao').value,
+      valor: document.getElementById('beneficioValor').value,
+      data_inicio: document.getElementById('beneficioDataInicio').value || null,
+      data_fim: document.getElementById('beneficioDataFim').value || null
+    };
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/beneficios/criar`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        bootstrap.Modal.getInstance(document.getElementById('modalBeneficio')).hide();
+        mostrarAlerta('Benefício criado com sucesso!', 'success');
+        await carregarBeneficios();
+      } else {
+        mostrarAlerta(data.message || 'Erro ao criar benefício', 'danger');
+      }
+    } catch (err) {
+      console.error('Erro ao criar benefício:', err);
+      mostrarAlerta('Erro ao criar benefício', 'danger');
+    }
+  }
+
+  // Editar benefício
+  async function editarBeneficio(id) {
+    const beneficio = todosBeneficios.find(b => b.id === id);
+    if (!beneficio) return;
+
+    // Preencher formulário
+    document.getElementById('beneficioSetor').value = beneficio.setor_id || '';
+    
+    if (beneficio.setor_id) {
+      document.getElementById('beneficioCargo').disabled = false;
+      document.getElementById('btnNovoCargo').disabled = false;
+      preencherSelectCargos(beneficio.setor_id);
+    }
+    
+    document.getElementById('beneficioCargo').value = beneficio.cargo_id || '';
+    document.getElementById('beneficioNome').value = beneficio.nome_do_beneficio;
+    document.getElementById('beneficioDescricao').value = beneficio.descricao_beneficio || '';
+    document.getElementById('beneficioValor').value = beneficio.valor_aplicado;
+    
+    if (beneficio.data_inicio) {
+      document.getElementById('beneficioDataInicio').value = beneficio.data_inicio.split('T')[0];
+    }
+    if (beneficio.data_fim) {
+      document.getElementById('beneficioDataFim').value = beneficio.data_fim.split('T')[0];
+    }
+
+    // Alterar título e ação do formulário
+    document.querySelector('#modalBeneficio .modal-title').textContent = 'Editar Benefício';
+    
+    // Substituir evento de submit
+    const form = document.getElementById('formBeneficio');
+    const novoForm = form.cloneNode(true);
+    form.parentNode.replaceChild(novoForm, form);
+    
+    novoForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      await atualizarBeneficio(id);
+    });
+
+    const modal = new bootstrap.Modal(document.getElementById('modalBeneficio'));
+    modal.show();
+  }
+
+  // Atualizar benefício
+  async function atualizarBeneficio(id) {
+    const dados = {
+      nome_beneficio: document.getElementById('beneficioNome').value,
+      descricao: document.getElementById('beneficioDescricao').value,
+      valor: document.getElementById('beneficioValor').value
+    };
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/beneficios/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dados)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        bootstrap.Modal.getInstance(document.getElementById('modalBeneficio')).hide();
+        mostrarAlerta('Benefício atualizado com sucesso!', 'success');
+        await carregarBeneficios();
+        
+        // Restaurar formulário para criação
+        document.querySelector('#modalBeneficio .modal-title').textContent = 'Criar Novo Benefício';
+        configurarEventListeners();
+      } else {
+        mostrarAlerta(data.message || 'Erro ao atualizar benefício', 'danger');
+      }
+    } catch (err) {
+      console.error('Erro ao atualizar benefício:', err);
+      mostrarAlerta('Erro ao atualizar benefício', 'danger');
+    }
+  }
+
+  // Deletar benefício
+  async function deletarBeneficio(id, nome) {
+    if (!confirm(`Tem certeza que deseja deletar o benefício "${nome}"?`)) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`${BACKEND_URL}/api/beneficios/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        mostrarAlerta('Benefício deletado com sucesso!', 'success');
+        await carregarBeneficios();
+      } else {
+        mostrarAlerta(data.message || 'Erro ao deletar benefício', 'danger');
+      }
+    } catch (err) {
+      console.error('Erro ao deletar benefício:', err);
+      mostrarAlerta('Erro ao deletar benefício', 'danger');
+    }
+  }
+
+  // Mostrar alerta
+  function mostrarAlerta(mensagem, tipo = 'info') {
+    const alertaDiv = document.createElement('div');
+    alertaDiv.className = `alert alert-${tipo} alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-3`;
+    alertaDiv.style.zIndex = '9999';
+    alertaDiv.innerHTML = `
+      ${mensagem}
+      <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    `;
+    
+    document.body.appendChild(alertaDiv);
+    
+    setTimeout(() => {
+      alertaDiv.remove();
+    }, 5000);
+  }
+</script>

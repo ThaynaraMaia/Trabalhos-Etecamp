@@ -1,0 +1,362 @@
+/* ===== Variáveis de tema ===== */
+:root{
+  --bg-image: url('/img/liquid_Glass.jpeg');
+  --bg-1: rgba(10,12,25,0.65);
+  --bg-2: rgba(25,18,45,0.5);
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+  --muted: rgba(255,255,255,0.75);
+  --muted-2: rgba(255,255,255,0.6);
+  --accent-1: #667eea;
+  --accent-2: #764ba2;
+  --accent-3: #4facfe;
+  --success: #28a745;
+  --danger: #dc3545;
+  --glass-blur: 10px;
+  --radius: 12px;
+  --transition-fast: 150ms;
+  --transition: 280ms;
+  --shadow: 0 8px 30px rgba(6,8,20,0.6);
+  --text: #ffffff;
+  --glass-strong: rgba(255,255,255,0.09);
+}
+
+/* ===== Layout base (2 colunas: sidebar + conteúdo) ===== */
+.cola-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+  /* background: #f8f8fb; */
+}
+
+/* ===== Sidebar fixa/sticky ===== */
+.sidebar {
+  width: 260px;
+  padding: 20px;
+  margin-left: 50px;
+  margin-top: 30px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+  position: sticky;
+  top: 30px;
+  align-self: start;
+}
+
+.sidebar h3 {
+  font-size: 1.05rem;
+  margin: 0 0 12px 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0 0 18px 0;
+  padding: 0;
+}
+
+.sidebar a {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--muted-2);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background var(--transition), color var(--transition), transform var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.sidebar a i {
+  font-size: 1.05rem;
+  color: var(--muted-2);
+}
+
+.sidebar a:hover {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.sidebar a.active {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+/* Remove os estilos antigos dos side-items */
+.side-item {
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+  margin-bottom: 0;
+  box-shadow: none;
+  position: relative;
+  overflow: visible;
+  transition: none;
+}
+
+.side-item::before {
+  display: none;
+}
+
+.side-item:hover::before {
+  display: none;
+}
+
+/* Mantém apenas a estilização dos links dentro */
+.side-item a {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 8px 10px;
+  border-radius: 8px;
+  color: var(--muted-2);
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: background var(--transition), color var(--transition), transform var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.side-item a:hover {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.side-item a.active {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+/* ===== Conteúdo ===== */
+.content {
+  padding: 24px;
+  overflow: auto;
+  /* quem rola é o conteúdo, não a sidebar */
+  /* background: #f8f8fb; */
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 992px) {
+  .cola-layout {
+    grid-template-columns: 1fr;
+    /* empilha */
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+}
+
+.cola-layout.has-navbar .sidebar {
+  top: 64px;
+  height: calc(100vh - 64px);
+}
+
+
+.upload {
+  background-color: rgba(255, 255, 255, 0.384);
+  backdrop-filter: blur(4px);
+  border: 2px dashed rgba(255, 255, 255, 0.462);
+  box-shadow: 5px 5px 5px rgba(50, 50, 77, 0.329);
+
+}
+
+.containerArq {
+  margin-left: 3px;
+  padding: 24px 16px;
+  box-shadow: 0 10px 15px rgb(50, 50, 77), inset 2px 0px 5px rgba(50, 50, 77, 0.685);
+  background-color: rgba(255, 255, 255, 0.178);
+  border-radius: 2rem;
+  width: 100%;
+  /* max-width: 420px; */
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6), inset 0 0 30px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(4px);
+  border: 1.5px solid rgba(255, 255, 255, 0.849);
+
+}
+
+.conteudoMuda {
+  color: #eaeaea;
+}
+
+/* ===== Painel lateral de setores ===== */
+.setores-panel {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-right: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 0 1.5rem 1.5rem 0;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+  transition: left 0.4s ease;
+  z-index: 2000;
+  padding: 1.5rem;
+  overflow-y: auto;
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.setores-panel::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Edge, etc */
+}
+
+.setores-panel.active {
+  left: 0;
+}
+
+/* cabeçalho */
+.setores-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.setores-header h5 {
+  color: #f4f4f9;
+  text-shadow: 1px 2px 5px #0e0e1fa8;
+  font-weight: 600;
+}
+
+.close-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.close-btn:hover {
+  transform: scale(1.2);
+}
+
+/* ===== Painel de Setores (estilo vidro consistente com a sidebar) ===== */
+.setores-panel {
+  position: fixed;
+  top: 0;
+  left: -320px;
+  width: 300px;
+  height: 100vh;
+  background: rgba(158, 158, 158, 0.386);
+  backdrop-filter: blur(14px) saturate(160%);
+  border-right: 1.5px solid rgba(255, 255, 255, 0.75);
+  border-radius: 0 1.5rem 1.5rem 0;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6),
+    inset 0 0 30px rgba(255, 255, 255, 0.05);
+  transition: left 0.4s ease;
+  z-index: 2000;
+   padding: 1.5rem;
+  overflow-y: auto; 
+}
+
+.setores-panel.active {
+  left: 0;
+}
+
+/* ===== Lista de Setores ===== */
+
+.setores-item{
+   /* color: #45466B; */
+  background-color: #ffffff2e;
+  /* border: 2px solid #ddd; */
+  border-radius: 18px;
+  /* padding: 10px 20px;  */
+  font-size: 16px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 4px 0 10px rgba(0, 0, 0, 0.2);
+  /* Box-shadow à direita */
+  margin-bottom: 8px;
+}
+
+.setores-item a{
+color: white;
+font-weight: bold;
+}
+
+.setores-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.setores-list li {
+  margin-bottom: 0.75rem;
+}
+
+.setores-list a {
+   display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #e7e7ef;
+  text-decoration: none;
+  /* color: inherit; */
+  text-shadow: 1px 2px 5px#100e27a9;
+}
+
+.setores-list a:hover {
+  background: #ffffff9c;
+  /* border: 2px solid #ffffff9c; */
+  /* color: #100e27; */
+  font-weight: 600;
+  gap: 2px;
+  box-shadow: inset 5px 5px 5px rgba(50, 50, 77, 0.329);
+}
+
+/* ===== Efeito de fundo escuro ao abrir ===== */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s;
+  z-index: 1500;
+}
+
+.setores-panel.active~body::after {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* botão de remover filtro (mantém estilo da sidebar) */
+#liRemoverFiltroSetor .nav-link {
+  background: rgba(255,255,255,0.06);
+  border-radius: 10px;
+  color: #ffe;
+  font-weight: 600;
+  transition: transform .15s ease, background .15s ease;
+}
+#liRemoverFiltroSetor .nav-link:hover {
+  background: rgba(255,255,255,0.12);
+  transform: translateY(-2px);
+}
+#liRemoverFiltroSetor .nav-link .me-2 { opacity: 0.95; }
+.sidebar .nav-link,
+.sidebar .nav-link:visited,
+.sidebar .nav-link:focus,
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  text-decoration: none !important;
+}

@@ -1,0 +1,517 @@
+/* frontend/public/css/folhapaga.css
+   Liquid glass theme para a página Folha de Pagamento
+   Substitua todo o conteúdo atual por este arquivo.
+*/
+
+/* ===== Variáveis de tema ===== */
+:root{
+  --bg-image: url('/img/liquid_Glass.jpeg');
+  --bg-1: rgba(10,12,25,0.65);
+  --bg-2: rgba(25,18,45,0.5);
+  --glass-bg: rgba(255,255,255,0.06);
+  --glass-border: rgba(255,255,255,0.12);
+  --muted: rgba(255,255,255,0.75);
+  --muted-2: rgba(255,255,255,0.6);
+  --accent-1: #667eea;
+  --accent-2: #764ba2;
+  --accent-3: #4facfe;
+  --success: #28a745;
+  --danger: #dc3545;
+  --glass-blur: 10px;
+  --radius: 12px;
+  --transition-fast: 150ms;
+  --transition: 280ms;
+  --shadow: 0 8px 30px rgba(6,8,20,0.6);
+  --text: #ffffff;
+  --glass-strong: rgba(255,255,255,0.09);
+}
+
+/* ===== Base ===== */
+* { box-sizing: border-box; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+html,body { height: 100%; margin: 0; font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: var(--text); }
+body {
+  background: linear-gradient(135deg, rgba(16,12,34,1) 0%, rgba(38,22,66,1) 60%);
+  -webkit-font-smoothing:antialiased;
+  -webkit-tap-highlight-color: transparent;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* subtle page wrapper and padding */
+.page-wrapper {
+  min-height: 100vh;
+  display: block;
+  padding-top: 20px;
+}
+
+/* ===== Layout ===== */
+.cola-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  padding: calc(var(--navbar-height) + 18px) 24px 24px 24px;
+  align-items: start;
+  min-height: calc(100vh - var(--navbar-height));
+}
+
+/* Sidebar (liquid glass) */
+.sidebar {
+  width: 260px;
+  padding: 20px;
+  margin-left: 50px;
+  margin-top: 30px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+}
+
+/* sidebar headings */
+.sidebar h3 {
+  margin: 0 0 12px 0;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+/* sidebar links */
+.sidebar ul { list-style: none; padding: 0; margin: 0 0 18px 0; }
+.sidebar .sidebar-link {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--muted-2);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 8px;
+  transition: background var(--transition), color var(--transition), transform var(--transition-fast);
+  font-size: 0.95rem;
+  border: 1px solid transparent;
+}
+.sidebar .sidebar-link i { font-size: 1.05rem; color: var(--muted-2); }
+
+/* active/default states */
+.sidebar .sidebar-link:hover {
+  background: linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  transform: translateY(-2px);
+  color: #fff;
+}
+.sidebar .sidebar-link-active {
+  background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+}
+
+/* configuration button looks like link but clickable */
+#btn-config {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 8px 0;
+  cursor: pointer;
+}
+
+/* ===== Main content ===== */
+main.p-4 {
+  flex: 1;
+  padding: 8px 0;
+}
+
+/* header area */
+.d-flex.justify-content-between.align-items-start.mb-4 {
+  margin-bottom: 24px !important;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.d-flex.justify-content-between.align-items-start.mb-4 > div:first-child h1 {
+  margin: 0 0 6px 0;
+}
+
+/* buttons (liquid glass) */
+.glass-button, .glass-button-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform var(--transition-fast), box-shadow var(--transition);
+  border: 1px solid rgba(255,255,255,0.06);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  color: var(--text);
+  box-shadow: 0 6px 20px rgba(6,8,20,0.45);
+}
+.glass-button:hover, .glass-button-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 36px rgba(6,8,20,0.55); }
+
+/* primary accent */
+.glass-button-primary {
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  border: none;
+  color: white;
+}
+
+/* stat cards container (row/cols) */
+.row { display: flex; flex-wrap: wrap; gap: 18px; margin: 0 -6px; }
+.col-md-3 { flex: 1 1 calc(25% - 18px); min-width: 200px; }
+
+/* stat card (liquid) */
+.stat-card {
+  padding: 18px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 10px 30px rgba(4,6,20,0.55);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* stat icon */
+.stat-icon { width: 48px; height: 48px; border-radius: 10px; display:flex; align-items:center; justify-content:center; color: #fff; font-size: 1.1rem; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+
+/* gradients for icons */
+.gradient-blue-cyan { background: linear-gradient(135deg,#4facfe 0%,#00f2fe 100%); }
+.gradient-green-emerald { background: linear-gradient(135deg,#2ecc71 0%, #11998e 100%); }
+.gradient-purple-pink { background: linear-gradient(135deg,#8e2de2 0%, #c33764 100%); }
+.gradient-orange-red { background: linear-gradient(135deg,#ff7e5f 0%, #feb47b 100%); }
+
+/* small text */
+.text-white { color: #fff !important; }
+.text-success { color: var(--success); }
+
+/* ===== Glass card for table and other surfaces ===== */
+.glass-card {
+  margin-top: 6px;
+  padding: 18px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 12px 40px rgba(4,6,20,0.6);
+  backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(120%);
+}
+
+/* table responsiveness wrapper */
+.table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 10px; }
+
+/* table (liquid) */
+.glass-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+  min-width: 720px;
+  background: transparent;
+}
+.glass-table thead th {
+  text-align: left;
+  padding: 14px 12px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.9);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.glass-table tbody td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
+  color: rgba(255,255,255,0.92);
+  vertical-align: middle;
+}
+
+/* table hover highlight */
+.glass-table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  transform: translateY(-1px);
+}
+
+/* actions column */
+.glass-table .acoes { display: flex; gap: 8px; align-items: center; }
+
+/* search input with icon */
+.position-relative { position: relative; display: inline-block; }
+.position-relative .bi-search { position: absolute; left: 0.75rem; top: 50%; transform: translateY(-50%); color: rgba(255,255,255,0.5); }
+.glass-input {
+  padding: 10px 12px 10px 36px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.06);
+  color: #fff;
+  transition: box-shadow var(--transition), border-color var(--transition);
+  min-width: 220px;
+}
+.glass-input:focus {
+  outline: none;
+  box-shadow: 0 6px 18px rgba(102,126,234,0.14);
+  border-color: rgba(102,126,234,0.45);
+}
+
+/* small icon buttons (filter) */
+.glass-button.small { padding: 8px; width: 40px; height: 40px; display: inline-flex; align-items:center; justify-content:center; }
+
+/* ===== Popup Config (overlay) ===== */
+#overlay-config {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(6,8,20,0.55), rgba(6,8,20,0.7));
+}
+#overlay-config.active { display: flex; }
+#popup-config {
+  width: 520px;
+  max-width: calc(100% - 40px);
+  border-radius: 14px;
+  padding: 26px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 18px 50px rgba(2,4,12,0.7);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  transform: translateY(-6px);
+  transition: all 220ms cubic-bezier(.2,.9,.3,1);
+}
+#popup-config.show { transform: translateY(0); opacity: 1; }
+
+/* popup header actions */
+#fechar-config {
+  background: transparent;
+  border: none;
+  color: rgba(255,255,255,0.8);
+  cursor: pointer;
+  font-size: 20px;
+}
+#fechar-config:hover { transform: rotate(90deg); color: #fff; }
+
+/* form fields inside popup reuse glass-input styling */
+#form-config .glass-input { width: 100%; padding: 12px 14px; }
+
+/* popup form buttons */
+#form-config .glass-button, #form-config .glass-button-primary { min-width: 110px; }
+
+/* tiny helpers */
+.mb-3 { margin-bottom: 12px !important; }
+.pb-3 { padding-bottom: 12px !important; }
+.gap-3 > * + * { margin-left: 12px; }
+
+/* ===== Animations ===== */
+@keyframes fadeInLite { from {opacity:0; transform: translateY(8px);} to {opacity:1; transform:none;} }
+@keyframes popIn { from {opacity:0; transform: scale(0.98);} to {opacity:1; transform: scale(1);} }
+
+.page-wrapper, .glass-card, .stat-card, #popup-config { animation: fadeInLite 360ms ease both; }
+
+/* ===== Accessibility & print ===== */
+@media print {
+  body { background: #fff !important; color: #000; }
+  .glass-card, .stat-card, .sidebar, #popup-config { box-shadow: none !important; background: #fff !important; border: none !important; color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .glass-input { border: 1px solid #ddd !important; color: #000 !important; background: #fff !important; }
+  #overlay-config, .glass-button-primary, .glass-button { display: none !important; }
+}
+
+/* high-contrast / focus-visible */
+*:focus-visible { outline: 3px solid rgba(102,126,234,0.25); outline-offset: 2px; }
+
+/* ===== Responsividade ===== */
+@media (max-width: 1100px) {
+  .col-md-3 { flex: 1 1 calc(50% - 18px); }
+  .cola-layout { padding: 20px; gap: 18px; }
+}
+@media (max-width: 768px) {
+  .cola-layout { flex-direction: column; padding: 14px; }
+  .sidebar { width: 100%; order: 2; display: block; }
+  .col-md-3 { flex-basis: 100%; }
+  .glass-table { min-width: 560px; }
+  .position-relative .bi-search { left: 0.6rem; }
+  .glass-input { min-width: unset; width: 100%; padding-left: 40px; }
+}
+
+/* ===== Compatibility: keep older selectors used in repo (optional) ===== */
+/* preserve some older classes used by holerite CSS so they continue to work */
+.container-holerite, .tabela-holerite, .input-holerite, .acoes-holerite,
+.secao-proventos, .secao-descontos {
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.04);
+  color: var(--text);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+/* small utility classes */
+.text-muted { color: rgba(255,255,255,0.65); }
+.small { font-size: 0.85rem; }
+
+/* ensure z-indexes for floating controls */
+.overlay, #overlay-config { z-index: 9999; }
+/* reduzir avatar padrão */
+/* reduz imagens dentro de cards de colaborador */
+/* ===== Avatares na tabela - size 20px ===== */
+.employee-avatar-img,
+.employee-avatar,
+.employee-avatar-initials,
+.foto-colab {
+  width: 40px;
+  height: 40px;
+  min-width: 20px;
+  min-height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  font-size: 10px;              /* ajusta o tamanho das iniciais */
+  line-height: 1;
+  color: #fff;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid rgba(255,255,255,0.12);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+}
+
+/* garantir que imagens cobrem o box sem distorcer */
+.employee-avatar-img,
+.foto-colab {
+  object-fit: cover;
+  display: inline-block;
+}
+
+/* wrapper que você usa no IIFE (mantém gap entre avatar e nome) */
+.employee-avatar-wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* quando avatar é apenas o bloco de iniciais no layout antigo */
+.employee-avatar {
+  background: linear-gradient(135deg, rgba(102,126,234,0.18), rgba(118,75,162,0.18));
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+/* ajuste do td para alinhar verticalmente */
+.glass-table td { vertical-align: middle; }
+
+/* se precisar sobrescrever width/height inline use !important (use somente se necessário) */
+/* .employee-avatar-img { width:20px !important; height:20px !important; } */
+
+/* =========================
+   Liquid Glass Scrollbars
+   ========================= */
+
+/* Variáveis de fácil customização */
+:root{
+  --scrollbar-size: 12px;
+  --scrollbar-track-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  --scrollbar-track-border: rgba(255,255,255,0.06);
+  --scrollbar-thumb-bg: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+  --scrollbar-thumb-border: rgba(255,255,255,0.12);
+  --scrollbar-thumb-hover-bg: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.12));
+  --scrollbar-accent-bg: linear-gradient(135deg, rgba(136,75,255,0.30), rgba(136,75,255,0.14));
+  --scrollbar-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  --scrollbar-radius: 10px;
+}
+
+/* -------------------------
+   WebKit (Chrome, Edge, Safari)
+   ------------------------- */
+*::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+/* Track (fundo) */
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-bg);
+  border-radius: var(--scrollbar-radius);
+  border: 1px solid var(--scrollbar-track-border);
+  box-shadow: inset 0 4px 18px rgba(0,0,0,0.25);
+}
+
+/* Thumb (alça) */
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border-radius: var(--scrollbar-radius);
+  border: 2px solid rgba(255,255,255,0.06); /* cria a sensação de vidro */
+  box-shadow: var(--scrollbar-shadow);
+  backdrop-filter: blur(6px) saturate(140%);
+   -webkit-backdrop-filter: blur(var(--glass-blur));
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* Thumb hover / active */
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-bg);
+  transform: translateY(-1px);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+}
+
+/* Corner */
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* -------------------------
+   Firefox (scrollbar-color)
+   ------------------------- */
+/* Aplica para elementos que usam scroll (padrão global como fallback) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) rgba(255,255,255,0.03);
+}
+
+/* Para contêineres específicos (melhor controle) */
+.sidebar,
+.content,
+.setores-panel,
+.containerArq,
+.setores-container,
+.arquivos-list,
+#arquivosContainer {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) rgba(255,255,255,0.03);
+}
+
+/* Se quiser destaque quando houver filtro ativo (accent thumb) */
+/* Ex.: .setores-panel.active dar um tom roxo à thumb */
+.setores-panel.active *::-webkit-scrollbar-thumb,
+.setores-panel.active {
+  /* WebKit: não há seletor direto para o thumb a partir do container em todos os browsers,
+     mas mantemos consistência design-wise mudando track/appearance */
+}
+.setores-panel.active,
+.sidebar.active {
+  /* Firefox: usa o mesmo color override */
+  scrollbar-color: var(--scrollbar-accent-bg) rgba(255,255,255,0.02);
+}
+
+/* -------------------------
+   Optional: scroll snap visual helper (glow while scrolling)
+   ------------------------- */
+@media (prefers-reduced-motion: no-preference) {
+  .sidebar:active ::-webkit-scrollbar-thumb,
+  .content:active ::-webkit-scrollbar-thumb {
+    box-shadow: 0 8px 30px rgba(136,75,255,0.18);
+  }
+}
+
+/* =========================
+   Notas:
+   - Para browsers que não suportam ::-webkit-scrollbar (Firefox), usamos scrollbar-color.
+   - Ajuste --scrollbar-size (8–16px) para barras mais finas/grossas.
+   - Se quiser uma thumb roxa fixa, troque --scrollbar-thumb-bg por --scrollbar-accent-bg.
+   - Cole no final do seu CSS para sobrescrever estilos nativos.
+   ========================= */
+

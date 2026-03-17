@@ -1,0 +1,146 @@
+
+/* INICIANDO ESTILIZAÇÃO DO FUNDO  */
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+
+    text-decoration: none;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+
+    background: #81C0E9;
+    background: radial-gradient(circle, rgba(129, 192, 233, 1) 0%, rgb(236, 251, 255) 100%);
+}
+
+@font-face {
+    font-family: 'Titulo';
+    src: url('../../fontes/Título.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Texto';
+    src: url('../../fontes/Texto.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* ========================
+   HEADER
+======================== */
+.header {
+    height: 120px;
+    grid-area: header;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 1.6rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    z-index: 120;
+}
+
+.header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, .1);
+    backdrop-filter: blur(50px);
+    z-index: -1;
+}
+
+.perfil {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 1.5px solid #12ba2b;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+
+.navbar {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.navbar a {
+    justify-items: center;
+    font-size: 1.15rem;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+
+#check {
+    display: none;
+}
+
+.icone {
+    position: absolute;
+    right: 0;
+    font-size: 2.8rem;
+    color: #fff;
+    cursor: pointer;
+    display: none;
+}
+
+
+/* GERAL NIVEIS  */
+
+h1 {
+    color: #fff;
+    font-size: 3rem;
+    font-family: 'Titulo';
+    margin-bottom: 40px;
+    text-align: center;
+    margin: 50px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.container a {
+    text-decoration: none;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, .3);
+}
+
+.btn {
+    background-color: #c6e1f6;
+    color: #38a0dd;
+    text-align: center;
+    padding: 20px;
+    border: 2px solid #38a0dd;
+    border-radius: 20px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    font-family: 'Texto';
+    letter-spacing: 2px;
+}
+
+.btn:hover {
+    background-color: #9fcaec;
+    color: #004b77;
+}

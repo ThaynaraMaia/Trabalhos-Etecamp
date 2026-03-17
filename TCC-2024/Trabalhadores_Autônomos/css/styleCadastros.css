@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Belleza&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    margin: 0;
+    box-sizing: 0;
+}
+:root{
+    --corPrimaria-1: #EBB548;
+    --corPrimaria-2: #EC5C14;
+    --corPrimaria-3: #235789;
+    --corPrimaria-4: #565254;
+    --corPrimaria-5: #FFFBFE;
+    --fonte-primaria: 'Belleza', 'calibri';
+}
+body{
+    background-color: #04074B;
+}
+
+.BarraNav{
+    background-color: #FFF;
+    padding:15px 35px 15px 35px;
+    display: flex;
+    justify-content: space-between ;
+}
+.BarraNav img{
+    width: 190px;
+}
+
+.BarraNav a{
+    text-decoration: none ;
+    color: #EC5C14;
+    font: 400 1.1rem "M PLUS 1p", sans-serif ;
+}
+
+.LoginGeral{
+    display: flex;
+    justify-content: center;
+    background-image: url(../img/TelaLoginGeral.png);
+    background-size: cover;
+    height: 140vh;
+}
+
+.tituloLogin img{
+    width: 150px;
+    display: block;
+    margin: auto;
+    padding-top: 24px;
+}
+.tituloLogin h1{
+    color: #FFF;
+    font: 400 1.7rem "M PLUS 1p", sans-serif ;
+    text-align: center;
+    margin: 6px;
+}
+
+.InputsLogin input{
+    width: 410px;
+    margin: 10px 0px;
+    padding: 13px;
+    border-radius: 16px;
+    border: #050739;
+    color: #FFF;
+    background-color: #050739;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+}
+.InputsLogin input::placeholder{
+    color: #ffffffb4;
+}
+
+.Senha{
+    display: inline-block;
+    position: relative;
+}
+.ConfirmaSenha i{
+    position: absolute;
+    top: 25%;
+    right: 3%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #FFF;
+}
+.Senha{
+    position: relative;
+}
+.Senha i{
+    position: absolute;
+    top: 25%;
+    right: 3%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #FFF;
+}
+
+.ConfirmaSenha{
+    position: relative;
+}
+.ConfirmaSenha i{
+    position: absolute;
+    top: 25%;
+    right: 3%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #FFF;
+}
+
+.BotaoLogin input{
+    display: block;
+    width: 310px;
+    padding:10px 20px;
+    margin: 20px auto 10px auto;
+    background: #EC5C14;
+    border: 2px solid #EC5C14;
+    border-radius: 18px;
+    font: 1em "Poppins", sans-serif;
+    color: #fff;
+    transition: .2s;
+}
+
+.BotaoCadastro input{
+    display: block;
+    width: 310px;
+    padding:10px 20px;
+    margin: 20px auto 10px auto;
+    background: #EC5C14;
+    border: 2px solid #EC5C14;
+    border-radius: 18px;
+    font: 1em "Poppins", sans-serif;
+    cursor: pointer;
+    color: #fff;
+    transition: .2s;
+}
+ 
+.BotaoCriarConta input{
+    display: block;
+    width: 400px;
+    padding:10px 20px;
+    margin: 20px auto 10px auto;
+    background: transparent;
+    border: 2px solid #EC5C14;
+    border-radius: 18px;
+    font: 1em "Poppins", sans-serif;
+    color: #fff;
+    transition: .2s;
+}
+
+.BotaoCadastro input:hover{
+    background-color: transparent;
+    cursor: pointer;
+}
+#cidade1 input{
+    margin-bottom: 0px;
+    border-radius: 18px 18px 0px 0px;
+}
+#cidade2 input{
+    border-radius: 0;
+}
+#cidade3 input{
+    border-radius: 0px 0px 18px 18px;
+}
+.efeito input:hover{
+    transform: scale(1.01);
+}
+ 
+.BotaoCriarConta input:hover{
+    background-color: #EC5C14;
+}
+.BotaoLogin input:hover{
+    background-color: #04074B;
+}
+footer{
+    background-color: #FFF;
+    padding: 10px;
+    font: .7rem "Poppins", sans-serif;
+    color: #666666;
+}
+footer p{
+    padding: 0px 10px 0px 10px;
+}
+
+.box select {
+    background-color: #050739;
+    color: white;
+    padding: 12px;
+    width: 436px;
+    height: 46px;
+    border: none;
+    font-size: 1rem;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.box:hover::before {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+    padding: 30px;
+}
+.marginteste{
+    margin-top: 10px;
+}
+.alert {
+    display: none;
+    padding: 15px;
+    margin-top: 10px;
+    border-radius: 10px;
+}
+.alert.show {
+    display: block;
+}
+.alert-danger {
+    background-color: #460006;
+    color: #f1d3d6;
+    font-family: "Poppins";
+}
+.alert-success {
+    
+    color: #ecfff1;
+    font-family: "Poppins";
+}
+.alert .close {
+    cursor: pointer;
+    float: right;
+    font-size: 1.2em;
+    line-height: 1;
+}

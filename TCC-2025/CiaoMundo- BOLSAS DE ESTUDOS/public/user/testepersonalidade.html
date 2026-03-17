@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teste de Personalidade - CiaoMundo</title>
+  <link rel="stylesheet" href="../css/styletestedepersonalidade.css">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="nav-logo">
+        <div class="planet-icon">
+          <img src="../images/Ciaomundo.png" id="planetIcon" alt="CiaoMundo" style="cursor: pointer;">
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="./user.html">HOME</a>
+        <a href="./bolsas.html">BOLSAS</a>
+        <a href="./documentos.html">DOCUMENTOS</a>
+        <a href="./simulador.html">SIMULADOR DE CUSTOS</a>
+        <a href="./testepersonalidade.html">TESTE DE PERSONALIDADE</a>
+        <a href="./lembrete.html">Notificações</a>
+      </div>
+      <div class="nav-profile">
+        <a href="../user/perfil.html" title="Perfil do usuário">
+          <img id="perfilBtnImg" src="../images/perfil.png" alt="Foto do usuário" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Teste de Personalidade</h1>
+    <p>Descubra o país que combina com você</p>
+  </header>
+
+  <div class="main-container">
+    <div class="sidebar">
+      <div class="cta-section">
+        <div class="cta-image">🌍</div>
+        <h2 class="cta-title">Descubra seu destino!</h2>
+        <p class="cta-text"><span class="pulse-dot"></span>Venha descobrir o país ideal para seu intercâmbio.</p>
+        <p class="cta-text">Responda ao nosso teste e veja quais experiências internacionais combinam melhor com você.</p>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="progress-bar"><div class="progress-fill" id="progressBar"></div></div>
+
+      <form id="personalityTest">
+        <!-- PERGUNTA 1 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">1. Qual estilo de viagem você prefere?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q1" value="sociavel">Gosto de conhecer pessoas e fazer amigos</label>
+              <label class="option"><input type="radio" name="q1" value="reservado">Prefiro momentos tranquilos e introspectivos</label>
+              <label class="option"><input type="radio" name="q1" value="criativo">Amo experiências diferentes e inovadoras</label>
+              <label class="option"><input type="radio" name="q1" value="disciplinado">Gosto de planejar tudo com organização</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 2 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">2. Qual é sua principal motivação para estudar fora?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q2" value="aventura">Viver aventuras e novas experiências</label>
+              <label class="option"><input type="radio" name="q2" value="carreira">Impulsionar minha carreira</label>
+              <label class="option"><input type="radio" name="q2" value="idioma">Aprender ou aperfeiçoar idiomas</label>
+              <label class="option"><input type="radio" name="q2" value="cultural">Conhecer novas culturas e tradições</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 3 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">3. Que tipo de ambiente você prefere?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q3" value="tradicional">Mais estruturado e clássico</label>
+              <label class="option"><input type="radio" name="q3" value="inovador">Inovador e cheio de novas ideias</label>
+              <label class="option"><input type="radio" name="q3" value="colaborativo">Colaborativo e social</label>
+              <label class="option"><input type="radio" name="q3" value="autonomo">Independente e autônomo</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 4 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">4. Qual característica descreve melhor você?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q4" value="ambicioso">Ambicioso e focado</label>
+              <label class="option"><input type="radio" name="q4" value="relaxado">Relaxado e tranquilo</label>
+              <label class="option"><input type="radio" name="q4" value="adaptavel">Adaptável e flexível</label>
+              <label class="option"><input type="radio" name="q4" value="focado">Determinado e disciplinado</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 5 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">5. Qual estilo de vida você prefere?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q5" value="aventuroso">Aventureiro e ousado</label>
+              <label class="option"><input type="radio" name="q5" value="cultural">Cultural e observador</label>
+              <label class="option"><input type="radio" name="q5" value="disciplinado">Organizado e disciplinado</label>
+              <label class="option"><input type="radio" name="q5" value="criativo">Criativo e inovador</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 6 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">6. Como você lida com mudanças?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q6" value="flexivel">Me adapto facilmente a novas situações</label>
+              <label class="option"><input type="radio" name="q6" value="planejador">Prefiro ter tudo planejado com antecedência</label>
+              <label class="option"><input type="radio" name="q6" value="cauteloso">Analiso bem antes de me adaptar</label>
+              <label class="option"><input type="radio" name="q6" value="espontaneo">Gosto de improvisação e surpresas</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 7 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">7. Qual tipo de clima você prefere?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q7" value="temperado">Clima temperado com quatro estações</label>
+              <label class="option"><input type="radio" name="q7" value="tropical">Clima quente e tropical</label>
+              <label class="option"><input type="radio" name="q7" value="frio">Clima frio e montanhoso</label>
+              <label class="option"><input type="radio" name="q7" value="variado">Não me importo, me adapto a qualquer clima</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- PERGUNTA 8 -->
+        <div class="question-container">
+          <div class="question-header" onclick="toggleQuestion(this)">
+            <span class="question-text">8. O que mais valoriza em uma cultura?</span>
+            <span class="toggle-icon">+</span>
+          </div>
+          <div class="options-container">
+            <div class="options">
+              <label class="option"><input type="radio" name="q8" value="historia">Rica história e tradições</label>
+              <label class="option"><input type="radio" name="q8" value="tecnologia">Inovação e tecnologia avançada</label>
+              <label class="option"><input type="radio" name="q8" value="diversidade">Diversidade e inclusão</label>
+              <label class="option"><input type="radio" name="q8" value="eficiencia">Organização e eficiência</label>
+            </div>
+          </div>
+        </div>
+
+        <button type="button" class="submit-btn" onclick="calculateResult()">Ver Resultado</button>
+      </form>
+
+      <div class="result-container" id="resultContainer">
+        <h2 class="result-title" id="resultTitle"></h2>
+        <div class="result-text" id="resultText"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 CiaoMundo. Todos os direitos reservados.</p>
+      <p>Desenvolvido com ❤️ para conectar estudantes ao mundo</p>
+    </div>
+  </footer>
+
+  <script>
+    // Atualização da foto do perfil e funcionalidade do ícone admin
+    document.addEventListener('DOMContentLoaded', async () => {
+      const perfilBtnImg = document.getElementById('perfilBtnImg');
+      const planetIcon = document.getElementById('planetIcon');
+      const token = localStorage.getItem('token');
+
+      // Função para atualizar foto do perfil
+      async function atualizarFoto() {
+        try {
+          if (token) {
+            const res = await fetch('/user/perfil', {
+              headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+              const user = await res.json();
+              perfilBtnImg.src = user.foto || '../images/perfil.png';
+              return;
+            }
+          }
+          perfilBtnImg.src = '../images/perfil.png';
+        } catch (err) {
+          console.error('Erro ao atualizar foto:', err);
+          perfilBtnImg.src = '../images/perfil.png';
+        }
+      }
+
+      atualizarFoto();
+      setInterval(atualizarFoto, 5000);
+
+      // Funcionalidade do ícone do planeta para administradores
+      if (token) {
+        try {
+          const payloadBase64 = token.split('.')[1];
+          const decodedPayload = JSON.parse(atob(payloadBase64));
+          const tipoUsuario = decodedPayload.tipo_usuario?.toLowerCase();
+
+          if (tipoUsuario === 'administrador') {
+            planetIcon.style.cursor = 'pointer';
+            planetIcon.title = 'Voltar para Painel Admin';
+            
+            planetIcon.addEventListener('mouseenter', () => {
+              planetIcon.style.transform = 'scale(1.1)';
+              planetIcon.style.filter = 'drop-shadow(0 0 15px rgba(96, 165, 250, 0.8))';
+            });
+            
+            planetIcon.addEventListener('mouseleave', () => {
+              planetIcon.style.transform = 'scale(1)';
+              planetIcon.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.4))';
+            });
+
+            planetIcon.addEventListener('click', (e) => {
+              e.preventDefault();
+              window.location.href = '/admin/admin.html';
+            });
+          }
+        } catch (err) {
+          console.error('Erro ao verificar tipo de usuário:', err);
+        }
+      }
+    });
+
+    function toggleQuestion(header) {
+      const container = header.parentElement;
+      container.classList.toggle("active");
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const totalQuestions = 8;
+      let answeredQuestions = 0;
+      
+      for(let i = 1; i <= totalQuestions; i++) {
+        const answer = document.querySelector(`input[name="q${i}"]:checked`);
+        if(answer) answeredQuestions++;
+      }
+      
+      const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+      document.getElementById('progressBar').style.width = progressPercentage + '%';
+    }
+
+    document.addEventListener('change', function(e) {
+      if(e.target.type === 'radio') {
+        updateProgressBar();
+      }
+    });
+
+    async function fetchBolsas(pais) {
+      try {
+        const res = await fetch(`/api/teste/bolsas?pais=${encodeURIComponent(pais)}`);
+        if(!res.ok) throw new Error("Erro ao buscar bolsas");
+        const data = await res.json();
+        if(data.length === 0) return "Nenhuma bolsa encontrada.";
+        return data.map(b => `• ${b.titulo} - Inscreva-se: ${b.link_inscricao}`).join("\n");
+      } catch(e) {
+        return "Erro ao carregar bolsas.";
+      }
+    }
+
+    async function calculateResult() {
+      const totalQuestions = 8;
+      const answers = [];
+      
+      for(let i = 1; i <= totalQuestions; i++) {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if(!sel) { 
+          alert('Responda todas as perguntas!'); 
+          return; 
+        }
+        answers.push(sel.value);
+      }
+
+      const profileMap = {
+        sociavel: ["extrovertido", "comunicativo", "colaborativo", "caloroso"],
+        reservado: ["introspectivo", "observador", "calmo", "reflexivo"],
+        criativo: ["imaginativo", "inovador", "expressivo", "artístico"],
+        disciplinado: ["organizado", "estruturado", "focado", "metódico"],
+        aventura: ["explorador", "ousado", "destemido", "dinâmico"],
+        carreira: ["ambicioso", "profissional", "visionário", "empreendedor"],
+        idioma: ["linguístico", "comunicativo", "cultural", "versátil"],
+        cultural: ["histórico", "tradicional", "diverso", "antropológico"],
+        tradicional: ["clássico", "formal", "estabelecido", "conservador"],
+        inovador: ["tecnológico", "moderno", "progressista", "futurista"],
+        colaborativo: ["cooperativo", "social", "inclusivo", "comunitário"],
+        autonomo: ["independente", "autossuficiente", "livre", "individual"],
+        ambicioso: ["determinado", "competitivo", "objetivo", "realizador"],
+        relaxado: ["tranquilo", "flexível", "despreocupado", "equilibrado"],
+        adaptavel: ["versátil", "resiliente", "maleável", "ajustável"],
+        focado: ["concentrado", "direcionado", "decidido", "persistente"],
+        aventuroso: ["corajoso", "esportivo", "natureza", "radical"],
+        flexivel: ["adaptável", "versátil", "aberto", "maleável"],
+        planejador: ["estratégico", "precavido", "sistemático", "preparado"],
+        cauteloso: ["prudente", "analítico", "criterioso", "ponderado"],
+        espontaneo: ["impulsivo", "livre", "criativo", "natural"],
+        temperado: ["equilibrado", "variado", "estacional", "moderado"],
+        tropical: ["caloroso", "descontraído", "exótico", "energético"],
+        frio: ["resistente", "contemplativo", "aventureiro", "desafiador"],
+        variado: ["adaptável", "flexível", "versátil", "global"],
+        historia: ["tradicional", "respeitoso", "patrimonial", "clássico"],
+        tecnologia: ["inovador", "digital", "futurista", "eficiente"],
+        diversidade: ["inclusivo", "multicultural", "tolerante", "aberto"],
+        eficiencia: ["prático", "organizado", "produtivo", "sistemático"]
+      };
+
+      let finalProfile = [];
+      answers.forEach(answer => {
+        const options = profileMap[answer] || [answer];
+        options.forEach(characteristic => {
+          if (!finalProfile.includes(characteristic)) {
+            finalProfile.push(characteristic);
+          }
+        });
+      });
+
+      const paises = [
+        {nome: "Canadá", perfil: "acolhedor, multicultural e com oportunidades", caracteristicas: ["comunicativo", "inclusivo", "multicultural", "colaborativo", "equilibrado", "moderado", "tolerante", "caloroso", "versátil", "aberto"]},
+        {nome: "Estados Unidos", perfil: "dinâmico, inovador e empreendedor", caracteristicas: ["ambicioso", "inovador", "competitivo", "empreendedor", "tecnológico", "dinâmico", "visionário", "realizador", "futurista", "profissional"]},
+        {nome: "Reino Unido", perfil: "tradicional, intelectual e histórico", caracteristicas: ["tradicional", "histórico", "intelectual", "formal", "clássico", "erudito", "estabelecido", "patrimonial", "sofisticado", "respeitoso"]},
+        {nome: "Austrália", perfil: "descontraído, aventureiro e natural", caracteristicas: ["descontraído", "aventureiro", "natureza", "esportivo", "caloroso", "livre", "corajoso", "energético", "radical", "exótico"]},
+        {nome: "Alemanha", perfil: "organizada, eficiente e estruturada", caracteristicas: ["organizado", "eficiente", "estruturado", "sistemático", "metódico", "produtivo", "precavido", "preparado", "estratégico", "prático"]},
+        {nome: "França", perfil: "cultural, artística e sofisticada", caracteristicas: ["artístico", "cultural", "sofisticado", "expressivo", "histórico", "tradicional", "erudito", "antropológico", "imaginativo", "clássico"]},
+        {nome: "Japão", perfil: "disciplinado, tecnológico e respeitoso", caracteristicas: ["disciplinado", "tecnológico", "respeitoso", "organizado", "focado", "tradicional", "metódico", "eficiente", "estruturado", "concentrado"]},
+        {nome: "Espanha", perfil: "calorosa, social e cultural", caracteristicas: ["caloroso", "social", "cultural", "comunicativo", "descontraído", "colaborativo", "extrovertido", "artístico", "energético", "comunitário"]},
+        {nome: "Holanda", perfil: "progressista, inovadora e liberal", caracteristicas: ["progressista", "inovador", "liberal", "tolerante", "aberto", "tecnológico", "moderno", "inclusivo", "versátil", "futurista"]},
+        {nome: "Suíça", perfil: "sofisticada, organizada e precisa", caracteristicas: ["sofisticado", "organizado", "preciso", "eficiente", "sistemático", "equilibrado", "criterioso", "preparado", "prático", "estruturado"]},
+        {nome: "Coreia do Sul", perfil: "dinâmica, tecnológica e disciplinada", caracteristicas: ["dinâmico", "tecnológico", "disciplinado", "inovador", "focado", "competitivo", "digital", "moderno", "ambicioso", "futurista"]},
+        {nome: "Itália", perfil: "apaixonante, histórica e artística", caracteristicas: ["apaixonante", "histórico", "artístico", "cultural", "expressivo", "tradicional", "caloroso", "criativo", "antropológico", "erudito"]},
+        {nome: "Suécia", perfil: "progressista, equilibrada e inovadora", caracteristicas: ["progressista", "equilibrado", "inovador", "inclusivo", "colaborativo", "sustentável", "moderno", "tolerante", "sistemático", "eficiente"]},
+        {nome: "Singapura", perfil: "moderna, multicultural e eficiente", caracteristicas: ["moderno", "multicultural", "eficiente", "tecnológico", "cosmopolita", "dinâmico", "organizado", "inovador", "digital", "global"]}
+      ];
+
+      paises.forEach(pais => {
+        let score = 0;
+        let matchedCharacteristics = [];
+        
+        finalProfile.forEach(userCharacteristic => {
+          pais.caracteristicas.forEach(countryCharacteristic => {
+            if (userCharacteristic === countryCharacteristic) {
+              score += 10;
+              matchedCharacteristics.push(userCharacteristic);
+            } else if (userCharacteristic.includes(countryCharacteristic) || countryCharacteristic.includes(userCharacteristic)) {
+              score += 5;
+            }
+          });
+        });
+        
+        score += matchedCharacteristics.length * 2;
+        pais.score = score;
+        pais.matchedCharacteristics = [...new Set(matchedCharacteristics)];
+      });
+
+      const topCountries = paises.sort((a, b) => b.score - a.score).slice(0, 5);
+
+      let resultado = '';
+      for(let i = 0; i < topCountries.length; i++) {
+        const pais = topCountries[i];
+        const bolsasText = await fetchBolsas(pais.nome);
+
+        let bolsasHTML = '';
+        if(bolsasText === "Nenhuma bolsa encontrada." || bolsasText === "Erro ao carregar bolsas.") {
+          bolsasHTML = `<p>${bolsasText}</p>`;
+        } else {
+          bolsasHTML = bolsasText.split("\n").map(b => {
+            const parts = b.split(" - Inscreva-se: ");
+            if(parts.length === 2) {
+              return `<p>• ${parts[0]} - <a href="${parts[1]}" target="_blank">Link da Bolsa</a></p>`;
+            }
+            return `<p>${b}</p>`;
+          }).join('');
+        }
+
+        const matchInfo = pais.matchedCharacteristics.length > 0 
+          ? `<p><strong>Características que combinam com você:</strong> ${pais.matchedCharacteristics.join(', ')}</p>`
+          : '';
+
+        resultado += `
+          <div class="result-card">
+            <h3>${i+1}. ${pais.nome} - ${pais.perfil}</h3>
+            ${matchInfo}
+            <h4>Oportunidades de Bolsas:</h4>
+            ${bolsasHTML}
+          </div>
+        `;
+      }
+
+      document.getElementById('resultTitle').innerText = "Seus Destinos Ideais";
+      document.getElementById('resultText').innerHTML = resultado;
+      document.getElementById('resultContainer').style.display = "block";
+      document.getElementById('resultContainer').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  </script>
+
+</body>
+</html>

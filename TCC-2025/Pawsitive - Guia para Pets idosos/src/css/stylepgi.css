@@ -1,0 +1,409 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "AlteHassGrotesk";
+    font-weight: 300;
+}
+
+/* body{
+    background-color: #FFF5EA;
+} */
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskRegular.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskBold.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+
+#rownav {
+    text-align: center;
+    background-color: #A8B16B;
+}
+
+#imgnav {
+    width: 290px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav2 {
+    margin-top: 15px;
+}
+
+#linksnav {
+    color: #4E6422;
+}
+
+#linksnav:hover {
+    color: #A8B16B;
+}
+
+.partedecima {
+    margin-top: 25px;
+}
+
+#cima {
+    border-radius: 10px;
+    width: 385px;
+    margin: 30px;
+    margin-left: 120px;
+}
+
+#itemCima {
+    background-color: #F1DEC3;
+    padding: 20px;
+}
+
+#linkcima {
+    text-decoration: none;
+    color: #4E6422;
+}
+
+#linkcima:hover {
+    color: #F1DEC3;
+    transition: 0.3s;
+}
+
+.carrosel {
+    margin: 30px;
+    margin-left: 100px;
+    background-color: #4E6422;
+    height: 325px;
+    margin-right: 120px;
+}
+
+#imgCar {
+    height: 325px;
+}
+
+.imgCont{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textoCont{
+    text-align: center;
+    margin-top: 35px;
+}
+
+.tituloCont{
+    font-size: 73px;
+    color: #4E6422;
+}
+
+.espaco{
+    margin-left: 30px;
+}
+
+.conteudo{
+    margin-top: 9%;
+}
+
+
+
+
+
+
+
+
+.texto2cont{
+    margin-left: 80px;
+}
+
+
+.meio{
+    background-color: #F1DEC3;
+    margin-top: 50px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.ongs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.cards {
+    width: 1150px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cardMeu {
+    position: relative;
+    padding: 10px;
+    width: 330px;
+    background-color: #fff;
+    margin: 20px;
+    border: 1px solid rgb(104, 104, 104);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: 0.5s;
+    text-align: center;
+}
+
+.imgcd {
+    transition: 0.5s;
+    border-radius: 400px;
+    width: 280px;
+    margin-top: 8px;
+}
+
+.titulo {
+    font-size: 2rem;
+    margin-top: 10px;
+    color: #4E6422;
+}
+
+.content {
+    padding: 20px;
+    text-align: center;
+}
+
+.descricao2 {
+    color: #4E6422;
+    transition: 0.5s;
+}
+
+.linkC {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4E6422;
+    color: #fff;
+    border-radius: 40px;
+    text-decoration: none;
+    transition: 0.6s;
+    outline: none;
+    margin-top: 20px;
+}
+
+.cardMeu:hover {
+    background-color: #4E6422;
+    color: #fff;
+    margin-bottom: 25px;
+    box-shadow: 2px 20px 25px #4E6422;
+    border-color: #4E6422;
+}
+
+
+.cardMeu:hover .descricao2 {
+    color: white;
+}
+
+.cardMeu:hover .linkC {
+    background-color: #fff;
+    color: #4E6422;
+}
+
+.cardMeu:hover .titulo{
+    color: #fff;
+}
+
+.paw {
+    text-align: center;
+    font-size: 75px;
+    color: #4E6422;
+}
+
+.botao {
+    border-radius: 12px;
+    border-color: #67852b;
+    background-color: #67852b;
+    color: #fff;
+    padding: 7px;
+    width: 550px;
+    font-size: 20px;
+    text-decoration: none;
+    border: transparent;
+}
+
+.botao:hover {
+    background-color: #4E6422;
+    transition: 0.5s;
+    box-shadow: #67852b;
+}
+
+
+.perfeita .card .imageCP {
+    height: 180px;
+    width: 180px;
+    border-radius: 50%;
+    padding: 3px;
+    background: #4E6422;
+    margin-top: -140px;
+}
+
+.perfeita .card .imageCP img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #fff;
+}
+
+.companhia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFF5EA;
+}
+
+.descricao {
+    width: 350px;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.card {
+    position: relative;
+    background: #fff;
+    border-radius: 20px;
+    margin: 90px 0;
+    width: 350px;
+    height: 490px;
+    margin-right: 20px;
+}
+
+.titu{
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: -20px;
+    font-size: 73px;
+}
+
+.titulo02{
+    text-decoration: none;
+    color: #4E6422;
+    transition: 0.5s;
+}
+
+
+
+.titulo02:hover{
+    color: #818853;
+}
+
+.swiper {
+    width: 1240px;
+}
+
+.swiper-pagination {
+    margin-bottom: 57px;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    height: 35%;
+    width: 100%;
+    background: #4E6422;
+    border-radius: 20px 20px 0 0;
+}
+
+.card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 200px;
+    position: relative;
+    z-index: 100;
+}
+
+.card .type-icons {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card .type-icons i {
+    color: #fff;
+    opacity: 0.6;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.card .type-icons i:hover {
+    opacity: 1;
+}
+
+.card .nome-pet {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10px;
+    color: #67852b;
+}
+
+.nome-pet .name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.nome-pet .idade {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.card .button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    width: 650px;
+}
+
+.card .button .sobre {
+    background: #4E6422;
+    outline: none;
+    border: none;
+    color: #fff;
+    padding: 7px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    justify-content: space-between
+}
+
+.card .button .outros {
+    background: #4E6422;
+    outline: none;
+    border: none;
+    color: #fff;
+    padding: 7px;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.button .sobre:hover {
+    background: #67852b;
+}
+
+/* footer {
+    margin-top: auto;
+    background-color: white;
+    width: 100%;
+    height: 220px;
+} */

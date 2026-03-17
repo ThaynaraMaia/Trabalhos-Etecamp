@@ -1,0 +1,83 @@
+#conteudoExercicios {
+    background-color: rgb(136, 35, 35);
+    color: white;
+    margin-top: 10px;
+    padding: 50px 45px;
+    box-shadow: 0px 0px 4px 4px rgb(240, 240, 240);
+    position: relative;
+}
+
+#conteudoExercicios:nth-of-type(even) {
+    background-color: rgb(219, 89, 89);
+}
+
+#exercicios {
+    display: flex;
+    min-height: calc(100vh - 70px);
+    position: relative;
+}
+
+#cta-exercicios {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 4%;
+}
+
+.title-exercicios {
+    font-size: 1.9rem;
+    color: rgb(0, 0, 0);
+}
+
+.title-exercicios span {
+    display: flex;
+    font-size: 2.7rem;
+    color: rgb(197, 36, 36);
+}
+
+.description-exercicios {
+    font-size: 1.2rem;
+    text-align: justify;
+}
+
+#banner-exercicios {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    width: 80%;
+    z-index: 2;
+}
+
+#banner-exercicios img {
+    width: fit-content;
+}
+
+.btn-exercicios {
+    display: flex;
+}
+
+.btn-exercicios a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+}
+
+.btn-exercicios a:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+
+.icones-ilustrativo {
+    position: absolute;
+    bottom: 50px;
+    right: 200px;
+    width: 60px;
+}

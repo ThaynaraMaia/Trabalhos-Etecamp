@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda - Dashboard</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    * {
+      font-family: 'Roboto Mono', monospace;
+    }
+
+    body {
+      background: #7B68EE;
+      background-attachment: fixed;
+      min-height: 100vh;
+      padding-top: 80px;
+       margin-top: 45px;
+    }
+
+    .main-container {
+      padding: 20px 0;
+    }
+
+    .calendar-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .calendar-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+    }
+
+    .side-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .side-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 5px;
+    }
+
+    .calendar-header {
+      background: transparent;
+      padding: 30px 20px 20px;
+      color: #1e293b;
+    }
+
+    .nav-btn {
+      background: rgba(37, 99, 235, 0.1);
+      border: 2px solid rgba(37, 99, 235, 0.2);
+      color: #2563eb;
+      border-radius: 12px;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-btn:hover {
+      background: #2563eb;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.3);
+    }
+
+    .month-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #1e293b;
+      text-transform: capitalize;
+    }
+
+    .weekday-header {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(220, 38, 38, 0.05));
+      padding: 15px 0;
+      border-bottom: 2px solid rgba(37, 99, 235, 0.1);
+    }
+
+    .weekday-header .col {
+      font-weight: 600;
+      color: #64748b;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .row.row-cols-7 {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 0;
+    }
+
+    .row.row-cols-7>.col {
+      display: block;
+    }
+
+    .calendar-day {
+      min-height: 110px;
+      max-height: 130px;
+      box-sizing: border-box;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      background: white;
+      overflow: hidden;
+      border-right: 1px solid rgba(37, 99, 235, 0.1);
+      border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .calendar-day:hover {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(220, 38, 38, 0.05));
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .calendar-day.out-month {
+      background: #fafbfc;
+      color: #adb5bd;
+    }
+
+    .calendar-day.out-month:hover {
+      background: #f1f3f4;
+    }
+
+    .calendar-day .date-number {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #495057;
+      padding: 4px;
+      border-radius: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .calendar-day.today {
+      background: #dc2626;
+      color: white;
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    .calendar-day.today .date-number {
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 700;
+    }
+
+    .calendar-day.today .event-pill {
+      background: rgba(255, 255, 255, 0.9);
+      color: #495057;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .calendar-day .events {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      font-size: 0.74rem;
+      max-height: 70px;
+      padding: 2px;
+    }
+
+    .event-pill {
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 0.65rem;
+      font-weight: 500;
+      padding: 4px 8px;
+      border-radius: 8px;
+      margin-bottom: 3px;
+      background:  #dc2626;
+      color: white;
+      max-width: 100%;
+      box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+      transition: all 0.2s ease;
+    }
+
+    .event-pill:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .form-control {
+      border-radius: 12px;
+      border: 2px solid rgba(37, 99, 235, 0.2);
+      padding: 12px 16px;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      outline: none;
+    }
+
+    .btn-success {
+      background:  #dc2626;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 24px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+      color: white;
+    }
+
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-warning {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      border: none;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .btn-warning:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.4);
+    }
+
+    .btn-danger {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      border: none;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      transition: all 0.3s ease;
+      color: white;
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+    }
+
+    .list-group-item {
+      border: none;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      background: rgba(37, 99, 235, 0.05);
+      transition: all 0.3s ease;
+      font-size: 0.85rem;
+      border: 2px solid rgba(37, 99, 235, 0.1);
+    }
+
+    .list-group-item:hover {
+      background: rgba(37, 99, 235, 0.1);
+      transform: translateX(4px);
+      border-color: #2563eb;
+    }
+
+    .card-header {
+      background: transparent;
+      color: #1e293b;
+      padding: 30px 20px 20px;
+      border: none;
+      font-weight: 700;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+
+    .section-title {
+      color: #1e293b;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(37, 99, 235, 0.1);
+      text-align: center;
+    }
+
+    .events::-webkit-scrollbar {
+      width: 3px;
+    }
+
+    .events::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .events::-webkit-scrollbar-thumb {
+      background: rgba(37, 99, 235, 0.3);
+      border-radius: 3px;
+    }
+
+    .events::-webkit-scrollbar-thumb:hover {
+      background: rgba(37, 99, 235, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-top: 70px;
+      }
+
+      .calendar-day {
+        min-height: 80px;
+        max-height: 110px;
+        padding: 6px;
+      }
+
+      .month-title {
+        font-size: 1.4rem;
+      }
+
+      .nav-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  {{>navbar}}
+  
+  <div class="container-fluid main-container">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-8">
+          <div class="calendar-card">
+            <div class="calendar-header d-flex align-items-center justify-content-between">
+              <button id="prevMonth" class="nav-btn">&lt;</button>
+              <h4 id="monthYear" class="month-title m-0 text-center flex-grow-1"></h4>
+              <button id="nextMonth" class="nav-btn">&gt;</button>
+            </div>
+
+            <div class="weekday-header">
+              <div class="row row-cols-7 text-center">
+                <div class="col">Dom</div>
+                <div class="col">Seg</div>
+                <div class="col">Ter</div>
+                <div class="col">Qua</div>
+                <div class="col">Qui</div>
+                <div class="col">Sex</div>
+                <div class="col">Sáb</div>
+              </div>
+            </div>
+
+            <div class="p-2">
+              <div id="calendarWeeks"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="side-card">
+            <div class="card-header">✨ Adicionar evento</div>
+            <div class="card-body p-4">
+              <form id="addEventForm">
+                <div class="mb-3">
+                  <input type="text" name="titulo" class="form-control" placeholder="Título do evento" required>
+                </div>
+                <div class="mb-3">
+                  <input type="date" name="data" class="form-control" required>
+                </div>
+                <button class="btn btn-success w-100" type="submit">Adicionar evento</button>
+              </form>
+
+              <hr class="my-4" style="border-color: rgba(37, 99, 235, 0.2);">
+
+              <div>
+                <div class="section-title">📅 Próximos eventos</div>
+                <ul id="eventList" class="list-group list-group-flush" style="max-height:280px; overflow:auto;"></ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  function formatYMD(d) {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  let currentMonth = today.getMonth();
+  let currentYear = today.getFullYear();
+
+  let eventos = [];
+  let eventoEditando = null;
+
+  const calendarWeeks = document.getElementById('calendarWeeks');
+  const monthYear = document.getElementById('monthYear');
+  const addEventForm = document.getElementById('addEventForm');
+  const eventList = document.getElementById('eventList');
+
+  async function carregarEventos() {
+    try {
+      const response = await fetch('/eventos');
+      if (response.ok) {
+        eventos = await response.json();
+        renderCalendar(currentMonth, currentYear);
+        renderEventsList();
+      }
+    } catch (err) {
+      console.error('Erro ao carregar eventos:', err);
+    }
+  }
+
+  function renderCalendar(month, year) {
+    calendarWeeks.innerHTML = '';
+    const firstOfMonth = new Date(year, month, 1);
+    const startDayIndex = firstOfMonth.getDay();
+    const firstCellDate = new Date(year, month, 1 - startDayIndex);
+
+    monthYear.textContent = firstOfMonth.toLocaleString('pt-BR', { month: 'long', year: 'numeric' });
+
+    for (let week = 0; week < 5; week++) {
+      const row = document.createElement('div');
+      row.className = 'row row-cols-7 calendar-row g-0';
+
+      for (let d = 0; d < 7; d++) {
+        const idx = week * 7 + d;
+        const cellDate = new Date(firstCellDate);
+        cellDate.setDate(firstCellDate.getDate() + idx);
+        const dateStr = formatYMD(cellDate);
+        const cellCol = document.createElement('div');
+        cellCol.className = 'col';
+
+        const cell = document.createElement('div');
+        cell.className = 'calendar-day d-flex flex-column';
+
+        if (cellDate.getMonth() !== month) {
+          cell.classList.add('out-month');
+        }
+
+        if (cellDate.getTime() === today.getTime()) {
+          cell.classList.add('today');
+        }
+
+        const num = document.createElement('div');
+        num.className = 'date-number';
+        num.textContent = cellDate.getDate();
+        cell.appendChild(num);
+
+        const eventsContainer = document.createElement('div');
+        eventsContainer.className = 'events';
+        eventos.filter(e => e.data === dateStr).forEach(e => {
+          const span = document.createElement('span');
+          span.className = 'event-pill';
+          const texto = e.descricao || e.titulo || '';
+          span.textContent = texto.length > 11 ? texto.substring(0, 11) + '...' : texto;
+          eventsContainer.appendChild(span);
+        });
+
+        cell.appendChild(eventsContainer);
+        cellCol.appendChild(cell);
+        row.appendChild(cellCol);
+      }
+
+      calendarWeeks.appendChild(row);
+    }
+  }
+
+  function renderEventsList() {
+    eventList.innerHTML = '';
+    const sorted = eventos.slice().sort((a, b) => a.data.localeCompare(b.data));
+
+    if (sorted.length === 0) {
+      const emptyState = document.createElement('div');
+      emptyState.className = 'text-center text-muted py-4';
+      emptyState.innerHTML = '<i>Nenhum evento cadastrado</i>';
+      eventList.appendChild(emptyState);
+      return;
+    }
+
+    sorted.forEach(evt => {
+      const li = document.createElement('li');
+      li.className = 'list-group-item d-flex justify-content-between align-items-center';
+      const texto = evt.descricao || evt.titulo || '';
+      li.innerHTML = `
+        <div>
+          <strong>${evt.data}</strong><br>
+          <small>${texto.length > 20 ? texto.substring(0, 20) + '...' : texto}</small>
+        </div>
+      `;
+
+      const buttonGroup = document.createElement('div');
+      buttonGroup.className = 'd-flex gap-2';
+
+      const editBtn = document.createElement('button');
+      editBtn.className = 'btn btn-warning btn-sm';
+      editBtn.textContent = 'Editar';
+      editBtn.onclick = () => editEvent(evt);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'btn btn-danger btn-sm';
+      deleteBtn.textContent = 'Excluir';
+      deleteBtn.onclick = () => deleteEvent(evt);
+
+      buttonGroup.appendChild(editBtn);
+      buttonGroup.appendChild(deleteBtn);
+      li.appendChild(buttonGroup);
+      eventList.appendChild(li);
+    });
+  }
+
+  function editEvent(event) {
+    addEventForm.titulo.value = event.descricao || event.titulo || '';
+    addEventForm.data.value = event.data;
+    eventoEditando = event;
+    
+    const btn = addEventForm.querySelector('button[type="submit"]');
+    btn.textContent = 'Atualizar evento';
+    btn.classList.remove('btn-success');
+    btn.classList.add('btn-warning');
+  }
+
+  async function deleteEvent(event) {
+    if (!confirm('Tem certeza que deseja excluir este evento?')) return;
+
+    try {
+      const response = await fetch(`/eventos/${event.id}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        await carregarEventos();
+      } else {
+        alert('Erro ao excluir evento');
+      }
+    } catch (err) {
+      console.error('Erro:', err);
+      alert('Erro ao excluir evento');
+    }
+  }
+
+  addEventForm.addEventListener('submit', async (ev) => {
+    ev.preventDefault();
+    const titulo = addEventForm.titulo.value.trim();
+    const data = addEventForm.data.value;
+    if (!titulo || !data) return;
+
+    const eventDate = new Date(data);
+    eventDate.setHours(0, 0, 0, 0);
+    if (eventDate < today) {
+      alert('Não é permitido adicionar eventos em datas passadas.');
+      return;
+    }
+
+    try {
+      let response;
+      
+      if (eventoEditando) {
+        response = await fetch(`/eventos/${eventoEditando.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ titulo, data })
+        });
+      } else {
+        response = await fetch('/eventos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ titulo, data })
+        });
+      }
+
+      if (response.ok) {
+        addEventForm.reset();
+        eventoEditando = null;
+        
+        const btn = addEventForm.querySelector('button[type="submit"]');
+        btn.textContent = 'Adicionar evento';
+        btn.classList.remove('btn-warning');
+        btn.classList.add('btn-success');
+        
+        await carregarEventos();
+        
+        if (window.achievementChecker) {
+          setTimeout(() => window.achievementChecker.check(), 500);
+        }
+      } else {
+        alert('Erro ao salvar evento');
+      }
+    } catch (err) {
+      console.error('Erro:', err);
+      alert('Erro ao salvar evento');
+    }
+  });
+
+  document.getElementById('prevMonth').addEventListener('click', () => {
+    if (currentMonth === 0) {
+      currentMonth = 11;
+      currentYear--;
+    } else {
+      currentMonth--;
+    }
+    renderCalendar(currentMonth, currentYear);
+  });
+
+  document.getElementById('nextMonth').addEventListener('click', () => {
+    if (currentMonth === 11) {
+      currentMonth = 0;
+      currentYear++;
+    } else {
+      currentMonth++;
+    }
+    renderCalendar(currentMonth, currentYear);
+  });
+
+  carregarEventos();
+</script>
+{{>footer}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

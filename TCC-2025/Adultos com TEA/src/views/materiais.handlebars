@@ -1,0 +1,711 @@
+{{>navbar}}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Material de Apoio</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #7B68EE;
+            background-attachment: fixed;
+            min-height: 100vh;
+            font-family: 'Roboto Mono', monospace;
+            padding-top: 110px;
+            margin-top: 70px;
+        }
+
+        .container-material {
+            padding: 20px 0;
+        }
+
+        .header-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #1e293b;
+            margin-bottom: 15px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: #64748b;
+            margin-bottom: 0;
+        }
+
+        /* Seção de Links Importantes */
+        .links-importantes-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .link-card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .link-icon {
+            font-size: 2rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+
+        .link-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .link-content {
+            margin-left: 44px;
+        }
+
+        .link-item {
+            display: block;
+            color: #64748b;
+            text-decoration: none;
+            padding: 8px 0;
+            font-size: 0.95rem;
+            transition: color 0.2s ease;
+        }
+
+        .link-item:hover {
+            color: #2563eb;
+        }
+
+        .clinic-item {
+            margin-bottom: 12px;
+        }
+
+        .clinic-name {
+            font-weight: 600;
+            color: #1e293b;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .clinic-phone {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .clinic-phone:hover {
+            text-decoration: underline;
+        }
+
+        .emocao-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(15px);
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+            transition: all 0.3s ease;
+        }
+
+        .emocao-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .emocao-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: var(--cor-emocao);
+        }
+
+        .emocao-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .emocao-icone {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        .emocao-info {
+            flex: 1;
+        }
+
+        .emocao-titulo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin: 0;
+        }
+
+        .emocao-contador {
+            font-size: 1rem;
+            color: #64748b;
+            margin: 5px 0 0 0;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .video-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #e2e8f0, #cbd5e1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #64748b;
+        }
+
+        .video-info {
+            padding: 15px;
+        }
+
+        .video-titulo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .video-descricao {
+            font-size: 0.85rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .sem-videos {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        .sem-videos-icone {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+
+        .sem-videos-texto {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .badge-recomendado {
+            display: inline-block;
+            background: linear-gradient(135deg, #22c55e, #10b981);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .modal-texto {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            animation: fadeIn 0.3s ease;
+            padding: 20px;
+        }
+
+        .modal-texto.active {
+            display: flex;
+        }
+
+        .modal-texto-content {
+            background: white;
+            border-radius: 20px;
+            padding: 35px;
+            max-width: 700px;
+            width: 100%;
+            max-height: 85vh;
+            overflow-y: auto;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.4);
+            position: relative;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-texto-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid;
+            border-image: linear-gradient(90deg, #2563eb, #dc2626) 1;
+        }
+
+        .modal-texto-titulo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        .modal-texto-fechar {
+            background: #ef4444;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .modal-texto-fechar:hover {
+            background: #dc2626;
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .modal-texto-corpo {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.03), rgba(220, 38, 38, 0.03));
+            border-radius: 12px;
+            padding: 25px;
+            color: #1e293b;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            border: 2px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .modal-texto-fontes {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 2px dashed rgba(100, 116, 139, 0.2);
+            color: #64748b;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .emocao-titulo {
+                font-size: 1.4rem;
+            }
+
+            .videos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .links-importantes-section {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-fluid container-material">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="header-section">
+                        <h1 class="page-title">📚 Material de Apoio</h1>
+                        <p class="page-subtitle">Conteúdos recomendados com base em como você está se sentindo</p>
+                    </div>
+
+                    <!-- Seção de Links Importantes -->
+                    <div class="links-importantes-section">
+                        <div class="link-card">
+                            <div class="link-card-header">
+                                <span class="link-icon">🧩</span>
+                                <h3 class="link-title">Recursos TEA</h3>
+                            </div>
+                            <div class="link-content">
+                                <a href="https://blog.matheustriliconeurologia.com.br/quiz/teste-autismo-em-adultos" target="_blank" class="link-item">
+                                    📝 Teste de triagem para autismo
+                                </a>
+                                <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12764.htm" target="_blank" class="link-item">
+                                    📋 Legislação - Lei nº 12.764/2012
+                                </a>
+                                <a href="https://ciptea.sp.gov.br" target="_blank" class="link-item">
+                                    🆔 CipTEA - Carteira de Identificação
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="link-card">
+                            <div class="link-card-header">
+                                <span class="link-icon">🏥</span>
+                                <h3 class="link-title">Clínicas Parceiras</h3>
+                            </div>
+                            <div class="link-content">
+                                <div class="clinic-item">
+                                    <span class="clinic-name">Florem</span>
+                                    <a href="tel:+5511937777939" class="clinic-phone">📞 (11) 93777-7939</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="materiaisContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para exibir textos -->
+    <div id="modalTexto" class="modal-texto">
+        <div class="modal-texto-content">
+            <div class="modal-texto-header">
+                <h3 id="modalTitulo" class="modal-texto-titulo"></h3>
+                <button class="modal-texto-fechar" onclick="fecharModal()">&times;</button>
+            </div>
+            <div id="modalCorpo" class="modal-texto-corpo"></div>
+            <div id="modalFontes" class="modal-texto-fontes"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const emocoesConfig = {
+            'ansioso': { cor: '#dc2626', label: '😰 Ansioso', icone: '😰' },
+            'feliz': { cor: '#22c55e', label: '😊 Feliz', icone: '😊' },
+            'triste': { cor: '#3b82f6', label: '😢 Triste', icone: '😢' },
+            'motivado': { cor: '#f59e0b', label: '💪 Motivado', icone: '💪' },
+            'calmo': { cor: '#10b981', label: '😌 Calmo', icone: '😌' },
+            'estressado': { cor: '#ef4444', label: '😤 Estressado', icone: '😤' },
+            'alegre': { cor: '#f97316', label: '🎉 Alegre', icone: '🎉' },
+            'preocupado': { cor: '#8b5cf6', label: '😟 Preocupado', icone: '😟' }
+        };
+
+        let materiaisData = {};
+
+        function abrirTexto(materialId) {
+            const material = materiaisData[materialId];
+            if (!material) {
+                console.error('Material não encontrado:', materialId);
+                return;
+            }
+
+            fetch(`/materiais/acessar/${materialId}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            }).catch(err => console.error('Erro ao registrar acesso:', err));
+
+            document.getElementById('modalTitulo').textContent = material.titulo || '';
+            document.getElementById('modalCorpo').textContent = material.texto || '';
+
+            const fontesDiv = document.getElementById('modalFontes');
+            if (material.fontes && material.fontes.trim()) {
+                fontesDiv.textContent = `📚 Fontes: ${material.fontes}`;
+                fontesDiv.style.display = 'block';
+            } else {
+                fontesDiv.style.display = 'none';
+            }
+
+            document.getElementById('modalTexto').classList.add('active');
+        }
+
+        function fecharModal() {
+            document.getElementById('modalTexto').classList.remove('active');
+        }
+
+        document.getElementById('modalTexto').addEventListener('click', function (e) {
+            if (e.target === this) {
+                fecharModal();
+            }
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                fecharModal();
+            }
+        });
+
+        async function acessarMaterial(materialId, url) {
+            try {
+                await fetch(`/materiais/acessar/${materialId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+            } catch (err) {
+                console.error('Erro ao registrar acesso:', err);
+            }
+
+            window.open(url, '_blank');
+        }
+
+        function getIdUsuario() {
+            const userIdFromServer = '{{user.id_usuario}}';
+
+            if (userIdFromServer && userIdFromServer !== '' && userIdFromServer !== '{{user.id_usuario}}') {
+                console.log('✅ Usando ID do servidor:', userIdFromServer);
+                return userIdFromServer;
+            }
+
+            const storedUserId = localStorage.getItem('current_user_id');
+            if (storedUserId) {
+                console.log('✅ Usando ID do localStorage:', storedUserId);
+                return storedUserId;
+            }
+
+            console.warn('⚠️ ID do usuário não encontrado!');
+            return 'guest_user';
+        }
+
+        function contarEmocoesHoje() {
+            const userId = getIdUsuario();
+            const chave = `emocoes_${userId}_dashboard`;
+            console.log('🔍 Buscando emoções com a chave:', chave);
+
+            const dados = localStorage.getItem(chave);
+            const emocoesData = dados ? JSON.parse(dados) : {};
+
+            console.log('📊 Dados encontrados:', emocoesData);
+
+            const hoje = new Date().toISOString().split('T')[0];
+            const emocoesHoje = emocoesData[hoje] || [];
+
+            console.log('📅 Emoções de hoje:', emocoesHoje);
+
+            const contador = {};
+            emocoesHoje.forEach(item => {
+                contador[item.emocao] = (contador[item.emocao] || 0) + 1;
+            });
+
+            console.log('✅ Contador de emoções:', contador);
+
+            return contador;
+        }
+
+        function renderizarMateriais() {
+            const materiaisPorEmocao = {{{ materiaisJSON }}};
+
+            Object.values(materiaisPorEmocao).forEach(materiais => {
+                materiais.forEach(material => {
+                    materiaisData[material.id] = material;
+                });
+            });
+
+            const contador = contarEmocoesHoje();
+            const container = document.getElementById('materiaisContainer');
+
+            const todasEmocoes = Object.keys(emocoesConfig);
+            const emocoesRegistradas = [];
+            const emocoesNaoRegistradas = [];
+
+            todasEmocoes.forEach(emocao => {
+                const count = contador[emocao] || 0;
+                if (count > 0) {
+                    emocoesRegistradas.push({ emocao, count });
+                } else {
+                    emocoesNaoRegistradas.push(emocao);
+                }
+            });
+
+            emocoesRegistradas.sort((a, b) => b.count - a.count);
+
+            const emocoesOrdenadas = [
+                ...emocoesRegistradas.map(item => item.emocao),
+                ...emocoesNaoRegistradas
+            ];
+
+            let html = '';
+
+            emocoesOrdenadas.forEach((emocao, index) => {
+                const config = emocoesConfig[emocao];
+                const quantidade = contador[emocao] || 0;
+                const isRecomendado = index === 0 && quantidade > 0;
+                const videos = materiaisPorEmocao[emocao] || [];
+
+                html += `
+                    <div class="emocao-section" style="--cor-emocao: ${config.cor};">
+                        <div class="emocao-header">
+                            <div class="emocao-icone">${config.icone}</div>
+                            <div class="emocao-info">
+                                <h2 class="emocao-titulo">
+                                    Caso esteja ${emocao}
+                                    ${isRecomendado ? '<span class="badge-recomendado">⭐ Mais Frequente Hoje</span>' : ''}
+                                </h2>
+                                ${quantidade > 0 ? `
+                                    <p class="emocao-contador">Registrado ${quantidade} ${quantidade === 1 ? 'vez' : 'vezes'} hoje</p>
+                                ` : ''}
+                            </div>
+                        </div>
+
+                        <div class="videos-grid">
+                            ${videos.length === 0 ? `
+                                <div class="sem-videos">
+                                    <div class="sem-videos-icone">📹</div>
+                                    <p class="sem-videos-texto">Em breve teremos vídeos e materiais para te ajudar!</p>
+                                </div>
+                            ` : videos.map(material => {
+                                const titulo = (material.titulo || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                                const descricao = (material.descricao || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                                const textoPreview = material.texto ? material.texto.substring(0, 100).replace(/</g, '&lt;').replace(/>/g, '&gt;') : '';
+
+                                if (material.tipo === 'texto') {
+                                    return `
+                                        <div class="video-card" onclick="abrirTexto(${material.id})">
+                                            <div class="video-thumbnail">${material.icone || '📖'}</div>
+                                            <div class="video-info">
+                                                <span style="display: inline-block; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 3px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-bottom: 8px;">📝 TEXTO</span>
+                                                <h3 class="video-titulo">${titulo}</h3>
+                                                <p class="video-descricao">${textoPreview}${material.texto && material.texto.length > 100 ? '...' : ''}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                } else {
+                                    return `
+                                        <div class="video-card" onclick="acessarMaterial(${material.id}, '${material.url}')">
+                                            <div class="video-thumbnail">${material.icone || '🎬'}</div>
+                                            <div class="video-info">
+                                                <span style="display: inline-block; background: linear-gradient(135deg, #2563eb, #1d4ed8); color: white; padding: 3px 10px; border-radius: 10px; font-size: 0.7rem; font-weight: 600; margin-bottom: 8px;">🎬 VÍDEO</span>
+                                                <h3 class="video-titulo">${titulo}</h3>
+                                                <p class="video-descricao">${descricao}</p>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                            }).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderizarMateriais();
+        });
+    </script>
+</body>
+{{>footer}}
+
+</html>

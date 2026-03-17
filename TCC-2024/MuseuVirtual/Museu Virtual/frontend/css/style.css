@@ -1,0 +1,75 @@
+*{
+    /*Padrão*/
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:serif;
+}
+
+html{
+    background-color: lightgoldenrodyellow;
+}
+
+body{
+    height: 100%; /* Garante que o body ocupe toda a altura da tela */
+    margin: 0; /* Remove margens padrão */
+    /* background-image: url(../img/paper-background.jpg);
+    background-size: cover; Imagem ocupar toda a tela */
+    /* background-repeat: no-repeat;
+    background-position: center; */
+    /* background-size: 100%; */
+    /* background-position: center; */
+    /* width: 100%; */
+    /* height: 100vh; */
+    background-color: lightgoldenrodyellow;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+    max-width: 100%;
+    background-color: #501207;
+    padding: 20px;
+    align-items: center;
+    color: #ffffff;
+    /* border-bottom: solid 2px;
+    color: black; */
+    /* flex-wrap: wrap; */
+    /* max-height: 10%; */
+   /* justify-content: flex-start; */
+    
+}
+
+.logo{
+    margin-left: 2%;
+}
+
+.logo img{
+    width: 30%;
+}
+
+.foto-perfil img{
+    width: 50%;
+}
+
+.navbar{
+    padding: 15px;
+    /* padding-left: 100px; */
+    margin-inline-start: auto;
+    margin-top: auto;
+    margin-right: 20%;
+    /* margin-left: 40px; */
+}
+
+.navbar a{
+    color: #ffffff;
+    font-size: 22px;
+    padding: 5px;
+    padding-left: 50px;
+    text-decoration: none; /*Remove o sublinhado do link*/
+    transition: 0.3s;
+}
+
+.navbar a:hover{
+    color: #557570;
+}

@@ -1,0 +1,772 @@
+{{#*inline "styles"}}
+<link rel="stylesheet" href="/css/home.css">
+{{/inline}}
+<section>
+  <div class="containerHome container-fluid p-4">
+    <nav class="d-flex justify-content-between align-items-center mb-5">
+      <img src="/img/Conecthar.png" alt="Conecthar" height="60" width="190">
+
+      <div class="d-flex gap-5">
+        <a href="#" class="text-white text-decoration-none">HONRAS</a>
+        <a href="#" class="text-white text-decoration-none">CONTATE-NOS</a>
+      </div>
+
+      <div class="d-flex gap-3">
+        <p class="text-white">Faça login como:</p>
+        <button class="btnGESTOR btn btn-outline-light" onclick="abrirPopup('gestor')">GESTOR</button>
+        <button class="btnCOLAB btn btn-outline-light" onclick="abrirPopup('colaborador')">COLABORADOR</button>
+      </div>
+    </nav>
+
+    <div class="row align-items-center">
+      <div class="col-md-6 text-white">
+        <h1 class="display-4">RENOVE SEU FUTURO</h1>
+        <h3>Comece com <span>CONECTHAR</span></h3>
+        <h3>mantenha-se conectado</h3>
+        <button class="btnSaibaMais btn btn-outline-light">Sobre nós</button>
+        <button class="btnEmpresa btn btn-outline-light" onclick="abrirPopup('empresa')">Cadastre sua empresa</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Popup -->
+  <div id="overlay">
+    <div id="popup">
+      <span class="close-btn" onclick="fecharPopup()">&times;</span>
+      <h3 id="popupTitle"></h3>
+      <form id="popupForm"></form>
+    </div>
+  </div>
+</section>
+<!-- ====== MAIS (Saiba Mais) - Novíssimo carrossel estilo FreeFrontend ====== -->
+<section id="mais-section" class="mais-section">
+  <div class="mais-bg" aria-hidden="true">
+    <img src="/img/gays.jpeg" alt="Fundo decorativo">
+    <div class="mais-bg-overlay"></div>
+  </div>
+
+  <div class="mais-inner container">
+    <div class="mais-row">
+      <div class="carousel-area">
+        <button class="cf-btn prev" id="cfPrev" aria-label="Anterior">‹</button>
+
+        <div class="cf-viewport" id="cfViewport">
+          <div class="cf-track" id="cfTrack">
+            <!-- slides: atualize src, data-popup-title e data-popup-desc -->
+            <div class="cf-slide" data-index="0" data-popup-title="Ana Luiza Teodoro Corrêa de Oliveira"
+              data-popup-desc="Criadora do desing de todas as páginas, lider do frontend">
+              <img src="/img/Sam.jpeg" alt="Slide 1">
+            </div>
+
+            <div class="cf-slide" data-index="1" data-popup-title="Rebecca Bordignon de Oliveira"
+              data-popup-desc="Criadora de toda logica do sistema, lider do backend">
+              <img src="/img/Rebecca.jpeg" alt="Slide 2">
+            </div>
+
+            <div class="cf-slide" data-index="2" data-popup-title="Ramon Viana Ferreira dos Reis"
+              data-popup-desc="Idealizador de todo o sistema, lider da parte escrita e responsavél por auxiliar todo o projeto no backend e frontend">
+              <img src="/img/Ramon.jpeg" alt="Slide 3">
+            </div>
+
+            <!-- adicionar mais slides aqui -->
+          </div>
+        </div>
+
+        <button class="cf-btn next" id="cfNext" aria-label="Próximo">›</button>
+
+        <div class="cf-dots" id="cfDots" role="tablist" aria-label="Indicadores do carrossel"></div>
+      </div>
+      <div class="description-column">
+        <div class="carousel-description liquid-glass" aria-live="polite">
+          <h3 id="descTitle">Título 1</h3>
+          <p id="descText">Descrição detalhada do slide 1.</p>
+        </div>
+      </div>
+
+    </div>
+</section>
+
+{{!-- Script da pagina --}}
+<script>
+  const overlay = document.getElementById("overlay");
+  const popupTitle = document.getElementById("popupTitle");
+  const popupForm = document.getElementById("popupForm");
+
+ // BACKEND_URL é injetado via template; fallback para localhost:3001
+const BACKEND_URL = "{{BACKEND_URL}}" && "{{BACKEND_URL}}" !== "" ? "{{BACKEND_URL}}" : "http://localhost:3001";
+
+// Função de login atualizada para suportar múltiplos colaboradores com mesmo registro
+async function loginUsuario(tipo, cnpj, registro, senha) {
+  try {
+    let endpoint = `${BACKEND_URL}/api/auth/login`;
+    const body = {};
+
+    if (String(tipo).toLowerCase() === 'colaborador') {
+      // NOVO ENDPOINT ESPECÍFICO para colaborador
+      endpoint = `${BACKEND_URL}/api/auth/colaborador/login`;
+      body.registro = registro;
+      body.senha = senha;
+      // Colaborador não precisa de CNPJ para login
+    } else { 
+      // Gestor - requer CNPJ
+      body.cnpj = cnpj;
+      body.registro = registro;
+      body.senha = senha;
+    }
+
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: 'include', // permite receber e armazenar cookie HttpOnly
+      body: JSON.stringify(body)
+    });
+
+    const data = await res.json();
+
+    if (res.ok && (data.token || (data.success && data.token))) {
+      const token = data.token;
+      // mantém token no localStorage (compatibilidade)
+      try { localStorage.setItem("token", token); } catch (e) { /* ignore */ }
+
+      const tipoUsuario = (data.usuario?.tipo_usuario || tipo || "").toLowerCase();
+      if (tipoUsuario === "gestor" || String(tipo).toLowerCase() === "gestor") {
+        // redireciona para rota do gestor
+        window.location.href = "/gestor/documentacao";
+      } else {
+        // colaborador
+        window.location.href = "/colaborador/holerites";
+      }
+      return true;
+    } else {
+      console.error("Erro de Login:", data.message || data.erro || "Número de registro ou senha incorretos.");
+      alert(data.message || data.erro || "Número de registro ou senha incorretos.");
+      return false;
+    }
+  } catch (err) {
+    console.error("Erro ao logar:", err);
+    alert("Erro de conexão com o servidor.");
+    return false;
+  }
+}
+
+function abrirPopup(tipo) {
+  const overlay = document.getElementById("overlay");
+  const popupTitle = document.getElementById("popupTitle");
+  const popupForm = document.getElementById("popupForm");
+  
+  overlay.style.display = "flex";
+  popupTitle.textContent = "";
+  popupForm.innerHTML = "";
+
+  const tipoLower = tipo.toLowerCase();
+
+  // Função de filtro para permitir APENAS números
+  function formatarApenasNumeros(event) {
+    const input = event.target;
+    input.value = input.value.replace(/[^0-9]/g, '');
+    if (input.id === 'cnpj' || input.id === 'cnpjEmpresa') {
+      input.value = input.value.slice(0, 14);
+    }
+  }
+
+  if (tipoLower === "gestor") {
+    popupTitle.textContent = `Login Gestor`;
+    popupForm.innerHTML = `
+      <input id="cnpj" type="text" placeholder="CNPJ" required oninput="formatarApenasNumeros(event)">
+      <input id="registro" type="text" placeholder="Número de registro" required>
+      <input id="senha" type="password" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    `;
+    document.getElementById("cnpj").addEventListener('input', formatarApenasNumeros);
+
+    popupForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const cnpj = document.getElementById("cnpj").value.trim();
+      const registro = document.getElementById("registro").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+      const btn = popupForm.querySelector("button[type='submit']");
+
+      if (!cnpj || !registro || !senha) {
+        alert("Todos os campos são obrigatórios!");
+        return;
+      }
+
+      if (cnpj.length !== 14) {
+        alert("O CNPJ deve conter exatamente 14 dígitos.");
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Entrando...';
+      const sucesso = await loginUsuario('gestor', cnpj, registro, senha);
+      if (sucesso) fecharPopup();
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    };
+
+  } else if (tipoLower === "colaborador") {
+    popupTitle.textContent = `Login Colaborador`;
+    popupForm.innerHTML = `
+      <input id="registro" type="text" placeholder="Número de registro" required>
+      <input id="senha" type="password" placeholder="Senha" required>
+      <p style="font-size: 0.85em; color: rgba(255,255,255,0.7); margin-top: 10px;">
+        💡 Se houver múltiplos usuários com o mesmo registro, você será identificado pela sua senha única.
+      </p>
+      <button type="submit">Entrar</button>
+    `;
+
+    popupForm.onsubmit = async (e) => {
+      e.preventDefault();
+      const registro = document.getElementById("registro").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+      const btn = popupForm.querySelector("button[type='submit']");
+      
+      if (!registro || !senha) {
+        alert("Todos os campos são obrigatórios!");
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.textContent = 'Entrando...';
+      // CNPJ vazio para login de colaborador
+      const sucesso = await loginUsuario('colaborador', '', registro, senha);
+      if (sucesso) fecharPopup();
+      btn.disabled = false;
+      btn.textContent = 'Entrar';
+    };
+    
+  } else if (tipoLower === "empresa") {
+      popupTitle.textContent = "Cadastro de Empresa";
+      popupForm.innerHTML = `
+        <input id="nomeEmpresa" type="text" placeholder="Nome da empresa" required>
+        <!-- CNPJ: Restrição de 14 dígitos e apenas números -->
+        <input id="cnpjEmpresa" type="text" placeholder="CNPJ" required oninput="formatarApenasNumeros(event)">
+        <input id="senhaEmpresa" type="password" placeholder="Senha da empresa" required>
+        <!-- CAMPO DE CONFIRMAÇÃO DE SENHA -->
+        <input id="confirmarSenhaEmpresa" type="password" placeholder="Confirmar Senha" required>
+        
+        <!-- ELEMENTO PARA EXIBIR A MENSAGEM DE ERRO DE SENHA CUSTOMIZADA -->
+        <p id="senhaMismatchError" style="color: #dc3545; font-size: 0.9em; margin-top: -10px; margin-bottom: 10px; display: none;">As senhas devem ser iguais.</p>
+
+        <hr>
+        <h4>Dados do Gestor</h4>
+        <input id="nomeGestor" type="text" placeholder="Nome do gestor" required>
+        <input id="cargoGestor" type="text" placeholder="Cargo do gestor" required>
+        <input id="setorGestor" type="text" placeholder="Setor do gestor" required>
+        <select id="tipoJornada" required>
+          <option value="" disabled selected>Selecione o tipo de jornada</option>
+          <option value="6x1">6x1</option>
+          <option value="5x2">5x2</option>
+          <option value="12x36">12x36</option>
+          <option value="flexível">Flexível</option>
+        </select>
+        <input id="horasDiarias" type="number" min="1" max="24" placeholder="Horas diárias" required>
+        <button type="submit">Cadastrar</button>
+      `;
+      document.getElementById("cnpjEmpresa").addEventListener('input', formatarApenasNumeros);
+
+
+      popupForm.onsubmit = async (e) => {
+        e.preventDefault();
+        const nomeEmpresa = document.getElementById("nomeEmpresa").value.trim();
+        const cnpj = document.getElementById("cnpjEmpresa").value.trim();
+        const senha = document.getElementById("senhaEmpresa").value.trim();
+        const confirmarSenha = document.getElementById("confirmarSenhaEmpresa").value.trim();
+        const nomeGestor = document.getElementById("nomeGestor").value.trim();
+        const cargo = document.getElementById("cargoGestor").value.trim();
+        const setor = document.getElementById("setorGestor").value.trim();
+        const tipo_jornada = document.getElementById("tipoJornada").value;
+        const horas_diarias = document.getElementById("horasDiarias").value;
+
+        // Referência ao novo elemento de erro
+        const erroElement = document.getElementById("senhaMismatchError");
+
+        // VALIDAÇÃO DE CAMPOS OBRIGATÓRIOS (incluindo confirmarSenha)
+        if (!nomeEmpresa || !cnpj || !senha || !confirmarSenha || !nomeGestor || !cargo || !setor || !tipo_jornada || !horas_diarias) {
+          erroElement.style.display = 'none'; // Garante que a mensagem de senha esteja oculta
+          alert("Todos os campos são obrigatórios!");
+          return;
+        }
+
+        // NOVO: VALIDAÇÃO SE AS SENHAS SÃO IGUAIS (e exibição da mensagem customizada)
+        if (senha !== confirmarSenha) {
+          erroElement.textContent = "A senha e a confirmação de senha não são idênticas!";
+          erroElement.style.display = 'block';
+          document.getElementById("senhaEmpresa").focus(); // Foca para o usuário corrigir
+          return;
+        } else {
+          // Se estiverem corretas, garante que a mensagem de erro está oculta para prosseguir
+          erroElement.style.display = 'none';
+        }
+
+        // Validação de tamanho no frontend (segunda camada)
+        if (cnpj.length !== 14 || !/^\d+$/.test(cnpj)) {
+          erroElement.style.display = 'none'; // Garante que a mensagem de senha esteja oculta
+          alert("O CNPJ deve conter exatamente 14 dígitos numéricos.");
+          return;
+        }
+
+
+        const btn = popupForm.querySelector("button[type='submit']");
+        btn.disabled = true;
+        btn.textContent = 'Cadastrando...';
+
+        try {
+          const res = await fetch(`${BACKEND_URL}/api/auth/registerEmpresa`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: 'include',
+            // ENVIAMOS SOMENTE A SENHA ORIGINAL (A CONFIRMAÇÃO É APENAS PARA VERIFICAÇÃO LOCAL)
+            body: JSON.stringify({
+              nomeEmpresa,
+              cnpj,
+              senha,
+              gestor: { nomeGestor, cargo, setor, tipo_jornada, horas_diarias }
+            })
+          });
+          const data = await res.json();
+          if (res.ok) {
+            alert(`Empresa cadastrada com sucesso!\nRegistro do gestor: ${data.registroGestor || ''}`);
+            fecharPopup();
+          } else {
+            // Se falhar no backend, esconde o erro do frontend antes do alert
+            erroElement.style.display = 'none';
+            alert(data.message || data.erro || "Erro interno no servidor.");
+          }
+        } catch (err) {
+          erroElement.style.display = 'none';
+          alert("Erro de conexão com o servidor");
+        }
+
+        btn.disabled = false;
+        btn.textContent = 'Cadastrar';
+      };
+    }
+    function fecharPopup() {
+  document.getElementById("overlay").style.display = "none";
+}
+  }
+</script>
+{{!-- Script do carrossel --}}
+<script>
+  (function () {
+    const track = document.getElementById('cfTrack');
+    const viewport = document.getElementById('cfViewport');
+    const prevBtn = document.getElementById('cfPrev');
+    const nextBtn = document.getElementById('cfNext');
+    const dotsWrap = document.getElementById('cfDots');
+    const descTitleEl = document.getElementById('descTitle');
+    const descTextEl = document.getElementById('descText');
+
+    if (!track || !viewport || !descTitleEl || !descTextEl) return;
+
+    const slides = Array.from(track.querySelectorAll('.cf-slide'));
+    if (!slides.length) return;
+
+    let current = 0;
+    let autoId = null;
+    const AUTO_MS = 4500;
+
+    /* build dots */
+    function buildDots() {
+      if (!dotsWrap) return;
+      dotsWrap.innerHTML = '';
+      slides.forEach((s, i) => {
+        const b = document.createElement('button');
+        b.className = 'cf-dot' + (i === 0 ? ' active' : '');
+        b.setAttribute('aria-label', 'Ir para slide ' + (i + 1));
+        b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+        b.addEventListener('click', () => { goTo(i); resetAuto(); });
+        dotsWrap.appendChild(b);
+      });
+    }
+
+    /* update description text based on data attributes of the active slide */
+    function updateDescription(idx) {
+      const s = slides[idx];
+      if (!s) return;
+      const title = s.dataset.popupTitle || s.dataset.title || ('Slide ' + (idx + 1));
+      const desc = s.dataset.popupDesc || s.dataset.desc || '';
+      descTitleEl.textContent = title;
+      descTextEl.textContent = desc;
+    }
+
+    /* update transform and classes */
+    function update() {
+      const vpRect = viewport.getBoundingClientRect();
+      const activeSlide = slides[current];
+      if (!activeSlide) return;
+
+      const slideRect = activeSlide.getBoundingClientRect();
+      const trackRect = track.getBoundingClientRect();
+      const offsetLeft = slideRect.left - trackRect.left;
+      const translateX = -(offsetLeft - (vpRect.width - slideRect.width) / 2);
+
+      track.style.transform = `translateX(${translateX}px)`;
+
+      slides.forEach((s, i) => {
+        s.classList.toggle('active', i === current);
+        s.classList.toggle('inactive', i !== current);
+        s.setAttribute('aria-hidden', i === current ? 'false' : 'true');
+        s.setAttribute('tabindex', i === current ? '0' : '-1');
+      });
+
+      // dots
+      const dots = dotsWrap ? Array.from(dotsWrap.children) : [];
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === current);
+        d.setAttribute('aria-pressed', i === current ? 'true' : 'false');
+      });
+
+      // update side description
+      updateDescription(current);
+    }
+
+    /* navigation helpers */
+    function goTo(idx) {
+      current = ((idx % slides.length) + slides.length) % slides.length;
+      update();
+    }
+    function prev() { goTo(current - 1); }
+    function next() { goTo(current + 1); }
+
+    /* auto-rotate */
+    function startAuto() { stopAuto(); autoId = setInterval(() => next(), AUTO_MS); }
+    function stopAuto() { if (autoId) { clearInterval(autoId); autoId = null; } }
+    function resetAuto() { stopAuto(); startAuto(); }
+
+    /* attach prev/next */
+    if (prevBtn) prevBtn.addEventListener('click', () => { prev(); resetAuto(); });
+    if (nextBtn) nextBtn.addEventListener('click', () => { next(); resetAuto(); });
+
+    /* slide click: center that slide and reset auto (no popup) */
+    slides.forEach((s, i) => {
+      s.addEventListener('click', () => {
+        goTo(i);
+        resetAuto();
+      });
+      s.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault(); goTo(i); resetAuto();
+        }
+      });
+    });
+
+    /* keyboard left/right for viewport focus */
+    viewport.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') { prev(); resetAuto(); }
+      if (e.key === 'ArrowRight') { next(); resetAuto(); }
+    });
+
+    /* responsive: recenter on resize */
+    let resizeId = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeId);
+      resizeId = setTimeout(() => update(), 120);
+    });
+
+    /* initialize */
+    buildDots();
+    // ensure images/layout ready before compute positions
+    window.addEventListener('load', () => {
+      goTo(0);
+      startAuto();
+    });
+    // also attempt immediate init in case images cached
+    setTimeout(() => { goTo(0); startAuto(); }, 80);
+
+    // expose for debug
+    window.__cf = { goTo, next, prev, startAuto, stopAuto };
+
+  })();
+</script>
+
+{{!-- Script para o botão de saiba mais --}}
+<script>
+  /**
+   * Smooth scroll para a seção #mais-section quando clicar em .btnSaibaMais
+   * - Detecta nav fixa automaticamente (position: fixed ou .fixed-top) e aplica offset
+   * - Usa event delegation para funcionar com vários botões
+   */
+  (function () {
+    function getFixedHeaderHeight() {
+      // tenta detectar cabeçalho fixo comum (Bootstrap .fixed-top, nav com position:fixed, header etc.)
+      const candidates = document.querySelectorAll('header, nav, .navbar, .fixed-top');
+      for (const el of candidates) {
+        if (!el) continue;
+        const st = window.getComputedStyle(el);
+        if (st.position === 'fixed' || el.classList.contains('fixed-top')) {
+          return el.offsetHeight || 0;
+        }
+      }
+      return 0;
+    }
+
+    function scrollToMaisSection() {
+      const target = document.getElementById('mais-section');
+      if (!target) return;
+
+      const headerOffset = getFixedHeaderHeight();
+      // ajuste extra se quiser um espaçamento maior entre o topo e a seção
+      const EXTRA_GAP = 12;
+
+      // posição absoluta do alvo no documento
+      const targetY = target.getBoundingClientRect().top + window.pageYOffset - headerOffset - EXTRA_GAP;
+
+      // rolagem suave
+      window.scrollTo({
+        top: Math.max(0, Math.floor(targetY)),
+        behavior: 'smooth'
+      });
+
+      // acessibilidade: focar a seção após um pequeno delay (após a rolagem)
+      // usamos setTimeout porque scrollIntoView/smooth é assíncrono
+      setTimeout(() => {
+        target.setAttribute('tabindex', '-1'); // permite focar se não for focável
+        target.focus({ preventScroll: true });
+      }, 600);
+    }
+
+    // Delegation: qualquer clique em um .btnSaibaMais aciona a rolagem
+    document.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btnSaibaMais');
+      if (!btn) return;
+      e.preventDefault();
+      scrollToMaisSection();
+    }, { passive: false });
+
+    // opcional: se preferir rolar ao carregar com hash #mais-section
+    if (location.hash === '#mais-section') {
+      // aguarda o carregamento de layout (imagens)
+      window.addEventListener('load', () => scrollToMaisSection());
+    }
+  })();
+</script>
+
+{{!-- Script dos pop-up de comunidade e contate-nos --}}
+<script>
+  (function () {
+    // emails de destino (conforme solicitado)
+    const CONTACT_DESTINOS = [
+      'ramon.reis2@etec.sp.gob.br',
+      'rebecca.oliveira11@etec.sp.gov.br',
+      'ana.oliveira2079@etec.sp.gov.br'
+    ];
+
+    // elementos existentes (do seu HBS)
+    const overlayEl = document.getElementById('overlay');
+    const popupEl = document.getElementById('popup');
+    const popupTitleEl = document.getElementById('popupTitle');
+    const popupFormEl = document.getElementById('popupForm');
+
+    if (!overlayEl || !popupEl || !popupTitleEl || !popupFormEl) {
+      console.warn('Elementos do popup não encontrados. Verifique seu HTML (#overlay / #popup).');
+      return;
+    }
+
+    // utility: fechar popup (usa sua função fecharPopup se existir)
+    function closePopupLocal() {
+      try {
+        // se função global existir, usa ela (mantém compatibilidade)
+        if (typeof fecharPopup === 'function') return fecharPopup();
+      } catch (e) { }
+      overlayEl.style.display = 'none';
+    }
+
+    // abre popup e configura (reaproveita overlay já existente)
+    function openPopup() {
+      overlayEl.style.display = 'flex';
+      // garantir foco no popup
+      popupEl.setAttribute('tabindex', '-1');
+      popupEl.focus({ preventScroll: true });
+    }
+
+    /* ---------- POPUP COMUNIDADE ---------- */
+    function openCommunityPopup() {
+  popupTitleEl.textContent = 'Comunidade Conecthar';
+  popupFormEl.innerHTML = `
+    <div class="popup-grid">
+      <!-- container com as imagens empilhadas -->
+      <div class="popup-imgs" style="display:flex; flex-direction:column; gap:0.6rem; flex:0 0 220px; max-width:220px;">
+        <div class="popup-img">
+          <img src="/img/Etec.png" alt="ETEC">
+        </div>
+        <div class="popup-img">
+          <img src="/img/Marcelo.jpeg" alt="Marcelo Macrino">
+        </div>
+      </div>
+
+      <!-- corpo do texto à direita -->
+      <div class="popup-body">
+        <h4 style="margin-top:0; margin-bottom:.5rem;">Comunidade da ETEC Campo Limpo Paulista</h4>
+        <p style="margin:0 0 .6rem 0; color: rgba(255,255,255,0.9);">
+          Seja bem-vindo(a) à Comunidade da ETEC Campo Limpo Paulista. Aqui reunimos estudantes, docentes, ex-alunos e empresas
+          para compartilhar conhecimento, apoiar projetos e criar oportunidades reais de aprendizado e formação profissional.
+        </p>
+
+        <p style="margin:0 0 .6rem 0; color: rgba(255,255,255,0.88);">
+          Encontre materiais de estudo, eventos, grupos de trabalho e canais de networking — ou contribua com conteúdo e iniciativas.
+          Sua participação torna nossa comunidade mais forte.
+        </p>
+
+        <p style="margin:0 0 .6rem 0; color: rgba(255,255,255,0.86); font-weight:600;">
+          Uma saudação e o nosso sincero agradecimento ao mestre de todas as artes da informática, <strong>Marcelo Macrino</strong>,
+          pela dedicação e inspiração que impulsionam gerações na ETEC.
+        </p>
+
+        <p style="margin:0 0 .6rem 0; color: rgba(255,255,255,0.86);">
+          Quer contribuir com conteúdo ou participar de projetos? Escreva para nós ou cadastre-se nas vagas.
+        </p>
+
+        <div style="display:flex; gap:.6rem; margin-top:.8rem;">
+          <button type="button" class="btn-cancel" id="communityCloseBtn">Fechar</button>
+          <a href="/comunidade" class="btn-send" style="text-decoration:none; display:inline-grid; place-items:center;">Ir para Comunidade</a>
+        </div>
+      </div>
+    </div>
+  `;
+  // abre o popup (usa sua função existente)
+  openPopup();
+
+  // adicionar handler para fechar
+  const closeBtn = document.getElementById('communityCloseBtn');
+  if (closeBtn) closeBtn.addEventListener('click', closePopupLocal);
+}
+
+    /* ---------- POPUP CONTATE-NOS ---------- */
+    function openContactPopup() {
+      popupTitleEl.textContent = 'Contate-nos';
+      popupFormEl.innerHTML = `
+      <form id="contactForm" novalidate>
+        <label class="contact-field">
+          <input id="contactName" name="name" type="text" placeholder="Nome" required>
+        </label>
+        <label class="contact-field">
+          <input id="contactEmail" name="email" type="email" placeholder="E-mail" required>
+        </label>
+        <label class="contact-field">
+          <input id="contactSubject" name="subject" type="text" placeholder="Assunto" required>
+        </label>
+        <label class="contact-field">
+          <textarea id="contactMessage" name="message" placeholder="Descrição" rows="6" required></textarea>
+        </label>
+
+        <div class="contact-actions">
+          <button type="button" class="btn-cancel" id="contactCancelBtn">Cancelar</button>
+          <button type="submit" class="btn-send" id="contactSendBtn">Enviar</button>
+        </div>
+
+        <div class="form-msg" id="contactFormMsg" aria-live="polite"></div>
+      </form>
+    `;
+      openPopup();
+
+      const contactForm = document.getElementById('contactForm');
+      const cancelBtn = document.getElementById('contactCancelBtn');
+      const msgEl = document.getElementById('contactFormMsg');
+      const sendBtn = document.getElementById('contactSendBtn');
+
+      if (cancelBtn) cancelBtn.addEventListener('click', closePopupLocal);
+
+      contactForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        msgEl.textContent = ''; msgEl.classList.remove('form-error', 'form-success');
+
+        const name = document.getElementById('contactName').value.trim();
+        const email = document.getElementById('contactEmail').value.trim();
+        const subject = document.getElementById('contactSubject').value.trim();
+        const message = document.getElementById('contactMessage').value.trim();
+
+        // validação simples
+        if (!name || !email || !subject || !message) {
+          msgEl.textContent = 'Por favor, preencha todos os campos.';
+          msgEl.classList.add('form-error');
+          return;
+        }
+        // validação básica de e-mail
+        const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRe.test(email)) {
+          msgEl.textContent = 'E-mail inválido.';
+          msgEl.classList.add('form-error');
+          return;
+        }
+
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Enviando...';
+
+        // Tenta enviar via backend (recomendado)
+        const payload = { name, email, subject, message, to: CONTACT_DESTINOS };
+
+        let sentByBackend = false;
+        try {
+          // BACKEND_URL já existe no seu template; usa fallback se não preenchido
+          const endpoint = (typeof BACKEND_URL !== 'undefined' && BACKEND_URL) ? `${BACKEND_URL}/api/sendContactEmail` : '/api/sendContactEmail';
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(payload)
+          });
+          if (res.ok) {
+            sentByBackend = true;
+            msgEl.textContent = 'Mensagem enviada com sucesso!';
+            msgEl.classList.add('form-success');
+            setTimeout(() => { closePopupLocal(); }, 1200);
+          } else {
+            // tenta ler texto de erro
+            const data = await res.json().catch(() => null);
+            console.warn('sendContactEmail falhou:', data);
+          }
+        } catch (err) {
+          console.warn('Erro ao chamar endpoint de envio:', err);
+        }
+
+        // fallback: abrir mailto: se backend indisponível
+        if (!sentByBackend) {
+          // montar corpo do email
+          const mailtoTo = CONTACT_DESTINOS.join(',');
+          const subjectEnc = encodeURIComponent(subject);
+          const body = [
+            `Nome: ${name}`,
+            `E-mail: ${email}`,
+            '',
+            message
+          ].join('\n\n');
+          const bodyEnc = encodeURIComponent(body);
+
+          // abrir o cliente de e-mail do usuário
+          const mailto = `mailto:${mailtoTo}?subject=${subjectEnc}&body=${bodyEnc}`;
+          // abrir em nova aba/janela evita substituir a SPA
+          window.location.href = mailto;
+          // fecha popup
+          closePopupLocal();
+        }
+
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Enviar';
+      });
+    }
+
+    /* ---------- hook nos links do nav (COMUNIDADE e CONTATE-NOS) ---------- */
+    (function attachNavHandlers() {
+      const navLinks = document.querySelectorAll('.containerHome nav a');
+      navLinks.forEach(a => {
+        const txt = (a.textContent || '').trim().toUpperCase();
+        if (txt === 'HONRAS') {
+          a.addEventListener('click', (e) => { e.preventDefault(); openCommunityPopup(); });
+        }
+        if (txt === 'CONTATE-NOS' || txt === 'CONTATE NÓS' || txt === 'CONTATE-NOS') {
+          a.addEventListener('click', (e) => { e.preventDefault(); openContactPopup(); });
+        }
+      });
+    })();
+
+    // close overlay when clicking OUTSIDE the #popup (mantendo compatibilidade)
+    overlayEl.addEventListener('click', function (e) {
+      if (e.target === overlayEl) closePopupLocal();
+    });
+
+  })();
+</script>
+
+<script src="/js/verificarLogin.js"></script>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AdapTEA - Bem-vindo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            background: linear-gradient(135deg, #4A90E2 0%, #7B68EE 50%, #9B59B6 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            background-attachment: fixed;
+        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 3rem;
+            gap: 4rem;
+            position: relative;
+        }
+
+        /* Floating elements background */
+        main::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        main::after {
+            content: '';
+            position: absolute;
+            bottom: 15%;
+            right: 15%;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: float 8s ease-in-out infinite reverse;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        /* Container Principal */
+        .container {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            max-width: 1300px;
+            width: 100%;
+        }
+
+        /* Welcome Section - Lado Esquerdo */
+        .welcome-section {
+            flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+
+        .navbar-logo {
+            height: 100px;
+            width: auto;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-logo:hover {
+            transform: scale(1.05);
+        }
+
+        /* Welcome Card */
+        .welcome-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .welcome-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .titulo-visitas {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #FFE5B4, #FFF8DC, #FFE5B4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+        }
+
+        .paragrafo-visitas {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+            font-weight: 300;
+            text-align: center;
+        }
+
+        /* Button Container */
+        .botao-visitantes {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.9rem 2.2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            min-width: 140px;
+            text-align: center;
+        }
+
+        /* Login Button */
+        .btn[href="/login"] {
+            background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+            color: white;
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn[href="/login"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Cadastro Button */
+        .btn[href="/cadastrar"] {
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            color: white;
+            box-shadow: 0 6px 20px rgba(78, 205, 196, 0.3);
+        }
+
+        .btn[href="/cadastrar"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(78, 205, 196, 0.4);
+        }
+
+        /* Info Section - Lado Direito */
+        .info-section {
+            flex: 0.8;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 20px;
+            padding: 1.5rem 1.2rem;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .info-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            margin-bottom: 0.8rem;
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+
+        .info-title {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+            color: #FFE5B4;
+        }
+
+        .info-description {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+            line-height: 1.4;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 3rem;
+            }
+
+            .welcome-section,
+            .info-section {
+                width: 100%;
+                max-width: 600px;
+            }
+
+            .info-section {
+                flex: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            main {
+                padding: 1.5rem;
+                gap: 2rem;
+            }
+
+            .container {
+                gap: 2rem;
+            }
+
+            .navbar-logo {
+                height: 70px;
+            }
+
+            .welcome-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .titulo-visitas {
+                font-size: 1.8rem;
+            }
+
+            .paragrafo-visitas {
+                font-size: 1rem;
+            }
+
+            .botao-visitantes {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+
+            .btn {
+                width: 100%;
+                padding: 1rem 2rem;
+            }
+
+            .info-card {
+                padding: 1.3rem 1rem;
+            }
+
+            .info-icon {
+                font-size: 2rem;
+            }
+
+            .info-title {
+                font-size: 1rem;
+            }
+
+            .info-description {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-logo {
+                height: 60px;
+            }
+
+            .titulo-visitas {
+                font-size: 1.6rem;
+            }
+
+            .welcome-card {
+                padding: 1.5rem 1rem;
+            }
+
+            .logo-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Additional animations for enhanced UX */
+        .welcome-section,
+        .info-section {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .info-section {
+            animation-delay: 0.15s;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <div class="container">
+            <!-- Welcome Section - Lado Esquerdo -->
+            <div class="welcome-section">
+                <!-- Welcome Card -->
+                <div class="welcome-card">
+                    <div class="logo-container">
+                        <img src="/img/carlosLOGO.png" alt="AdapTEA Logo" class="navbar-logo">
+                    </div>
+                    <h1 class="titulo-visitas">Bem-vindo ao AdapTEA!</h1>
+                    <p class="paragrafo-visitas">Cadastre-se ou faça login para aproveitar todos os recursos.</p>
+                    <div class="botao-visitantes">
+                        <a class="btn" href="/login">Login</a>
+                        <a class="btn" href="/cadastrar">Cadastro</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Info Section - Lado Direito -->
+            <div class="info-section">
+                <a href="https://blog.matheustriliconeurologia.com.br/quiz/teste-autismo-em-adultos" target="_blank" class="info-card">
+                    <div class="info-icon">🧩</div>
+                    <h3 class="info-title">Tem dúvidas?</h3>
+                    <p class="info-description">Faça um teste de triagem para autismo em adultos para melhor auxilio</p>
+                </a>
+
+                <a href="https://www.planalto.gov.br/ccivil_03/_ato2011-2014/2012/lei/l12764.htm" target="_blank" class="info-card">
+                    <div class="info-icon">📋</div>
+                    <h3 class="info-title">Saiba mais sobre a legislação</h3>
+                    <p class="info-description">Conheça a Lei nº 12.764/2012 - Política Nacional de Proteção dos Direitos da Pessoa com TEA</p>
+                </a>
+
+                <a href="https://ciptea.sp.gov.br" target="_blank" class="info-card">
+                    <div class="info-icon">🆔</div>
+                    <h3 class="info-title">CipTEA</h3>
+                    <p class="info-description">Carteira de Identificação da Pessoa com Transtorno do Espectro Autista</p>
+                </a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

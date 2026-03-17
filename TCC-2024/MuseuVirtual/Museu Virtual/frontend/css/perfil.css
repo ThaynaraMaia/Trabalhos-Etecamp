@@ -1,0 +1,42 @@
+container{
+    margin: auto;
+    /* display: flex; */
+    /* flex-direction:column; */
+    justify-content: center;
+    padding: 12px;
+    /* max-width: 500px; */
+}
+
+container h1{
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.perfil{
+    text-align: center;
+}
+
+container img{
+   width: 10%;
+}
+
+.dados{
+    display: flex;
+    background-color: #501207;
+    width: 50%;
+    margin: auto;
+    padding: 12px;
+    color: white;
+    border: solid #ffffff 8px;
+    border-radius: 20px;
+}
+
+.dados img{
+    width: 48%;
+}
+
+.dados p {
+    font-size: 20px;
+}

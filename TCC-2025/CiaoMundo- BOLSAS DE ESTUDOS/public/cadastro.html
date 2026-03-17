@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="/css/stylecadastro.css">
+
+</head>
+<body>
+
+  <a href="/home.html" class="back-button">← Voltar</a>
+
+  <div class="login-container" role="main" aria-label="Cadastro form">
+    <h2>Cadastro</h2>
+    <p id="p">Cadastre-se no site para aproveitar todas as funcionalidades do nosso sistema.</p>
+    <form id="registerForm" novalidate>
+      <input type="text" name="nome" placeholder="Nome completo" required autocomplete="name" />
+      <input type="email" name="email" placeholder="E-mail" required autocomplete="email" />
+      <input type="password" name="senha" placeholder="Senha" required autocomplete="new-password" />
+      <input type="password" name="confirmarSenha" placeholder="Confirmar senha" required autocomplete="new-password" />
+      <p id="erroSenha">As senhas não conferem!</p>
+      <button type="submit">Cadastrar</button>
+    </form>
+    <p class="signup">
+      Já tem uma conta? <a href="/login.html">Entrar</a>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', async function(event) {
+      event.preventDefault();
+
+      const senha = this.senha.value;
+      const confirmarSenha = this.confirmarSenha.value;
+
+      if (senha !== confirmarSenha) {
+        document.getElementById('erroSenha').style.display = 'block';
+        return;
+      } else {
+        document.getElementById('erroSenha').style.display = 'none';
+      }
+
+      const formData = new FormData(this);
+      const data = Object.fromEntries(formData.entries());
+
+      try {
+        const response = await fetch('/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Redirecionar para a página de login após o cadastro bem-sucedido
+          window.location.href = '/login.html';
+        } else {
+          alert(result.message || 'Erro ao cadastrar. Tente novamente.');
+        }
+      } catch (error) {
+        console.error(error);
+        alert('Erro na comunicação com o servidor. Tente novamente mais tarde.');
+      }
+    });
+  </script>
+
+</body>
+</html>

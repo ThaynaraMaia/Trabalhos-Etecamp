@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #7B68EE;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin-top: 45px;
+           font-family: 'Roboto Mono', monospace;
+            padding-top: 80px;
+        }
+
+
+        .container-perfil {
+            padding: 20px 0;
+            padding-top: 45px;
+        }
+
+        .perfil-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto 30px;
+        }
+
+        .perfil-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+        }
+
+        .perfil-titulo {
+            text-align: center;
+            color: #1e293b;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .perfil-titulo::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .avatar-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .avatar-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .avatar-preview:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+        }
+
+        .avatar-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .avatar-container:hover .avatar-overlay {
+            opacity: 1;
+        }
+
+        .avatar-edit {
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .avatar-edit i {
+            font-size: 1.5rem;
+        }
+
+        .perfil-form {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            color: #1e293b;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-rounded {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #fff;
+            color: #1e293b;
+        }
+
+        .input-rounded:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-file {
+            display: none;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #64748b;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #2563eb;
+        }
+
+        .primary-btn {
+            width: 100%;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .primary-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(37, 99, 235, 0.4);
+        }
+
+        .primary-btn:hover::before {
+            left: 100%;
+        }
+
+        .primary-btn:active {
+            transform: translateY(0);
+        }
+
+        .form-feedback {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        .form-feedback.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .form-feedback.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading-spinner {
+            display: none;
+            margin-left: 10px;
+        }
+
+        .btn-loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .divider {
+            margin: 40px 0 30px;
+            border-bottom: 2px solid #e2e8f0;
+            position: relative;
+        }
+
+        .divider-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 20px;
+            color: #64748b;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .perfil-card {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .form-group {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .primary-btn { animation-delay: 0.4s; }
+
+        .input-rounded.valid {
+            border-color: #28a745;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2328a745' viewBox='0 0 16 16'%3E%3Cpath d='M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.061L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+
+        .input-rounded.invalid {
+            border-color: #dc3545;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23dc3545' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+            padding-right: 45px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-top: 70px;
+            }
+
+            .perfil-card {
+                padding: 30px 20px;
+            }
+
+            .perfil-titulo {
+                font-size: 2rem;
+            }
+
+            .avatar-preview {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .perfil-card {
+                padding: 25px 15px;
+            }
+
+            .perfil-titulo {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    {{>navbar}}
+    
+    <div class="container-fluid container-perfil">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <section class="perfil-card">
+                        <h2 class="perfil-titulo">
+                            <i class="fas fa-user-circle me-2"></i>
+                            Meu Perfil
+                        </h2>
+
+                        <div class="avatar-wrapper">
+                            <div class="avatar-container">
+                                <img src="{{#if user.foto}}{{user.foto}}{{else}}/avatar.png{{/if}}" 
+                                     alt="Foto de perfil" 
+                                     class="avatar-preview" 
+                                     id="avatarPreview">
+                                <div class="avatar-overlay" onclick="document.getElementById('foto').click()">
+                                    <div class="avatar-edit">
+                                        <i class="fas fa-camera"></i>
+                                        <span>Alterar foto</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form method="POST" action="/perfil" enctype="multipart/form-data" class="perfil-form" id="perfilForm">
+                            <div class="form-group">
+                                <label for="nome" class="form-label">
+                                    <i class="fas fa-user me-2"></i>
+                                    Nome
+                                </label>
+                                <input id="nome" 
+                                       type="text" 
+                                       name="nome" 
+                                       value="{{user.nome}}" 
+                                       required 
+                                       class="input-rounded"
+                                       minlength="2"
+                                       maxlength="100">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    E-mail
+                                </label>
+                                <input id="email" 
+                                       type="email" 
+                                       name="email" 
+                                       value="{{user.email}}" 
+                                       required 
+                                       class="input-rounded"
+                                       maxlength="100">
+                            </div>
+
+                            <div class="form-group">
+                                <input id="foto" 
+                                       type="file" 
+                                       name="foto" 
+                                       accept="image/jpeg,image/jpg,image/png,image/webp" 
+                                       class="input-file">
+                            </div>
+
+                            <div class="divider">
+                                <span class="divider-text">
+                                    <i class="fas fa-lock me-2"></i>
+                                    Alterar Senha (opcional)
+                                </span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="senha_atual" class="form-label">
+                                    <i class="fas fa-key me-2"></i>
+                                    Senha Atual
+                                </label>
+                                <div class="input-wrapper">
+                                    <input id="senha_atual" 
+                                           type="password" 
+                                           name="senha_atual" 
+                                           class="input-rounded"
+                                           placeholder="Deixe em branco para não alterar">
+                                    <i class="fas fa-eye password-toggle" onclick="togglePassword('senha_atual')"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="senha_nova" class="form-label">
+                                    <i class="fas fa-lock me-2"></i>
+                                    Nova Senha
+                                </label>
+                                <div class="input-wrapper">
+                                    <input id="senha_nova" 
+                                           type="password" 
+                                           name="senha_nova" 
+                                           class="input-rounded"
+                                           minlength="6"
+                                           maxlength="255"
+                                           placeholder="Mínimo 6 caracteres">
+                                    <i class="fas fa-eye password-toggle" onclick="togglePassword('senha_nova')"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="senha_confirma" class="form-label">
+                                    <i class="fas fa-check-double me-2"></i>
+                                    Confirmar Nova Senha
+                                </label>
+                                <div class="input-wrapper">
+                                    <input id="senha_confirma" 
+                                           type="password" 
+                                           name="senha_confirma" 
+                                           class="input-rounded"
+                                           placeholder="Digite a senha novamente">
+                                    <i class="fas fa-eye password-toggle" onclick="togglePassword('senha_confirma')"></i>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="primary-btn" id="submitBtn">
+                                <i class="fas fa-save me-2"></i>
+                                Atualizar Perfil
+                                <div class="loading-spinner">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                </div>
+                            </button>
+
+                            <div class="form-feedback" id="formFeedback"></div>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePassword(fieldId) {
+            const field = document.getElementById(fieldId);
+            const icon = field.nextElementSibling;
+            
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                field.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('perfilForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const feedback = document.getElementById('formFeedback');
+            const fotoInput = document.getElementById('foto');
+            const avatarPreview = document.getElementById('avatarPreview');
+            const nomeInput = document.getElementById('nome');
+            const emailInput = document.getElementById('email');
+            const senhaAtualInput = document.getElementById('senha_atual');
+            const senhaNovaInput = document.getElementById('senha_nova');
+            const senhaConfirmaInput = document.getElementById('senha_confirma');
+
+            fotoInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 5 * 1024 * 1024) {
+                        showFeedback('A imagem deve ter no máximo 5MB.', 'error');
+                        fotoInput.value = '';
+                        return;
+                    }
+
+                    if (!file.type.match(/^image\/(jpeg|jpg|png|webp)$/)) {
+                        showFeedback('Formato não suportado. Use JPEG, PNG ou WebP.', 'error');
+                        fotoInput.value = '';
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        avatarPreview.src = e.target.result;
+                        avatarPreview.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            avatarPreview.style.transform = 'scale(1)';
+                        }, 300);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            nomeInput.addEventListener('input', function() {
+                validateField(this, this.value.trim().length >= 2);
+            });
+
+            emailInput.addEventListener('input', function() {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                validateField(this, emailRegex.test(this.value));
+            });
+
+            senhaConfirmaInput.addEventListener('input', function() {
+                if (senhaNovaInput.value) {
+                    validateField(this, this.value === senhaNovaInput.value);
+                }
+            });
+
+            function validateField(field, isValid) {
+                field.classList.remove('valid', 'invalid');
+                if (field.value) {
+                    field.classList.add(isValid ? 'valid' : 'invalid');
+                }
+            }
+
+            function showFeedback(message, type) {
+                feedback.textContent = message;
+                feedback.className = 'form-feedback ' + type;
+                feedback.style.display = 'block';
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                }, 5000);
+            }
+
+            form.addEventListener('submit', function(e) {
+                // Validar apenas se algum campo de senha foi preenchido
+                const senhaAtualPreenchida = senhaAtualInput.value.trim() !== '';
+                const senhaNovaPreenchida = senhaNovaInput.value.trim() !== '';
+                const senhaConfirmaPreenchida = senhaConfirmaInput.value.trim() !== '';
+                
+                // Se qualquer campo de senha foi preenchido, valida todos
+                if (senhaAtualPreenchida || senhaNovaPreenchida || senhaConfirmaPreenchida) {
+                    if (!senhaAtualPreenchida) {
+                        e.preventDefault();
+                        showFeedback('Digite a senha atual para alterar a senha.', 'error');
+                        return;
+                    }
+                    
+                    if (!senhaNovaPreenchida) {
+                        e.preventDefault();
+                        showFeedback('Digite a nova senha.', 'error');
+                        return;
+                    }
+                    
+                    if (senhaNovaInput.value.length < 6) {
+                        e.preventDefault();
+                        showFeedback('A nova senha deve ter pelo menos 6 caracteres.', 'error');
+                        return;
+                    }
+                    
+                    if (!senhaConfirmaPreenchida) {
+                        e.preventDefault();
+                        showFeedback('Confirme a nova senha.', 'error');
+                        return;
+                    }
+                    
+                    if (senhaNovaInput.value !== senhaConfirmaInput.value) {
+                        e.preventDefault();
+                        showFeedback('As senhas não coincidem.', 'error');
+                        return;
+                    }
+                }
+
+                // Validar campos obrigatórios (nome e email)
+                if (!nomeInput.value.trim() || nomeInput.value.trim().length < 2) {
+                    e.preventDefault();
+                    showFeedback('O nome deve ter pelo menos 2 caracteres.', 'error');
+                    return;
+                }
+
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailInput.value)) {
+                    e.preventDefault();
+                    showFeedback('Digite um e-mail válido.', 'error');
+                    return;
+                }
+
+                submitBtn.classList.add('btn-loading');
+                submitBtn.querySelector('.loading-spinner').style.display = 'inline-block';
+            });
+        });
+    </script>
+    {{>footer}}
+
+</body>
+</html>

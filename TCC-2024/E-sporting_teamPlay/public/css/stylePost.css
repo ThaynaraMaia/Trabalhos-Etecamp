@@ -1,0 +1,290 @@
+
+
+* {
+    box-sizing: border-box;
+    font-family: monospace;
+}
+.toolbar {
+    width: 100.5%;
+}
+
+.sidebar {
+    box-sizing: inherit;
+}
+
+body {
+    
+    background-color: var(--shade2);
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: var(--shade1);
+    border-radius: 2vw;
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.hidden {
+    display: none;
+}
+
+label {
+    font-family: monospace;
+    color: var(--will);
+    display: block;
+    margin-bottom: 5px;
+}
+
+textarea {
+    background-color: var(--void);
+    border: none;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 2vw;
+    color: var(--light); 
+}
+
+.tinps {
+    background-color: var(--void);
+    border: none;
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 2vw;
+    color: var(--light); 
+}
+
+
+input[type="file"] {
+    color: transparent;
+    background-color: var(--void);
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border-radius: 2vw;
+}
+input::file-selector-button {
+    display: none;
+
+}
+
+.drop-area {
+    width: 100%;
+    padding: 20px;
+    border: 2px dashed --light;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.drop-area input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    background-color: var(--void);
+}
+
+.drop-area span {
+    display: block;
+    color: var(--light);
+    z-index: 1;
+    position: relative;
+}
+::placeholder {
+    color: var(--light);
+}
+
+
+#imagePreview {
+    margin-top: 10px;
+    max-width: 100%;
+    max-height: 200px;
+    border-radius: 5px;
+    display: block;
+    margin: 10px auto;
+}
+
+.post-card {
+    color: var(--will);
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background-color: var(--light);
+    position: relative;
+}
+
+.cover-image {
+    max-width: 100%;
+    max-height: 300px; 
+    object-fit: cover;
+    border-radius: 5px;
+    display: block;
+    margin-top: 10px; 
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.profile-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 10px;
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-name {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.buttons-container {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 10px; 
+}
+
+.like-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0; 
+}
+
+.like-button img {
+    width: 50px; 
+    height: 50px;
+    transition: transform 0.2s;
+}
+
+.like-button img:hover {
+    transform: scale(1.1); 
+}
+
+.comment-button {
+    background: none;
+    border: none;
+    cursor: pointer; 
+    font-size: 16px; 
+}
+
+.comments-section {
+    margin-top: 10px;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+.comment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.comment .profile-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.comment .profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.comment .comment-content {
+    flex: 1;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.comment-form {
+    display: none;
+    margin-top: 10px;
+}
+
+.comment-form .profile-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.comment-form textarea {
+    width: calc(100% - 60px);
+    margin-bottom: 10px;
+    resize: vertical;
+}
+
+.comment-form button {
+    display: block;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.comment-form button:hover {
+    background-color: #0056b3;
+}
+
+
+.hidden {
+    display: none;
+}
+
+.page {
+    width: 94%;
+    height: 87%;
+    left: 3vw;
+}
+.con1 {
+    height: 100%;
+    border-radius: 1vw;
+}
+.con2 {
+    height: 100%;
+}
+.inp {
+    transition: .5s;
+    background-color: var(--void);
+    border-radius: 2vw;
+    border: 1px solid var(--light);
+    padding: .5rem;
+    height: 100%;
+    width: 20%;
+    font-family: monospace;
+    color: var(--will);
+    font-size: x-large;
+}
+
+.main {
+    left: 0;
+}

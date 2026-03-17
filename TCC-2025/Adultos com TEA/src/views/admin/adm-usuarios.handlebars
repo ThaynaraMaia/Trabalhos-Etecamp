@@ -1,0 +1,205 @@
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <title>Painel de Administração - AdapTEA</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+    
+      background: linear-gradient(135deg, #2e5cb8 0%, #6366b8 50%, #c94b6e 100%);
+      min-height: 100vh;
+     padding-top: 90px;
+     background-attachment: fixed;
+    }
+
+    main {
+      font-family: 'Roboto Mono', monospace;
+      max-width: 1200px;
+      margin: 40px auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      color: #5a4f9a;
+      font-size: 2em;
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .success {
+      background: #d4edda;
+      color: #155724;
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 4px solid #28a745;
+      font-size: 0.95em;
+    }
+
+    .error {
+      background: #fee;
+      color: #c33;
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      border-left: 4px solid #c33;
+      font-size: 0.95em;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 20px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    thead {
+      background: linear-gradient(135deg, #6366b8 0%, #7d6fb8 100%);
+    }
+
+    thead tr th {
+      color: white;
+      padding: 16px 20px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 0.95em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr {
+      border-bottom: 1px solid #f0f0f0;
+      transition: all 0.3s ease;
+    }
+
+    tbody tr:hover {
+      background: #f8f9ff;
+    }
+
+    tbody tr:last-child {
+      border-bottom: none;
+    }
+
+    td {
+      padding: 16px 20px;
+      color: #333;
+      font-size: 0.95em;
+    }
+
+    td.actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .btn-small {
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 0.85em;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .btn-small[href*="editar"] {
+      background: #6366b8;
+      color: white;
+    }
+
+    .btn-small[href*="editar"]:hover {
+      background: #5255a3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 184, 0.3);
+    }
+
+    .btn-small[href*="deletar"] {
+      background: #dc3545;
+      color: white;
+    }
+
+    .btn-small[href*="deletar"]:hover {
+      background: #c82333;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+    }
+
+    .btn-small[href*="promover"] {
+      background: #28a745;
+      color: white;
+    }
+
+    .btn-small[href*="promover"]:hover {
+      background: #218838;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+    }
+
+    .btn-small[href*="rebaixar"] {
+      background: #ffc107;
+      color: #333;
+    }
+
+    .btn-small[href*="rebaixar"]:hover {
+      background: #e0a800;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 193, 7, 0.3);
+    }
+  </style>
+</head>
+<body>
+  {{>navbar}}
+  <main>
+    <h2>Painel de Administração</h2>
+    {{#if success}}<p class="success">{{success}}</p>{{/if}}
+    {{#if error}}<p class="error">{{error}}</p>{{/if}}
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Email</th>
+          <th>Tipo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each usuarios}}
+        <tr>
+          <td>{{id_usuario}}</td>
+          <td>{{nome}}</td>
+          <td>{{email}}</td>
+          <td>{{tipo}}</td>
+          <td class="actions">
+            <a class="btn-small" href="/admin/usuarios/deletar/{{id_usuario}}">Excluir</a>
+            {{#if (neq tipo "Administrador")}}
+              <a class="btn-small" href="/admin/usuarios/promover/{{id_usuario}}">Promover</a>
+            {{else}}
+              <a class="btn-small" href="/admin/usuarios/rebaixar/{{id_usuario}}">Rebaixar</a>
+            {{/if}}
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </main>
+ {{>footer}}
+</body>
+</html>

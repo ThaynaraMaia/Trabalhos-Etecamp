@@ -1,0 +1,147 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "AlteHassGrotesk", Arial, sans-serif;
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "AlteHassGrotesk";
+  src: url(../../../assets/AlteHaasGroteskRegular.ttf);
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "AlteHassGrotesk";
+  src: url(../../../assets/AlteHaasGroteskBold.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+#rownav {
+  text-align: center;
+  background-color: #A8B16B;
+}
+
+#imgnav {
+  width: 290px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.nav2 {
+  margin-top: 15px;
+}
+
+#linksnav {
+  color: #4E6422;
+}
+
+#linksnav:hover {
+  color: #A8B16B;
+}
+
+.perfil-container {
+  width: 350px;
+  margin: 90px auto 0 auto;
+  background-color: white;
+  border-radius: 25px;
+  padding: 20px;
+  text-align: center;
+}
+
+.foto-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 10px;
+}
+
+.foto-perfil {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #aaa;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+}
+
+.edit-photo-icon {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #737b3f;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  padding: 3px;
+  cursor: pointer;
+  fill: white;
+  transition: background-color 0.3s;
+}
+
+.edit-photo-icon:hover {
+  background: #4E6422;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  text-align: left;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 3px;
+}
+
+.value-view {
+  display: inline-block;
+  padding-right: 25px;
+  cursor: default;
+}
+
+.edit-icon {
+  position: absolute;
+  right: 5px;
+  top: 28px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  fill: #737b3f;
+  transition: fill 0.3s;
+}
+
+.edit-icon:hover {
+  fill: #4E6422;
+}
+
+.editar-input {
+  width: 100%;
+  padding: 7px;
+  border-radius: 10px;
+  border: 1px solid #999;
+  display: none;
+  box-sizing: border-box;
+}
+
+#fotoInput {
+  display: none;
+  margin-top: 5px;
+}
+
+.salvar-btn {
+  background: #999;
+  color: #fff;
+  border: none;
+  width: 100%;
+  padding: 7px;
+  border-radius: 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  display: none;
+}

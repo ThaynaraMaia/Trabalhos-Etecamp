@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Home - CiaoMundo</title>
+  <link rel="stylesheet" href="../css/styleuser.css">
+ 
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+     
+      <div class="nav-logo">
+        <div class="planet-icon">
+          <img src="../images/Ciaomundo.png" id="planetIcon" alt="CiaoMundo" style="cursor: pointer;">
+        </div>
+      </div>
+
+      <div class="nav-links">
+        <a href="./user.html">HOME</a>
+        <a href="./bolsas.html">BOLSAS</a>
+        <a href="./documentos.html">DOCUMENTOS</a>
+        <a href="./simulador.html">SIMULADOR DE CUSTOS</a>
+        <a href="./testepersonalidade.html">TESTE DE PERSONALIDADE</a>
+        <a href="./lembrete.html">Notificações</a>
+      </div>
+      <div class="nav-profile">
+        <a href="../user/perfil.html" title="Perfil do usuário">
+          <img id="perfilBtnImg" src="../images/perfil.png" alt="Foto do usuário" />
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <h1>Seja <strong>Bem vindo!</strong></h1>
+    <p>Deseja começar?</p>
+    <button class="btn-primary"><a href="./bolsas.html">Saiba mais</a></button>
+  </header>
+
+  <main class="container">
+
+    <section class="about">
+      <div>
+        <h2>Venha conferir nossas oportunidades de bolsas!</h2>
+        <p>
+          Descubra uma variedade de programas de bolsas de estudo disponíveis para estudantes interessados em intercâmbio. Cada oportunidade possui requisitos específicos e benefícios únicos, incluindo auxílio financeiro, acomodação e até cursos de idiomas. Com essas bolsas, você pode tornar a experiência internacional mais acessível e concentrar-se em aproveitar ao máximo o aprendizado cultural e acadêmico. Além disso, muitas bolsas oferecem suporte durante toda a viagem, garantindo segurança e conforto enquanto você explora novos horizontes.
+        </p>
+        <a href="./bolsas.html">Começar →</a>
+      </div>
+      <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1950&q=80" alt="Students studying abroad" style="height: 500px; width: 550px;"/>
+    </section>
+
+    <section class="travel-map">
+      <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80" alt="Travel documents and passport" style="height: 500px; width: 550px;"/>
+      <div>
+        <h2>Tudo para uma experiência tranquila</h2>
+        <p>Antes de embarcar em um intercâmbio, é essencial estar com toda a documentação em ordem. Isso inclui passaporte válido, visto de estudante, comprovantes de matrícula, seguros de saúde e, em alguns casos, cartas de recomendação e certificados de proficiência em idiomas. Ter todos os documentos organizados não apenas facilita a entrada no país de destino, mas também evita contratempos durante a estadia. Nosso guia detalhado ajuda você a identificar cada item necessário e fornece dicas de como agilizar o processo de obtenção.</p>
+        <a href="./documentos.html">Começar →</a>
+      </div>
+    </section>
+    
+    <section class="about">
+      <div>
+        <h2>Tenha um projeto de custos acessível</h2>
+        <p>
+          Planejar financeiramente seu intercâmbio é fundamental para aproveitar a viagem sem preocupações. Nosso simulador de custos permite calcular despesas com passagens, transporte local, hospedagem, alimentação, atividades de lazer e imprevistos. Com ele, você consegue criar um orçamento realista e identificar oportunidades de economizar. Além disso, o simulador ajuda a comparar diferentes cidades e programas, facilitando a escolha de um destino que se encaixe no seu perfil financeiro e nas suas expectativas de experiência internacional.
+        </p>
+        <a href="./simulador.html">Começar →</a>
+      </div>
+      <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=800&q=80" alt="Budget planning and calculator" style="height: 500px; width: 550px;"/>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>CiaoMundo</h3>
+        <p>Conectando estudantes com oportunidades de intercâmbio ao redor do mundo. Sua jornada internacional começa aqui.</p>
+        <div class="social-links">
+          <a href="#" title="Facebook">📘</a>
+          <a href="#" title="Instagram">📸</a>
+          <a href="#" title="LinkedIn">💼</a>
+          <a href="#" title="YouTube">📺</a>
+        </div>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Serviços</h3>
+        <a href="./user.html">Home</a>
+        <a href="./bolsas.html">Bolsas de Estudo</a>
+        <a href="./documentos.html">Documentação</a>
+        <a href="./simulador.html">Simulador de Custos</a>
+        <a href="./testepersonalidade.html">Teste de Personalidade</a>
+        <a href="./lembrete.html">Notificações</a>
+      </div>
+      
+      <div class="footer-section">
+        <h3>Suporte</h3>
+        <a href="../admin/sobrenos.html">Sobre nós</a>
+      </div>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>&copy; 2025 CiaoMundo. Todos os direitos reservados.</p>
+      <p>Desenvolvido com ❤️ para conectar estudantes ao mundo</p>
+    </div>
+  </footer>
+
+<script>
+ document.addEventListener('DOMContentLoaded', async () => {
+   const perfilBtnImg = document.getElementById('perfilBtnImg');
+   const planetIcon = document.getElementById('planetIcon');
+   const token = localStorage.getItem('token');
+
+   // Função para atualizar foto do perfil
+   async function atualizarFoto() {
+     try {
+       const token = localStorage.getItem('token');
+       if (token) {
+         const res = await fetch('/user/perfil', {
+           headers: { 'Authorization': `Bearer ${token}` }
+         });
+         if (res.ok) {
+           const user = await res.json();
+           perfilBtnImg.src = user.foto || '../images/perfil.png';
+           return;
+         }
+       }
+       perfilBtnImg.src = '../images/perfil.png';
+     } catch (err) {
+       console.error('Erro ao atualizar foto:', err);
+       perfilBtnImg.src = '../images/perfil.png';
+     }
+   }
+
+   atualizarFoto();
+   setInterval(atualizarFoto, 5000);
+
+   // Funcionalidade do ícone do planeta para administradores
+   if (token) {
+     try {
+       // Decodifica token JWT
+       const payloadBase64 = token.split('.')[1];
+       const decodedPayload = JSON.parse(atob(payloadBase64));
+       const tipoUsuario = decodedPayload.tipo_usuario?.toLowerCase();
+
+       // Se for administrador, adiciona funcionalidade ao ícone para voltar a home do administrador
+       if (tipoUsuario === 'administrador') {
+         // Adiciona visual diferente para indicar que é clicável
+         planetIcon.style.cursor = 'pointer';
+         planetIcon.title = 'Voltar para Painel Admin';
+         
+         // Adiciona efeito visual ao passar o mouse
+         planetIcon.addEventListener('mouseenter', () => {
+           planetIcon.style.transform = 'scale(1.1)';
+           planetIcon.style.filter = 'drop-shadow(0 0 15px rgba(96, 165, 250, 0.8))';
+         });
+         
+         planetIcon.addEventListener('mouseleave', () => {
+           planetIcon.style.transform = 'scale(1)';
+           planetIcon.style.filter = 'drop-shadow(0 0 10px rgba(255, 255, 255, 0.4))';
+         });
+
+         // Clique do ícone redireciona para admin
+         planetIcon.addEventListener('click', (e) => {
+           e.preventDefault();
+           window.location.href = '/admin/admin.html';
+         });
+       }
+     } catch (err) {
+       console.error('Erro ao verificar tipo de usuário:', err);
+     }
+   }
+ });
+</script>
+
+</body>
+</html>
+

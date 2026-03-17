@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "AlteHassGrotesk";
+    font-weight: 300;
+}
+
+body{
+    overflow-x: hidden;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskRegular.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskBold.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+
+#rownav {
+    text-align: center;
+    background-color: #efebce;
+}
+
+#imgnav {
+    width: 290px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav1 {
+    width: 100%;
+    background-color: #F1DEC3;
+}
+
+.nav2 {
+    margin-top: 15px;
+}
+
+#linksnav {
+    color: #4E6422;
+}
+
+#linksnav:hover {
+    color: #A8B16B;
+}
+
+.imgPTS {
+    width: 500px;
+    margin-top: 40px;
+    margin-left: 70px;
+    border-radius: 10px;
+}
+
+.mirasol{
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.conteudo {
+    width: 550px;
+    margin-top: 90px;
+    margin-left: 85px;
+}
+
+.botao {
+    border-radius: 20px;
+    padding: 5px;
+    width: 450px;
+    font-size: 18px;
+    background-color: #4E6422;
+    color: white;
+    border: solid #4E6422;
+    margin-left: 48px;
+    margin-top: 10PX;
+}
+
+.botao:hover {
+    background-color: #60703e;
+    border: solid #60703e;
+    transition: 0.5s;
+}

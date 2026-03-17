@@ -1,0 +1,219 @@
+<!-- navbar.hbs -->
+<nav class="navbar-modern">
+  <div class="navbar-left">
+    <a href="/" class="navbar-logo-link">
+      <img src="/img/carlosLOGO.png" alt="logo" class="navbar-logo">
+    </a>
+  </div>
+    
+  <div class="navbar-right">
+    {{#if user}}
+      <a href="/perfil" aria-label="perfil" class="navbar-avatar-link">
+        <img src="{{#if user.foto}}{{user.foto}}{{else}}/img/avatar.png{{/if}}" 
+             alt="avatar" 
+             class="navbar-avatar">
+      </a>
+      <a href="/logout" class="navbar-btn-logout">Sair</a>
+    {{else}}
+      <a href="/login" class="navbar-btn">Login</a>
+      <a href="/cadastrar" class="navbar-btn">Cadastro</a>
+    {{/if}}
+  </div>
+</nav>
+
+<style>
+.navbar-modern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+ background: #335ea8 ;
+  backdrop-filter: blur(10px);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  padding: 0 2rem;
+  height: 125px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+font-family: 'Roboto Mono', monospace;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 78rem;
+}
+
+.navbar-logo-link {
+  text-decoration: none;
+}
+
+.navbar-logo {
+  width: 240px;
+  height: 115px;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.navbar-logo:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.navbar-links {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.navbar-botao {
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-botao:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.navbar-botao:hover:before {
+  left: 100%;
+}
+
+.navbar-botao:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.navbar-user-name {
+  color: white;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.navbar-avatar-link {
+  text-decoration: none;
+  justify-content: end;
+  text-align: end;
+}
+
+.navbar-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  object-fit: cover;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.navbar-avatar:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.navbar-btn {
+  background: linear-gradient(45deg, #dc2626, #ef4444);
+  color: white;
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.navbar-btn:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.navbar-btn:hover:before {
+  left: 100%;
+}
+
+.navbar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-btn-logout {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.navbar-btn-logout:hover {
+  background: rgba(220, 38, 38, 0.8);
+  transform: translateY(-1px);
+  color: white;
+  text-decoration: none;
+}
+
+/* Responsivo para mobile */
+@media (max-width: 768px) {
+  .navbar-modern {
+    padding: 0 1rem;
+  }
+  
+  .navbar-links {
+    display: none;
+  }
+  
+  .navbar-user-name {
+    display: none;
+  }
+  
+  .navbar-right {
+    gap: 0.5rem;
+  }
+}
+</style>

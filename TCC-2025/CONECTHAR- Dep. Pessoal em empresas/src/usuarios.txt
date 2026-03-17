@@ -1,0 +1,8 @@
+Login como gestor:
+Cnpj 12345678912111
+Numero de registro: G13
+Senha: 1234
+
+Login colaborador:
+Número de registro: CC001
+Senha: 123456

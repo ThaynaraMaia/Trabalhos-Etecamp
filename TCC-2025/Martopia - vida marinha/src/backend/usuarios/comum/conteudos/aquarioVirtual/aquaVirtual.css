@@ -1,0 +1,108 @@
+
+body {
+
+    background: linear-gradient( #95e9e7, #0765b1, #1a2980);
+    color: #fff;
+}
+
+
+.page-content {
+    flex: 1 0 auto;
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15rem;
+}
+
+
+/* MENSAGEM DE BOAS VINDAS  */
+
+
+h1#inicio {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 4rem;
+  z-index: 1;
+  text-transform: uppercase;
+  font-family: 'Titulo';
+  color: #fff;
+  letter-spacing: 5px;
+  width: 1200px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
+}
+
+#texto_in {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  color: #fff;
+  font-family: 'Texto';
+  padding-top: 5%;
+  width: 1200px;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, .5);
+}
+
+
+/* COMEÇO ONDAS  */
+
+#onda {
+  display: block;
+  width: 100%;
+  margin-top: 80px;
+}
+
+
+
+/* Container para as bolhas */
+ 
+.ocean-bottom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #c6e1fe, #81c0e9, #38a0dd);
+  overflow: hidden;
+  z-index: -1;
+}
+
+
+
+.bubble {
+  position: absolute;
+  bottom: -100px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  animation: bolhas linear infinite;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+
+@keyframes bolhas {
+  from {
+    transform: translateY(0);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-110vh);
+    opacity: 0;
+  }
+}

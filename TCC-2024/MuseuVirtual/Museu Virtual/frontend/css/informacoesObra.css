@@ -1,0 +1,34 @@
+/* container h1{
+    text-align: center;
+    padding: 12px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+} */
+.informacoes{
+    display: flex;
+    gap: 2vw;
+    justify-content: center;
+    padding: 5px;
+    margin: 10px;
+    align-items: center;
+    margin-bottom: 7px;
+}
+
+.informacoes img{
+    width: 34%;
+    border: 10px solid #ffff;
+}
+
+.texto{
+    background-color: white; 
+    width: 75%;
+    border: 10px solid #501207;
+    border-radius: 20px;
+}
+
+.informacoes p{
+    font-size: 22px;
+    font-weight: bold;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    padding: 5px;
+}

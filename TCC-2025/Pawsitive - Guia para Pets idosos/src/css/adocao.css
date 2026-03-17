@@ -1,0 +1,192 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "AlteHassGrotesk";
+    font-weight: 300;
+}
+
+body{
+    background-color: white;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskRegular.ttf);
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "AlteHassGrotesk";
+    src: url(../assets/AlteHaasGroteskBold.ttf);
+    font-weight: 400;
+    font-style: normal;
+}
+
+#rownav {
+    text-align: center;
+    background-color: #A8B16B;
+}
+
+#imgnav {
+    width: 290px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.nav2 {
+    margin-top: 15px;
+}
+
+#linksnav {
+    color: #4E6422;
+}
+
+#linksnav:hover {
+    color: #A8B16B;
+}
+
+/* Pets Section */
+.pets {
+    padding: 30px 15px;
+}
+
+/* Ajustar o container dos pets para ser responsivo */
+.pet {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Imagem dos pets - responsiva */
+.imgPET {
+    width: 100%;
+    max-width: 320px;
+    height: 250px;
+    border-radius: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.prgPts {
+    margin-top: 10px;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    padding: 0 10px;
+}
+
+.nomePet {
+    color: #C06500;
+    font-size: 2rem; /* usa rem para escalabilidade */
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.local {
+    color: #C06500;
+    margin-top: -7px;
+}
+
+/* Características - flexível e responsiva */
+.caracter {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+.carac {
+    background-color: #4E6422;
+    color: #ffffff;
+    font-size: 0.75rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-align: center;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.carac:hover {
+    background-color: #C06500;
+    color: #F1DEC3;
+    transition: 0.5s;
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+    background-color: #efebce;
+    width: 100%;
+    padding: 20px 15px;
+}
+
+footer .logo img {
+    max-width: 100%;
+    height: auto;
+    max-height: 240px;
+    margin-top: 85px;
+}
+
+/* Ajustar colunas footer texto para responsivo */
+footer .colabore, footer .redes, footer .parceiros {
+    color: #4E6422;
+    margin-top: 20px;
+}
+
+footer h4 {
+    margin-bottom: 15px;
+}
+
+/* MEDIA QUERIES */
+
+/* Tablets e telas médias */
+@media (max-width: 991.98px) {
+    .pets {
+        margin: 30px 10px;
+    }
+    .nomePet {
+        font-size: 1.75rem;
+    }
+}
+
+/* Mobile */
+@media (max-width: 575.98px) {
+    #imgnav {
+        max-height: 70px;
+    }
+
+    .nomePet {
+        font-size: 1.5rem;
+    }
+
+    .prgPts {
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .caracter {
+        justify-content: flex-start;
+        gap: 5px;
+    }
+
+    .carac {
+        font-size: 0.65rem;
+        padding: 3px 8px;
+    }
+
+    footer {
+        text-align: center;
+    }
+
+    footer .row {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+}

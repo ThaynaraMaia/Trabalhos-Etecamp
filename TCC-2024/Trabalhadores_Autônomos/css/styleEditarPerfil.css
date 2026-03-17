@@ -1,0 +1,287 @@
+@import url('https://fonts.googleapis.com/css2?family=Belleza&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oxygen+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@100;300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+*{
+    margin: 0;
+    margin: 0;
+    box-sizing: 0;
+}
+:root{
+    --corPrimaria-1: #EBB548;
+    --corPrimaria-2: #EC5C14;
+    --corPrimaria-3: #235789;
+    --corPrimaria-4: #565254;
+    --corPrimaria-5: #FFFBFE;
+    --fonte-primaria: 'Belleza', 'calibri';
+}
+
+h1 {
+    text-align: center;
+    font-weight: 500; /* Ajusta o peso da fonte */
+    font:  1.8rem "M PLUS 1p", sans-serif;
+    color: #04074B;
+    margin-bottom: 30px;
+}
+.BarraNav{
+    background-color: #FFF;
+    padding:15px 35px 15px 15px;
+    display: flex;
+    justify-content: space-between ;
+}
+.BarraNav > img{
+    width: 186px;
+    height: 58px;
+    margin-top: -10px;
+}
+
+.FotoPerfil{
+    position: relative;
+    width: 45px;
+    height: 45px;
+    border: solid 3px var(--corPrimaria-2);
+    border-radius: 50%;
+    padding: 1px;
+    z-index: 2;
+    cursor: pointer;
+}
+
+nav.menuLateral{
+    /* width: 50px;
+    height: 412px; */
+    background-color: #04074B;
+    padding: 30px 0 40px 1%;
+    box-shadow: 3px 0 0 #ED5C15;
+    border-radius: 0 20px 20px 0;
+
+    position: fixed;
+    top: 15%;
+    left: 0;
+    overflow: hidden; 
+    transition: .3s;
+    z-index: 20;
+
+}
+nav.menuLateral.expandir{
+    width: 300px;
+}
+.IconExpandir{
+    width: 100%;
+    padding-left: 7px;
+}
+.IconExpandir > i{
+    color: #ED5C15;
+    font-size: 1.8rem;
+    cursor: pointer;
+}
+
+ul{
+    height: 100%;
+    list-style-type: none;
+    padding-left: 3%;
+}
+
+ul li.itemMenu a:hover{
+    background: #ED5C15;
+    color: #FFF;
+    border-radius: 9px 0px 0px 9px;
+
+}
+
+ul li.itemMenu a{
+    color: #ED5C15;
+    text-decoration: none;
+    font-size: 1.2rem;
+    padding: 10px 1%;
+    display: flex;
+    margin-bottom: 10px;
+    line-height: 30px;
+    transition: .4s;
+}
+ul li.ativo a{
+    background-color: #ED5C15;
+    color: #FFF;
+    border-radius: 9px 0px 0px 9px;
+}
+
+ul li.itemMenu a .txtLink{
+    margin-left: 70px;
+    transition: .6s;
+    opacity: 0;
+}
+nav.menuLateral.expandir .txtLink{
+    margin-left: 40px;
+    opacity: 1;
+}
+ul li.itemMenu a .icon > i{
+    font-size: 30px;
+    padding-left: 5px;
+}
+.imgPerfil{
+    margin-left: 200px;
+}
+.imgPerfil img{
+    width: 150px;
+    height: 150px;
+    border-radius: 100px;
+    border: 5px solid #282A2E  ;
+}
+.txtPerfil{
+    margin-left: 8%;
+}
+.txtMargin{
+    margin-left: 10%;
+}
+.topoPerfil{
+    font: 400 1.1rem "M PLUS 1p", sans-serif ;
+    color: #083A50;
+}
+.coluna1{ 
+    margin-left: 15%;
+}
+
+.EstiloInputs input{
+    width: 410px;
+    margin: 10px 0px;
+    padding: 13px;                            
+    border-radius: 16px;
+    border: 1px solid #050739;
+    color: #050739;
+    background-color: transparent;
+    outline: none;
+    font-family: "Poppins", sans-serif;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.16);
+
+}
+
+.EstiloInputs input::placeholder{
+    color: #0507398e;
+}
+textarea {
+    width: 410px;
+    height: 150px;
+    padding: 12px 20px;
+    margin-top: 35px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
+}
+
+.box select {
+    background-color: transparent;
+    color: #050739;
+    padding: 12px;
+    width: 410px;
+    height: 46px;
+    border: none;
+    font-size: 1rem;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    -webkit-appearance: button;
+    appearance: button;
+    outline: none;
+    border-radius: 16px;
+    border: 1px solid #050739;
+    cursor: pointer;
+}
+.box::before {
+    content: "\f13a";
+    font-family: FontAwesome;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 10%;
+    height: 100%;
+    text-align: center;
+    font-size: 28px;
+    line-height: 45px;
+    color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    cursor: pointer;
+
+}
+
+.box:hover::before {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+}
+
+.box select option {
+    padding: 30px;
+    cursor: pointer;
+
+}
+
+.imgServicos img{
+    width: 300px;
+}
+.botaoSalvar{
+    height: 48px;
+}
+.botaoSalvar input{
+    position: relative;
+    width: 108px;
+    border-radius: 16px;
+    border: 3px solid #1c1d4e;
+    background-color: #1c1d4e;
+    color: white;
+    cursor: pointer;
+    z-index: 5;
+    transition: .3s;
+}
+.botaoSalvar input:hover{
+    background-color: transparent;
+    color: #1c1d4e;
+    cursor: pointer;
+}
+.marginteste{
+    margin-top: 20px;
+}
+
+.MensagemAtualizacao{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 6px;
+    margin: 0px 0px 20px 0px;
+    background-color: #235789;
+    z-index: 2;
+    font-family: "Poppins", sans-serif;
+    color: #e0e0e0;
+    /* width: 150px; */
+}
+label{
+    text-align: center;
+    font-family: "Poppins", sans-serif;
+    color: #04074B;
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+.txtFotos input{
+    margin-left: 20%;
+}
+/* .txtFotosT label{
+    text-align: center;
+} */
+.txtFotosT input{
+    margin-left: 10%;
+}
+footer{
+    background-color: #FFF;
+    padding: 10px;
+    font: .7rem "Poppins", sans-serif;
+    color: #666666;
+}
+footer p{
+    padding: 0px 10px 0px 10px;
+}
+

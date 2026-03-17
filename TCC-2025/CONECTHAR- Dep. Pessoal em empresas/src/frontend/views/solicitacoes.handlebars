@@ -1,0 +1,152 @@
+{{> navbar }}
+
+<link rel="stylesheet" href="/css/solicitacoes.css">
+
+<div class="page-wrapper">
+<main class="gestor-page container-gestao" role="main" aria-label="Painel de solicitações">
+  <aside class="sidebar" aria-label="Filtros laterais">
+    <h4>Painel Gestor</h4>
+    <p>Visualize e gerencie todas as solicitações agrupadas por setor e colaborador.</p>
+
+    <div class="box">
+      <button id="btnRefreshSolicitacoes" class="btn" type="button">Atualizar</button>
+      <button id="btnFilterTodos" class="btn" type="button">Todos</button>
+    </div>
+
+    <div class="box mt-3">
+      <h5>Filtros rápidos</h5>
+      <div class="filtros" role="toolbar" aria-label="Filtros de status">
+        <button data-status="all" class="filtro-btn ativo" type="button">Todas</button>
+        <button data-status="pendente" class="filtro-btn" type="button">Pendente</button>
+        <button data-status="aprovada" class="filtro-btn" type="button">Aprovada</button>
+        <button data-status="reprovada" class="filtro-btn" type="button">Reprovada</button>
+      </div>
+
+      <hr />
+
+      <h6 class="mt-2">Filtrar por setor</h6>
+      <div id="setorFilters" class="setor-filters" aria-live="polite" aria-atomic="true">
+        <div class="small muted">Carregando setores...</div>
+      </div>
+    </div>
+  </aside>
+
+  <section class="main-panel">
+    <header class="header-panel liquid-glass">
+      <div class="header-text">
+        <h1>Solicitações da Empresa</h1>
+        <p class="small">Agrupadas por setor → colaborador. Clique sobre qualquer solicitação para ver detalhes e
+          anexos.</p>
+      </div>
+
+      <div class="acoes">
+        <div class="filter-group">
+          <input id="buscaSolicitacoes" class="glass-input busca-input"
+            placeholder="Pesquisar por colaborador, tipo ou texto..." aria-label="Pesquisar solicitações" />
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button id="btnToggleView" class="btn small" title="Alternar visualização" type="button">Lista</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section id="setoresWrapper" class="setores-wrapper" aria-live="polite" aria-busy="true" tabindex="0">
+      <div class="placeholder">Carregando solicitações...</div>
+      <noscript class="small mt-3" style="display:block; color:var(--muted);">
+        JavaScript está desabilitado — ative para visualizar e gerenciar solicitações.
+      </noscript>
+    </section>
+  </section>
+</main>
+</div>
+
+<!-- Modal: detalhes da solicitação -->
+<div class="modal fade" id="modalSolicitacao" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content liquid-glass p-4">
+      <div class="modal-header">
+        <h5 id="modalSolicitacaoTitulo">Solicitação</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="detalhes-solicitacao">
+          <div class="meta d-flex gap-3 wrap">
+            <div><strong>Tipo:</strong> <span id="modalSolicitacaoTipo"></span></div>
+            <div><strong>Status:</strong> <span id="modalSolicitacaoStatus"></span></div>
+            <div><strong>Data:</strong> <span id="modalSolicitacaoData"></span></div>
+          </div>
+
+          <hr />
+
+          <div class="conteudo">
+            <h6>Descrição</h6>
+            <p id="modalSolicitacaoDescricao"></p>
+
+            <div id="modalSolicitacaoCamposEspecificos" class="campos-especificos mt-3"></div>
+
+            <h6 class="mt-3">Anexos</h6>
+            <div id="modalSolicitacaoAnexos" class="anexos-list" aria-live="polite"></div>
+          </div>
+
+          <hr />
+
+          <div class="colaborador-info d-flex gap-3 align-items-center">
+            <img id="modalSolicitacaoFoto" src="/img/fundofoda.png" alt="foto do colaborador" class="colab-foto"
+              crossorigin="anonymous" />
+            <div class="flex-grow-1">
+              <div id="modalSolicitacaoColabNome" class="nome h5"></div>
+              <div id="modalSolicitacaoColabSetor" class="setor small"></div>
+              <div id="modalSolicitacaoColabCargo" class="cargo small"></div>
+              <div id="modalSolicitacaoColabExtra" class="colab-extra small mt-2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <div class="flex-left">
+          <button id="btnAprovar" class="btn btn-success" type="button">Aprovar</button>
+          <button id="btnReprovar" class="btn btn-danger" type="button">Reprovar</button>
+        </div>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal: perfil do colaborador -->
+<div class="modal fade" id="modalColaboradorGestor" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-md modal-dialog-centered">
+    <div class="modal-content liquid-glass p-4">
+      <div class="modal-header">
+        <h5>Colaborador</h5>
+        <button class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <div class="colab-full text-center">
+          <img id="colabModalFoto" src="/img/fundofoda.png" alt="Foto do colaborador" class="colab-foto"
+            crossorigin="anonymous" />
+          <h4 id="colabModalNome"></h4>
+          <p id="colabModalCargoSetor" class="small"></p>
+          <p id="colabModalInfoExtra" class="small"></p>
+
+          <h6 class="mt-3">Solicitações do colaborador</h6>
+          <div id="colabModalSolicitacoes" class="colab-solicitacoes"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="btnFecharColabModal" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Configuração JavaScript -->
+<script>
+  // BACKEND_URL fornecido pelo servidor
+  window.BACKEND_URL = "{{BACKEND_URL}}" || "http://localhost:3001";
+</script>
+
+<script src="/js/solicitacoesGestor.js" defer></script>

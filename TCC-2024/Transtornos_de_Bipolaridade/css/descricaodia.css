@@ -1,0 +1,97 @@
+body {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(254, 254, 254);
+}
+
+.container {
+    width: 80%;
+    height: 70vh;
+    display: flex;
+    margin-top: 20px;
+}
+
+.form-img-descricao {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: rgb(209, 220, 255);
+    padding: 3rem;
+    border-radius: 12px;
+}
+
+.form-header {
+    margin-bottom: 2rem;
+    display: flex;
+}
+
+.title-descricao h1{
+    font-size: 2rem;
+}
+
+.title-descricao h1::after {
+    content: '';
+    display: block;
+    width: 12rem;
+    height: 0.3rem;
+    background-color:rgb(14, 7, 77);
+    margin: 0 auto;
+    position: absolute;
+    border-radius: 12px;
+}
+
+.input-box label {
+    font-size: 1.5rem;
+}
+
+.btn-salvar {
+    display: flex;
+    align-items: center;
+}
+
+.btn-salvar input {
+    width: 40%;
+    margin-top: 2rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 0.40rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+
+
+.btn-salvar input:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+    }
+
+.input-box textarea{
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 1px 1px 3px 3px rgb(181, 195, 207);
+    width: 100%;
+    border: 1px solid #ccc;
+    resize: none;
+    overflow: hidden;
+}
+
+.input-box input:hover {
+    background-color: rgb(243, 243, 243);
+}
+

@@ -1,0 +1,906 @@
+<link rel="stylesheet" href="/css/documentacaoGestor.css">
+
+<div class="page-wrapper">
+  {{> navbar }}
+  <div class="cola-layout">
+    {{> sidebar }}
+
+    <main class="content p-4">
+      <h4>Documentação</h4>
+      <p>Gerencie seus documentos de forma simples e organizada</p>
+
+      <div class="col-md-12">
+        <!-- Área de upload melhorada -->
+        <div class="upload rounded p-5 text-center my-4"
+          style=" border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.34), rgba(255,255,255,0.015));
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 8px 30px rgba(6,8,20,0.6);
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);">
+          <i class="bi bi-cloud-arrow-up" style="font-size: 2rem;"></i>
+          <h5 class="mt-3">Carregar seu arquivo aqui ou arraste</h5>
+          <p class="text-muted">Formatos suportados: JPG, JPEG, PNG, GIF, PDF, DOC, DOCX, TXT, XLS, XLSX</p>
+
+          <!-- Formulário de upload -->
+          <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="fileInput" name="documento" style="display:none"
+              accept=".jpg,.jpeg,.png,.gif,.pdf,.doc,.docx,.txt,.xls,.xlsx" />
+
+            <button type="button" id="btnSelectFile" class="btn btn-outline-secondary mb-3">
+              <i class="bi bi-file-earmark-arrow-up me-2"></i> Selecionar arquivo
+            </button>
+
+            <p id="fileName" class="text-success mt-2" style="display:none;"></p>
+
+            <!-- Seletor de categoria -->
+            <div class="mt-3 mb-3">
+              <label for="tipoDocumento" class="form-label">Categoria do documento</label>
+              <select id="tipoDocumento" name="tipo_documento" class="form-select"
+                style="max-width: 400px; margin: 0 auto;" required>
+                <option value="">Selecione a categoria</option>
+                <option value="contrato"> Contratos</option>
+                <option value="recibo"> Recibos</option>
+                <option value="atestado"> Atestados médicos</option>
+                <option value="holerite">Holerites</option>
+                <option value="declaracao"> Comprov. de férias</option>
+                <option value="outros">Outros documentos</option>
+              </select>
+            </div>
+
+            <!-- Botão de envio -->
+            <button type="submit" id="btnEnviar" class="btn btn-primary" disabled>
+              <i class="bi bi-upload me-2"></i> Enviar Documento
+            </button>
+          </form>
+
+          <p id="uploadStatus" class="mt-3 text-success" style="display:none;"></p>
+          <p id="uploadError" class="mt-3 text-danger" style="display:none;"></p>
+        </div>
+
+        <!-- Seção de documentos carregados -->
+        <div class="row">
+          <div class="col-md-12">
+            <h5>Meus Documentos</h5>
+            <div class="row g-3" id="arquivosContainer">
+              <div class="col-12">
+                <p class="text-muted">Carregando documentos...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Paginação -->
+        {{!-- <div class="paginacao d-flex justify-content-end align-items-center mt-4">
+          <p class="me-3" id="paginacaoInfo">Mostrando 0 de 0 documentos</p>
+          <button class="btn btn-outline-secondary me-2" id="btnAntes" disabled>Anterior</button>
+          <span class="me-2">
+            <button class="btn btn-secondary me-1" id="btnPagina1" disabled>1</button>
+            <button class="btn btn-outline-secondary me-1" id="btnPagina2">2</button>
+            <button class="btn btn-outline-secondary me-1" id="btnPagina3">3</button>
+          </span>
+          <button class="btn btn-outline-secondary" id="btnProxima">Próxima</button>
+        </div> --}}
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+//  Evita conflitos e garante que BACKEND_URL e tokenKey existam antes da sidebar
+window.BACKEND_URL = window.BACKEND_URL || '{{BACKEND_URL}}' || `${location.origin}/api`;
+window.tokenKey = window.tokenKey || (() => localStorage.getItem('token') || sessionStorage.getItem('token'));
+</script>
+<script>
+
+
+const BACKEND_URL = '{{BACKEND_URL}}';
+const tokenKey = () => localStorage.getItem('token') || sessionStorage.getItem('token');
+
+// DOM: seletor resiliente para o container de arquivos (fallbacks)
+let arquivosContainer = document.getElementById('arquivosList') 
+                      || document.getElementById('arquivosContainer')
+                      || document.querySelector('.arquivos-list');
+
+const fileInput = document.getElementById('fileInput');
+const btnSelectFile = document.getElementById('btnSelectFile');
+const btnEnviar = document.getElementById('btnEnviar');
+const uploadForm = document.getElementById('uploadForm');
+const uploadStatus = document.getElementById('uploadStatus');
+const uploadError = document.getElementById('uploadError');
+const fileNameDisplay = document.getElementById('fileName');
+const tipoDocumentoSelect = document.getElementById('tipoDocumento');
+const usuarioNomeEl = document.getElementById('usuarioNome');
+
+// proteção: terminar cedo se não houver container (evita erro no console)
+if (!arquivosContainer) {
+  console.error('arquivosContainer não encontrado — verifique o ID do elemento na HBS (arquivosList / arquivosContainer / .arquivos-list).');
+}
+
+// Estado e paginação
+const PAGE_SIZE = 6;
+let todosOsDocumentos = [];
+let documentosAtuais = [];
+let paginaAtual = 1;
+let totalPaginas = 1;
+let arquivoSelecionado = null;
+
+/* ------------------ utilitários ------------------ */
+{{!-- function escapeHtml(unsafe) {
+  if (unsafe === null || unsafe === undefined) return '';
+  return String(unsafe)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#039;');
+} --}}
+
+function parsePossibleDate(value) {
+  if (value === null || value === undefined || value === '') return null;
+
+  // já é Date
+  if (value instanceof Date && !isNaN(value)) return value;
+
+  // número (string de dígitos ou number)
+  if (typeof value === 'number' || (/^\d+$/.test(String(value)))) {
+    let n = Number(value);
+    // heurística: se parece segundos (<= 1e10), converter para ms
+    if (n > 0 && n < 1e11) n = n * 1000;
+    const d = new Date(n);
+    if (!isNaN(d)) return d;
+  }
+
+  // string: tentar ISO, trocar espaço por 'T', Date.parse
+  if (typeof value === 'string') {
+    const s = value.trim();
+    let d = new Date(s);
+    if (!isNaN(d)) return d;
+    if (s.indexOf(' ') !== -1) {
+      d = new Date(s.replace(' ', 'T'));
+      if (!isNaN(d)) return d;
+    }
+    try {
+      d = new Date(Date.parse(s));
+      if (!isNaN(d)) return d;
+    } catch (e) { /* ignore */ }
+  }
+
+  return null;
+}
+
+// Extrai data a partir de vários campos possíveis
+function extrairData(upload) {
+  if (!upload) return null;
+  const cand = [
+    upload.usuario_data, upload.usuario_data_upload, upload.data_upload,
+    upload.data, upload.uploadedAt, upload.uploaded_at,
+    upload.createdAt, upload.created_at, upload.dataCriacao,
+    upload.timestamp, upload.datahora, upload.createdOn, upload.date
+  ];
+  for (const c of cand) {
+    const d = parsePossibleDate(c);
+    if (d) return d;
+  }
+  // subobjetos
+  if (upload.usuario) {
+    const d = parsePossibleDate(upload.usuario.createdAt || upload.usuario.created_at);
+    if (d) return d;
+  }
+  return null;
+}
+
+
+// torna acessível para a sidebar
+window.carregarSetores = carregarSetores;
+
+// Extrai nome do remetente — prioriza campo usuario_nome vindo do backend
+function extrairNomeUsuario(upload) {
+  if (!upload) return 'Desconhecido';
+
+  if (upload.usuario_nome) return upload.usuario_nome;
+  if (upload.usuario && (upload.usuario.nome || upload.usuario.name)) return upload.usuario.nome || upload.usuario.name;
+  if (upload.enviado_por) return upload.enviado_por;
+  if (upload.nome_usuario) return upload.nome_usuario;
+  if (upload.nome) return upload.nome;
+  if (upload.autor) return upload.autor;
+  if (upload.uploader && (upload.uploader.nome || upload.uploader.name)) return upload.uploader.nome || upload.uploader.name;
+  if (upload.owner && (upload.owner.nome || upload.owner.name)) return upload.owner.nome || upload.owner.name;
+
+  return 'Desconhecido';
+}
+
+function formatarData(d) {
+  if (!d) return 'Data desconhecida';
+  try {
+    return d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  } catch {
+    return String(d);
+  }
+}
+
+/* -------------- feedback UI -------------- */
+function showStatus(msg) {
+  if (!uploadStatus) return;
+  uploadStatus.textContent = msg;
+  uploadStatus.style.display = 'block';
+  if (uploadError) uploadError.style.display = 'none';
+}
+function showError(msg) {
+  if (!uploadError) return;
+  uploadError.textContent = msg;
+  uploadError.style.display = 'block';
+  if (uploadStatus) uploadStatus.style.display = 'none';
+}
+function hideStatus() {
+  if (uploadStatus) uploadStatus.style.display = 'none';
+  if (uploadError) uploadError.style.display = 'none';
+}
+
+/* -------------- token / usuário -------------- */
+async function verificarTokenValido() {
+  const token = tokenKey();
+  if (!token) {
+    showError('Token não encontrado. Redirecionando...');
+    setTimeout(() => window.location.href = '/', 2000);
+    return false;
+  }
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) {
+      localStorage.removeItem('token');
+      sessionStorage.removeItem('token');
+      showError('Token inválido. Redirecionando...');
+      setTimeout(() => window.location.href = '/', 2000);
+      return false;
+    }
+    const j = await res.json();
+    const nome = (j.usuario && (j.usuario.nome || j.usuario.name)) || j.nome || j.name;
+    if (usuarioNomeEl && nome) usuarioNomeEl.textContent = nome;
+    return true;
+  } catch (e) {
+    console.error('erro verificarTokenValido', e);
+    showError('Erro ao validar token');
+    return false;
+  }
+}
+
+/* -------------- eventos / upload -------------- */
+function configurarEventListeners() {
+  if (btnSelectFile && fileInput) btnSelectFile.addEventListener('click', () => fileInput.click());
+  if (fileInput) fileInput.addEventListener('change', onFileChange);
+  if (tipoDocumentoSelect) tipoDocumentoSelect.addEventListener('change', validarFormulario);
+  if (uploadForm) uploadForm.addEventListener('submit', async (e) => { e.preventDefault(); await enviarArquivo(); });
+
+  // filtros sidebar (se existirem)
+  document.querySelectorAll('.filtro-categoria').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const categoria = e.currentTarget.dataset.categoria || 'todos';
+      filtrarDocumentos(categoria);
+    });
+  });
+
+  // botões extras (se existirem)
+  const btnProcurarDocs = document.getElementById('btnProcurarDocs');
+  if (btnProcurarDocs) btnProcurarDocs.addEventListener('click', onBuscarDocs);
+
+  const btnRecentesDownload = document.getElementById('btnRecentesDownload');
+  if (btnRecentesDownload) btnRecentesDownload.addEventListener('click', onMostrarRecentes);
+}
+
+function onFileChange(e) {
+  if (e.target.files && e.target.files.length > 0) {
+    arquivoSelecionado = e.target.files[0];
+    if (fileNameDisplay) { fileNameDisplay.textContent = `Arquivo selecionado: ${arquivoSelecionado.name}`; fileNameDisplay.style.display = 'block'; }
+  } else {
+    arquivoSelecionado = null;
+    if (fileNameDisplay) fileNameDisplay.style.display = 'none';
+  }
+  validarFormulario();
+}
+
+function validarFormulario() {
+  const temArquivo = !!arquivoSelecionado;
+  const temCategoria = tipoDocumentoSelect && tipoDocumentoSelect.value && tipoDocumentoSelect.value.trim() !== '';
+  if (btnEnviar) btnEnviar.disabled = !(temArquivo && temCategoria);
+}
+
+async function enviarArquivo() {
+  const token = tokenKey();
+  if (!token) return showError('Token não encontrado. Faça login novamente.');
+  if (!arquivoSelecionado) return showError('Selecione um arquivo.');
+  if (!tipoDocumentoSelect || !tipoDocumentoSelect.value) return showError('Selecione a categoria.');
+
+  const fd = new FormData();
+  fd.append('documento', arquivoSelecionado);
+  fd.append('tipo_documento', tipoDocumentoSelect.value);
+
+  try {
+    showStatus('Enviando arquivo...');
+    if (btnEnviar) btnEnviar.disabled = true;
+
+    const res = await fetch(`${BACKEND_URL}/api/upload/usuario/upload`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}` },
+      body: fd
+    });
+
+    if (!res.ok) {
+      let body = '';
+      try { body = await res.text(); } catch {}
+      throw new Error(`Erro ${res.status}: ${body || res.statusText}`);
+    }
+
+    showStatus('Upload concluído.');
+    uploadForm.reset();
+    arquivoSelecionado = null;
+    if (fileNameDisplay) fileNameDisplay.style.display = 'none';
+    if (tipoDocumentoSelect) tipoDocumentoSelect.value = '';
+    validarFormulario();
+
+    // recarregar lista
+    setTimeout(async () => { hideStatus(); await carregarMeusUploads(); }, 700);
+  } catch (err) {
+    console.error(err);
+    showError('Erro ao enviar: ' + (err.message || err));
+  } finally {
+    if (btnEnviar) btnEnviar.disabled = false;
+  }
+}
+
+/* -------------- carregar / renderizar uploads -------------- */
+
+async function carregarMeusUploads() {
+  // protege contra container inexistente
+  if (!arquivosContainer) {
+    console.warn('arquivosContainer ausente — ignorando carregamento de uploads.');
+    return;
+  }
+
+  const token = tokenKey();
+  if (!token) {
+    arquivosContainer.innerHTML = `<div class="alert alert-danger">Token não encontrado.</div>`;
+    return;
+  }
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/upload/usuario/uploads`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const json = await res.json();
+    const uploads = Array.isArray(json) ? json : (Array.isArray(json.uploads) ? json.uploads : []);
+    // NUNCA force data aqui (remova qualquer sobrescrita)
+    todosOsDocumentos = uploads || [];
+    documentosAtuais = [...todosOsDocumentos];
+    paginaAtual = 1;
+    renderizarPaginaAtual();
+  } catch (err) {
+    console.error('Erro ao carregar uploads:', err);
+    arquivosContainer.innerHTML = `<div class="alert alert-danger">Erro ao carregar documentos.</div>`;
+  }
+}
+
+function renderizarPaginaAtual() {
+  if (!arquivosContainer) return;
+  const total = documentosAtuais.length;
+  totalPaginas = Math.max(1, Math.ceil(total / PAGE_SIZE));
+  if (paginaAtual > totalPaginas) paginaAtual = totalPaginas;
+
+  const start = (paginaAtual - 1) * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const slice = documentosAtuais.slice(start, end);
+
+  if (!slice || slice.length === 0) {
+    arquivosContainer.innerHTML = `<div class="empty-placeholder">Nenhum documento nesta página.</div>`;
+    atualizarPaginacaoDOM(total, paginaAtual, totalPaginas, 0, 0);
+    return;
+  }
+
+  arquivosContainer.innerHTML = slice.map(upload => {
+    const icones = {
+      'contrato': '','recibo': '','atestado': '','holerite': '','declaracao': '','outros': ''
+    };
+    const tipo = upload.tipo_documento || 'outros';
+    const nomeArquivo = upload.nome_arquivo || upload.filename || upload.originalname || upload.name || 'Sem nome';
+    const nomeUsuario = extrairNomeUsuario(upload);
+    const dataObj = extrairData(upload);
+    const dataStr = formatarData(dataObj);
+    const id = upload.id || upload._id || upload.fileId || '';
+
+    return `
+ <div class="col-12 col-md-6 col-lg-4 mb-3">
+  <div class="card h-100 documento-card">
+    <div class="card-body">
+      <h6 class="card-title documento-title">${escapeHtml(icones[tipo] || '')} ${escapeHtml(tipo)}</h6>
+      <p class="card-text mb-2">
+        <strong class="documento-nome">${escapeHtml(nomeArquivo)}</strong><br>
+        <small class="documento-info"><strong>${escapeHtml(nomeUsuario)}</strong> • Enviado em: ${escapeHtml(dataStr)}</small>
+      </p>
+      <div class="d-flex gap-2 documento-acoes">
+        <button class="btn btn-sm btn-outline-primary" onclick="visualizarDocumento('${escapeHtml(id)}')">
+          <i class="bi bi-eye"></i> Visualizar
+        </button>
+        <a class="btn btn-sm btn-outline-secondary" href="${BACKEND_URL}/api/upload/download/${escapeHtml(id)}" target="_blank" rel="noopener">
+          <i class="bi bi-download"></i> Baixar
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+    `;
+  }).join('');
+
+  const exibindoDe = slice.length ? start + 1 : 0;
+  const exibindoAte = Math.min(end, total);
+  atualizarPaginacaoDOM(total, paginaAtual, totalPaginas, exibindoDe, exibindoAte);
+}
+
+function atualizarPaginacaoDOM(totalDocs, pagina, totalPags, exibindoDe = 0, exibindoAte = 0) {
+  // cria area de paginação logo abaixo do container (uma só vez)
+  const parent = arquivosContainer.parentElement || document.body;
+  let pagContainer = parent.querySelector('.pagina-controls');
+  if (!pagContainer) {
+    pagContainer = document.createElement('div');
+    pagContainer.className = 'pagina-controls d-flex justify-content-between align-items-center mt-3';
+    parent.appendChild(pagContainer);
+  }
+
+  const info = totalDocs === 0 ? 'Mostrando 0 de 0 documentos' : `Mostrando ${exibindoDe}–${exibindoAte} de ${totalDocs} documentos`;
+
+  // construir botões (Previous / números / Next)
+  const buttons = [];
+  buttons.push(`<button class="btn btn-outline-secondary me-2" data-page="prev" ${pagina <= 1 ? 'disabled' : ''}>Anterior</button>`);
+
+  const maxButtons = 7;
+  if (totalPags <= maxButtons) {
+    for (let p = 1; p <= totalPags; p++) {
+      buttons.push(`<button class="${p === pagina ? 'btn btn-secondary me-1' : 'btn btn-outline-secondary me-1'}" data-page="${p}">${p}</button>`);
+    }
+  } else {
+    const arr = [1];
+    let left = Math.max(2, pagina - 2);
+    let right = Math.min(totalPags - 1, pagina + 2);
+    if (left > 2) arr.push('...');
+    for (let i = left; i <= right; i++) arr.push(i);
+    if (right < totalPags - 1) arr.push('...');
+    arr.push(totalPags);
+
+    arr.forEach(it => {
+      if (it === '...') buttons.push(`<span class="mx-1">...</span>`);
+      else buttons.push(`<button class="${it === pagina ? 'btn btn-secondary me-1' : 'btn btn-outline-secondary me-1'}" data-page="${it}">${it}</button>`);
+    });
+  }
+
+  buttons.push(`<button class="btn btn-outline-secondary ms-2" data-page="next" ${pagina >= totalPags ? 'disabled' : ''}>Próxima</button>`);
+
+  pagContainer.innerHTML = `
+    <div class="pagina-info">${escapeHtml(info)}</div>
+    <div class="pagina-buttons">${buttons.join('')}</div>
+  `;
+
+  // listeners
+  pagContainer.querySelectorAll('button[data-page]').forEach(b => {
+    b.onclick = () => {
+      const page = b.getAttribute('data-page');
+      if (page === 'prev') { if (paginaAtual > 1) paginaAtual--; }
+      else if (page === 'next') { if (paginaAtual < totalPaginas) paginaAtual++; }
+      else {
+        const p = parseInt(page, 10);
+        if (!isNaN(p)) paginaAtual = p;
+      }
+      renderizarPaginaAtual();
+      window.scrollTo({ top: arquivosContainer.getBoundingClientRect().top + window.scrollY - 90, behavior: 'smooth' });
+    };
+  });
+}
+
+/* -------------- filtros / busca / ordenação -------------- */
+
+let categoriaAtual = 'todos';
+
+function filtrarDocumentos(categoria = 'todos') {
+  categoriaAtual = categoria;
+  if (categoria === 'todos') documentosAtuais = [...todosOsDocumentos];
+  else documentosAtuais = todosOsDocumentos.filter(d => d.tipo_documento === categoria);
+  paginaAtual = 1;
+  renderizarPaginaAtual();
+
+  // atualiza visual sidebar
+  document.querySelectorAll('.filtro-categoria').forEach(link => {
+    link.classList.remove('active');
+    if (link.dataset.categoria === categoria) link.classList.add('active');
+  });
+}
+
+function onBuscarDocs(e) {
+  e && e.preventDefault();
+  const termo = prompt('Digite o nome do documento que deseja buscar:');
+  if (!termo) return;
+  const resultados = todosOsDocumentos.filter(doc =>
+    (doc.nome_arquivo || '').toLowerCase().includes(termo.toLowerCase()) ||
+    (doc.tipo_documento || '').toLowerCase().includes(termo.toLowerCase())
+  );
+  documentosAtuais = resultados;
+  paginaAtual = 1;
+  renderizarPaginaAtual();
+}
+
+function onMostrarRecentes(e) {
+  e && e.preventDefault();
+  documentosAtuais = [...todosOsDocumentos].sort((a,b) => (parsePossibleDate(b.data_upload) || 0) - (parsePossibleDate(a.data_upload) || 0));
+  paginaAtual = 1;
+  renderizarPaginaAtual();
+}
+
+/* -------------- visualizar / download (com auth) -------------- */
+
+async function visualizarDocumento(id) {
+  const token = tokenKey();
+  if (!token) return showError('Token não encontrado. Faça login novamente.');
+
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/upload/download/${id}`, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) {
+      let txt = '';
+      try { txt = await res.text(); } catch {}
+      throw new Error(`Erro ${res.status}: ${txt || res.statusText}`);
+    }
+    const blob = await res.blob();
+    const url = window.URL.createObjectURL(blob);
+    window.open(url, '_blank');
+    setTimeout(() => window.URL.revokeObjectURL(url), 60000);
+  } catch (err) {
+    console.error('Erro visualizarDocumento', err);
+    showError('Erro ao abrir documento: ' + (err.message || err));
+  }
+}
+window.visualizarDocumento = visualizarDocumento;
+
+// Função utilitária para escapar HTML (segurança)
+{{!-- function escapeHtml(text) {
+  const map = {
+    '&': '&amp;', '<': '&lt;', '>': '&gt;',
+    '"': '&quot;', "'": '&#039;'
+  };
+  return text?.replace(/[&<>"']/g, m => map[m]) || '';
+} --}}
+
+function escapeHtml(value) {
+  if (value === null || value === undefined) return '';
+  if (typeof value !== 'string') value = String(value);
+  const map = {
+    '&': '&amp;', '<': '&lt;', '>': '&gt;',
+    '"': '&quot;', "'": '&#039;'
+  };
+  return value.replace(/[&<>"']/g, m => map[m]);
+}
+
+/**
+ * 🔹 Carrega e renderiza os setores no painel lateral.
+ */
+async function carregarSetores() {
+  const token = tokenKey();
+  const setoresLista = document.getElementById('setoresLista');
+  const setoresLoading = document.querySelector('.setores-loading');
+
+  if (!token) {
+    console.warn('[carregarSetores] Token ausente.');
+    if (setoresLista)
+      setoresLista.innerHTML = '<li class="erro">⚠️ Token ausente — faça login novamente.</li>';
+    return;
+  }
+
+  try {
+    setoresLoading.style.display = 'block';
+    setoresLista.innerHTML = '';
+
+    const url = `${BACKEND_URL}/api/setores/empresa`;
+    console.info(`[carregarSetores] Buscando setores de: ${url}`);
+
+    const res = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${token}` },
+    });
+
+    const text = await res.text();
+    let data = [];
+    try {
+      const json = JSON.parse(text);
+      data = Array.isArray(json) ? json : json?.data || [];
+    } catch {
+      console.warn('[carregarSetores] Resposta não JSON:', text.slice(0, 150));
+    }
+
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}: ${(data && data.message) || text}`);
+    }
+
+    if (!data.length) {
+      setoresLista.innerHTML = '<li class="erro">Nenhum setor encontrado.</li>';
+      console.info('[carregarSetores] Nenhum setor encontrado.');
+      return;
+    }
+
+    // Renderiza os setores como botões clicáveis
+    setoresLista.innerHTML = data
+      .map(s => {
+        const nome = escapeHtml(s.nome_setor || s.nome || 'Sem nome');
+        const id = escapeHtml(String(s.id || s._id || ''));
+        return `
+          <li class="setores-item">
+            <a href="#" class="setor-btn" data-setor-id="${id}">
+              <i class="bi bi-diagram-3 me-2"></i>${nome}
+            </a>
+          </li>
+        `;
+      })
+      .join('');
+
+    console.info(`[carregarSetores] ${data.length} setores carregados.`);
+
+    // Adiciona eventos de clique para filtragem
+    setoresLista.querySelectorAll('.setor-btn').forEach(btn => {
+      btn.addEventListener('click', async e => {
+        e.preventDefault();
+        const setorId = btn.dataset.setorId;
+
+        setoresLista.querySelectorAll('.setor-btn')
+          .forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        // Fecha painel
+        document.getElementById('setoresPanel')?.classList.remove('active');
+
+        // Chama filtragem
+        if (typeof filtrarUploadsPorSetor === 'function') {
+          await filtrarUploadsPorSetor(setorId);
+        } else {
+          console.warn('[carregarSetores] Função filtrarUploadsPorSetor não encontrada.');
+        }
+      });
+    });
+
+  } catch (err) {
+    console.error('[carregarSetores] Erro:', err);
+    setoresLista.innerHTML = `<li class="erro"> Erro ao carregar setores: ${escapeHtml(err.message)}</li>`;
+  } finally {
+    setoresLoading.style.display = 'none';
+  }
+}
+
+// estado global para controle de filtro por setor
+window.activeSetorId = null;                // id do setor atualmente filtrado (ou null)
+let _snapshotAntesFiltroSetor = null;       // guarda o array original antes de aplicar o filtro
+
+// util: encontra nome do setor no DOM (se carregado no painel)
+function getSetorNameById(setorId) {
+  try {
+    const sel = document.querySelectorAll('[data-setor-id]');
+    for (const el of sel) {
+      if (String(el.dataset.setorId) === String(setorId)) {
+        // texto sem ícones
+        return (el.textContent || '').trim();
+      }
+    }
+  } catch (e) { /* ignore */ }
+  return `Setor ${setorId}`;
+}
+
+// mostra/atualiza o botão "Remover filtro por setor"
+function showRemoveFilterButton(show = true, setorId = null) {
+  const li = document.getElementById('liRemoverFiltroSetor');
+  const txt = document.getElementById('txtRemoverFiltro');
+  if (!li || !txt) return;
+
+  if (show && setorId) {
+    const nome = getSetorNameById(setorId) || `Setor ${setorId}`;
+    txt.textContent = `Remover filtro: ${nome}`;
+    li.style.display = 'block';
+  } else {
+    li.style.display = 'none';
+    txt.textContent = 'Remover filtro de setor';
+  }
+}
+
+// limpa o filtro por setor e restaura os documentos
+async function clearFiltroSetor() {
+  console.info('[clearFiltroSetor] Removendo filtro de setor...');
+  // reset state
+  window.activeSetorId = null;
+
+  // restaura snapshot se existir
+  if (_snapshotAntesFiltroSetor) {
+    todosOsDocumentos = Array.isArray(_snapshotAntesFiltroSetor) ? [..._snapshotAntesFiltroSetor] : [];
+    documentosAtuais = [...todosOsDocumentos];
+    _snapshotAntesFiltroSetor = null;
+    paginaAtual = 1;
+    renderizarPaginaAtual();
+  } else {
+    // fallback: recarrega a lista padrão (usuário/gestor)
+    try {
+      if (typeof inicializarDocumentacao === 'function') {
+        await inicializarDocumentacao();
+      } else if (typeof carregarMeusUploads === 'function') {
+        await carregarMeusUploads();
+      } else {
+        // se nada existir, recarrega a página
+        console.warn('[clearFiltroSetor] Nenhuma função de reload encontrada; recarregando a página.');
+        window.location.reload();
+      }
+    } catch (e) {
+      console.error('[clearFiltroSetor] Erro ao recarregar documentos:', e);
+    }
+  }
+
+  // esconder botão
+  showRemoveFilterButton(false);
+}
+
+// liga o clique do botão (executar uma vez)
+(function attachRemoverFiltroBtn() {
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('btnRemoverFiltroSetor');
+    if (!btn) return;
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      clearFiltroSetor();
+    });
+  });
+})();
+
+
+async function filtrarUploadsPorSetor(setorId) {
+  if (!setorId) {
+    console.warn('[filtrarUploadsPorSetor] setorId vazio');
+    return;
+  }
+  const token = tokenKey();
+  if (!token) {
+    console.error('[filtrarUploadsPorSetor] token ausente');
+    return;
+  }
+
+  // se ainda não armazenamos snapshot, grava o estado atual antes do filtro
+  if (_snapshotAntesFiltroSetor == null) {
+    try { _snapshotAntesFiltroSetor = Array.isArray(todosOsDocumentos) ? [...todosOsDocumentos] : []; }
+    catch (e) { _snapshotAntesFiltroSetor = []; }
+  }
+
+  // candidates de URL, em ordem de preferência
+  const base = (typeof BACKEND_URL !== 'undefined' && BACKEND_URL) ? String(BACKEND_URL).replace(/\/$/, '') : '';
+  const candidates = [
+    `${base}/upload/setor/${setorId}`,
+    `${base}/api/upload/setor/${setorId}`,
+    `/api/upload/setor/${setorId}`,
+    `/upload/setor/${setorId}`
+  ].filter(Boolean);
+
+  let lastError = null;
+  for (const url of candidates) {
+    try {
+      console.info(`[filtrarUploadsPorSetor] Tentando ${url}`);
+      const res = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      const text = await res.text().catch(() => '');
+      let data = [];
+      try {
+        const json = text ? JSON.parse(text) : null;
+        if (Array.isArray(json)) data = json;
+        else if (json && Array.isArray(json.uploads)) data = json.uploads;
+        else if (json && Array.isArray(json.data)) data = json.data;
+        else if (json && Array.isArray(json.result)) data = json.result;
+        else data = [];
+      } catch (e) {
+        console.warn('[filtrarUploadsPorSetor] Resposta não-JSON recebida (primeiros 200 chars):', String(text).slice(0,200));
+      }
+
+      if (!res.ok) {
+        lastError = new Error(`HTTP ${res.status}: ${text || res.statusText}`);
+        if (res.status === 404) {
+          console.warn('[filtrarUploadsPorSetor] 404 no endpoint, tentando próximo candidate...');
+          continue;
+        }
+        throw lastError;
+      }
+
+      // Atualiza estado e UI com os uploads retornados
+      todosOsDocumentos = data || [];
+      documentosAtuais = [...todosOsDocumentos];
+      paginaAtual = 1;
+      renderizarPaginaAtual();
+
+      // marca setor ativo e mostra botão de limpar filtro
+      window.activeSetorId = setorId;
+      showRemoveFilterButton(true, setorId);
+
+      console.info(`[filtrarUploadsPorSetor] ${todosOsDocumentos.length} uploads carregados para setor ${setorId}`);
+      return;
+    } catch (err) {
+      console.warn(`[filtrarUploadsPorSetor] tentativa ${url} falhou:`, err.message || err);
+      lastError = err;
+    }
+  }
+
+  console.error('[filtrarUploadsPorSetor] Todas tentativas falharam:', lastError);
+  alert('Não foi possível carregar uploads do setor (verifique rota /api/upload/setor/:id no backend).');
+}
+
+/* -------------- boot -------------- */
+</script>
+<script>
+  // ... suas variáveis BACKEND_URL e tokenKey já definidas
+
+  // Chama a rota do gestor para obter uploads do mesmo CNPJ
+  async function carregarUploadsGestor() {
+    const token = tokenKey();
+    if (!token) {
+      if (arquivosContainer) arquivosContainer.innerHTML = '<div class="alert alert-danger">Token não encontrado.</div>';
+      return;
+    }
+
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/upload/gestor/uploads`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+
+      if (!res.ok) {
+        const txt = await res.text().catch(() => '');
+        throw new Error(`HTTP ${res.status} ${txt}`);
+      }
+
+      const json = await res.json();
+      const uploads = Array.isArray(json.uploads) ? json.uploads : [];
+      // grava no array global e renderiza (reutilize sua renderização/paginação)
+      todosOsDocumentos = uploads;
+      documentosAtuais = [...todosOsDocumentos];
+      paginaAtual = 1;
+      renderizarPaginaAtual();
+    } catch (err) {
+      console.error('Erro carregarUploadsGestor:', err);
+      if (arquivosContainer) arquivosContainer.innerHTML = '<div class="alert alert-danger">Erro ao carregar documentos do gestor.</div>';
+    }
+  }
+
+  // Exemplo: se quiser detectar se o usuário é gestor e automaticamente carregar a vista
+  async function inicializarDocumentacao() {
+    const token = tokenKey();
+    if (!token) return;
+
+    // pegar info do usuário
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/auth/me`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (!res.ok) return;
+      const j = await res.json();
+      const tipo = (j.usuario && j.usuario.tipo_usuario) || j.tipo_usuario || '';
+      // se for gestor, carrega documentos por CNPJ
+      if (tipo === 'gestor') {
+        await carregarUploadsGestor();
+      } else {
+        // caso contrário, carrega apenas os uploads do próprio usuário
+        await carregarMeusUploads(); // sua função existente que chama /api/upload/usuario/uploads
+      }
+    } catch (e) {
+      console.warn('Erro inicializarDocumentacao:', e);
+    }
+  }
+
+  // chame inicializarDocumentacao() no DOMContentLoaded em vez de apenas carregarMeusUploads()
+  document.addEventListener('DOMContentLoaded', async () => {
+    await verificarTokenValido(); // sua função que valida token e mostra nome
+    configurarEventListeners();
+    await inicializarDocumentacao();
+  });
+</script>
+

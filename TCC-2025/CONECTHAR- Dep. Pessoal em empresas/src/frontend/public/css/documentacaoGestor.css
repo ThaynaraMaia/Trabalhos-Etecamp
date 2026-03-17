@@ -1,0 +1,321 @@
+/* ================================
+   Base Layout
+   ================================ */
+body {
+  margin: 0;
+  height: 100vh;
+  background:
+    linear-gradient(135deg, rgba(8,10,20,0.85), rgba(10,12,25,0.95)),
+    url('/img/glassmorphism5.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #fff;
+  font-family: 'Segoe UI', system-ui, -apple-system, "Helvetica Neue", Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.page-wrapper {
+  min-height: 100vh;
+  display: block;
+  padding-top: 20px;
+}
+
+.content{
+  margin-left: 30px;
+}
+
+/* ================================
+   Conteúdo principal
+   ================================ */
+#documentosContainer {
+  width: 100%;
+  max-width: 1200px; /* limita a largura máxima */
+  padding: 2rem;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 6px 22px rgba(0,0,0,0.4);
+  min-height: 80vh;
+}
+
+/* ================================
+   Cards de documentos
+   ================================ */
+.doc-item {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 0.75rem;
+  margin-bottom: 12px;
+  transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.doc-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.35);
+}
+
+.doc-item .btn-outline {
+  border: 1px solid #6b57e0;
+  color: #6b57e0;
+  background: transparent;
+  border-radius: 6px;
+  padding: 0.25rem 0.6rem;
+  font-size: 0.85rem;
+  transition: all 0.2s ease-in-out;
+}
+
+.doc-item .btn-outline:hover {
+  background: #6b57e0;
+  color: #fff;
+}
+
+/* ================================
+   Responsividade
+   ================================ */
+@media (max-width: 992px) {
+  .cola-layout {
+    padding: 20px 10px;
+  }
+
+  #documentosContainer {
+    padding: 1.5rem;
+    min-height: auto;
+  }
+}
+/* ================================
+   Scrollbars - Liquid Glass Style
+   ================================ */
+
+/* Para navegadores WebKit (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 12px;  /* largura da barra vertical */
+  height: 12px; /* altura da barra horizontal */
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05); /* fundo da barra */
+  border-radius: 12px;
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
+  backdrop-filter: blur(10px);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15); /* cor do “polegar” */
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: background 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25); /* efeito hover */
+}
+
+/* Para Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.15) rgba(255,255,255,0.05);
+}
+
+/* Para Edge/IE (menos suporte) */
+body {
+  -ms-overflow-style: auto;
+}
+/* =========================
+   Liquid Glass Scrollbars
+   ========================= */
+
+/* Variáveis de fácil customização */
+:root{
+  --scrollbar-size: 12px;
+  --scrollbar-track-bg: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  --scrollbar-track-border: rgba(255,255,255,0.06);
+  --scrollbar-thumb-bg: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.08));
+  --scrollbar-thumb-border: rgba(255, 255, 255, 0.026);
+  --scrollbar-thumb-hover-bg: linear-gradient(135deg, rgba(255,255,255,0.28), rgba(255,255,255,0.12));
+  --scrollbar-accent-bg: linear-gradient(135deg, rgba(136,75,255,0.30), rgba(136,75,255,0.14));
+  --scrollbar-shadow: 0 4px 14px rgba(0,0,0,0.45);
+  --scrollbar-radius: 10px;
+}
+
+/* -------------------------
+   WebKit (Chrome, Edge, Safari)
+   ------------------------- */
+*::-webkit-scrollbar {
+  width: var(--scrollbar-size);
+  height: var(--scrollbar-size);
+}
+
+/* Track (fundo) */
+*::-webkit-scrollbar-track {
+  background: var(--scrollbar-track-bg);
+  border-radius: var(--scrollbar-radius);
+  border: 1px solid var(--scrollbar-track-border);
+  box-shadow: inset 0 4px 18px rgba(0,0,0,0.25);
+}
+
+/* Thumb (alça) */
+*::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb-bg);
+  border-radius: var(--scrollbar-radius);
+  border: 2px solid rgba(255,255,255,0.06); /* cria a sensação de vidro */
+  box-shadow: var(--scrollbar-shadow);
+  backdrop-filter: blur(6px) saturate(140%);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+/* Thumb hover / active */
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover-bg);
+  transform: translateY(-1px);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+}
+
+/* Corner */
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* -------------------------
+   Firefox (scrollbar-color)
+   ------------------------- */
+/* Aplica para elementos que usam scroll (padrão global como fallback) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) rgba(255,255,255,0.03);
+}
+
+/* Para contêineres específicos (melhor controle) */
+.sidebar,
+.content,
+.setores-panel,
+.containerArq,
+.setores-container,
+.arquivos-list,
+#arquivosContainer {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.18) rgba(255,255,255,0.03);
+}
+
+/* Se quiser destaque quando houver filtro ativo (accent thumb) */
+/* Ex.: .setores-panel.active dar um tom roxo à thumb */
+.setores-panel.active *::-webkit-scrollbar-thumb,
+.setores-panel.active {
+  /* WebKit: não há seletor direto para o thumb a partir do container em todos os browsers,
+     mas mantemos consistência design-wise mudando track/appearance */
+}
+.setores-panel.active,
+.sidebar.active {
+  /* Firefox: usa o mesmo color override */
+  scrollbar-color: var(--scrollbar-accent-bg) rgba(255,255,255,0.02);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .sidebar:active ::-webkit-scrollbar-thumb,
+  .content:active ::-webkit-scrollbar-thumb {
+    box-shadow: 0 8px 30px rgba(136,75,255,0.18);
+  }
+}
+.sidebar .nav-link,
+.sidebar .nav-link:visited,
+.sidebar .nav-link:focus,
+.sidebar .nav-link:hover,
+.sidebar .nav-link.active {
+  text-decoration: none !important;
+}
+
+/* Card de documento com estilo glass */
+.documento-card {
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.17), rgba(255,255,255,0.015)) !important;
+  border: 1px solid rgba(255,255,255,0.06) !important;
+  box-shadow: 0 8px 30px rgba(6,8,20,0.6) !important;
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.documento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(6,8,20,0.75) !important;
+}
+
+.documento-card .card-body {
+  background: transparent !important;
+  color: #fff !important;
+}
+
+.documento-title {
+  color: #ffffff !important;
+  font-weight: 700;
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.documento-nome {
+  color: #f0f0f0 !important;
+  word-break: break-all;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.documento-info {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.documento-info strong {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Força texto branco em todos os elementos do card */
+.documento-card * {
+  color: inherit;
+}
+
+.documento-card .card-text {
+  color: #fff !important;
+}
+
+.documento-card .text-muted,
+.documento-card small {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.documento-acoes .btn {
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-color: rgba(255,255,255,0.3) !important;
+  transition: all 0.2s ease;
+  font-weight: 600;
+}
+
+.documento-acoes .btn-outline-primary {
+  color: #fff !important;
+  background: rgba(13, 110, 253, 0.2);
+}
+
+.documento-acoes .btn-outline-primary:hover {
+  background: rgba(13, 110, 253, 0.8) !important;
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+
+.documento-acoes .btn-outline-secondary {
+  color: #fff !important;
+  background: rgba(108, 117, 125, 0.2);
+}
+
+.documento-acoes .btn-outline-secondary:hover {
+  background: rgba(108, 117, 125, 0.8) !important;
+  transform: translateY(-2px);
+  color: #fff !important;
+}
+
+.documento-acoes .btn i {
+  color: #fff !important;
+}

@@ -1,0 +1,76 @@
+.main{
+    box-sizing: border-box;
+    margin-left: 6px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+
+.autoajudacard {
+    margin: 10px;
+    background-color: rgb(11, 11, 83);
+    color: white;
+    width: 300px;
+    height: 420px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.autoajudacard > h1 {
+    font-size: 25px;
+    padding-top: 10px;
+}
+
+.autoajudacard > p {
+    font-size: 20px;
+    padding: 10px 10px;
+}
+
+.btn-card {
+    display: flex;
+    align-items: center;
+}
+
+.btn-card a {
+    margin-top: 5px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 214, 78);
+    border-radius: 12px;
+    padding: 10px 130px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color .3s ease;
+    text-decoration: none;
+    color: rgb(4, 4, 43);
+}
+
+.btn-card a:hover {
+    background-color: rgb(4, 4, 43);
+    color: rgb(255, 214, 78);
+}
+
+.autoajudacard > img {
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.btnexercicio {
+    font-size: 17px;
+    padding-top: 10px 50px;
+    border: none;
+    background-color: #f5eda0;
+    font-weight: 600;
+    transition: background-color .0,5s ease;
+    cursor: pointer;
+}
+.btnexecicio:hover{
+    transition: background-color .0,5s ease;
+    background-color: #f5eda0; 
+}

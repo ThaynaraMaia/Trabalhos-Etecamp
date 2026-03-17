@@ -1,0 +1,425 @@
+{{> navbarCola}}
+
+<link rel="stylesheet" href="/css/holerites.css">
+
+<div class="cola-layout has-navbar">
+  <main class="content holerite-page">
+    <h2>Meus Holerites</h2>
+    <p>Visualize e baixe seus holerites mensais</p>
+
+    <!-- armazenamento de dados vindo do Handlebars (apenas *valores*, não mostrado) -->
+    <div id="data-storage" style="display:none;">
+      <span id="data-nome-empresa" data-value="{{empresa.nome_empresa}}"></span>
+      <span id="data-cnpj" data-value="{{empresa.cnpj}}"></span>
+      <span id="data-nome-usuario" data-value="{{usuario.nome}}"></span>
+      <span id="data-cargo-usuario" data-value="{{usuario.cargo}}"></span>
+      <span id="data-cpf-usuario" data-value="{{usuario.cpf}}"></span>
+      <!-- opcional: id da empresa/usuario caso venha do backend -->
+      <span id="data-usuario-id" data-value="{{usuario.id}}"></span>
+      <span id="data-empresa-id" data-value="{{empresa.id}}"></span>
+    </div>
+
+    <div class="filtros">
+      <input id="buscaMes" type="month" placeholder="Filtrar por mês" />
+      <button id="btnAtualizar" class="btn btn-outline-primary"> Atualizar</button>
+    </div>
+
+    <div id="holerites-container" class="holerites-grid">
+      <p>Carregando holerites...</p>
+    </div>
+
+    <div id="mensagem-vazio" class="vazio" style="display:none">
+      <i class="bi bi-inbox icon-inbox"></i>
+      <p>Nenhum holerite disponível ainda.</p>
+    </div>
+  </main>
+</div>
+
+<!-- Modal -->
+<div id="modal-holerite" class="modal-overlay" style="display:none">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h3>Holerite</h3>
+      <div class="modal-actions">
+        <button id="btn-imprimir" title="Imprimir">🖨️</button>
+        <button id="btn-download-holerite" title="Baixar PDF">💾</button>
+        <button id="btn-fechar-modal" title="Fechar">✖️</button>
+      </div>
+    </div>
+
+    <div id="modal-body" class="modal-body">
+      <div id="holerite-printable" class="papel-holerite">
+          <header class="h-header">
+              <div class="empresa-info">
+                  <h3 id="modal-nome-empresa"></h3>
+                  <small>CNPJ: <span id="modal-cnpj"></span></small>
+              </div>
+              <div class="recibo-titulo">
+                  <h4>RECIBO DE PAGAMENTO DE SALÁRIO</h4>
+                  <span>Referência: <strong> <span id="modal-mes-referencia"></span></strong></span>
+              </div>
+          </header>
+
+          <div class="colaborador-info">
+              <div>
+                  <label>Colaborador</label>
+                  <strong id="modal-nome-colaborador"></strong>
+              </div>
+              <div>
+                  <label>Cargo</label>
+                  <strong id="modal-cargo-colaborador"></strong>
+              </div>
+              <div>
+                  <label>CPF</label>
+                  <strong id="modal-cpf-colaborador"></strong>
+              </div>
+          </div>
+
+          <table class="tabela-holerite-detalhe">
+              <thead>
+                  <tr>
+                      <th width="10%">Cód.</th>
+                      <th width="40%">Descrição</th>
+                      <th width="10%" class="text-center">Ref.</th>
+                      <th width="20%" class="text-right">Vencimentos</th>
+                      <th width="20%" class="text-right">Descontos</th>
+                  </tr>
+              </thead>
+              <tbody id="modal-tabela-corpo"></tbody>
+              <tfoot>
+                  <tr class="totais-row">
+                      <td colspan="3" class="text-right"><strong>TOTAIS</strong></td>
+                      <td class="text-right"><span id="modal-total-proventos"></span></td>
+                      <td class="text-right"><span id="modal-total-descontos"></span></td>
+                  </tr>
+              </tfoot>
+          </table>
+
+          <div class="liquido-box">
+              <span>VALOR LÍQUIDO A RECEBER</span>
+              <span id="modal-salario-liquido" class="valor-grande"></span>
+          </div>
+
+          <div class="rodape-msg">
+              <p>Declaro ter recebido a importância líquida discriminada neste recibo.</p>
+              <div class="assinatura-line">
+                  Data: ____/____/______ &nbsp;&nbsp;&nbsp; Assinatura: __________________________________________
+              </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* (mantive seu CSS, por brevidade só deixei o mesmo que já tinha) */
+.modal-overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.6);z-index:9999;display:flex;justify-content:center;align-items:center;backdrop-filter:blur(4px)}
+.modal-card{background:white;width:90%;max-width:800px;max-height:90vh;overflow-y:auto;border-radius:12px;box-shadow:0 15px 35px rgba(0,0,0,.5);display:flex;flex-direction:column;animation:aparecerModal .3s ease-out}
+.modal-header{padding:15px 25px;background:#f8f9fa;border-bottom:1px solid #e9ecef;display:flex;justify-content:space-between;align-items:center;border-radius:12px 12px 0 0;position:sticky;top:0;z-index:10}
+.modal-body{padding:20px;background:#525659}
+.papel-holerite{background:#fff;color:#000;padding:20px;border-radius:4px;font-family:Arial,sans-serif}
+.h-header{display:flex;justify-content:space-between;border-bottom:2px solid #333;padding-bottom:15px;margin-bottom:20px}
+.colaborador-info{display:flex;justify-content:space-between;background:#f9f9f9;padding:10px;border:1px solid #ddd;margin-bottom:20px}
+.colaborador-info label{display:block;font-size:11px;color:#666;text-transform:uppercase}
+.tabela-holerite-detalhe{width:100%;border-collapse:collapse;margin-bottom:20px}
+.tabela-holerite-detalhe th{background:#eee;padding:8px;text-align:left;font-size:12px;border:1px solid #ccc;color:#333}
+.tabela-holerite-detalhe td{padding:8px;border:1px solid #eee;font-size:13px;color:#333}
+.liquido-box{background:#eee;border:1px solid #333;padding:15px;display:flex;justify-content:space-between;align-items:center;font-weight:bold}
+.valor-grande{font-size:18px}
+.text-right{text-align:right}.text-center{text-align:center}.text-success{color:#006400}.text-danger{color:#8b0000}
+</style>
+
+<script>
+const BACKEND_URL = 'http://localhost:3001';
+let holeritesCacheados = [];
+
+/* utilidades */
+function formatarMoeda(v){ return (Number(v||0)).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+function formatarDataIso(dt){ try{ return new Date(dt).toLocaleDateString('pt-BR'); }catch(e){ return dt; } }
+function formatarMesReferencia(ms){
+  if(!ms) return ms;
+  const partes = (''+ms).split('-');
+  if(partes.length>=2){ const meses=['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro']; return meses[Number(partes[1]) -1] + '/' + partes[0]; }
+  return ms;
+}
+function mascaraCPF(cpf){
+  if(!cpf) return '';
+  const s = cpf.replace(/\D/g,'').padStart(11,'0').slice(0,11);
+  return s.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');
+}
+function logDebug(msg){ console.log('[DEBUG]',msg); const el=document.getElementById('debug-status'); if(el) el.textContent=msg; }
+
+/* tenta preencher dados básicos a partir do token (fallback) */
+(function preencherDadosSeVazio(){
+  try{
+    const token = localStorage.getItem("token");
+    if(!token) return;
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const setIfEmpty = (selector, ...props) => {
+      const el = document.querySelector(selector);
+      if(!el) return;
+      const cur = (el.dataset.value||'').trim();
+      if(cur === '') {
+        // busca nas props do payload
+        for(const p of props){ if(payload[p]){ el.dataset.value = payload[p]; return; } }
+      }
+    };
+
+    setIfEmpty('#data-nome-usuario','nome','name');
+    setIfEmpty('#data-cargo-usuario','cargo','role');
+    setIfEmpty('#data-nome-empresa','empresa_nome','empresaName','empresa');
+    setIfEmpty('#data-cnpj','cnpj');
+    setIfEmpty('#data-cpf-usuario','cpf');
+    // se token tiver ids
+    const uid = payload.id || payload.userId || payload.sub;
+    if(uid && document.querySelector('#data-usuario-id') && !(document.querySelector('#data-usuario-id').dataset.value || '').trim()){
+      document.querySelector('#data-usuario-id').dataset.value = uid;
+    }
+  }catch(e){ /* ignora */ }
+})();
+
+/* --- render da lista de holerites --- */
+function renderizarHolerites(holerites){
+  const container=document.getElementById('holerites-container');
+  const mensagemVazio=document.getElementById('mensagem-vazio');
+  if(!container) return;
+  try{
+    if(!holerites || holerites.length===0){ container.innerHTML=''; if(mensagemVazio) mensagemVazio.style.display='block'; logDebug('Nenhum holerite encontrado'); return; }
+    if(mensagemVazio) mensagemVazio.style.display='none';
+    logDebug(`${holerites.length} holerite(s) encontrado(s)`);
+    container.innerHTML = holerites.map(h=>{
+      const id = h.id ?? h.ID ?? '';
+      const mes = h.mes_referencia ?? h.mes ?? '';
+      const data = h.data_criacao ?? h.created_at ?? '';
+      const salario_liq = (Number(h.salario_liquido) || Number(h.salario_base) || 0);
+      return `
+        <div class="holerite-card" onclick="abrirModalHolerite(${id})">
+          <div class="title"><span>Holerite</span><small> ${formatarMesReferencia(mes)}</small></div>
+          <div class="meta">Disponível desde ${formatarDataIso(data)}</div>
+          <div class="valor">${formatarMoeda(salario_liq)}</div>
+          <div style="margin-top:12px; display:flex; gap:8px">
+              <span style="font-size:12px; color:#aaa; text-decoration:underline; cursor: pointer;">Clique para detalhes</span>
+          </div>
+        </div>`;
+    }).join('');
+  }catch(err){ console.error('Erro render:',err); }
+}
+
+/* --- carregar holerites do backend --- */
+async function carregarHolerites(){
+  try{
+    logDebug('Buscando servidor...');
+    let usuarioId = (document.getElementById('data-usuario-id')?.dataset.value) || '{{usuario.id}}';
+    if(!usuarioId || usuarioId === 'undefined'){
+      const token = localStorage.getItem('token');
+      if(token){ try{ const payload = JSON.parse(atob(token.split('.')[1])); usuarioId = payload.id || payload.userId || payload.sub; }catch(e){} }
+    }
+    if(!usuarioId){ logDebug('Erro: Usuário não identificado'); return; }
+    const token = localStorage.getItem('token');
+    const headers = {'Content-Type':'application/json'}; if(token) headers['Authorization'] = `Bearer ${token}`;
+    const resp = await fetch(`${BACKEND_URL}/api/holerites/usuario/${usuarioId}`,{ headers });
+    if(!resp.ok){ logDebug('Erro ao buscar dados'); return; }
+    const payload = await resp.json();
+    let holeritesRaw = [];
+    if(Array.isArray(payload)) holeritesRaw = payload;
+    else if(Array.isArray(payload.holerites)) holeritesRaw = payload.holerites;
+    else { for(const k in payload) if(Array.isArray(payload[k])) { holeritesRaw = payload[k]; break; } }
+
+    const holerites = holeritesRaw.map(h=>{
+      let proventos = [], descontos = [];
+      try{ const rawP = h.proventos_detalhe || h.proventos; proventos = typeof rawP === 'string' ? JSON.parse(rawP) : (rawP || []); }catch(e){ proventos = []; }
+      try{ const rawD = h.descontos_detalhe || h.descontos; descontos = typeof rawD === 'string' ? JSON.parse(rawD) : (rawD || []); }catch(e){ descontos = []; }
+      const totalP = Number(h.total_proventos) || proventos.reduce((acc,i)=> acc + (Number(i.valor)||0),0);
+      const totalD = Number(h.total_descontos) || descontos.reduce((acc,i)=> acc + (Number(i.valor)||0),0);
+      return {
+        ...h,
+        id: h.id,
+        usuario_id: h.usuario_id || h.user_id,
+        mes_referencia: h.mes_referencia,
+        data_criacao: h.data_criacao || h.created_at,
+        salario_liquido: Number(h.salario_liquido || (totalP - totalD)),
+        proventos,
+        descontos,
+        total_proventos: totalP,
+        total_descontos: totalD
+      };
+    });
+
+    holeritesCacheados = holerites;
+    renderizarHolerites(holeritesCacheados);
+  }catch(err){ console.error(err); logDebug('Erro crítico ao carregar'); }
+}
+
+/* --- buscar empresa/usuario via API (várias tentativas, sem alterar backend) --- */
+async function buscarDadosDoUsuario(usuarioId){
+  const token = localStorage.getItem('token');
+  const headers = { 'Content-Type': 'application/json' };
+  if(token) headers['Authorization'] = `Bearer ${token}`;
+
+  // 1) tenta /api/usuarios/:id
+  try{
+    let resp = await fetch(`${BACKEND_URL}/api/usuarios/${usuarioId}`, { headers });
+
+    if(resp.ok){
+      const user = await resp.json();
+      return user;
+    }
+  }catch(e){ /* ignora e tenta próxima estratégia */ }
+
+  return null;
+}
+
+async function buscarEmpresaPorId(empresaId){
+  const token = localStorage.getItem('token');
+  const headers = { 'Content-Type': 'application/json' };
+  if(token) headers['Authorization'] = `Bearer ${token}`;
+
+  const candidatos = [
+    `${BACKEND_URL}/api/empresa/${empresaId}`,
+    `${BACKEND_URL}/api/empresas/${empresaId}`,
+    `${BACKEND_URL}/api/empresa?id=${empresaId}`,
+    `${BACKEND_URL}/api/empresas?id=${empresaId}`
+  ];
+
+  for(const url of candidatos){
+    try{
+      const resp = await fetch(url, { headers });
+      if(resp.ok){
+        const e = await resp.json();
+        return e;
+      }
+    }catch(e){}
+  }
+  return null;
+}
+
+/* abrir modal e preencher (com tentativas para empresa/cpf) */
+async function abrirModalHolerite(id){
+  const holerite = holeritesCacheados.find(h => h.id == id);
+  if(!holerite) return;
+
+  // pega valores do HTML (preenchidos por Handlebars ou pelo fallback token)
+  let nomeEmpresaGlobal = (document.getElementById('data-nome-empresa')?.dataset.value||'').trim();
+  let cnpjEmpresaGlobal = (document.getElementById('data-cnpj')?.dataset.value||'').trim();
+  let nomeUserGlobal = (document.getElementById('data-nome-usuario')?.dataset.value||'').trim();
+  let cargoUserGlobal = (document.getElementById('data-cargo-usuario')?.dataset.value||'').trim();
+  let cpfUserGlobal = (document.getElementById('data-cpf-usuario')?.dataset.value||'').trim();
+
+  // Se empresa em branco, tenta buscar via API usando usuario_id
+  try{
+    if((!nomeEmpresaGlobal || nomeEmpresaGlobal==='') || (!cpfUserGlobal || cpfUserGlobal==='')){
+      // 1) tenta buscar dados do usuário (pode retornar cpf e empresa embarcada)
+      const usuarioId = holerite.usuario_id || holerite.user_id || (document.getElementById('data-usuario-id')?.dataset.value) || null;
+      if(usuarioId){
+        const user = await buscarDadosDoUsuario(usuarioId);
+        if(user){
+          // se responder um object com empresa aninhada
+          if(!nomeEmpresaGlobal && user.empresa && (user.empresa.nome_empresa || user.empresa.nome)){
+            nomeEmpresaGlobal = user.empresa.nome_empresa || user.empresa.nome;
+            cnpjEmpresaGlobal = cnpjEmpresaGlobal || user.empresa.cnpj || '';
+          }
+          // se user trouxer empresa_id
+          if(!nomeEmpresaGlobal && (user.empresa_id || user.empresaId || user.empresa)){
+            const eid = user.empresa_id || user.empresaId || user.empresa;
+            const eObj = await buscarEmpresaPorId(eid);
+            if(eObj && (eObj.nome_empresa || eObj.nome)) nomeEmpresaGlobal = eObj.nome_empresa || eObj.nome;
+            if(eObj && eObj.cnpj) cnpjEmpresaGlobal = cnpjEmpresaGlobal || eObj.cnpj;
+          }
+          // cpf do usuário
+          if(!cpfUserGlobal && (user.cpf || user.CPF)) cpfUserGlobal = user.cpf || user.CPF;
+          // nome/cargo
+          if(!nomeUserGlobal && (user.nome || user.name)) nomeUserGlobal = user.nome || user.name;
+          if(!cargoUserGlobal && (user.cargo || user.role)) cargoUserGlobal = user.cargo || user.role;
+        }
+      }
+
+      // 2) se ainda não encontrou nomeEmpresa, tenta buscar por empresa_id vindo do holerite (caso exista)
+      if(!nomeEmpresaGlobal && (holerite.empresa_id || holerite.empresaId)){
+        const eObj = await buscarEmpresaPorId(holerite.empresa_id || holerite.empresaId);
+        if(eObj && (eObj.nome_empresa || eObj.nome)) nomeEmpresaGlobal = eObj.nome_empresa || eObj.nome;
+        if(eObj && eObj.cnpj) cnpjEmpresaGlobal = cnpjEmpresaGlobal || eObj.cnpj;
+      }
+    }
+  }catch(e){ console.warn('Erro ao buscar empresa/usuario via API',e); }
+
+  // 1. preenche header e dados do colaborador (com máscaras)
+  document.getElementById('modal-nome-empresa').textContent = nomeEmpresaGlobal || 'Empresa';
+  document.getElementById('modal-cnpj').textContent = cnpjEmpresaGlobal || '';
+  document.getElementById('modal-mes-referencia').textContent = formatarMesReferencia(holerite.mes_referencia);
+
+  document.getElementById('modal-nome-colaborador').textContent = nomeUserGlobal || (holerite.nome || holerite.nome_colaborador) || 'Colaborador';
+  document.getElementById('modal-cargo-colaborador').textContent = cargoUserGlobal || (holerite.cargo || holerite.cargo_colaborador) || '';
+  document.getElementById('modal-cpf-colaborador').textContent = mascaraCPF(cpfUserGlobal || holerite.cpf || holerite.cpf_colaborador || '');
+
+  // 2. monta tabela
+  const tabelaCorpo = document.getElementById('modal-tabela-corpo');
+  let htmlItens = '';
+  if(Array.isArray(holerite.proventos)) holerite.proventos.forEach(p=>{
+    htmlItens += `<tr>
+      <td>${p.codigo || '001'}</td>
+      <td>${p.descricao || ''}</td>
+      <td class="text-center">${p.referencia || '-'}</td>
+      <td class="text-right text-success">${formatarMoeda(p.valor)}</td>
+      <td class="text-right">0,00</td>
+    </tr>`;
+  });
+  if(Array.isArray(holerite.descontos)) holerite.descontos.forEach(d=>{
+    htmlItens += `<tr>
+      <td>${d.codigo || '002'}</td>
+      <td>${d.descricao || ''}</td>
+      <td class="text-center">${d.referencia || '-'}</td>
+      <td class="text-right">0,00</td>
+      <td class="text-right text-danger">${formatarMoeda(d.valor)}</td>
+    </tr>`;
+  });
+  tabelaCorpo.innerHTML = htmlItens;
+
+  // 3. totas
+  document.getElementById('modal-total-proventos').textContent = formatarMoeda(holerite.total_proventos);
+  document.getElementById('modal-total-descontos').textContent = formatarMoeda(holerite.total_descontos);
+  document.getElementById('modal-salario-liquido').textContent = formatarMoeda(holerite.salario_liquido);
+
+  // 4. ações
+  document.getElementById('btn-download-holerite').onclick = () => baixarHolerite(id);
+  document.getElementById('btn-imprimir').onclick = () => imprimirModal();
+
+  // 5. mostra modal
+  document.getElementById('modal-holerite').style.display = 'flex';
+}
+
+function fecharModalLocal(){ document.getElementById('modal-holerite').style.display = 'none'; }
+
+function imprimirModal(){
+  const conteudo = document.getElementById('holerite-printable').innerHTML;
+  const style = `<style>body{font-family:sans-serif;padding:20px}.h-header{display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:10px;margin-bottom:15px}.colaborador-info{border:1px solid #000;padding:10px;margin-bottom:15px;display:flex;justify-content:space-between}.tabela-holerite-detalhe{width:100%;border-collapse:collapse;margin-bottom:20px}.tabela-holerite-detalhe th,.tabela-holerite-detalhe td{border:1px solid #ccc;padding:6px;font-size:12px}.tabela-holerite-detalhe th{background:#eee;text-align:left}.text-right{text-align:right}.text-center{text-align:center}.liquido-box{background:#ddd;padding:10px;display:flex;justify-content:space-between;align-items:center;border:1px solid #000;font-weight:bold}.rodape-msg{margin-top:40px;font-size:11px}.assinatura-line{margin-top:20px;border-top:1px dashed #999;padding-top:10px}</style>`;
+  const win = window.open('','_blank','height=700,width=800');
+  win.document.write('<html><head><title>Imprimir Holerite</title>');
+  win.document.write(style);
+  win.document.write('</head><body>');
+  win.document.write(conteudo);
+  win.document.write('</body></html>');
+  win.document.close();
+  win.print();
+}
+
+function baixarHolerite(id){
+  const token = localStorage.getItem('token');
+  const url = `${BACKEND_URL}/api/holerites/download/${id}`;
+  if(!token){ window.open(url,'_blank'); return; }
+  fetch(url,{ headers: { 'Authorization': `Bearer ${token}` } })
+    .then(r => r.ok ? r.blob() : Promise.reject(r))
+    .then(blob => {
+      const u = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = u; a.download = `Holerite_${id}.pdf`; a.click(); URL.revokeObjectURL(u);
+    })
+    .catch(() => alert('Erro ao baixar documento.'));
+}
+
+/* inicialização */
+document.addEventListener('DOMContentLoaded', () => {
+  carregarHolerites();
+  document.getElementById('btn-fechar-modal')?.addEventListener('click', fecharModalLocal);
+  document.getElementById('modal-holerite')?.addEventListener('click', (e)=>{ if(e.target.id==='modal-holerite') fecharModalLocal(); });
+  document.getElementById('btnAtualizar')?.addEventListener('click', carregarHolerites);
+  document.getElementById('buscaMes')?.addEventListener('change', carregarHolerites);
+});
+</script>
