@@ -66,8 +66,9 @@ Sistema resolver o problema da ineficiência, desorganização e alto risco de e
 <hora>
 <forte><h2>Como citar o projeto</h2></forte>
 
-De Oliveira, Ana Luiza Teodoro Corrêa; Dos Reis, Ramón Viana Ferreira; Bordignon, Rebeca. Desenvolvimento de uma plataforma aoara auxiliar na gestão documental e folha de pagamento do departamento pessoal em empresas de meio e pequeno porte. 2025. 35 p.
+REIS, Ramon Viana Ferreira dos; OLIVEIRA, Rebecca Bordignon de; OLIVEIRA, Ana Luiza Teodoro Corrêa de. Desenvolvimento de uma plataforma web para auxiliar na gestão documental e folha de pagamento do departamento pessoal em empresas de médio e pequeno porte. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2025. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2025.
 
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/41923)
 
 Em caso de dúvidas entre em contato com rebeccabordignon11@gmail.com 
 
