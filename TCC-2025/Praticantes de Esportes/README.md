@@ -1,4 +1,4 @@
-# Desenvolvimento-de-um-Website-para-Praticantes-de-Esporte-em-Campo-Limpo-Paulista
+# Desenvolvimento de um Website para Praticantes de Esporte em Campo Limpo Paulista
 
 ## Descrição
 Nosso trabalho busca auxiliar comunidades esportivas em Campo Limpo Paulista a se encontrarem, organizarem e praticarem esportes, auxiliando com horários, eventos, agendas e fórums/chats.
