@@ -156,7 +156,9 @@ O **cliente** pode agendar serviços, visualizar serviços agendados e participa
 
 ## 📜 Citação
 
-> PEREIRA, Fernanda; SILVEIRA, Natalia; LIMA, Willian. **Identidade visual e marketing: justificativas e proposta para o redesign de uma estética automotiva**. 2024. 40 p. Artigo.
+PEREIRA, Fernanda Caroline Santos; SILVEIRA, Natália Araújo da; LIMA, Willian Gabriel Da Paixão. Identidade visual e marketing: justificativas e proposta para o redesign de uma estética automotiva. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29325)
 
 ---
 
