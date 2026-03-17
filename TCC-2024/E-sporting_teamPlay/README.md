@@ -101,7 +101,9 @@ Entrando pela primeira vez, uma tela introdutória lhe receberá com *links* oar
 
 ## 3. Considerações Finais
 #### 1.1. Estrutura da Citação 
-MORAES, Leonardo da Graça; CARVALHO, Pablo Henrique Pinheiro de; LUCAS, Ryan Vicentin. O desenvolvimento de uma rede social para o cenário de e-sports. 2024. 38 p. Artigo científico, Centro Paula Souza – ETEC de Campo Limpo Paulista. 2024
+MORAES, Leonardo da Graça; CARVALHO, Pablo Henrique Pinheiro de; LUCAS, Ryan Vicentin. O desenvolvimento de uma rede social para o cenário de e-sports. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29339)
 
 
 <br>
