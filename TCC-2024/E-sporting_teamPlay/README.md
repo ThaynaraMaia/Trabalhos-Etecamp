@@ -1,6 +1,8 @@
 # TeamPlay - Where Champions Rise
 ![TeamPlay](/public/assets/Logo_Full.png)
 
+<img src="/public/assets/Logo_Full.png">
+
 
 >#### Da Djous Company para o TCC da ETEC.
 
