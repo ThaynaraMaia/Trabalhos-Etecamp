@@ -206,5 +206,7 @@ O CiaoMundo demonstra como soluções tecnológicas podem democratizar o acesso 
 
 **🖇️ Como citar este trabalho**
 
-SILVA, Rayssa A.; OLIVEIRA, Beatriz S.; CAGNIATO, Maria C.; PEREIRA, Hana N. Ciaomundo: Desenvolvimento de uma plataforma web para auxiliar jovens brasileiros na busca por bolsas internacionais de graduação. 2025.
+BRANCO, Rayssa Aparecida da Silva Sousa et al. Desenvolvimento de uma plataforma para auxiliar jovens brasileiros na busca por bolsas de estudos internacionais de graduação. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2025. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2025.
+
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/41936)
 
