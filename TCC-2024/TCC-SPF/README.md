@@ -250,8 +250,10 @@ Uso do sistema:
 
 ##  Como citar este trabalho: ⌨️🖱️
 
-DA SILVA, Matheus Araújo; DIAS, Nycollas Feriotto; KUM, Vinicius. Desenvolvimento de um sistema web para auxiliar na organização da semana Paulo freire. 2024. 35 p.
+SILVA, Matheus Araujo da; DIAS, Nycollas Feriotto; KUM, Vinicius. Desenvolvimento de um sistema web para auxiliar na organização da semana Paulo Freire. Orientadores: Thaynara Cristina Maia dos Santos, Barbara Kathellen Andrade Porfirio. 2024. Artigo Científico, apresentado como Trabalho de Conclusão de Curso (Ensino Técnico em Informática para Internet) – ETECAMP: ETEC de Campo Limpo Paulista, Campo Limpo Paulista, 2024.
 
-### Em caso de duvidas entre em contato com codnicius@gmail.com ou com feriottodias@gmail.com
+[Trabalho na íntegra](https://ric.cps.sp.gov.br/handle/123456789/29334)
+
+### Em caso de dúvidas entre em contato com codnicius@gmail.com ou com feriottodias@gmail.com
 
 #### Copyright @ 2024 Todos os direitos reservados aos autores.
