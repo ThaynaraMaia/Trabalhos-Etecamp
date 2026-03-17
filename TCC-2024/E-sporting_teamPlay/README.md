@@ -63,7 +63,7 @@ ___
 
 Prototipada utilizando a ferramenta [Figma](https://www.figma.com/pt-br/).
 
-<img align="center" src="/public/assets/prot.png" width="auto" height="auto">
+<img align="center" src="public/assets/prot.png" width="auto" height="auto">
 
 <br><br>
 
@@ -90,7 +90,7 @@ Clone/faça download deste repositório na sua pasta `/htdocs`. Inicie o Apache 
 
 #### 1.4. Uso 
 ___
-<img align="center" src="/public/assets/instructions/homepage.png" width="auto" height="auto">  
+<img align="center" src="public/assets/instructions/homepage.png" width="auto" height="auto">  
 <br>
 
 Entrando pela primeira vez, uma tela introdutória lhe receberá com *links* oara Login e Criação de Conta. Crie sua conta e acesse a página Home, Usuários, Toneios, Perfis, Chat, dentre outras. Faça logout e use as credenciais abaixo para fazer login como administrador. Acesse o painel de controle, com funções de manipular a base de usuários e torneios.
